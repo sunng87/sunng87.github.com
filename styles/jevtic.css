@@ -1,0 +1,72 @@
+@import url(http://fonts.googleapis.com/css?family=Monda);
+* {
+    margin:0;
+    padding:0;
+}
+
+body {
+    background-color: #1f3b31;
+    background-repeat:repeat-x;
+    background-position:top center;
+    font-family: 'Monda',sans-serif;
+    height:100%;
+}
+
+#page{
+    margin-top:40px;
+    margin-left:20px;
+    z-index:0;
+    /*width:450px;*/
+}
+#avatar{
+    float:left;
+    width:80px;
+    padding:5px;
+    background-color:rgba(255,255,255,0);
+    text-align:center;
+}
+#avatar img {
+    margin-top: 18px;
+    border-radius:15px;
+}
+div.info {
+    float:left;
+    margin-bottom:20px;
+    margin-left:10px;
+    color:#FFF;
+    font-size:1.4em;
+}
+div.info h1 {
+    font-size:3em;
+}
+div.info h2 {
+    font-size:1.75em;
+    margin-bottom:20px;
+}
+
+div.info p {
+    margin-bottom:5px;
+    font-size:1em;
+}
+ul.links {
+    margin-bottom:5px;
+}
+ul.links li {
+    display: inline-block;
+    font-size:0.8em;
+    padding-right:8px;
+    border-right:1px #FFF solid;
+}
+ul.links li:last-child {
+    border:0;
+}
+a:link,a:visited{
+    border-bottom:1px #FFF dashed;
+    color: #FFF;
+    text-decoration:none;
+}
+a:hover {
+    color: #67CC67;
+}
+
+
