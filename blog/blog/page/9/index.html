@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="最近没有什么特别值得一提的事情，或者说都还在进行中还没有到值得一提的时候。 中秋节休息之后的第一天清早去驾校考交规理论，这个事没什么可说的，除了在4sq上又拓展了一点疆土，后来我又后悔没把GPS带着错过了一些还没有数据的道路。倒是那天去和回分别坐错了车，想十年前本人对城市交通网络了然于胸， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/9">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/17/%E6%B5%81%E6%B0%B4%E5%B8%90/">流水帐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-17T00:00:00+08:00" pubdate data-updated="true">Sep 17<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近没有什么特别值得一提的事情，或者说都还在进行中还没有到值得一提的时候。</p>
+
+<p>中秋节休息之后的第一天清早去驾校考交规理论，这个事没什么可说的，除了在4sq上又拓展了一点疆土，后来我又后悔没把GPS带着错过了一些还没有数据的道路。倒是那天去和回分别坐错了车，想十年前本人对城市交通网络了然于胸，除了视力不好把48路看成46路就没有坐错过车走错过路。结果现在公交线路的数量翻了一番，城市的交通网络也更复杂了。人脑则不具备scalability，活地图的时代一去不复返了。</p>
+
+<p>第二件值得一说的是我在VirtualBox里成功安装了ArchLinux和GNOME Shell桌面。我工作的机器是有点古老的Dell OptiPlex 760，显卡还是ATI的Radeon HD 3420。为了开发的方便，我们装的都是CentOS 5，没错是5！！这周上班后升到了8G内存我就开始琢磨开个虚拟机体会一下现代生活。多余的不说了，几个注意事项：
+<ul>
+<li>Host要装ATI的fglrx驱动，xorg-x11-drv-ati直接也能用，但是性能非常差</li>
+<li>VirtualBox要在4.0.4以上，我看网上说的，具体能个版本也不知道，但是用最新的就可以</li>
+<li>3D加速要开，在虚拟机的设置里</li>
+<li>最最重要的一点！不要从虚拟机的菜单里安装Guest Addon，那个对Arch不管用。要用pacman安装仓库里，包名我忘了，请自行-Ss</li>
+<li>别忘了把rc.vboxadd加入rc.conf的Deamons里</li>
+</ul></p>
+
+<p>这周最诡异的问题是在配Netty的Pipeline时，我用了：<br />
+[cc lang=&#8221;java&#8221;]<br />
+Channels.pipeline(new HttpMessageDecoder(), new HttpMessageEncoder(), myhandler);<br />
+[/cc]</p>
+
+<p>结果稍微上一点压力居然出现了很多decoder异常，什么包不全、头不全、空指针什么的。不明真相最后改用例子里的：<br />
+[cc lang=&#8221;java&#8221;]<br />
+ChannelPipeline cp = Channels.pipeline();<br />
+cp.addLast(&#8220;decoder&#8221;, new HttpMessageDecoder());<br />
+cp.addLast(&#8220;encoder&#8221;, new HttpMessageEncoder());<br />
+cp.addLast(&#8220;handler&#8221;, myhandler);<br />
+[/cc]</p>
+
+<p>就成功了。也许是顺序的原因也许是名字的原因，可如果这个名字真的具有意义的话为什么没有常量可用呢？不去追究具体原因了，记住就好。</p>
+
+<p>此外遇到的bug还包括clojure中transient数据结构的问题，我有一个transient的map，但是persistent之后发现只有前9（依稀好像是）次assoc!的内容保存了，后面却都丢失了。1.2里的transient都被标记了alpha，不过印象1.3的changes里好像也没提transient。</p>
+
+<p>另一件与clojure有关的诡异事件是一个test case的failure report：
+<blockquote>FAIL in (test-read-job) (wal.clj:61) <br />
+expected: (= (job k) (rjob k)) <br />
+actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
+不过最后好在是冤有头债有主，睁着眼有时也要说下滑。在从stream中读字节流多读了一个byte，后来用这一组byte去new String的时候，就变成了一个不可见字符。结果在命令行里的输出就是这么骇人听闻，还是在IDEA里跑这个测试才发现错误的那个字符串后面跟了一个方块。至于为什么多读了一个byte，copy/paste害死人啊。</p>
+
+<p>以上这些牢骚是关于clojure的，但是这篇就不加clojure的tag了，否则被planet clojure收录去我又给中文世界丢脸了。</p>
+
+<p>周五晚上我又更新了sunng.info的首页，以后也许我会定期的放一些得意的照片（或者照片上有得意的东西）上去做背景，以免被人看到后发现太单调乏味。</p>
+
+<p>最后还要感谢一下twitter网友Kymair这周将Rage Viewer<a href="http://rageviewer.herokuapp.com/index.html">部署到了Heroku</a>上。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/07/rageviewer-updates/">RageViewer Updated</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00+08:00" pubdate data-updated="true">Sep 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just added some new features to <a href="http://rageviewer.cloudfoundry.com/index.html" target="_blank">RageViewer</a>, a rage comic viewer written in Clojure and ClojureScript. Issue on a recent update of CloudFoundry has been fixed. So I can update this application as normal.</p>
+
+<p>Since there are a lot of over-18 content on rage comics, RageViewer now prompts you to confirm if it is suitable to display NSFW (Not Suit For Work, marked by author) content. If rejected, a placeholder comic (made by me) will be displayed to you.
+<img alt="" src="http://rageviewer.cloudfoundry.com/nsfw-placeholder.jpg" title="nsfw placeholder" class="alignnone" width="500" height="375" /></p>
+
+<p>Also, a lot of rage comic related subreddits are now supported by RageViewer. You can find an indicator on the top bar for current channel. Click it and you can switch to a different channel. </p>
+
+<p>Bugs are fixed when there is a ? on the end of image url. &#8220;Show most recent hot comics&#8221; button also works now.</p>
+
+<p>Let me know if you have any ideas or questions about this site.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/06/squealer-a-test-framework-for-pig-script-is-using-jip/">Squealer (a Test Framework for Pig Script) Is Using Jip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-06T00:00:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://bitbucket.org/markroddy/squealer/overview">Squealer</a> is a framework written in Jython to test your Apache Pig scripts, by <a href="http://dibon.homelinux.org/">Mark Roddy</a>. It&#8217;s now using <a href="http://pypi.python.org/pypi/jip">jip</a> to resolve Java dependencies. On huge dependencies of Hadoop, jip could be great helpful to setup Squealer.</p>
+
+<p>To get started, it is recommended to create a standalone Jython environment for Squealer:
+<em>virtualenv -p /usr/local/bin/jython &#8211;no-site-packages squealer-env</em></p>
+
+<p>Activate the environment
+<em>cd squealer-env</em>
+<em>. bin/activate</em></p>
+
+<p>Install jip with pip
+<em>pip install jip</em></p>
+
+<p>Download squealer from bitbucket project page, extract it to somewhere. Install it with jip:
+<em>jython setup.py install</em></p>
+
+<p>Dependencies will be downloaded from Maven Central. You just wait for it to finish.</p>
+
+<p>Start a Jython interpreter with &#8217;<em>jython-all</em>&#8217; and now you can import squealer.
+</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/04/%E5%90%89%E5%B0%94157/">吉尔157</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-04T00:00:00+08:00" pubdate data-updated="true">Sep 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是1CM的ZIL157卡车模型，虽说是五十年代的苏联车，可是咱们看着也眼熟，因为它就是解放卡车(CA30)的原型。这是我的第二个模型。万事开头难，可是做到第二个了怎么还是很难，嗯，说明这头还没有开完。难就难在，打开包装发现少了两根车轴！这车的版件是散装的，也弄不清是丢了还是本来就缺。无奈，最后用的是回形针的铁丝代替，所以后面后轮有粗糙了。但是总体来说，有了上一辆车的经验，加上配置的新的工具笔刀，这次还是挺顺利的。</p>
+
+<p>这是ZIL-157的实物图
+<img src="http://i.imgur.com/C06OG.jpg" title="Hosted by imgur.com" width="500" /></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6111338393/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6070/6111338393_1a552b378f.jpg" alt="DSC_0001" height="335" width="500" /></a></p>
+
+<p>157的备胎放在底盘和货架之间
+<a href="http://www.flickr.com/photos/40741608@N08/6111884676/" title="DSC_0002 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6085/6111884676_633ae87396.jpg" alt="DSC_0002" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6111341519/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6071/6111341519_d8a8f322a4.jpg" alt="DSC_0004" height="335" width="500" /></a></p>
+
+<p>和ATZ油罐车的对照
+<a href="http://www.flickr.com/photos/40741608@N08/6111889674/" title="DSC_0008 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6182/6111889674_0ed6812fba.jpg" alt="DSC_0008" height="335" width="500" /></a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=6fc1b35e-afcd-8591-9cbd-894bf8be2230" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/03/%E7%9B%9B%E5%A4%A7%E7%9A%84%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%89%A9/">盛大的中秋礼物</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-03T00:00:00+08:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>真没想到，离开盛大快一年了，人事部门还记着给我寄东西。过年收到大礼包算是惊喜，这次收到月饼就是有点感动了。难得啊，居然还有人惦记着咱，而且因为离开上海当时登记的电话也失效了，负责的人事还辗转了一番才找到我。当然这个不是针对我，所有的离职员工貌似都收到了盛大寄来的中秋礼物。能做到这点的公司，全世界不多吧。</p>
+
+<p>拆开邮包是一如既往的红得喜人的logo
+<a href="http://www.flickr.com/photos/40741608@N08/6108619640/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6080/6108619640_b3dd2fa262.jpg" alt="DSC_0001" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6108071971/" title="DSC_0002 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6187/6108071971_172b77714c.jpg" alt="DSC_0002" height="500" width="335" /></a>
+（插一句，终于有盛大的环保袋了，以前用的都是08年找工作时候顺的百度腾讯支付宝的）</p>
+
+<p>月饼包装盒
+<a href="http://www.flickr.com/photos/40741608@N08/6108073551/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6210/6108073551_eb1f2db129.jpg" alt="DSC_0003" height="335" width="500" /></a></p>
+
+<p>月饼和茶叶
+<a href="http://www.flickr.com/photos/40741608@N08/6108075239/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6195/6108075239_3d13e10e03.jpg" alt="DSC_0004" height="335" width="500" /></a></p>
+
+<p>我琢磨了半天，请教了原来的同事才知道这是个U盘。
+<a href="http://www.flickr.com/photos/40741608@N08/6108076517/" title="DSC_0005 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6079/6108076517_f972c472d2.jpg" alt="DSC_0005" height="335" width="500" /></a></p>
+
+<p>这是盛大在线（SDO）的企业文化宣传册
+<a href="http://www.flickr.com/photos/40741608@N08/6108626622/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6090/6108626622_e17a01d480.jpg" alt="DSC_0006" height="500" width="335" /></a></p>
+
+<p>我这里就不为前前东家摇旗呐喊了，说得多了也有吃人嘴短的嫌疑。总之能有今天，离不开在盛大在线一年多的工作和学习，离不开同事们的帮助。希望公司能够越来越强大！<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=b9d6ce29-52b2-8e5b-9e0a-6318d6a3cc11" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/28/clojure-client-for-beanstalkd-forked/">Clojure Client for Beanstalkd Forked</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-28T00:00:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/kr/beanstalkd">Beanstalkd</a> is a distributed task queue written by Keith Rarick. I just forked the clojure client as the original version is no long active. Some features are added:
+<ul>
+	<li>Add commands: stats-tube, stats-job, pause-tube, list-tubes, list-tube-used and list-tubes-watched</li>
+	<li>Use yaml library to decode stats output into clojure data structure.</li>
+</ul></p>
+
+<p>Use it in your leiningen project:<br />
+[org.clojars.sunng/beanstalk &#8220;1.0.5&#8221;]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/27/clojure-developers-you-should-follow/">Clojure Developers You Should Follow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-27T00:00:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>介绍一下Clojure社区的活跃人物，有助于大家更好地学习和了解clojure，以下罗列的前提是包含但不限于，排名亦不分先后。</p>
+
+<p><h3>Rich Hickey (richhickey)</h3>
+Clojure的创始人。</p>
+
+<p><h3>Michael Fogus (fogus)</h3>
+The joy of clojure一书的作者，clojure社区的活跃人物，Clojure/core的成员。参与和维护着很多clojure项目。</p>
+
+<p><h3>James Reeves (weavejester)</h3>
+Compojure等一系列web框架的作者。是Clojure web开发方面的先驱，还维护着大量的clojure项目。</p>
+
+<p><h3>Mark McGranaghan (mmcgrana)</h3>
+Clojure web规范Ring的创始人，还维护着clj-redis等项目。</p>
+
+<p><h3>Stuart Hallowa (stuarthalloway)</h3>
+Programming Clojure一书的作者，Clojure的核心开发人员之一。</p>
+
+<p><h3>Christophe Grand (cgrand)</h3>
+cgrand是clojure web开发方面的专家，维护了enlive moustache等库。</p>
+
+<p><h3>Phil Hagelberg (technomancy)</h3>
+Clojure构建工具leiningen的作者。</p>
+
+<p><h3>Zach Tellman (ztellman)</h3>
+Zach是框架aleph/lamina/gloss的作者，是clojure网络编程的专家。</p>
+
+<p><h3>Nathan Marz (nathanmarz)</h3>
+Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目。</p>
+
+<p>以上列举的人都可以在github和twitter上找到。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=eafeb545-d70d-8011-8df5-66febda32431" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/20/%E8%8B%8F%E5%88%B6%E6%B2%B9%E7%BD%90%E8%BD%A6%E6%A8%A1%E5%9E%8B/">苏制油罐车模型</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-20T00:00:00+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前段时间说发展兴趣爱好，于是又多了一个心灵手巧的爱好：静态模型。昨天买了一套油罐车模型（<a href="http://www.icm.com.ua/catalogue/technics/30-atz-5-4320.html" target="_blank">ATZ 5-4320</a>）1：72，今天上午花了一上午时间就把它组装起来了。这种静态模型需要用胶水把各个零件粘合起来。所以对心灵手巧的要求程度比较高，作为一个小时候手工课沿着线剪纸都剪不齐的娃来说，其实这是一种挑战。
+<a href="http://www.flickr.com/photos/40741608@N08/6061428870/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6070/6061428870_d2272d9efb.jpg" alt="DSC_0001" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061429306/" title="DSC_0002 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6087/6061429306_563625982b.jpg" alt="DSC_0002" height="500" width="335" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061429838/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6074/6061429838_00b03f0885.jpg" alt="DSC_0003" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061430266/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6065/6061430266_23e5ab8524.jpg" alt="DSC_0004" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061430728/" title="DSC_0005 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6187/6061430728_7a244ab09c.jpg" alt="DSC_0005" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061431154/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6079/6061431154_e6ba703e2d.jpg" alt="DSC_0006" height="500" width="335" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6061431724/" title="DSC_0007 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6195/6061431724_1911f762e9.jpg" alt="DSC_0007" height="500" width="335" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6060880533/" title="DSC_0008 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6069/6060880533_6c63f02e41.jpg" alt="DSC_0008" height="335" width="500" /></a></p>
+
+<p>这个是乌克兰的品牌叫做ICM，1：72的模型通常在50元上下。质量一般，有的小零件刚刚还没有拆下来就损坏了。当然全看个人喜好，我之所以买这个来入门主要是出于随便。静态模型入门的工具，需要一个水口钳（用来把零件剪下来），一瓶模型专用胶水（味道不太好），一把镊子，一把钢尺，一张砂纸。网上还说的角刀一类，暂时可以不用。</p>
+
+<p>上面的照片是还没有上漆的效果，等到我把第二个也做出来，再买一点专用的油漆把它刷出来。敬请留意。</p>
+
+<p>我小时候的愿望就是住一楼有个院子，在一角能开辟一个沙盘，把我的小人兵通通部署上去。我小时候确实就生活在这种没有硝烟的战争里。。。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=24a3725a-4543-86d9-840b-190b1f2b79f0" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/06/clojure-chinese-user-group%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E8%81%9A%E4%BC%9A/">Clojure Chinese User Group第一次线下聚会</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-06T00:00:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天下午赶到上海参加了clojure中文用户的第一次线下聚会，见到了国内clojure的的主要用户。感谢一直在努力组织这次活动的朋友，还有提供场地的朋友。</p>
+
+<p>这是我关于clojure构建工具、生命周期管理的slides</p>
+
+<p><div style="width:425px" id="__ss_8785604"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/sunng87/clojure-cnclojuremeetup" title="Clojure cnclojure-meetup" target="_blank">Clojure cnclojure-meetup</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/8785604" marginwidth="0" marginheight="0" frameborder="0" height="355" scrolling="no" width="425"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/sunng87" target="_blank">sunng87</a> </div> </div></p>
+
+<p>欢迎对clojure感兴趣的朋友加入<a href="http://cnlojure.org/" target="_blank">中文用户邮件列表</a>，希望这样的聚会活动可以长期的办下去。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=4f567446-b5a0-8664-be07-796569d5b7c1" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/05/using-google-closure-library-with-clojurescript/">Using Google Closure Library With ClojureScript</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-05T00:00:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google closure library is shipped with ClojureScript, and could be compiled with ClojureScript into a minimized javascript file. So closure library is doubtlessly the first candidate when you are considering to use an external Javascript library in your cljs browser application.</p>
+
+<p>However, different from clojure&#8217;s interoperability with Java, ClojureScript has its own characteristics when you are interoperating with JavaScript and JavaScript based libraries.</p>
+
+<p><strong>Clojure types are not fully compatible with JavaScript types</strong>
+In ClojureScript, you can never treat a Clojure map as a JavaScript object although they have similar characteristics. You have to do some conversion before passing a clojure map to javascript functions. Matthew Gilliard made <a href="https://gist.github.com/1098417#file_ajax.cljs" target="_blank">a sample</a> of such conversion.</p>
+
+<p><strong>JavaScript package is not Clojure namespace</strong>
+This could be a common mistake for ClojureScript newbie. Actually, JavaScript doesn&#8217;t have concept of &#8220;Package&#8221; or &#8220;Namespace&#8221;. Many JavaScript libraries(dojo, Google Closure) made enhancement on this. ClojureScript also takes advantage of this mechanism. So before you start to coding with closure, you may browse <a href="http://closure-library.googlecode.com/svn/docs/index.html" target="_blank">closure library API document</a>, and find a module called <em>goog.net</em> which includes lots of types. Then you write this:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net :as gnet]))<br />
+[/cc]</p>
+
+<p>But compiler shows you &#8220;ERROR: JSC_MISSING_PROVIDE_ERROR. required &#8220;goog.net&#8221; namespace never<br />
+provided at &#8230; &#8220;. This is not a PATH issue. The root cause is that closure module has a lower granularity than Clojure ones. Types are often contained in their own modules. You can find closure source code in <em>clojurescript/closure/library/closure</em>. Modules are declare with <em>goog.provide</em> function. Thus, you should require this name instead of the logical module name.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+[/cc]</p>
+
+<p>In addition, ClojureScript does not support &#8216;use&#8217;.</p>
+
+<p><strong>Just use full name for JavaScript class</strong>
+For functions contains in some module, you can refer it with the clojure way:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.dom :as dom]))<br />
+(dom/$ &#8220;element-id&#8221;)<br />
+[/cc]</p>
+
+<p>But for classes, just use the full name and ignore the module alias.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+(def xhr (goog.net.XhrIo.))<br />
+[/cc]</p>
+
+<p>These are basic tips before you start using Closure with ClojureScript. Leveraging on Google&#8217;s closure library, you can create cross-browser JavaScript application with Clojure easily.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/10/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/8/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

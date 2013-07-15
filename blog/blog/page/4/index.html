@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="Recently, the leiningen team has released a preview version for leiningen 2. It brings new features to the clojure build tool. But my favorite one is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/4">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/21/my-favorite-feature-in-leiningen-2/">My Favorite Feature in Leiningen 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-21T00:00:00+08:00" pubdate data-updated="true">Mar 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently, the leiningen team has released a preview version for leiningen 2. It brings <a href="https://github.com/technomancy/leiningen/blob/master/NEWS.md" target="_blank">new features</a> to the clojure build tool. But my favorite one is not listed in any document. So I would like to share with you here.</p>
+
+<p>As you know, leiningen is a project oriented tool. It manages dependencies for a particular project. In Java world, Maven and Gradle are also working in this manner. </p>
+
+<p>In contrast, there are tools which manages dependencies in a system scope. For instance, pip(python), npm(nodejs) and gems(ruby). One advantage of these tools is easy for evaluating a library. Concretely, when you want to test pyclj, just run &#8220;pip install pyclj&#8221; to install it. Then open a REPL and type &#8220;import pyclj&#8221;. That&#8217;s pretty easy.</p>
+
+<p>But in clojure/leiningen, to take a tutorial of &#8220;core.logic&#8221;, we have following steps: 
+<ol>
+<li>Find a right directory and type &#8220;lein new logic-abc&#8221; to create a project. </li>
+<li>cd into it, edit project.clj, add core.logic as a dependency</li>
+<li>Run `lein deps`</li>
+<li>Start a REPL and follow the tutorial</li>
+</ol></p>
+
+<p>So I guest you must have a lot of empty projects created for such purpose. </p>
+
+<p>Now we could say goodbye to this situation. Leiningen 2 has move its dependency management core to a new library, called <a href="https://github.com/cemerick/pomegranate" target="_blank">pomegranate</a>. Pomegranate wraps aether, which is a maven library created by sonatype. With pomegranate, we can add a maven artifact from repository to REPL classpath. Still on the core.logic example, it becomes much easier:</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+$ lein2 repl<br />
+Welcome to REPL-y!<br />
+Clojure 1.3.0<br />
+    Exit: Control+D or (exit) or (quit)<br />
+Commands: (help)<br />
+    Docs: (doc function-name-here)<br />
+          (find-doc &#8220;part-of-name-here&#8221;)<br />
+  Source: (source function-name-here)<br />
+          (sourcery function-name-here)<br />
+ Javadoc: (javadoc java-object-or-class-here)<br />
+Examples from clojuredocs.org:<br />
+          (clojuredocs name-here)<br />
+          (clojuredocs &#8220;ns-here&#8221; &#8220;name-here&#8221;)<br />
+nil<br />
+user=> (use &#8216;[cemerick.pomegranate :only (add-dependencies)])<br />
+nil<br />
+user=> (add-dependencies :coordinates &#8216;[[org.clojure/core.logic &#8220;0.6.8&#8221;]])<br />
+{[org.clojure/clojure &#8220;1.3.0&#8221;] nil, [org.clojure/core.logic &#8220;0.6.8&#8221;] #{[org.clojure/clojure &#8220;1.3.0&#8221;]}}<br />
+user=> (use  &#8216;[clojure.core.logic])<br />
+nilWARNING: == already refers to: #&#8217;clojure.core/== in namespace: user, being replaced by: #&#8217;clojure.core.logic/==<br />
+user=> (run* [q] (== q 1))<br />
+(1)<br />
+[/cc]</p>
+
+<p>Now core.logic is right on you classpath and you are ready to use any functions under the namespace. There&#8217;s no need to create project, no need to care about where the jars stored. Just start a REPL at anywhere you want. When you finished, send EOF to the REPL. Nothing to clean up.</p>
+
+<p>My jython dependency manager <a href="https://github.com/sunng87/jip" target="_blank">jip</a> has <a href="http://sunng87.github.com/jip/#section-6" target="_blank">similar feature</a> as I described above. It does great help to me. So I have been waiting for this feature in leiningen for a long time. Thanks to leiningen guys, it finally comes.</p>
+
+<p>Edit 20120323 21:39</p>
+
+<p>If you want to load libraries from clojars, you should explicitly add clojars in add-dependencies:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(add-dependencies :coordinates &#8216;[[incanter &#8220;1.2.3&#8221;]]<br />
+                  :repositories (merge cemerick.pomegranate.aether/maven-central<br />
+                                       {&#8220;clojars&#8221; &#8220;http://clojars.org/repo&#8221;}))<br />
+[/cc]<br />
+(The example is copied from Pomegranate document.)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/19/%E5%88%B7htc-evo-3d-gsm/">刷HTC EVO 3D GSM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-19T00:00:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行，系统连google账户，官方market都没有。</p>
+
+<p>那么只能刷一下了。所有的步骤开始之前都是解锁，按照官方的解锁方式(http://www.htcdev.com)基本上没有什么难度。在我的archlinux上，不需要安装HTC Sync（也没得装），只需要从aur安装android-sdk和android-sdk-platform-tools就有adb和fastboot在PATH里。唯一值得一提的是，在我的系统上fastboot oem get_identifier_token需要sudo，否则会一直wait device。除了这个小插曲以外，按照官方的步骤就可以解锁HBOOT。</p>
+
+<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru，可以在网上搜索 cwm-4.0.1.4-shooteru.img 这个文件，比较好找。继续通过 sudo fastboot flash recovery cwm-4.0.1.4-shooteru.img把recovery刷进手机。</p>
+
+<p>接下来就是ROM的选择了。最好的选择是cyanogenmod，EVO 3D分为GSM和CDMA版，cmod 7只支持CDMA版，似乎还没有稳定的正式版。对GSM似乎有正在开发7.2，不过按照他们的说法，自从4.0发布之后，所有人的注意力都转移到基于4.0的cmod9上，所以7.2这个版本希望也比较渺茫。9.0已经有开发版本，但是都有一些还未解决的严重bug。说了这么多就是说我暂时放弃cmod了。</p>
+
+<p>除了cmod，EVO 3D GSM上一个比较被认可的ROM叫做<a href="http://leedroid.com/evo-3d/?c=roms">LeeDrOiD</a>.从网站上下载5.3.0的发布版，拷贝到sd卡上，通过recovery就可以安装。安装之前先要清除旧的数据。剩下这一步也没有什么悬念。但是安装之后5.3.0上，WIFI无法启动。必须继续更新kernel，从<a href="http://leedroid.com/evo-3d/?c=kernels">网站上下</a>载。安装kernel的方法和之前不太一样，不能通过recovery安装。需要用一个叫做FlashImageGUI的工具，可以在网上直接搜索这个名字找到下载。剩下就很简单了。</p>
+
+<p>折腾这么一圈，手机基本上能用了。不过我还是非常期待早日能用上cmod 9.
+</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/11/kliment-voroshilov-tank-2/">Kliment Voroshilov Tank 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-11T00:00:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>业余时间，我除了写括号以外，也会做点模型，不过是入门水平。用淘宝店家的话说，你随便涂涂就行了。这个KV-2坦克是去年秋天买的，后来周末学车加上天冷坐不住就搁置下来。现在稍微暖和一点，就赶紧把开工。</p>
+
+<p>KV-2坦克，是二战时期苏联的重型坦克。最早参加了苏芬战争，后来投入到早期的苏德战争。但是绝大多数被德军在巴巴罗萨行动中摧毁、俘虏。被俘虏的KV-2坦克被刷上德军的标志也为德军服役，这在二战早期的东线战场倒是很常见。我的这个KV-2附带的水贴纸也分两个版本，分别是苏军和德军的涂装。</p>
+
+<p>花了一天时间素组。
+<a href="http://www.flickr.com/photos/40741608@N08/6825567316/" title="DSC_0016 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7043/6825567316_29e7e13830.jpg" width="500" height="335" alt="DSC_0016" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825568984/" title="DSC_0013 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7041/6825568984_8e897f9513.jpg" width="335" height="500" alt="DSC_0013" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971689967/" title="DSC_0023 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7180/6971689967_171ab05c49.jpg" width="335" height="500" alt="DSC_0023" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825572612/" title="DSC_0019 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7176/6825572612_a4bdb17248.jpg" width="500" height="335" alt="DSC_0019" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971692767/" title="DSC_0029 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7182/6971692767_c84b5aba61.jpg" width="500" height="335" alt="DSC_0029" /></a></p>
+
+<p>今天又花了一上午时间上漆。第一次上漆，也没看什么教程，就是这个结果了。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971694113/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7057/6971694113_73c6939dc8.jpg" width="335" height="500" alt="DSC_0003" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825576398/" title="DSC_0009 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7059/6825576398_e57bf106a2.jpg" width="500" height="335" alt="DSC_0009" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971697399/" title="DSC_0015 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7045/6971697399_fd01ca6c69.jpg" width="335" height="500" alt="DSC_0015" /></a></p>
+
+<p>下一个目标就是T34。</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/">What&#8217;s New in Slacker 0.7.0 ?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-09T00:00:00+08:00" pubdate data-updated="true">Mar 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just released [slacker &#8220;0.7.0&#8221;] to clojars. This is the first release after my presentation on the Clojure China Meetup. <a href="https://github.com/lbt05" target="_blank">lbt05</a> contributed an ACL module to slacker, which is the most significant feature in this release. </p>
+
+<p>The ACL module provides a simple DSL to define access rules.</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;slacker.acl)<br />
+(use &#8216;slacker.server)</p>
+
+<p>(defrules myrule<br />
+  (allow [&#8220;10.60.15.*&#8221;]))</p>
+
+<p>(start-slacker-server &#8230;<br />
+                      :acl myrule)<br />
+[/cc]</p>
+
+<p>&#8220;myrule&#8221; defines a limited access control list. Only clients from IP segment 10.60.15.* could access the slacker service.</p>
+
+<p>And there are also minor enhancements in this release:</p>
+
+<p><ul>
+<li>Content compression, new content type :deflate-carb :deflate-json and :deflate-clj</li>
+<li>In debug mode, server side stacktraces are printed on client</li>
+<li>Zookeeper node path refined</li>
+<li>New options in use-remote, :only and :exclude</li>
+<li>Cheshire used as json library</li>
+</ul></p>
+
+<p>slacker 0.7.0 will be the last version on clojure 1.2 . As aleph 0.2.1 is coming near, we will migrate to clojure 1.3 as soon as possible. If you like to taste slacker on your 1.3 application now, there is a 0.7.1-SNAPSHOT available.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/06/slacker-slides-on-cnclojure-meetup/">Slacker Slides on Cnclojure Meetup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-06T00:00:00+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从北京回来两天了，稍微有点累，还没来得及总结一下，先把slides上传分享一下： <a href="http://www.box.com/s/k0alcj1p115jq40bdkik" target="_blank">http://www.box.com/s/k0alcj1p115jq40bdkik</a></p>
+
+<p>解压之后 lein deps && lein run 一下即可。</p>
+
+<p>这是一个借助impress.js制作的幻灯片。之所以让它跑在webbit里，是因为我简单hack了impress.js让你可以通过websocket远程控制幻灯片播放。这样，就可以通过手机上的firefox浏览器（目前android上仅有firefox支持websocket）控制播放，把手机变成一款遥控器。</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/24/dosync-dosync-with-event-listener/">Dosync+: Dosync With Event Listener</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-24T00:00:00+08:00" pubdate data-updated="true">Feb 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Discussed in clojure-cn mailing list, we come up with an extensible dosync block with event listener: on-start, on-retry and on-committed.</p>
+
+<p><script src="https://gist.github.com/1898383.js?file=dosync-plus.clj"></script></p>
+
+<p>With these extension points, you can bind STM monitor to a transaction. And I believe there will more advanced use cases on this.</p>
+
+<p><script src="https://gist.github.com/1898383.js?file=main.clj"></script></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/18/%E7%87%95%E5%AD%90%E7%9F%B6/">燕子矶</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-18T00:00:00+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>作为几乎是很多人脑海里南京最北端的地方，燕子矶平时算是人迹罕至。我上一次去这个公园是99年小学毕业的夏天，一晃都已经13年（13年！）过去了。</p>
+
+<p>当年通往燕子矶的小街已经被新修的永济大道取代，不过当时的和平街、临江街依然存在。燕子矶公园的门原本开在临江街上，现在这个门已经几乎倒掉，公园在小院的另一侧开了一个面向永济大道的新门。以前这门口是各式拖挂卡车来来往往，环境整治以后现在到公园门口这一段没有卡车，所有的卡车从前面一条小街“新燕街”开到江边的码头。所以万变不离其宗，江边的主题依然是各种大型运输工具。</p>
+
+<p>[mapsmarker marker=&#8221;3&#8221;]</p>
+
+<p>刚到公园门口，就听见有人感叹自己也十年没来这个公园。看来这个公园已经小到、偏到不隔个十多年都想不起他来。然而可贵就可贵在，这么长时间小公园几乎就没有变化。规模小，又有一点特殊的历史背景，再加上有政府的补贴，也不必因为自负盈亏去折腾去影响气氛。说难也难，说简单也简单，就这么无欲无求地保存下来。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895709289/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7186/6895709289_7017db7469.jpg" width="500" height="335" alt="DSC_0004" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895702169/" title="DSC_0010 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7198/6895702169_f23616b13e.jpg" width="335" height="500" alt="DSC_0010" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895706809/" title="DSC_0013 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7194/6895706809_bb2a000726.jpg" width="335" height="500" alt="DSC_0013" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895704293/" title="DSC_0041 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7052/6895704293_0aae20c9a5.jpg" width="335" height="500" alt="DSC_0041" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895713699/" title="DSC_0037 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7184/6895713699_33a202485e.jpg" width="335" height="500" alt="DSC_0037" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895717673/" title="DSC_0028 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7187/6895717673_35ff2ea296.jpg" width="500" height="332" alt="DSC_0028" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895710599/" title="DSC_0020 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7052/6895710599_32bf33d76f.jpg" width="309" height="500" alt="DSC_0020" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6895715441/" title="DSC_0044 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7049/6895715441_68bedb5c77.jpg" width="500" height="335" alt="DSC_0044" /></a></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/">Python&#8217;s Valentines Day Gift to Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T00:00:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Inspired by meh&#8217;s <a href="https://github.com/meh/ruby-clj" target="_blank">Ruby-Clj</a> module, I created the python equivalent &#8220;pyclj&#8221; last weekend. Pyclj is a clojure literal reader/writer for python. It enables data exchange between python and clojure, in a clojure-native way. It&#8217;s Valentines Day today, I&#8217;d like to release it as the gift of python to clojure :)</p>
+
+<p>The API is very simple. It&#8217;s all like python&#8217;s data modules (json, pickle)</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+import clj</p>
+
+<p>clj.loads(&#8220;[1 2 3]&#8221;)<br />
+clj.dumps({&#8220;a&#8221;:1, &#8220;b&#8221;:2})<br />
+[/cc]</p>
+
+<p>Clojure types are mapping to python data structures :</p>
+
+<p><table border="1">
+<tbody><tr>
+<th>Clojure</th>
+<th>Python</th>
+</tr>
+<tr>
+<td>list</td>
+<td>list</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>list</td>
+</tr>
+<tr>
+<td>set</td>
+<td>set</td>
+</tr>
+<tr>
+<td>map</td>
+<td>dict</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>None</td>
+</tr>
+<tr>
+<td>string</td>
+<td>string</td>
+</tr>
+<tr>
+<td>int</td>
+<td>int</td>
+</tr>
+<tr>
+<td>float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>char</td>
+<td>string</td>
+</tr>
+<tr>
+<td>keyword</td>
+<td>string</td>
+</tr>
+</tbody></table></p>
+
+<p>But how we win clojure&#8217;s heart from ruby? </p>
+
+<p>We are faster.</p>
+
+<p>Considering clojure literal below:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+[1 2 3 true false nil {:a 21.3 :b 43.2} &#8220;Hello&#8221;]<br />
+[/cc]</p>
+
+<p>Comparing ruby-clj(0.0.4.5, ruby 1.9.3p0) and pyclj(0.1.3 python 2.7.2):<br />
+[cc lang=&#8221;ruby&#8221;]<br />
+require &#8216;clj&#8217;</p>
+
+<p>s = &#8220;[1 2 3 true false nil {:a 21.3 :b 43.2} &#34;Hello&#34;]&#8221;</p>
+
+<p>t1 = Time.now()<br />
+for i in 0&#8230;10000<br />
+  Clojure.parse(s)<br />
+end<br />
+puts Time.now()-t1<br />
+[/cc]</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+import clj<br />
+import time</p>
+
+<p>s = &#8220;[1 2 3 true false nil {:a 21.3 :b 43.2} &#34;Hello&#34;]&#8221;</p>
+
+<p>t1 = time.time()<br />
+for i in range(10000):<br />
+  clj.loads(s)<br />
+print time.time()-t1<br />
+[/cc]</p>
+
+<p>The result:<br />
+ruby: <del datetime="2012-02-16T05:30:18+00:00"><strong>13.451157809</strong></del>
+python: <del datetime="2012-02-16T05:30:18+00:00"><strong>0.712423086166</strong></del>
+Edit 20120216 13:30<br />
+ruby-clj 0.0.5.3 has resolved the performance issue :) <br />
+The new result ruby-clj/0.0.5.4 Vs pyclj0.1.4 (on my laptop):<br />
+ruby-clj: 2.044872364<br />
+pyclj: 1.19659209251</p>
+
+<p>The project is hosted on <a href="https://github.com/sunng87/pyclj" target="_blank">github</a>. Feel free to join the development and enhance it.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/11/heatcanvas-performance-enhanced/">HeatCanvas Performance Enhanced</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-11T00:00:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://i.imgur.com/6vkpo.png" alt="heatcanvas" /></p>
+
+<p>时隔半年日日沉浸在clojure世界里的时候，多亏了github上<a href="https://github.com/dazuma">Daniel Azuma</a>的提示，现在HeatCanvas通过Image Data数组来绘制图像。过去由于不太熟悉Canvas API，我用的是fillRect来填充1像素大小的区域，模拟像素的渲染。但是这种方式导致浏览器渲染的效率非常低。</p>
+
+<p>ImageDataArray允许用户开辟一个固定大小的buffer，并设置每一像素的像素值，然后一次性地渲染到canvas上。详情可以参考这里：<a href="https://developer.mozilla.org/En/HTML/Canvas/Pixel_manipulation_with_canvas" target="_blank">Pixel manipulation with canvas</a></p>
+
+<p>这次性能的提升基本没有影响API，唯一的区别是如果原先自定义了value-color的映射函数的话，现在不再接受hsl的css字符串了，新的API需要你返回一个四个元素的数组，分别代表h, s, l, a，值域[0-1]。</p>
+
+<p>感谢关注HeatCanvas的朋友。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/">China Clojurians Meetup #2 Is Calling You</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-09T00:00:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击<a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">这里</a>报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。</p>
+
+<p>For English readers:<br />
+If you are interested in Clojure and also living in Beijing, feel free to join our meetup. Please register <a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">here</a>. We will see you there!
+</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

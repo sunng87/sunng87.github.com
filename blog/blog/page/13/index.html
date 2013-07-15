@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="昨晚终于下了决心告别Ubuntu的紫色，迎接新的GNOME3桌面。这个想法有一段时间了，Ubuntu从09年生日的时候安装在这台电脑上，已经将近两年的时间，经历了9.04, 9.10, 10.04, 10.10, 11.04五个版本，安装了GNOME, awesome, KDE, LXDE, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/13">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/22/%E5%91%8A%E5%88%ABubuntu%EF%BC%8C%E8%BF%81%E7%A7%BB%E5%88%B0fedora-15%EF%BC%8Cgnome-3/">告别Ubuntu，迁移到Fedora 15，GNOME 3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-22T00:00:00+08:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5643299802/" title="Fedora15/Gnome3 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5068/5643299802_787791dd52.jpg" alt="Fedora15/Gnome3" height="313" width="500" /></a></p>
+
+<p>昨晚终于下了决心告别Ubuntu的紫色，迎接新的GNOME3桌面。这个想法有一段时间了，Ubuntu从09年生日的时候安装在这台电脑上，已经将近两年的时间，经历了9.04, 9.10, 10.04, 10.10, 11.04五个版本，安装了GNOME, awesome, KDE, LXDE, Openbox, wmii, GNOME3, Ubuntu Netbook等等桌面环境，可以想想那种混乱。而且通过升级获得的新版本，并不能体会到快速开机这样的特性。这次unity发布以后，用了半个月，没有什么眼前一亮的感觉，操作也不太方便，于是换发行版的想法就更加强烈了。</p>
+
+<p>我的系统之前有三个分区，分别挂载/，/home以及/opt。这次更新理想的方式就是格式化/，保留/home和/opt。之前比较讲究规范，所以/下面基本上没有什么需要备份的东西，配置文件都放在/home下面。这样用fedora的livecd安装程序手动配置磁盘分区，只格式化/就可以了。安装的过程非常顺利，重启以后就进入用户配置的界面了。</p>
+
+<p>要把原先的/home/sun分配给新的sun用户，这里我走了一点弯路。系统可以把/home/sun目录配置给新的sun用户作为$HOME，但是目录的owner并不会根据用户名称来匹配。Ubuntu默认第一个用户的UID是1000，而Fedora创建的新用户默认是500. 我现在不确定如果把第一个用户的ID手动指定为1000会不会就直接成功。不过这个问题不大，只要启动之后用root用户把/home/sun目录chown给新的sun用户就可以了，当然文件很多是需要消耗一些时间的。</p>
+
+<p>进入GNOME3桌面之后发现无线网络连不上，而且不弹出密码输入框。因为我最近改了无线的密码，而NetworkManager还是从gnome-keyring里去读旧的密码，所以总是连接失败。这时<font face="monospace">rm -r ~/.gnome-keyring/</font> 删除旧密码即可。</p>
+
+<p>桌面的第二个问题是桌面背景仍然是旧的配置（只有颜色没有图片，因为GNOME3默认桌面不由Nautilus管理），这时要毫不留情地删掉所有GNOME2的配置： <font face="monospace">rm -rf ~/.gnome2 ~/.gconf ~/.gconfd </font></p>
+
+<p>第三个问题，gnome的applition菜单非常混乱，还存着Ubuntu系统时候的内容。根据freedesktop的标准，用户的菜单配置保存在<font face="monospace">~/.config/menus</font>里，而用户菜单会从<font face="monospace">~/.local/share/applications</font>下读取所有的.desktop文件，甚至包括wine也会在这里创建自己的菜单。对付这些内容，一删了之： <font face="monospace">rm -rf ~/.local/share/applications/*</font>。这样菜单就只会从/usr/share/applications/下读取.desktop文件，这些都是最新安装的。</p>
+
+<p>然后，然后就没有了！就可以开始享受fresh install了，甚至你打开thunderbird，所有的邮件都在那里，什么都不用再做。
+<a href="http://www.flickr.com/photos/40741608@N08/5643386496/" title="Window Selector by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5041/5643386496_153d59d4b1.jpg" alt="Window Selector" height="313" width="500" /></a>
+如果要比较gnome-shell和unity的话：
+<ol>
+<li>gs的启动器比unity要好用，unity的启动器搜索程序之后必须点击图标才能启动，gs可以直接回车启动第一个</li>
+<li>gs的dock比unity要好用，其实都与windows7的任务栏类似，但是 unity里打开了一个终端之后，再点这个图标就转到终端，如果想新开一个就无奈了，右键点击也没有新开的选项。（难道是shift+click，来不及试了。。。）</li>
+<li>unity的indicator比gs的tray强大多了，这是ubuntu的强项，从10.04开始就用自己的indicator，到了11.04已经有成熟的API，除了官方的，还有很多程序支持，还有天气、系统监控的indicator。gs抛弃了原来的panel applets，现在看天气、看系统状况都无从谈起。尤其是看不到cpu使用情况，心里总是不踏实，天知道firefox+flash又把你的系统烧了多久。</li>
+</ol></p>
+
+<p>总体来说这次重装效果非常好，基本上没有留下任何瑕疵。断断续续用了四年多的Ubuntu，再见了～<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=98d4edfa-b22d-81bd-b0cc-4b2b6afdacb9" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/17/exaile-sound-menu-support-updated-now-compatible-with-natty/">Exaile Sound Menu Support Updated, Now Compatible With Natty</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-17T00:00:00+08:00" pubdate data-updated="true">Apr 17<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Finally it was fixed. I just updated the plugin according to the new <a href="https://wiki.ubuntu.com/SoundMenu#For%20Natty">SoundMenu registration process</a>. Now you can download the head version from github and extract it under <font face="monospace">~/.local/share/exaile/plugins</font>.</p>
+
+<p><img src="http://i.imgur.com/z2YSG.png" title="Hosted by imgur.com" /></p>
+
+<p>You can fire an issue on github if you have problem of using it.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=ebfcb568-71a3-85d5-a381-5a9865617aae" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/">Don&#8217;t Repeat Yourself: Distribute Jython Package With jip.dist</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As a new feature in <b>jip</b> 0.4, we can use some helpers from <font face="monospace">jip.dist</font> to simplify package distribution. With jip.dist, you can define Java dependencies for your jython package. In an environment with jip, dependencies will be automatically installed when user uses pip to get you package.</p>
+
+<p>We have two different approaches allow you to choose.</p>
+
+<p><h3>Approach 1, Define dependencies in POM</h3>
+This is the standard maven way. To describe your jython package and its dependencies, create a pom.xml in your project. The directory hierarchy looks like:
+<pre>
+├── app
+│&nbsp;&nbsp; ├── module1
+│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py
+│&nbsp;&nbsp; ├── core.py
+│&nbsp;&nbsp; ├── __init__.py
+├── LICENSE
+├── MANIFEST.in
+├── pom.xml
+├── README
+└── setup.py
+</pre></p>
+
+<p>In pom.xml, just add dependencies as you do with Maven.<br />
+[cc lang=&#8221;xml&#8221;]
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" <br="" />  xsi:schemaLocation=&#8221;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#8221;&gt;</p>
+
+<p>    &#8230;</p>
+
+<p>    <dependencies>
+        <dependency>
+            <groupid>org.slf4j</groupid>
+            <artifactid>slf4j-api</artifactid>
+            <version>1.6.1</version>
+        </dependency></dependencies></p>
+
+<p>        <dependency>
+            <groupid>org.slf4j</groupid>
+            <artifactid>slf4j-log4j12</artifactid>
+            <version>1.6.1</version>
+        </dependency></p>
+
+<p>        &#8230;</p>
+
+<p>    </p>
+
+<p>    <repositories>
+        <repository>
+            <id>sonatype-oss-sonatype</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+[/cc]<br />
+You can also define repositories in pom.xml if you use custom repository. (for example, jboss, java.net)</p>
+
+<p>Remember to add pom.xml in your <font face="monospace">MANIFEST.in</font>, to ensure the file will be packaged into source package:<br />
+[cc lang=&#8221;text&#8221;]<br />
+include pom.xml<br />
+[/cc]</p>
+
+<p><h3>Approach 2, Define dependencies with Python</h3>
+You may be tired with endless XML configuration. jip allows you to define dependencies with python, just like gradle with groovy.</p>
+
+<p>In your setup.py, add something like:<br />
+[cc lang=&#8221;python&#8221;]<br />
+requires_java = {<br />
+    &#8216;dependencies&#8217;:[<br />
+        ## (groupdId, artifactId, version)<br />
+        (&#8216;org.slf4j&#8217;, &#8216;slf4j-api&#8217;, &#8216;1.6.1&#8217;),<br />
+        (&#8216;org.slf4j&#8217;, &#8216;slf4j-log4j12&#8217;, &#8216;1.6.1&#8217;),<br />
+        (&#8216;info.sunng.soldat&#8217;, &#8216;soldat&#8217;, &#8216;1.0-SNAPSHOT&#8217;),<br />
+        (&#8216;org.apache.mina&#8217;, &#8216;mina-core&#8217;, &#8216;2.0.2&#8217;)<br />
+    ],<br />
+    &#8216;repositories&#8217;:[<br />
+        (&#8216;sonatype-oss-snapshot&#8217;, &#8216;http://oss.sonatype.org/content/repositories/snapshots/&#8217;)<br />
+    ]<br />
+}
+[/cc]</p>
+
+<p>Then pass it to <font face="monospace">setup()</font>. The keyword argument <font face="monospace">require_java</font> is jip specific.<br />
+[cc lang=&#8221;python&#8221;]<br />
+setup(<br />
+    &#8230;<br />
+    requires_java=requires_java,<br />
+    &#8230;)<br />
+[/cc]</p>
+
+<p><h3>Use jip&#8217;s setup wrapper</h3>
+To use jip&#8217;s power, the only difference is to use <font face="monospace">setup()</font> from <font face="monospace">jip.dist</font> instead of setuptools or distutils.<br />
+[cc lang=&#8221;python&#8221;]<br />
+from jip.dist import setup<br />
+[/cc]</p>
+
+<p>Then publish your jython package to Python Cheese Shop:
+<font face="monospace">$ jython setup.py sdist upload</font></p>
+
+<p>Internally, jip uses setuptools. So you can still do <font face="monospace">jython setup.py develop</font> .</p>
+
+<p>And jip 0.4 is available under MIT License. You are free to use jip.dist in your code.</p>
+
+<p><h3>For your user</h3>
+You should write a guide forcing users to use your jython application within <a href="http://www.virtualenv.org">virtualenv</a>. And install jip as a prerequisite:
+<font face="monospace">$ pip install jip</font></p>
+
+<p>Then simply install your package with pip:
+<font face="monospace">$ pip install &lt;your-package-name&gt;</font></p>
+
+<p>No additional step required!</p>
+
+<p>So please just release your jython package with <b>jip</b> !</p>
+
+<p>For more information:
+<ul>
+<li><a href="http://pypi.python.org/pypi/jip/">http://pypi.python.org/pypi/jip/</a></li>
+<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li>
+</ul>
+<div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=5c436f7f-49fe-8f60-9a90-1331f01105a9" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/10/enhanced-jip-to-simplify-jython-module-distribution/">Enhanced Jip to Simplify Jython Module Distribution</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-10T00:00:00+08:00" pubdate data-updated="true">Apr 10<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><p>As you might notice, the installation of gefr is too complex, requiring several manual actions. User have to remember the long maven coodinator to resolve dependencies. wtf!</p>
+<p>So I have been working whole day to simplify the process.  </p>
+<p>Currently, gefr&#8217;s approach is to upload pom.xml to a public maven repositoy (sonatype oss). And the source is uploaded to pypi. Pip will find the source and install it. Jip will find the plain pom and resolve it. Because once pip finished the installation, the source package will be erased and jip can never find the pom. So I have to distribute them seperately.</p>
+<p>It would be better to invoke jip right before pip exits. I did some investigation about post-install script. And lucky enough, distutils allows you to override default install command. We can use it to invoke jip, in the scope of setup scrript. It does make sense. </p>
+<p>Another problem is the original design of .jip configuration file. From jip 0.2, .jip is available as environmen-scoped: we define some custom repositories and the whole environment shares them. But if we have multiple projects in the same environment, jip may waste time to find public artifact in a private repository. Even worse, jip may load invalid artifact from private repos. In the new design, private repositories are defined in pom.xml, as project-scoped, just like most java build tools. </p>
+<p>With new jip, to distribute a jython package, you should write a pom in the same way of Java, specifying the dependencies and custom repositories if you have. Then modify your MANIFEST.in to include it to your source package. At last, in the setup.py, define a new install command to call jip and pass the command into the setup() . From the new approach, only &#8216;pip install&#8217; is required for end user. Super easy!</p>
+<p>Upon the new usage of jip(as a library), I am also considering to migrate from GPL to LGPL or MIT. I have little knowledge about conflicts between licenses. So if you have some ideas or concerns, feel free to let me know.</p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/09/gefr-with-multiple-backends-support/">Gefr With Multiple Backends Support</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-09T00:00:00+08:00" pubdate data-updated="true">Apr 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been working on <a href="https://bitbucket.org/sunng/gefr">gefr</a> this week to add apache MINA backend for it. The goal of gefr is to provide adapters between Python&#8217;s WSGI and Java network infrastructures. In cPython world, most WSGI servers are implemented with C code(fapws, meinheld, etc.), which is not applicable on Jython platform. However, the Java world has its own reliable network foundations. So my gefr turns them into WSGI servers. The ultimate goal of gefr is to make it possible to port any of your WSGI web applications to Jython seamlessly.</p>
+
+<p>There has been many attempts to use Jython in Java web development. Most of them is focusing on applying Jython in Servlet framework. This is helpful, but it doesn&#8217;t take the whole advantage of Python web programming. The most valuable thing in Python web development is its various web frameworks and agile tools. But inside servlet framework, we can hardly apply them, the only things we have is Jython&#8217;s beautiful syntax. That should not be enough.</p>
+
+<p>OK. You are eager to meet gefr?  Let&#8217;s get hands dirty with some setup. I just assume that you have some essential software installed in the right place. Is it true for you?</p>
+
+<p>Create Jython virtual environment:
+<font face="monospace">
+$ virtualenv -p /usr/local/bin/jython gefr-test<br />
+$ cd gefr-test<br />
+$ source bin/activate
+</font></p>
+
+<p>Install jip. <a href="https://github.com/sunng87/jip">jip</a> is a great tool to manage Java dependencies for your Jython application. jip&gt;=0.3 is required in this guide, and pip will handle this for you.
+<font face="monospace">$ pip install jip</font></p>
+
+<p>Install gefr. Since gefr is a pure Python package, pip is still helpful.
+<font face="monospace">$ pip install gefr</font></p>
+
+<p>Now create a jip configuration file called <b>.jip</b> in your virtual home. We should add sonatype oss repository.<br />
+[cc lang=&#8221;ini&#8221;]<br />
+[repos:oss]<br />
+uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
+type=remote</p>
+
+<p>[repos:central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote</p>
+
+<p>[repos:local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local<br />
+[/cc]</p>
+
+<p>New in jip 0.3, we can use a single command to resolve dependencies of gefr.
+<font face="monospace">$ jip install-dependencies info.sunng.gefr:gefr:0.2-SNAPSHOT</font></p>
+
+<p>OK. Then everything is ready. Create your first Jython WSGI application. Actually, there is no difference.<br />
+I just copy the example of gefr here, you can find it in the code repository.<br />
+[cc lang=&#8221;python&#8221;]<br />
+#! /usr/bin/python</p>
+
+<p>__author__=&#8221;Sun Ning <classicning@gmail.com>&#8220;<br />
+__date__ =&#8221;$Jan 5, 2011 10:14:27 PM$&#8221;</p>
+
+<p>import sys<br />
+from gefr.core import Gefr</p>
+
+<p>def simple(environ, start_response):<br />
+    &#8220;&#8221;&#8220;a static app&#8221;&#8220;&#8221;<br />
+    headers = []<br />
+    headers.append((&#8216;Content-Type&#8217;, &#8220;text/html&#8221;))<br />
+    start_response(&#8220;200 OK&#8221;, headers)</p>
+
+<p>    return [&#8221;<h1>it works.</h1>&#8221;]</p>
+
+<p>if __name__ == &#8220;__main__&#8221;:<br />
+    from optparse import OptionParser<br />
+    parser = OptionParser()<br />
+    parser.add_option(&#8216;-b&#8217;, &#8216;&#8211;backend&#8217;, dest=&#8217;backend&#8217;, help=&#8217;server backend&#8217;)<br />
+    (options, args) = parser.parse_args()</p>
+
+<p>    if options.backend == &#8216;soldat&#8217;:<br />
+        from gefr.backends.soldat import SoldatBackend as backend<br />
+    elif options.backend == &#8216;mina&#8217;:<br />
+        from gefr.backends.mina import MinaBackend as backend<br />
+    else:<br />
+        print &#8216;backend %s not supported.&#8217; % options.backend<br />
+        sys.exit(1)</p>
+
+<p>    g = Gefr(simple, backend)<br />
+    g.start()<br />
+[/cc]<br />
+With the command line options, you can control which backend to be used. Now start it with:
+<font face="monospace">$ jython-all example.py -b soldat</font>
+or
+<font face="monospace">$ jython-all example.py -b mina</font></p>
+
+<p><a href="https://bitbucket.org/sunng/soldat">Soldat</a> is another network framework written by myself. And MINA, you must know. Open your browser, redirect it to http://localhost:8080 , now you see it works.</p>
+
+<p>Sure, that&#8217;s not enough for your needs. Let&#8217;s have an advanced example. Among all the web frameworks in Python, I like <a href="https://github.com/defnull/bottle">bottle</a> most. So we just build a simple application with GET and POST in bottle.</p>
+
+<p><font face="monospace">$ pip install bottle<br />
+$ pip install mako<br />
+$ mkdir bottleapp<br />
+$ cd bottleapp</font></p>
+
+<p>The bottle application looks like:<br />
+echo.py<br />
+[cc lang=&#8221;python&#8221;]<br />
+# -*- coding:utf-8 -*-</p>
+
+<p>from bottle import Bottle, mako_view, request<br />
+from gefr.core import Gefr<br />
+from gefr.backends.mina import MinaBackend</p>
+
+<p>bapp = Bottle()</p>
+
+<p>@bapp.get(&#8216;/&#8217;)<br />
+@mako_view(&#8216;edit&#8217;)<br />
+def display_form():<br />
+    return dict(ip=request.environ.get(&#8216;REMOTE_ADDR&#8217;))</p>
+
+<p>@bapp.post(&#8216;/&#8217;)<br />
+@mako_view(&#8216;show&#8217;)<br />
+def display_content():<br />
+    content = request.POST.get(&#8216;content&#8217;)<br />
+    return dict(content=content)</p>
+
+<p>Gefr(bapp, MinaBackend).start()<br />
+[/cc]</p>
+
+<p>The simple mako templates are:</p>
+
+<p>edit.tpl<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+<head>
+    <title>Bottle on MINA</title>
+</head>
+<body>
+    <h1>Bottle on MINA</h1>
+    <p>User from ${ip}, leave your words please:</p>
+    <form action="/" method="post">
+        <textarea cols="60" rows="20" name="content"></textarea>
+        <p><input type="submit" /></p>
+    </form>
+</body>
+</html>
+[/cc]</p>
+
+<p>show.tpl<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+    <head>
+        <title>Bottle on MINA</title>
+    </head>
+    <body>
+        <h1>Bottle on MINA</h1>
+        <pre>${content | h}</pre></body></html></p>
+
+<p>    
+
+[/cc]</p>
+
+<p>Start the bottle app:
+<font face="monospace">$ jython-all echo.py</font></p>
+
+<p>This is rather simple but it covers the most basic features of a web server.</p>
+
+<p>I should say thank you for reaching here. Gefr is still an experimental project in early development. So there must be bugs and potential performance improvements in it. Feel free to contact me if you are also interested in it. The project is hosted on bitbucket:
+<a href="https://bitbucket.org/sunng/gefr">https://bitbucket.org/sunng/gefr</a></classicning@gmail.com><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=473ecd63-8d12-88ec-aa8e-ff8244fe6861" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/05/jip-0-2-released/">Jip 0.2 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-05T00:00:00+08:00" pubdate data-updated="true">Apr 5<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As you may know, jip is a dependency management tool for Jython/Java development. It resolves and downloads Java packages from maven-compatible repositories. jip also follows some best practices, encouraging you to use a portable and standalone environment (virtualenv) for your Jython development.</p>
+
+<p>It has been four months since the initial release. In version 0.2, I made following changes for you:
+<ul>
+<li>Improved console output format</li>
+<li>Correct scope dependency management inheritance</li>
+<li>Snapshot management, alpha</li>
+<li>Environment independent configuration</li>
+<li>Bug fixes</li>
+</ul></p>
+
+<p>You can find the typical usage doc on github:
+<a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></p>
+
+<p>jip-0.2 has been published to pypi so you can install or upgrade it with:<br />
+easy_install -U jip</p>
+
+<p>Please do remember to use it inside virtualenv!<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=6d854cec-aede-8421-9daa-99288bc44ead" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/03/%E5%8D%97%E4%BA%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%91%A8%E6%9C%AB/">南京的第一个周末</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-03T00:00:00+08:00" pubdate data-updated="true">Apr 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>回了南京，最大的变化就是心里踏实多了，从上大学以后几乎就没有再在家里好好呆过。虽然年纪轻轻就告老还乡有点不太给力，但是这样实在是比在外乡遥遥无期地飘着感觉要好（飘着好，遥遥无期地飘着不好）。</p>
+
+<p>上班的地方在江宁，你可以从sunng.info页面的location标签上找到我。那个园区应该是聚集了一些软件公司，不过规模比显然比不上浦东软件园（还一二三期）。当然啦，规模大有个毛用，稍微晚几分钟食堂还要排队，快算了吧。</p>
+
+<p>交通比想象的要方便，换一次公交车就从家门口到园区门口了。即使是早高峰时间，也只有在市区的一条路上稍微堵一下，大部分时间都是飞驰的专车，夫复何求！！换车的地方在未来的京沪高铁附近，将来南京南站也建在那一带，施工的时候还是尘土飞扬的，这点比张江要差点。（嗯，也就跟张江比比吧）</p>
+
+<p>小公司有小公司的好处，新人去了没有繁文缛节的洗脑。开发岗位的直接用linux桌面，我把它看作一种福利，虽然是个rhel5，但好歹有自己配置的余地。当然即使这样，Windows还是少不了，Office是主要的原因，不过现在虚拟机是它永恒的家了。其他嘛，印象深刻的是公司的OpenDNS规则配得很厉害，好在firefox有个配置项叫做network.proxy.socks_remote_dns，你懂的。</p>
+
+<p>周末在南京就可以随心所欲了。今天是新赛季中超联赛第一轮，下午3点半奥体又要热闹了。去年舜天队不给力，在盛大又特别忙，全年我就看了第一个主场的比赛，结果还输了（十年来第一次在现场输球）！！初中高中的时候要忙学习，大学的时候工作室周六开会，所以这么多年都没有条件保持看球的出勤率。现在时候到了，这是一种怎样的情怀了。</p>
+
+<p>除去安逸的事情以外，我最近在看UEAP，再和@rlove的Linux System Programming对照看比较有感觉，不过我好像动手偏少了。另外还要看一下一个python的wsgi server叫做meinheld它为什么这么快呢。。</p>
+
+<p>最后还要恭喜工作室战友、某著名互联网企业优秀员工、抢了04地理（我几乎忘了我是地理学院的了）第一婚的成功人士<a href="http://goodtiger.net">tiger</a>新婚愉快！（除了The connection was reset以外就是成功人士的定义了）</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/03/28/gefr-api-updates/">Gefr API Updates</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-28T00:00:00+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>早上收到<a href="http://jythonet.appspot.com">jythonet</a>作者的一封邮件，受到启发，我打算扩展一下gefr这个WSGI adapter。原本gefr是写给soldat用来测试的，结果发现现在出现了买椟还珠的效果，既然大家更加关注这个，我决定多花一些时间在上面。不过话说回来gefr确实是Jython Web程序的新思路，过去大家都在想怎样把Jython放进Servlet中，gefr的思路是把Java的服务器实现放到WSGI后面。未来会有gefr-netty, gefr-mina, gefr-servlet等等出现，如果真的存在一个可靠的backend，也许这种思路也不失为一个办法，毕竟python的web框架更吸引人，而java的基础设施相对可靠，各取所长。</p>
+
+<p>根据这个目的，现在gefr 0.2的API更新为：
+<script src="https://bitbucket.org/sunng/gefr/src/8490748055f1/src/examples/example.py?embed=t"></script></p>
+
+<p>即在创建Gefr的时候需要告知backend类型，目前还只有soldat一种后端。未来也可能通过自动检测让这个参数成为可选。</p>
+
+<p>gefr 0.2已经在开发中，您可以通过这里关注：
+<a href="https://bitbucket.org/sunng/gefr/overview">https://bitbucket.org/sunng/gefr/overview</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/03/27/setting-up-soldat-and-gefr/">Setting Up Soldat and Gefr</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-27T00:00:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文介绍soldat服务器和gefr WSGI适配器的环境搭建，以及jip的基本使用。</p>
+
+<p><h4>安装python工具</h4>
+virtualenv和pip是python开发的关键工具<br />
+sudo apt-get install python-virtualenv<br />
+sudo apt-get install python-pip</p>
+
+<p>jython需要您手动下载安装。推荐安装到/usr/local/下，并建立软连接到/usr/local/bin/中，下文将假设您是这么做的。</p>
+
+<p><h4>创建虚拟jython环境</h4>
+virtualenv -p /usr/local/bin/jython gefr-test<br />
+cd gefr-test<br />
+source bin/activate</p>
+
+<p><h4>安装jip</h4>
+pip install jip</p>
+
+<p><h4>配置jip</h4>
+在$HOME下创建文件.jip，内容为：</p>
+
+<p>[cc lang=&#8221;ini&#8221;]<br />
+[repos:oss]<br />
+uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
+type=remote</p>
+
+<p>[repos:central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote</p>
+
+<p>[repos:local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local<br />
+[/cc]</p>
+
+<p><h4>安装soldat</h4>
+配置完jip后，可以使用jip来安装soldat<br />
+jip install info.sunng.soldat:soldat:1.0-SNAPSHOT</p>
+
+<p>文件将被下载到 javalib 目录中，您可以检查安装的正确性：<br />
+$ ls javalib/<br />
+log4j-1.2.16.jar     slf4j-log4j12-1.6.1.jar<br />
+slf4j-api-1.6.1.jar  soldat-1.0-SNAPSHOT.jar</p>
+
+<p><h4>安装gefr</h4>
+pip install gefr==0.1dev2</p>
+
+<p><h4>创建一个简单的Python WSGI程序</h4>
+创建test.py</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+from gefr import Gefr</p>
+
+<p>def wsgiapp(environ, start_response):<br />
+    status = &#8216;200 OK&#8217;<br />
+    res_body = &#8221;<html><head><title>Welcome</title></head><body><h1>It works!</h1></body></html>&#8221;<br />
+    res_headers = [(&#8216;Content-Type&#8217;, &#8216;text/html&#8217;),<br />
+            (&#8216;Content-Length&#8217;, str(len(res_body)))]<br />
+    start_response(status, res_headers)<br />
+    return [res_body]</p>
+
+<p>Gefr(wsgiapp, host=&#8217;0.0.0.0&#8217;, port=8000).start()<br />
+[/cc]</p>
+
+<p><h4>启动服务</h4>
+使用jip附带的jython-all<br />
+jython-all test.py</p>
+
+<p>打开浏览器，访问 http://localhost:8000/</p>
+
+<p><h4>用ab测试服务性能</h4>
+$ ab -n 10000 -c 100 http://localhost:8000/
+<pre>
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/</pre></p>
+
+<p>Benchmarking localhost (be patient)<br />
+Completed 1000 requests<br />
+Completed 2000 requests<br />
+Completed 3000 requests<br />
+Completed 4000 requests<br />
+Completed 5000 requests<br />
+Completed 6000 requests<br />
+Completed 7000 requests<br />
+Completed 8000 requests<br />
+Completed 9000 requests<br />
+Completed 10000 requests<br />
+Finished 10000 requests</p>
+
+<p>Server Software:        gefr/0.1dev<br />
+Server Hostname:        localhost<br />
+Server Port:            8000</p>
+
+<p>Document Path:          /<br />
+Document Length:        79 bytes</p>
+
+<p>Concurrency Level:      100<br />
+Time taken for tests:   2.539 seconds<br />
+Complete requests:      10000<br />
+Failed requests:        0<br />
+Write errors:           0<br />
+Total transferred:      1640000 bytes<br />
+HTML transferred:       790000 bytes<br />
+Requests per second:    3938.11 [#/sec] (mean)<br />
+Time per request:       25.393 [ms] (mean)<br />
+Time per request:       0.254 [ms] (mean, across all concurrent requests)<br />
+Transfer rate:          630.71 [Kbytes/sec] received</p>
+
+<p>Connection Times (ms)<br />
+              min  mean[+/-sd] median   max<br />
+Connect:        0    0   0.6      0       8<br />
+Processing:     9   25  22.4     21     239<br />
+Waiting:        9   25  22.4     21     239<br />
+Total:         13   25  22.3     21     239</p>
+
+<p>Percentage of the requests served within a certain time (ms)<br />
+  50%     21<br />
+  66%     22<br />
+  75%     22<br />
+  80%     23<br />
+  90%     26<br />
+  95%     40<br />
+  98%     65<br />
+  99%    233<br />
+ 100%    239 (longest request)
+</p>
+
+<p>Good Luck!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/03/24/update-new-random-nextint/">&#8220;Update ${new Random().nextInt()}&#8221;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-24T00:00:00+08:00" pubdate data-updated="true">Mar 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>多少年没写Update体了，看Samson的Update Series都到了53了，咱就只好来这么个标题了。</p>
+
+<p><ol>
+<li>头等大事，officially announce 一下艰难决定，经过慎重考虑我决定离开上海了。从09年3月第一次到上海到张江，现在整好两年的时间。一方面是获得了大城市的工作机会，另一方面也被在这里边缘的生活闹够了。于是这个悲喜交加的本命年春天决定告老还乡卸甲归田，过没有追求没有房东的土著生活。</li>
+<li>雁过留声踏雪留痕，我在晨晖路1001号半年最大的影响就是让这里又多了两个kindle用户，其他嘛，惭愧了。。。</li>
+<li>要说在上海有什么舍不得的话，就是这里的朋友了，同学同事真不少。有一起干活的，有一起吃饭的，有一起听歌的，各种都有，回了南京就没有这种条件了。不过其实大家在上海很忙一个月也聚不上一回，这么想的话没什么区别，赶上什么RubyConf之类的就又过来了，给沪宁线作贡献是咱的宿命。（话说今年的这些会什么时候开啊，我夏天的衣服还没有攒够呢）</li>
+<li>新赛季中超3号就揭幕了，今年舜天队的比赛可能连电视转播都没有了，你说不回南京能行吗！！能行吗！！从96年开始，今年就是第16年了。</li>
+<li>本来想说最近一两个月荒废得厉害，我回家以后要怎么怎么的，在这还是改为此处省去多少多少字吧。。。</li>
+</ol></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/12/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

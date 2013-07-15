@@ -1,0 +1,722 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="Weekend project &#8220;RageViewer&#8221;最近新增了一些功能： 界面更新 Rages现在持久化到redis中，支持permalink 程序可以直接部署到cloudfoundry上 RageViewer现在也有一个cloudfoundry上部署的版本：
+http &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/10">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/03/rageviewer-updated/">RageViewer Updated</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-03T00:00:00+08:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Weekend project &#8220;RageViewer&#8221;最近新增了一些功能：
+<ul>
+	<li>界面更新</li>
+	<li>Rages现在持久化到redis中，支持permalink</li>
+	<li>程序可以直接部署到cloudfoundry上</li></ul></p>
+
+<p>RageViewer现在也有一个cloudfoundry上部署的版本：
+<a href="http://rageviewer.cloudfoundry.com/index.html" target="_blank">http://rageviewer.cloudfoundry.com/index.html</a></p>
+
+<p>对本地开发、调试，现在需要在本机上启动一个监听默认端口的redis，执行<em>lein ring server</em>即可。对部署在cloudfoundry的情况，受益于cloudfoundry基于环境变量的数据库配置机制，不需要做任何额外的配置和修改：执行<em>lein ring uberwar && vmc update your-app-name</em> 即可。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/29/geohash-rewritten-with-clojure/">Geohash Rewritten With Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-29T00:00:00+08:00" pubdate data-updated="true">Jul 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sorry but this is another release announcement.</p>
+
+<p>I just rewrite my <a href="https://github.com/sunng87/node-geohash" target="_blank">node-geohash</a> module with clojure. You can include it with leiningen according to the instructions shows <a href="http://clojars.org/org.clojars.sunng/geohash" target="_blank">here</a>. The project is hosted on <a href="https://bitbucket.org/sunng/clojure-geohash" target="_blank">bitbucket</a> this time. The API is rather simple, please just follow the README doc.</p>
+
+<p>It&#8217;s totally different experience to write such kind of algorithm in a functional language. You have to translate loops to recursions, also make sure they are available for tail recursion optimization. I really enjoy coding in clojure.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/28/clojure-control-plugin-for-leiningen/">Clojure-Control Plugin for Leiningen</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-28T00:00:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/killme2008/clojure-control/" target="_blank">Clojure-Control</a> is the clojure port of node-control, developed by <a href="http://www.blogjava.net/killme2008/" target="_blank">killme2008</a>. Clojure-Control allows you to define clusters and tasks in a DSL and execute them with simple command.</p>
+
+<p><a href="https://github.com/sunng87/lein-control" target="_blank">Lein-control</a> is a leiningen(clojure build tool) plugin, with which you can integrate Clojure-Control into your build tasks. It could be helpful to execute deployment tasks on several machines.</p>
+
+<p>To use lein-control, simply add this to your project.clj . And download dependencies with <em>lein deps</em>.<br />
+:dev-dependencies [[lein-control &#8220;0.1.0&#8221;]]</p>
+
+<p>Create a sample control file in your project home:
+<em>lein control init</em></p>
+
+<p>Check your cluster configuration:
+<em>lein control show cluster-name</em></p>
+
+<p>Execute tasks against particular cluster:
+<em>lein control run cluster-name task-name</em></p>
+
+<p>Enjoy your deployment !</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/26/reddit-clj-clojure-wrapper-for-reddit-api/">Reddit.clj: Clojure Wrapper for Reddit API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-26T00:00:00+08:00" pubdate data-updated="true">Jul 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As mentioned in <a href="http://sunng.info/blog/2011/07/weekend-project-rageviewer/" target="_blank">Rage Viewer</a>, I have another clojure library to communicate with Reddit. Now it&#8217;s public available as &#8221;<a href="https://github.com/sunng87/reddit.clj" target="_blank">reddit.clj</a>&#8221;.</p>
+
+<p>Reddit.clj is managed with leiningen. The current reddit.clj release is <del datetime="2011-07-26T13:29:58+00:00">0.1.3</del> 0.2.0. You can include it in your project.clj:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defproject xxxx &#8220;1.0.0-SNAPSHOT&#8221;<br />
+  :dependencies [[reddit.clj &#8220;0.2.0&#8221;]])<br />
+[/cc]</p>
+
+<p>This is a simple tutorial for you to getting started :<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+;; include reddit.clj<br />
+(require &#8216;[reddit.clj.core :as reddit])<br />
+;; create a reddit client with reddit/login.<br />
+;; you can also ignore the arguments to use it<br />
+;; anonymously<br />
+(def rc (reddit/login &#8220;your-reddit-name&#8221; &#8220;your-reddit-passwd&#8221;))</p>
+
+<p>;; load reddits from subreddit &#8220;clojure&#8221;, and print titles<br />
+(doseq<br />
+ [title (map :title (reddit/reddits rc &#8220;clojure&#8221;))]<br />
+  (println title))</p>
+
+<p>;; enhance reddit client to enable writing, for login user only<br />
+;; this operation will retrieve reddit user modhash under the hood<br />
+(def rc (reddit/enhance rc))</p>
+
+<p>;; vote-up a thing on reddit<br />
+(reddit/vote-up rc &#8220;t3_iz61z&#8221;)</p>
+
+<p>;; you may also submit links to reddit.<br />
+;; permalink will be returned when success.<br />
+;; be careful to use this API because reddit may ask you for a<br />
+;; captcha. But as a library, reddit.clj will return nil on this case.<br />
+;; use it at your own risk.<br />
+(reddit/submit-link rc &#8220;title&#8221; &#8220;url&#8221; &#8220;subreddit-name&#8221;)</p>
+
+<p>[/cc]</p>
+
+<p>Detailed API documents are listed <a href="http://sunng87.github.com/reddit.clj/reddit.clj.core-api.html" target="_blank">here</a>.</p>
+
+<p>This library should be useful to crawl data from reddit which is rich of information. Reddit.clj is hosted on <a href="https://github.com/sunng87/reddit.clj" target="_blank">github</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/25/weekend-project-rageviewer/">Weekend Project: RageViewer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-25T00:00:00+08:00" pubdate data-updated="true">Jul 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><blockquote>&#8220;Weekend is for weekend projects.&#8221;</blockquote></p>
+
+<p>介绍Weekend Project前，先说个事。早上HN上<a href="http://www.romku.com/blog/2011/07/my-weekend-project-what-can-you-really-do-in-a-weekend" target="_blank">有人说</a>：你们这些个人，自个偷偷摸摸搞了半年一年的东西，然后发到HN上说这是两天就搞定的weekend project，你们恶心不恶心。本人郑重声明，下面这个东西确实是标准的weekend project，只用了周六下午和晚上的时间，结果周日还因为元气大伤只改了一点小东西。因为确实只有不到两天的effort，所以就不发到HN上丢人现眼了。</p>
+
+<p>话说，比起HN，我更常看reddit。于是就有了这个weekend project，<strong><a href="http://sunng.info:8080/rageviewer/index.html" target="_blank">Rage Viewer</a></strong>，可以浏览reddit ffffffffuuuuuuu上最新的rage comic。</p>
+
+<p>功能很简单，唯一值得一提的是它是统统用clojure写成的，后端是clojure，前端是最近公布的clojurescript编译的js。之所以这么搞，不为别的，只为cool。这个和每天早晨五点起床化妆是一个道理。</p>
+
+<p>在github上可以找到这个项目，他可以随意跑在任何地方，只要三个步骤：
+<ul>
+	<li>git clone git://github.com/sunng87/rageviewer.git</li>
+	<li>lein deps</li>
+	<li>lein ring server</li>
+</ul></p>
+
+<p>欢迎feedback。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/24/clojurescript-recipes/">ClojureScript Recipes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-24T00:00:00+08:00" pubdate data-updated="true">Jul 24<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。简单地说cljs是clojure在javascript上的实现，通过cljsc可以把clojure编译成js，运行在浏览器里或是Node环境里。</p>
+
+<p>目前clojurescript还没有正式的发布版本，需要从github签出开发版本。
+<ol>
+	<li>cljs是在Oracle JDK上开发的，引用了sun.org.mozilla.javascript.internal.Context，这个类在OpenJDK里叫做sun.org.mozilla.javascript.Context。所以没有办法，暂时只能在Oracle JDK上用clojurescript。</li>
+	<li>cljs自带的所有脚本，启动jvm时，heap size都是开2G的。可怜我所有的内存才2.5G，还是分布在两台电脑上（#@&amp;*……@￥@！）。不过我手动把它改为512M后cljsc还是依然可以正常运行的。</li>
+	<li>cljs与javascript的互操作是最麻烦的部分，一般情况cljs通过(js*)这个form来访问javascript数据和对象，比如访问document：(js* &#8220;document&#8221;)。进而访问getElementById时，即(.getElementById (js* &#8220;document&#8221;) &#8220;some-id&#8221;)。</li>
+	<li>cljs访问js对象时，通过(aget)而不是(.属性名)，例如(aget rage &#8220;ups&#8221;)编译后为rage.ups，如果(.ups rage)就会被当作函数调用。不过奇怪的是如果(.title rage)依然会被编译成rage.title。这种不一致的情况在对.url也存在。当然用aget是可以获得一致的结果的（aget在clojure里是根据索引取java数组的form，在cljs里可以支持js object了）。</li>
+	<li>当访问无参数的js对象时，cljs与clojure有不同。例如在clojure里(.toString date)，而在cljs里，这样写编译的结果是date.toString，注意没有括号，直接访问这个function对象了。所以在cljs里，正确的写法有些变化(. date (toString))。</li>
+	<li>创建js对象，可以通过(js-obj)这个form</li>
+	<li>修改dom属性，需要用(set!)这个form，如 (set! (.src img) &#8220;http://xxx&#8221;)。如果把cljs用在网页里，类似这样的操作比比皆是，这和clojure大不相同。</li>
+	<li>cljs里没有STM，暂时也不支持ref。可以直接用def定义变量，随意地访问和修改，js环境是单线程环境。</li>
+	<li>对于要对外访问的方法，在声明时加上^:export可以让编译器不修改方法的名字。</li>
+</ol>
+用cljs开发有趣归有趣，调试还是很困难的，建议开发的时候就写好打log的代码(js* &#8220;console.log&#8221;)，因为目前cljsc编译的速度也不快，反复地修改代价还是挺高的。当然，为了cool，以上都不是问题。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/22/%E4%BD%BF%E7%94%A8defrecord%E4%B8%8Edefprotocol%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">使用defrecord与defprotocol的注意事项</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-22T00:00:00+08:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>简单地说，protocol是clojure中的接口，record是clojure中的数据类型。</p>
+
+<p>可以通过这样的code定义一个protocol<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defprotoco DummyProtocol<br />
+  &#8220;doc string&#8230;&#8221;<br />
+  (method-one [self x] &#8220;doc string&#8230;&#8221;))<br />
+[/cc]</p>
+
+<p>需要注意的是，protocol里所有方法的第一个参数都是self/this参数（类似python），从第二个开始才是调用时传入的参数。如果方法要重载呢？</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(defprotocol DummyProtocol<br />
+  &#8220;doc string&#8230;&#8221;<br />
+  (method-one [self x] [self x y] &#8220;doc string&#8221;)<br />
+)
+[/cc]</p>
+
+<p>Apress的 Practical Clojure 书里的例子，给重载的参数表加上了括号，这样会导致编译错误（<a href="http://book.douban.com/annotation/13819191/" target="_blank">注记</a>）。</p>
+
+<p>定义一个record实现protocol</p>
+
+<p>[cc lang＝&#8221;clojure&#8221;]<br />
+(defrecord DummyRecord [a b c]<br />
+  DummyProtocol<br />
+  (method-one [self x] (+ a x))<br />
+  (method-one [self x y] (+ a x y)))<br />
+[/cc]<br />
+Practical Clojure里关于这部分的代码，又丢掉了self参数（<a href="http://book.douban.com/annotation/13819264/" target="_blank">注记</a>）。</p>
+
+<p>最后还有一个问题，如果直接use你的ns，你会发现调用record时出现：<br />
+java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
+
+<p>怎么回事，不是都use了吗？原因是record被编译成了java对象，所以引用时要用java对象的引用方式，import之。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/18/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%BA%8C%E5%B9%B4/">工作第二年</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-18T00:00:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><p>这个周末就是我正式工作两年的日子了，第二年过得稍微有些起伏，晚上写了一点总结。但是刚才读了一下觉得不太满意，也不太合适发出来。这样，即将跨入三年级的时候，我就改改风格谈谈愿望吧。</p>
+<p>1. 把日常工作做好，积累技术，流程，项目管理的经验<br />
+2. 业余时间拓展周边领域的知识：数据挖掘，数据分析，可视化方面<br />
+3. 希望能主导去做成一点有始有终的事情<br />
+4. 希望不久的将来能参与一个志同道合齐心协力（self-motivated）的团队一起做好一个产品</p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/18/heatcanvas-support-for-leaflet/">HeatCanvas Support for Leaflet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-18T00:00:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://leaflet.cloudmade.com/" title="leaflet" target="_blank">Leaflet</a> is a light weight web mapping library developed by <a href="http://cloudmade.com/" title="cloudmade" target="_blank">Cloudmade</a>. Leaflet is designed for compatibility with both desktop browser and mobile browser.</p>
+
+<p>HeatCanvas-Leaflet extension enables heat map on Leaflet. You can create heat map layer and add it to Leatlet map:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+var heatmap = new L.TileLayer.HeatCanvas(&#8220;Heat Canvas&#8221;, map, {},<br />
+                        {&#8216;step&#8217;:0.3, &#8216;degree&#8217;:HeatCanvas.QUAD, &#8216;opacity&#8217;:0.7});<br />
+heatmap.pushData(32.1104, 118.0852, 14);<br />
+//push more data &#8230;<br />
+map.addLayer(heatmap);<br />
+[/cc]</p>
+
+<p>You can find live demo on:
+<a href="http://sunng87.github.com/heatcanvas/leaflet.html" title="heatcanvas demo" target="_blank">http://sunng87.github.com/heatcanvas/leaflet.html</a>
+Mobile browser is also supported. (Tested on Firefox Android and default Android browser)</p>
+
+<p>Find more about HeatCanvas on <a href="https://github.com/sunng87/heatcanvas">github page</a>.</p>
+
+<p>Leaflet is still buggy for extension. There is a latlng-pixel coordinate conversion <a href="https://github.com/CloudMade/Leaflet/issues/190" target="_blank">issue</a> in low zoom level, affects this demo. Hope it could be fixed soon.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/13/staged-event-driven-architecture/">Staged Event-Driven Architecture</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信，这是线程被任务占用的时间就相对较长。如果请求的并发量很大，容器的线程池耗尽，新的请求就无法被处理，导致并发性无法提高，吞吐量也无法提高。</p>
+
+<p>实际上在大部分应用程序里，所谓代价很高的任务，往往都是I/O Bound。涉及网络通信，磁盘读写，线程被迫wait，CPU却是空闲的。所以，I/O Bound的程序理论上都还有优化的空间。于是有了这种Staged Event-Driven Architecture，即SEDA。</p>
+
+<p>SEDA的思路是将原先由一个线程完成的任务，分割为相对独立的多个阶段。每个阶段由专用的一组线程负责执行，阶段之间用过队列交互。又是上次提到的老话：If you cannot split it, you cannot scale it.</p>
+
+<p>例如，我们的业务逻辑是读取请求，操作数据库，与后端通信，操作数据库，写回结果。如果采用NIO的方式，网络通信可以认为是非阻塞的。而目前与数据库的交互，通常还是阻塞式的风格。这样这五个阶段分别是非阻塞、阻塞、非阻塞、阻塞、非阻塞。组塞操作容易成为性能瓶颈，CPU时间用于等待，占用率不高，所以对组塞操作可以分配相对多的线程；非阻塞操作速度较快，为了避免快速的切换导致sy升高，采用和CPU核数一样多的线程即可。</p>
+
+<p>这样，原本一个线程反复等待的阻塞操作，变成了部分线程等待的同时，其他线程仍然在处理自己的业务，有效使用CPU。利用的多核的优势，提高了CPU的占用，即提高了系统的处理能力。</p>
+
+<p>而对外部接口来说，当读取数据的线程在读取完毕之后，将任务dispatch到相应队列即返回，前端可以保证很高的处理速度，并发性也可以保证。任务被积压在阻塞操作的队列中，而消费阻塞操作的线程要多于提供者，在一定程度上也保证了处理速度。再退一步说，当阻塞操作的速度却是无法消费大量任务时，前端可以根据队列的大小判断当前系统的load，拒绝服务。</p>
+
+<p>当然，采用这种方式，只有在并发量提高到一定程度，并发成为系统瓶颈时才能体现价值。就单个操作而言，由于队列的传递，他的latency一定是有所上升的。</p>
+
+<p>关于SEDA，可以参考<a href="http://matt-welsh.blogspot.com/">Matt Welsh</a>的相关论文：The Staged Event-Driven Architecture for Highly-Concurrent Server Applications。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/9/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

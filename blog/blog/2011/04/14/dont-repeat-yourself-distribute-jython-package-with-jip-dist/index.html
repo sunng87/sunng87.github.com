@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Don't repeat yourself: distribute jython package with jip.dist - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="As a new feature in jip 0.4, we can use some helpers from jip.dist to simplify package distribution. With jip.dist, you can define Java dependencies &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Don't Repeat Yourself: Distribute Jython Package With jip.dist</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>As a new feature in <b>jip</b> 0.4, we can use some helpers from <font face="monospace">jip.dist</font> to simplify package distribution. With jip.dist, you can define Java dependencies for your jython package. In an environment with jip, dependencies will be automatically installed when user uses pip to get you package.</p>
+
+<p>We have two different approaches allow you to choose.</p>
+
+<p><h3>Approach 1, Define dependencies in POM</h3>
+This is the standard maven way. To describe your jython package and its dependencies, create a pom.xml in your project. The directory hierarchy looks like:
+<pre>
+├── app
+│&nbsp;&nbsp; ├── module1
+│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py
+│&nbsp;&nbsp; ├── core.py
+│&nbsp;&nbsp; ├── __init__.py
+├── LICENSE
+├── MANIFEST.in
+├── pom.xml
+├── README
+└── setup.py
+</pre></p>
+
+<p>In pom.xml, just add dependencies as you do with Maven.<br />
+[cc lang=&#8221;xml&#8221;]
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" <br="" />  xsi:schemaLocation=&#8221;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#8221;&gt;</p>
+
+<p>    &#8230;</p>
+
+<p>    <dependencies>
+        <dependency>
+            <groupid>org.slf4j</groupid>
+            <artifactid>slf4j-api</artifactid>
+            <version>1.6.1</version>
+        </dependency></dependencies></p>
+
+<p>        <dependency>
+            <groupid>org.slf4j</groupid>
+            <artifactid>slf4j-log4j12</artifactid>
+            <version>1.6.1</version>
+        </dependency></p>
+
+<p>        &#8230;</p>
+
+<p>    </p>
+
+<p>    <repositories>
+        <repository>
+            <id>sonatype-oss-sonatype</id>
+            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+[/cc]<br />
+You can also define repositories in pom.xml if you use custom repository. (for example, jboss, java.net)</p>
+
+<p>Remember to add pom.xml in your <font face="monospace">MANIFEST.in</font>, to ensure the file will be packaged into source package:<br />
+[cc lang=&#8221;text&#8221;]<br />
+include pom.xml<br />
+[/cc]</p>
+
+<p><h3>Approach 2, Define dependencies with Python</h3>
+You may be tired with endless XML configuration. jip allows you to define dependencies with python, just like gradle with groovy.</p>
+
+<p>In your setup.py, add something like:<br />
+[cc lang=&#8221;python&#8221;]<br />
+requires_java = {<br />
+    &#8216;dependencies&#8217;:[<br />
+        ## (groupdId, artifactId, version)<br />
+        (&#8216;org.slf4j&#8217;, &#8216;slf4j-api&#8217;, &#8216;1.6.1&#8217;),<br />
+        (&#8216;org.slf4j&#8217;, &#8216;slf4j-log4j12&#8217;, &#8216;1.6.1&#8217;),<br />
+        (&#8216;info.sunng.soldat&#8217;, &#8216;soldat&#8217;, &#8216;1.0-SNAPSHOT&#8217;),<br />
+        (&#8216;org.apache.mina&#8217;, &#8216;mina-core&#8217;, &#8216;2.0.2&#8217;)<br />
+    ],<br />
+    &#8216;repositories&#8217;:[<br />
+        (&#8216;sonatype-oss-snapshot&#8217;, &#8216;http://oss.sonatype.org/content/repositories/snapshots/&#8217;)<br />
+    ]<br />
+}
+[/cc]</p>
+
+<p>Then pass it to <font face="monospace">setup()</font>. The keyword argument <font face="monospace">require_java</font> is jip specific.<br />
+[cc lang=&#8221;python&#8221;]<br />
+setup(<br />
+    &#8230;<br />
+    requires_java=requires_java,<br />
+    &#8230;)<br />
+[/cc]</p>
+
+<p><h3>Use jip&#8217;s setup wrapper</h3>
+To use jip&#8217;s power, the only difference is to use <font face="monospace">setup()</font> from <font face="monospace">jip.dist</font> instead of setuptools or distutils.<br />
+[cc lang=&#8221;python&#8221;]<br />
+from jip.dist import setup<br />
+[/cc]</p>
+
+<p>Then publish your jython package to Python Cheese Shop:
+<font face="monospace">$ jython setup.py sdist upload</font></p>
+
+<p>Internally, jip uses setuptools. So you can still do <font face="monospace">jython setup.py develop</font> .</p>
+
+<p>And jip 0.4 is available under MIT License. You are free to use jip.dist in your code.</p>
+
+<p><h3>For your user</h3>
+You should write a guide forcing users to use your jython application within <a href="http://www.virtualenv.org">virtualenv</a>. And install jip as a prerequisite:
+<font face="monospace">$ pip install jip</font></p>
+
+<p>Then simply install your package with pip:
+<font face="monospace">$ pip install &lt;your-package-name&gt;</font></p>
+
+<p>No additional step required!</p>
+
+<p>So please just release your jython package with <b>jip</b> !</p>
+
+<p>For more information:
+<ul>
+<li><a href="http://pypi.python.org/pypi/jip/">http://pypi.python.org/pypi/jip/</a></li>
+<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li>
+</ul>
+<div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=5c436f7f-49fe-8f60-9a90-1331f01105a9" /></div></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/ann/'>ANN</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2011/04/10/enhanced-jip-to-simplify-jython-module-distribution/" title="Previous Post: Enhanced jip to simplify Jython module distribution">&laquo; Enhanced jip to simplify Jython module distribution</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2011/04/17/exaile-sound-menu-support-updated-now-compatible-with-natty/" title="Next Post: Exaile sound menu support updated, now compatible with Natty">Exaile sound menu support updated, now compatible with Natty &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

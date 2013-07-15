@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 把戏 | 车水马龙]]></title>
+  <link href="http://sunng87.github.io/blog//blog/categories/ba-xi/atom.xml" rel="self"/>
+  <link href="http://sunng87.github.io/blog//"/>
+  <updated>2013-07-15T23:10:13+08:00</updated>
+  <id>http://sunng87.github.io/blog//</id>
+  <author>
+    <name><![CDATA[Sun Ning]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[给 Raspberry Pi 添加一个显示 IP 的液晶屏]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/"/>
+    <updated>2013-06-29T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2013/06/29/给-raspberry-pi-添加一个显示-ip-的液晶屏</id>
+    <content type="html"><![CDATA[<p>我的 Raspberry Pi 在家里一直是通过 DHCP 联网的，每次要登录上去都要先进路由管理界面看看他的 IP 到底是什么，很不方便。于是就买了这块液晶屏幕，准备显示一下 IP，另外以后也可以作为一个输出设备。毕竟用这个比外接一个显示器方便多了（现在显示器最小都是21寸）。</p>
+
+
+
+
+<p>液晶屏就是最普通的1602屏幕，淘宝上有很多，基本上都一样。要注意的是需要自备引脚，要自己焊到板上，否则无法连接。我也是第一回焊，感觉还比较简单。(<a href="http://instagram.com/p/bIPSEcBM6R/" target="_blank">如图。</a>)另外为了控制液晶屏的对比度需要有一个电位器，为此我中途还专门跑了一趟中关村。</p>
+
+
+
+
+<p>之后就可以按照 <a href="http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/overview" target="_blank">Adafruit 上的教程</a>一步一步做了。</p>
+
+
+
+
+<p>最后我简化了一下显示 IP 的脚本，时间就不去刷新了。
+<script src="https://gist.github.com/sunng87/5890563.js"></script></p>
+
+
+
+
+<p>把这个脚本作为 systemd 的服务，可以参考<a href="http://blog.sdbarker.com/adding-custom-units-services-to-systemd-on-arch-linux/" target="_blank">这里</a>有关如何创建自定义服务的说明。然后通过systemctl enable ip-display.service设置自启动。</p>
+
+
+
+
+<p>最终效果如下：
+<img src="http://i.imgur.com/ZqAc2dh.jpg" alt="my ip display setup" /></p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[第一个开关]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2013/02/23/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BC%80%E5%85%B3/"/>
+    <updated>2013-02-23T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2013/02/23/第一个开关</id>
+    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/3S4WPUG.jpg" alt="" /></p>
+
+
+
+
+<p>过年回家路上无聊看了一些关于电子制作的书，知道了 Android 上的开发板 IOIO。另外认识了 Arduino 的程序，感觉要比想象中还要简单。本来担心还要学一门新的语言，看了之后发现完全是多虑。</p>
+
+
+
+
+<p>在淘宝上找 IOIO 的时候正好发现了<a href="http://item.taobao.com/item.htm?id=13115078082">一整套元件</a>。买回来以后看看可能价格是贵了，但是对我这样的新手来说，省去了自己找元件的麻烦。因为找元件实在是很容易让人退缩。</p>
+
+
+
+
+<p>点亮 Arduino 基本上没什么问题。但是在 Archlinux 上访问 serial port 需要一些配置。首先要把用户加入 uucp 组确保可以访问 /dev/tty* 的设备。其次，需要给当前用户访问 /run/lock 的权限，否则 Arduino IDE 还是无法访问到 Arduino，这点在 Archlinux 的 Wiki 上有提及。</p>
+
+
+
+
+<p>我这个开关电路太简单了就不详细说了，参考书是一本 Getting started with Arduino。据说这本书出第二版了，第一版上 Arduino 的版本不是 Uno，所以图片有一些出入，不过接口都没有变化。这第一个二极管开关的电路还是挺有成就感的，晚上我就可以让台灯什么的都退了休吧。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Top Github users in China]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/07/19/top-github-users-in-china/"/>
+    <updated>2012-07-19T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/07/19/top-github-users-in-china</id>
+    <content type="html"><![CDATA[<p>有感于<a href="http://sofish.de/file/demo/github/" target="_blank">这个版本</a>的github中国用户排名，我觉得单纯根据用户的followers数量不能完全说明问题。因此，需要改进一下排名的分数，加入项目Watchers的数量，这样可以让优质项目多的用户排名到前面。</p>
+
+
+
+
+<p>这个策略是：followers + 1.5 * watchers + 2 * forks</p>
+
+
+
+
+<p>得到的排名如下：
+<script src="https://gist.github.com/3141146.js?file=results"></script></p>
+
+
+
+
+<p>另外，这前100名用户里，语言使用的情况如下：<br />
+'JavaScript': 80<br />
+'Ruby': 52<br />
+'Python': 46<br />
+'C': 34<br />
+'C++': 30<br />
+'Java': 28<br />
+'VimL': 28<br />
+'Shell': 24<br />
+'Objective-C': 24<br />
+'PHP': 21<br />
+'CoffeeScript': 13<br />
+'Perl': 10<br />
+'Erlang': 9<br />
+'Emacs Lisp': 9<br />
+'Lua': 6<br />
+'Haskell': 5<br />
+'Clojure': 5<br />
+'Go': 5<br />
+'ActionScript': 4<br />
+'C#': 3<br />
+'Scheme': 2<br />
+'Common Lisp': 2<br />
+'Elixir': 2<br />
+'Scala': 1<br />
+'Objective-J': 1<br />
+'Vala': 1<br />
+'Nemerle': 1</p>
+
+
+
+
+<p>明天我会补充一下城市的排名。</p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Visualizing OpenStreetMap Nanjing Contribution]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/04/20/visualizing-openstreetmap-nanjing-contribution/"/>
+    <updated>2012-04-20T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/04/20/visualizing-openstreetmap-nanjing-contribution</id>
+    <content type="html"><![CDATA[<p>早上在prismatic上看到mapbox的一篇<a href="http://mapbox.com/blog/how-to-map-contributions-openstreetmap/" target="_blank">博客</a>，介绍通过TileMill可视化OSM的贡献者，非常酷。于是我在南京的地图上也做了一个这样的可视化。</p>
+
+
+
+
+<p><img src="http://i.imgur.com/U2yXK.png" alt="" /></p>
+
+
+
+
+<p>一个详细的大图在<a href="http://i.imgur.com/YnULm.png" target="_blank">这里</a>。虽然只做了南京的五个主要贡献者，基本上涵盖了大部分数据。</p>
+
+
+
+
+<p>图例就不专门输出了<br />
+[user = 'Sunng'] { marker-fill: @magenta;} <br />
+[user = 'fuwuyuan'] { marker-fill: @blue;}<br />
+[user = 'sinopitt'] {marker-fill: @yellow;}<br />
+[user = 'larryy'] {marker-fill: @green;}<br />
+[user = 'zhengz'] {marker-fill: @red;}</p>
+
+
+
+
+<p>MapBox家的东西真的非常酷，这家的技术以nodejs为主，围绕osm开发了不少产品。最近比较大的新闻，比如4sq转到osm上，其实就是转到这家的osm服务上。有兴趣你可以关注一下！
+<img src="http://i.imgur.com/Hum2r.png" alt="" /></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为WebWorker设置正确的路径]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/03/22/%E4%B8%BAwebworker%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE%E7%9A%84%E8%B7%AF%E5%BE%84/"/>
+    <updated>2012-03-22T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/03/22/为webworker设置正确的路径</id>
+    <content type="html"><![CDATA[<p>WebWorker的路径通常是写在代码源文件中，而且这个路径并非其相对父js文件的相对路径，而似乎是相对页面的路径。所以指定一个正确的可随处部署的路径变得有些麻烦。昨天有人给HeatCanvas提了这个问题我才想到上网搜索了一下，有一个还算挺不错的办法。</p>
+
+
+
+
+<p>写一个getPath函数，从document里找到父js的路径，拼到Worker的名字上。对heatcanvas.js这个文件来说就是：</p>
+
+
+
+
+<p>[cc lang="javascript"]<br />
+HeatCanvas.getPath = function() {<br />
+    var scriptTags = document.getElementsByTagName("script");<br />
+    for (var i=0; i<scriptTags.length; i++) {<br />
+        var src = scriptTags[i].src;<br />
+        var pos = src.indexOf("heatcanvas.js");<br />
+        if (pos > 0) {<br />
+            return src.substring(0, pos);<br />
+        }<br />
+    }<br />
+    return "";<br />
+};<br />
+[/cc]</p>
+
+
+
+
+<p>因此现在HeatCanvas已经解决了这个路径问题，现在这个库应该更好用了。当然如果你改了我的文件名我就无话可说了。
+</p>
+
+]]></content>
+  </entry>
+  
+</feed>

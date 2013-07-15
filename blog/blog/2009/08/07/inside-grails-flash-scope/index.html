@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Inside Grails Flash Scope - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="Grails的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。 Grails的FlashScope接口定义在org. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2009/08/07/inside-grails-flash-scope">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Inside Grails Flash Scope</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true">Aug 7<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://www.grails.org" target="_blank">Grails</a>的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。</p>
+
+<p>Grails的FlashScope接口定义在org.codehaus.groovy.grails.web.servlet包中，这个接口继承了Map接口，并定义了一个方法next()。</p>
+
+<p>Grails的默认实现在org.codehaus.groovy.grails.web.servlet包中，GrailsFlashScope。这个实现内部定义了两个Map（生命周期为两个请求），current和next，这两个Map不断滚动，保持在一个请求中可以且仅可以访问到当前和前一次请求的上下文。<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public void next() {<br />
+current.clear();<br />
+current = (HashMap)next.clone();<br />
+next.clear();<br />
+reassociateObjectsWithErrors(current);<br />
+}
+[/codesyntax]</p>
+
+<p>put的时候，Grails只把新制放到next表中，因为next将在下一次请求时继续保存<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object put(Object key, Object value) {<br />
+// create the session if it doesn&#8217;t exist<br />
+registerWithSessionIfNecessary();<br />
+if(current.containsKey(key)) {<br />
+current.remove(key);<br />
+}
+storeErrorsIfPossible(next,value);</p>
+
+<p>return next.put(key,value);<br />
+}
+[/codesyntax]</p>
+
+<p>get的时候，Grails在两个Map中查找<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object get(Object key) {<br />
+if(next.containsKey(key))<br />
+return next.get(key);<br />
+return current.get(key);<br />
+}
+[/codesyntax]</p>
+
+<p>此外，FlashScope本身还是被放在session中<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+private void registerWithSessionIfNecessary() {<br />
+GrailsWebRequest webRequest = (GrailsWebRequest) RequestContextHolder.currentRequestAttributes();<br />
+HttpSession session = webRequest.getCurrentRequest().getSession(true);<br />
+if(session.getAttribute(GrailsApplicationAttributes.FLASH_SCOPE) == null)<br />
+session.setAttribute(GrailsApplicationAttributes.FLASH_SCOPE, this);<br />
+}
+[/codesyntax]</p>
+
+<p>然后，滚动FlashScope的行为在GrailsWebRequestFilter中被调用，GrailsWebRequestFilter继承自spring-web的OncePerRequestFilter<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+protected void doFilterInternal(<br />
+HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)<br />
+throws ServletException, IOException {<br />
+&#8230;</p>
+
+<p>// Set the flash scope instance to its next state. We do<br />
+// this here so that the flash is available from Grails<br />
+// filters in a valid state.<br />
+FlashScope fs = webRequest.getAttributes().getFlashScope(request);<br />
+fs.next();<br />
+&#8230;<br />
+}
+[/codesyntax]</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true">Aug 7<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/shou-yi/'>手艺</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2009/08/07/inside-grails-flash-scope/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2009/08/07/inside-grails-flash-scope/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2009/08/06/%E5%8F%B2%E6%9C%89%E5%85%88%E4%BE%8B%E7%9A%84%E4%B8%80%E8%B7%A4/" title="Previous Post: 史有先例的一跤">&laquo; 史有先例的一跤</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2009/08/24/yamb-is-now-hosted-on-kenai-com/" title="Next Post: YAMB is now hosted on kenai.com">YAMB is now hosted on kenai.com &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2009/08/07/inside-grails-flash-scope/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2009/08/07/inside-grails-flash-scope/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

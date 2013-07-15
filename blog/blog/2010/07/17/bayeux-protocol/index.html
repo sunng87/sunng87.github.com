@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bayeux Protocol - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="运行一个CometD Demo非常简单，只要创建一个Maven项目即可（CometD Howtos）：
+$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org maven会提示用户选择archetype，包括cometd的版本1、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bayeux Protocol</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-17T00:00:00+08:00" pubdate data-updated="true">Jul 17<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>运行一个CometD Demo非常简单，只要创建一个Maven项目即可（<a href="http://cometd.org/documentation/howtos/primer">CometD Howtos</a>）：
+<i>$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org</i></p>
+
+<p>maven会提示用户选择archetype，包括cometd的版本1、版本2，jetty6、jetty7的实现，以及客户端dojo或jquery的实现。这里可以选择最新的：
+<i>http://cometd.org -> cometd-archetype-dojo-jetty7 (2.0.0 - CometD archetype for creating a server-side event-driven web application)</i></p>
+
+<p>项目创建完成后执行mvn jetty:run即可，打开http://127.0.0.1:8080/{artifactId}即可。</p>
+
+<p>CometD的协议包容了各种主要的浏览器，比如在Chromium 5上，dojo采用WebSocket实现；而在不支持WebSocket的Firefox 3上，通过long-polling实现。Bayuex是一个应用协议，CometD是Bayuex的实现，类似鸡与蛋的关系。</p>
+
+<p>有了昨天在Chromium上看WebSocket协议的经验，先看一下CometD的WebSocket实现：<br />
+握手。客户端请求/{artifactId}/cometd/handshake<br />
+包含Header
+<blockquote>GET /cometd-jetty/cometd/handshake HTTP/1.1<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+Host: 127.0.0.1:8080<br />
+Origin: http://127.0.0.1:8080<br />
+Cookie: JSESSIONID=12jqq6hbsfkfic8vzqpevxtrw
+</blockquote></p>
+
+<p>这是标准的WebSocket握手协议，服务端返回：</p>
+
+<p><blockquote>HTTP/1.1 101 Web Socket Protocol Handshake<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+WebSocket-Origin: http://127.0.0.1:8080<br />
+WebSocket-Location: ws://127.0.0.1:8080/cometd-jetty/cometd/handshake</blockquote></p>
+
+<p>双方完成WebSocket连接的建立。客户端通过websocket发送JSON，进行bayuex的握手：</p>
+
+<p><blockquote>[{&#8220;version&#8221;:&#8221;1.0&#8221;,&#8221;minimumVersion&#8221;:&#8221;0.9&#8221;,&#8221;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;],&#8221;advice&#8221;:{&#8220;timeout&#8221;:60000,&#8221;interval&#8221;:0},&#8221;id&#8221;:&#8221;1&#8221;}]</blockquote></p>
+
+<p>服务端返回JSON，下发clientId完成握手：</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;,&#8221;version&#8221;:&#8221;1.0&#8221;,&#8221;successful&#8221;:true,&#8221;minimumVersion&#8221;:&#8221;1.0&#8221;,&#8221;id&#8221;:&#8221;1&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;]}]</blockquote></p>
+
+<p>握手完成，bayuex连接建立。</p>
+
+<p>在Demo中，客户端添加了一个handshake的listerner<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+    function _metaHandshake(handshake)<br />
+    {<br />
+        if (handshake.successful === true)<br />
+        {<br />
+            cometd.batch(function()<br />
+            {<br />
+                cometd.subscribe(&#8216;/hello&#8217;, function(message)<br />
+                {<br />
+                    dojo.byId(&#8216;body&#8217;).innerHTML += &#8217;<div>Server Says: &#8217; + message.data.greeting + &#8217;</div>&#8217;;<br />
+                });<br />
+                // Publish on a service channel since the message is for the server only<br />
+                cometd.publish(&#8216;/service/hello&#8217;, { name: &#8216;World&#8217; });<br />
+            });<br />
+        }<br />
+    }<br />
+[/cc]<br />
+所以在完成握手后，客户端发送一个批量请求，subscribe /hello频道，并且向/service/hello发送json格式的消息。向/service channel发送的信息<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_81">表示客户端与服务端的单独通信</a>，不会被转发给其他客户端。<br />
+id用于区分每个请求，<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_38">bayuex spec规定</a>向/meta和/service发送的请求必须包含id字段，用于标示请求响应。<br />
+请求的内容最终聚合为一个Json</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;World&#8221;},&#8221;id&#8221;:&#8221;3&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;}]</blockquote></p>
+
+<p>服务端发回响应，id=2的请求成功，订阅/hello频道成功</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;}]</blockquote></p>
+
+<p>之后，服务端发回/hello channel的消息</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;greeting&#8221;:&#8221;Hello, World&#8221;}},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;3&#8221;}]</blockquote></p>
+
+<p>客户端还要定期发送连接请求保持连接</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;connectionType&#8221;:&#8221;websocket&#8221;,&#8221;advice&#8221;:{&#8220;timeout&#8221;:0},&#8221;id&#8221;:&#8221;4&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;}]</blockquote></p>
+
+<p>服务端返回，连接成功</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;advice&#8221;:{&#8220;reconnect&#8221;:&#8221;retry&#8221;,&#8221;interval&#8221;:2500,&#8221;timeout&#8221;:15000},&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;4&#8221;}]</blockquote></p>
+
+<p>connect请求是用于在客户端和服务端维持连接， Bayeux标准中提到(<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_52">1</a>, <a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_53">2</a>)：</p>
+
+<p><blockquote>A transport MUST maintain one and only one outstanding connect message. When a HTTP response that contains a /meta/connect response terminates, the client MUST wait at least the interval specified in the last received advice before following the advice to reestablish the connection </blockquote></p>
+
+<p><blockquote>
+The client MUST maintain only a single outstanding connect message. If the server does not have a current outstanding connect and a connect is not received within a configured timeout, then the server SHOULD act as if a disconnect message has been received. </blockquote></p>
+
+<p>至此，cometd客户端就可以在/hello频道上订阅、发布消息了。<br />
+在Chromium上，所有的操作都在一个WebSocket连接上完成。</p>
+
+<p>而当断开连接时，客户端向服务端发送</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;id&#8221;:&#8221;188&#8221;,&#8221;clientId&#8221;:&#8221;a8iutjvfp7dtwhzrfujeonk5q&#8221;}]</blockquote></p>
+
+<p>服务端响应</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;188&#8221;}]</blockquote></p>
+
+<p>Bayuex基本上就可以理解为一个websocket上的应用协议了。</p>
+
+<p>再看看Firefox 3.6上的实现。Firefox 3.6不支持WebSocket，所有的通信只能通过XHR来实现。<br />
+握手，通过一个xhr post请求实现：</p>
+
+<p><blockquote>POST /{artifactId}/cometd/handshake HTTP/1.1<br />
+Host: 127.0.0.1:8080<br />
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.6) Gecko/20100628 Ubuntu/10.04 (lucid) Firefox/3.6.6<br />
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8<br />
+Accept-Language: en-us,en;q=0.5<br />
+Accept-Encoding: gzip,deflate<br />
+Accept-Charset: UTF-8,*<br />
+Keep-Alive: 115<br />
+Connection: keep-alive<br />
+Content-Type: application/json;charset=UTF-8<br />
+X-Requested-With: XMLHttpRequest<br />
+Referer: http://127.0.0.1:8080/{artifactId}/<br />
+Content-Length: 182<br />
+Cookie: JSESSIONID=fjnyxb28raih1cnaljrijl1ic<br />
+Pragma: no-cache<br />
+Cache-Control: no-cache
+</blockquote></p>
+
+<p>服务器端响应：</p>
+
+<p><blockquote>HTTP/1.1 200 OK<br />
+Content-Type: application/json;charset=UTF-8<br />
+Set-Cookie: BAYEUX_BROWSER=df92-h8q89f416mutgbpxrwb8185u;Path=/<br />
+Content-Length: 213<br />
+Server: Jetty(7.1.5.v20100705)</blockquote></p>
+
+<p>[{&#8220;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;,&#8221;version&#8221;:&#8221;1.0&#8221;,&#8221;successful&#8221;:true,&#8221;minimumVersion&#8221;:&#8221;1.0&#8221;,&#8221;id&#8221;:&#8221;1&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;]}]</p>
+
+<p>握手完成，执行客户端定义的回调。发送bayeux请求，通过一个新的XHR上<br />
+[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;World&#8221;},&#8221;id&#8221;:&#8221;3&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</p>
+
+<p>服务端同时返回三个bayuex的请求响应</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;},{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;greeting&#8221;:&#8221;Hello, World&#8221;}},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;3&#8221;}]</blockquote></p>
+
+<p>客户端开始发送连接请求</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;connectionType&#8221;:&#8221;long-polling&#8221;,&#8221;advice&#8221;:{&#8220;timeout&#8221;:0},&#8221;id&#8221;:&#8221;4&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</blockquote></p>
+
+<p>注意这里使用的是<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_69">long-polling</a>方式，这是由dojo针对浏览器特性决定的。</p>
+
+<p><blockquote>Long-polling server implementations attempt to hold open each request until there are events to deliver; the goal is to always have a pending request available to use for delivering events as they occur, thereby minimizing the latency in message delivery.</blockquote></p>
+
+<p>如果没有新消息，服务端阻塞十秒后返回</p>
+
+<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;7&#8221;}]</blockquote></p>
+
+<p>客户端接收到返回立刻发起新的connect请求</p>
+
+<p>当有新消息时，阻塞在服务器端的connect请求会立即返回，同时带回新的消息，如
+<blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;555&#8221;},&#8221;id&#8221;:&#8221;6&#8221;},{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;619&#8221;}]</blockquote>
+而如果是本客户端publish的新消息，会在请求成功的响应中返回，不会影响connect连接，如：
+<blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;nihao&#8221;},&#8221;id&#8221;:&#8221;715&#8221;},{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;715&#8221;}]</blockquote></p>
+
+<p>断开时，仍然是通过xhr post一条bayuex命令到服务端
+<blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;id&#8221;:&#8221;750&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</blockquote>
+服务端响应：
+<blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;750&#8221;}]</blockquote></p>
+
+<p>至此，通过long polling方式实现bayuex的cometd客户端也描述清楚了。long-polling仍然是通过connect请求来实现pull的方式准实时，与websocket真正push的方式还是存在区别的。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-17T00:00:00+08:00" pubdate data-updated="true">Jul 17<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/ba-xi/'>把戏</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2010/07/16/websocket-protocol/" title="Previous Post: Websocket Protocol">&laquo; Websocket Protocol</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2010/07/21/bottle-fapws3/" title="Next Post: bottle & fapws3">bottle & fapws3 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

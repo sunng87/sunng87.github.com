@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 手艺 | 车水马龙]]></title>
+  <link href="http://sunng87.github.io/blog//blog/categories/shou-yi/atom.xml" rel="self"/>
+  <link href="http://sunng87.github.io/blog//"/>
+  <updated>2013-07-15T23:10:13+08:00</updated>
+  <id>http://sunng87.github.io/blog//</id>
+  <author>
+    <name><![CDATA[Sun Ning]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[OSM reporter]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/12/24/osm-reporter/"/>
+    <updated>2012-12-24T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/12/24/osm-reporter</id>
+    <content type="html"><![CDATA[<p>好久没有Weekend project了，礼拜天给一个叫作<a href="https://github.com/timlinux/osm-reporter">osm reporter</a>的小项目写了一点代码。这个小程序的功能很简单，显示指定区域里建筑物的贡献者情况。</p>
+
+
+
+
+<p>我做了一些修改，增加了道路贡献情况。还有，利用自己的heatcanvas库显示用户个人编辑的分布情况。</p>
+
+
+
+
+<p><a href=" http://reporter.fluv.io/?bbox=118.51638793945312,31.92943755974919,119.16183471679688,32.133175697091374&obj=highway">这里</a>有一个live demo，显示南京的编辑情况，不幸而又庆幸的是，离开南京大半年，我已经远远落后于sinopitt了。</p>
+
+
+
+
+<p>这个项目的缘起：<a href="http://linfiniti.com/2012/12/holiday-openstreetmap-project-for-swellendam/">http://linfiniti.com/2012/12/holiday-openstreetmap-project-for-swellendam/</a></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adding -var-missing to Clojure Namespace]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/10/27/adding-var-missing-to-clojure-namespace/"/>
+    <updated>2012-10-27T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/10/27/adding-var-missing-to-clojure-namespace</id>
+    <content type="html"><![CDATA[<p><h3>Motivation</h3></p>
+
+
+
+
+<p>I Just need some mechanism like "methondMissing" in Ruby. When a nonexistent var is called, the lookup system will try to call a "-var-missing" function in the namespace. This function should return a var and clojure compiler assumes this var as the one it was looking for.</p>
+
+
+
+
+<p>For example, in the shake library:<br />
+[cc lang="clojure"]<br />
+(ns shake.core)</p>
+
+
+
+
+<p>(defn -var-missing [sym]<br />
+  (create-executable-var sym))<br />
+[/cc]</p>
+
+
+
+
+<p>To support lazy loading, shake 0.3.0 won't read your path. It will now create vars on demand. So on calling sh/uname, a var named `uname` will be created. And to create a var, just use intern or eval.</p>
+
+
+
+
+<p>[cc lang="clojure"]<br />
+(require '[shake.core :as sh])<br />
+(sh/uname -a)<br />
+[/cc]</p>
+
+
+
+
+<p><h3>How to</h3></p>
+
+
+
+
+<p>I'm sorry there is no way to implement this except hacking into Clojure's compiler. Fortunately, it's not too difficult to find out the injection point. </p>
+
+
+
+
+<p>As you may know, there are two phases in Clojure compiler: expanding macros and evaluating forms. Both phases will look up vars to find macros or values. So we should take care both of them.</p>
+
+
+
+
+<p>All code diff is here:
+<script src="https://gist.github.com/3962750.js?file=Compiler.java"></script></p>
+
+
+
+
+<p><h3>Conclusion</h3>
+Adding -var-missing is just an attempt to implement lazy loading of vars. And it provides another smooth syntax for writing DSLs. But actually, Clojure's macro system provides a great metaprogramming mechanism. So in most case, you don't have to hack into the Compiler like this. Just put your DSL into a top level macro, and you can get them done all in clojure scripts. </p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[更新了stages]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/07/13/%E6%9B%B4%E6%96%B0%E4%BA%86stages/"/>
+    <updated>2012-07-13T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/07/13/更新了stages</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sunng87/stages">Stages</a>原先是业余时间开发的一个简单的框架，用来实现SEDA。不过现在这个库经过同事们的加强，已经用在了美味和zeen的生产环境。最近我也对开源的这个分支做了一些修改。</p>
+
+
+
+
+<p>首先是使用更安全的线程池，现在必须指定任务积压后的策略，即RejectionHandler。用户也可以设置自己的Queue，并且指定允许的大小。这是之前应该要做但是一直没做的事情。</p>
+
+
+
+
+<p>其次在Task上增加了一个priority属性，如果你使用的是PriorityBlockingQueue，那么任务会根据这个优先级排序。但是由于PriorityBlockingQueue是unbounded，所以请慎用这个功能。</p>
+
+
+
+
+<p>另外，现在所有的Task都通过perf4j计时，你可以用过配置log4j打印出性能报表日志。也可以通过JMX将耗时情况发布出去，我们在生产环境里通过ganglia监控了这些数据，还是比较有参考价值的。</p>
+
+
+
+
+<p>最后，现在jmx监控stage积压队列的功能终于实现了。我会把每个队列的pending tasks数量通过mbean暴露出来，同样可以配置监控这个数据。有了这个数据后，我们可以很明确地了解各个stage的压力情况，调整线程池的策略。</p>
+
+
+
+
+<p><img src="http://i.imgur.com/ashLh.png" alt="" /></p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[多线程服务器]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/04/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <updated>2012-04-12T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/04/12/多线程服务器</id>
+    <content type="html"><![CDATA[<p>写了挺长时间网络程序了，有些事到最近才弄明白，记录一下。</p>
+
+
+
+
+<p>写一个高性能的服务器，传统的BIO方式基本上已经被淘汰了，很难获得理想的性能。所以现在都是以事件驱动的方式来写，在Linux上用epoll,Java平台上就是NIO。再向上，有一些包装的库，比如twisted比如libevent比如Java上的Netty。</p>
+
+
+
+
+<p>Netty的server需要至少两组线程，BossPool和WorkerPool,。前者负责accept，后者负责r/w。通常的例子里，这就是仅有的两组线程。用户在框架之上的业务逻辑，写在handler里，以单线程的方式运行在worker线程上。</p>
+
+
+
+
+<p>这样的方式在很多例子里很普遍。但是如果handler里的业务逻辑比较复杂，尤其是IO的等待过长(比如查询数据库)，就会由于在handler上阻塞的时间过长，导致服务器读写的效率下降。所以通常是不能在这样环境下的handler里写IO阻塞的代码。</p>
+
+
+
+
+<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间，换取更高的利用率。</p>
+
+
+
+
+<p>但是随之而来了另一个问题，因为在handler中使用了多线程的模型。对顺序收到的包，交由不同的线程并行处理，就没有办法保证返回时的顺序。客户端就无法了解刚刚返回的包是对应哪个请求的。</p>
+
+
+
+
+<p>这个情况也有两种办法处理。其一是在线程管理上做文章，采用一种折中的办法。对于每一个客户端连接来说，仍然是占用同一个线程来处理。这样首先任务不会占用worker线程，其次在整体上仍然提高了CPU的利用率。但是这样做的缺点是，在单一客户端看来，任务仍然是串行执行: 三个需要耗时500ms的请求同时顺序发出，第三个至少要在1500ms之后才能收到响应，客户端的latency比较高。</p>
+
+
+
+
+<p>另一种，就是在应用协议层面做一个冗余字段，通常叫做serial id或者transaction id。客户端为每一个请求生成一个这样的id，并存储这个id对应的回调。服务器端不需要对包的顺序作任何关注，只需要把这个id原封不动地拷贝回去即可。这样，服务器就可以自由调度线程来处理请求。以上面的例子，在不繁忙的情况下，三个响应在500ms左右就都可以到达了。</p>
+
+
+
+
+<p>这种方式对应用协议有特殊的要求，但是比较常见的协议都预留了这个字段，Diameter协议甚至留了两个这样的字段来便于代理的实现。</p>
+
+
+
+
+<p>slacker 0.7.x基于aleph，由于aleph / lamina无法侵入协议层面，所以采用的都是顺序的客户端和服务器。这种方式编程非常简洁，协议设计简单，实现起来很快。但是作为RPC框架，一旦客户的函数阻塞较长，就会影响整体性能。0.8.0开始，通过新的协议和link库支持，slacker采用了transaction id的方式，服务器端默认使用并行处理，客户端不再依赖顺序指定响应和回调。尽管在一些CPU为局限的测试里性能有少许下降(与单线程相比，增加了调度的成本)，但是针对实际应用里IO等待较多的情况，新版本应该会表现出更好的综合性能。</p>
+
+
+
+
+<p>以上这些，就是最近的心得，希望能解释清楚事件驱动服务器里的这些事情。</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Slacker performance enhanced]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2012/04/02/slacker-performance-enhanced/"/>
+    <updated>2012-04-02T00:00:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2012/04/02/slacker-performance-enhanced</id>
+    <content type="html"><![CDATA[<p>In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure meetup, I will focus on the performance enhancement in next release. </p>
+
+
+
+
+<p>Now I have worked out a testable version. The new slacker core has been moved to a new NIO library, <a href="https://github.com/sunng87/link" target="_blank">link</a>. Compared with aleph, link is a thin wrapper of Netty. It takes some nice features from aleph (gloss codec dsl, elegant API), and drops the heavy abstraction, lamina. The new slacker client runs on a real nonblocking connection. Connection pooling is no longer needed.</p>
+
+
+
+
+<p>I have some performance benchmark to visualize the improvement. The test was made on my laptop (Intel(R) Core(TM)2 Duo CPU     T5870  @ 2.00GHz). It ran 400,000 calls with 40 threads on a local slacker server.</p>
+
+
+
+
+<p>slacker 0.7.0 (clojure 1.2, aleph 0.2.0): <strong>614005.059259msecs</strong>
+slacker 0.7.1-SNAPSHOT (clojure 1.3, aleph 0.2.1-beta2): <strong>409110.909142msecs</strong>
+slacker 0.8.0-SNAPSHOT (clojure 1.3, link 0.2.0-SNAPSHOT): <strong>42468.401522msecs</strong></p>
+
+
+
+
+<p><img src="http://i.imgur.com/gMtdo.jpg" alt="tps chart" /></p>
+
+
+
+
+<p>Check out the new slacker on the <a href="https://github.com/sunng87/slacker/tree/0.8-dev" target="_blank">0.8-dev</a> branch. </p>
+
+
+
+
+<p></p>
+
+]]></content>
+  </entry>
+  
+</feed>

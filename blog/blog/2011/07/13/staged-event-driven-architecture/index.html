@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Staged Event-Driven Architecture - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2011/07/13/staged-event-driven-architecture">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Staged Event-Driven Architecture</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信，这是线程被任务占用的时间就相对较长。如果请求的并发量很大，容器的线程池耗尽，新的请求就无法被处理，导致并发性无法提高，吞吐量也无法提高。</p>
+
+<p>实际上在大部分应用程序里，所谓代价很高的任务，往往都是I/O Bound。涉及网络通信，磁盘读写，线程被迫wait，CPU却是空闲的。所以，I/O Bound的程序理论上都还有优化的空间。于是有了这种Staged Event-Driven Architecture，即SEDA。</p>
+
+<p>SEDA的思路是将原先由一个线程完成的任务，分割为相对独立的多个阶段。每个阶段由专用的一组线程负责执行，阶段之间用过队列交互。又是上次提到的老话：If you cannot split it, you cannot scale it.</p>
+
+<p>例如，我们的业务逻辑是读取请求，操作数据库，与后端通信，操作数据库，写回结果。如果采用NIO的方式，网络通信可以认为是非阻塞的。而目前与数据库的交互，通常还是阻塞式的风格。这样这五个阶段分别是非阻塞、阻塞、非阻塞、阻塞、非阻塞。组塞操作容易成为性能瓶颈，CPU时间用于等待，占用率不高，所以对组塞操作可以分配相对多的线程；非阻塞操作速度较快，为了避免快速的切换导致sy升高，采用和CPU核数一样多的线程即可。</p>
+
+<p>这样，原本一个线程反复等待的阻塞操作，变成了部分线程等待的同时，其他线程仍然在处理自己的业务，有效使用CPU。利用的多核的优势，提高了CPU的占用，即提高了系统的处理能力。</p>
+
+<p>而对外部接口来说，当读取数据的线程在读取完毕之后，将任务dispatch到相应队列即返回，前端可以保证很高的处理速度，并发性也可以保证。任务被积压在阻塞操作的队列中，而消费阻塞操作的线程要多于提供者，在一定程度上也保证了处理速度。再退一步说，当阻塞操作的速度却是无法消费大量任务时，前端可以根据队列的大小判断当前系统的load，拒绝服务。</p>
+
+<p>当然，采用这种方式，只有在并发量提高到一定程度，并发成为系统瓶颈时才能体现价值。就单个操作而言，由于队列的传递，他的latency一定是有所上升的。</p>
+
+<p>关于SEDA，可以参考<a href="http://matt-welsh.blogspot.com/">Matt Welsh</a>的相关论文：The Staged Event-Driven Architecture for Highly-Concurrent Server Applications。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/shou-yi/'>手艺</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2011/07/13/staged-event-driven-architecture/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2011/07/13/staged-event-driven-architecture/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2011/07/09/%E8%87%AA%E5%88%B6%E5%B1%B1%E5%AF%A8%E6%91%A9%E5%8D%A1/" title="Previous Post: 自制山寨摩卡">&laquo; 自制山寨摩卡</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2011/07/18/heatcanvas-support-for-leaflet/" title="Next Post: HeatCanvas support for Leaflet">HeatCanvas support for Leaflet &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2011/07/13/staged-event-driven-architecture/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2011/07/13/staged-event-driven-architecture/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

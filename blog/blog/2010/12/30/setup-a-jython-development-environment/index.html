@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Setup a Jython development environment - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="This article will show you some basic steps to setup a standalone environment for Jython, with the power of some popular and standard tools. 0. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/12/30/setup-a-jython-development-environment">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Setup a Jython Development Environment</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-30T00:00:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This article will show you some basic steps to setup a standalone environment for Jython, with the power of some popular and standard tools.</p>
+
+<p><h3>0. Install essential tools</h3>
+Take Ubuntu Maverick as an example, before starting, you have to make sure these packages installed on your system.</p>
+
+<p><strong>Essential Python tools</strong> (Python is shipped with most Linux distribution by default)
+<i>sudo apt-get install python-pip python-virtualenv</i></p>
+
+<p><strong>Java</strong>
+<i>sudo apt-get install openjdk-6-jdk openjdk-6-jre</i></p>
+
+<p><strong>Jython</strong>
+The Jython package in Ubuntu repository is obsolete. Download Jython installer from official website. A full installation is recommended here.
+<a href="http://jython.org/downloads.html">http://jython.org/downloads.html</a></p>
+
+<p>As an optional step, I often move Jython direcotry to /usr/local/share/ , and use a symbol link to add Jython to PATH:
+<i>sudo ln -s /usr/local/share/jython/bin/jython /usr/local/bin/</i></p>
+
+<p><strong>Install additional Java tools</strong>
+<i>sudo apt-get install ant ivy</i></p>
+
+<p><h3>1. Create a standalone environment</h3>
+Jython 2.5 is fully compatible with virtualenv, so you can create a standalone environment just like what you do with python:
+<i>virtualenv -p /usr/local/bin/jython jython-env</i>
+<i>cd jython-env</i></p>
+
+<p>List the directory, you will see these files and directories:
+<ul>
+<li>bin/</li>
+<li>cachedir/</li>
+<li>Lib/</li>
+<li>jython.jar</li>
+<li>registry</li>
+</ul>
+Source the activate script:
+<i>source bin/activate</i></p>
+
+<p><h3>2. Download and install python packages</h3>
+Now the python environment is just ready, you can install python packages as you want. Install bottle, for example:
+<i>pip install bottle</i></p>
+
+<p><h3>3. Download and install Java dependencies</h3>
+This is the different step. As you know, the most important feature of Jython is availability of Java libraries to Python code. So we need some additional tools to manage Java dependencies. Popular Java lifecycle management tool <strong>Maven</strong> is not suitable here, because Maven is tightly depends on its archetype. <strong>Gradle</strong> is also known as a powerful build tool with DSL support. However, Gradle uses Groovy as the scripting language to create build file. Bringing Groovy to a Jython project seems terribly strange.</p>
+
+<p>So I prefer the traditional Ant way to manage dependencies. First of all, create a build file with following content:
+<strong>build.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="jython-env" default="resolve">
+    <target name="resolve" description="retrieve dependencies">
+        <ivy:retrieve pattern="javalib/[artifact]-[revision].[ext]" type="jar" />
+    </target>
+</project>
+[/cc]</p>
+
+<p>Then create an ivy xml to configure dependencies:
+<strong>ivy.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<ivy-module version="2.0">
+    <info organisation="info.sunng" module="jython-env" />
+    <dependencies>
+        <dependency org="commons-lang" name="commons-lang" rev="2.5" />
+    </dependencies>
+</ivy-module>
+[/cc]</p>
+
+<p>Also, as an optional step, you can overwrite default settings to configure ivy to use maven local repository.
+<strong>ivysettings.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<ivy-settings>
+    <settings defaultresolver="maven-or-not" />
+    <resolvers>
+        <chain name="maven-or-not" returnfirst="true">
+            <filesystem name="maven-local" m2compatible="true" />
+            <ibiblio name="ibiblio" m2compatible="true" />
+        </chain>
+    </resolvers>
+</ivy-settings>
+[/cc]</p>
+
+<p>All done, now you can download everything. In Ubuntu, default ivy installation, you have to specify ivy path in ant command line:
+<i>ant -lib /usr/share/java/ivy.jar</i></p>
+
+<p>You will see jars in <i>javalib</i>.</p>
+
+<p><h3>4. Reconfigure start up script</h3>
+The default Jython start up script is not friendly to external Java dependencies. To include jars, you have to use such dirty command line parameters:
+<i>jython -Dpython.path=javalib/commons-lang-2.5.jar:javalib/&#8230;</i></p>
+
+<p>To get rid of this, first rename bin/jython to bin/startJython. (Follow the Groovy naming convention)</p>
+
+<p>Then create a new bin/jython script wraps the old one:<br />
+[cc lang=&#8221;bash&#8221;]<br />
+#! /bin/bash</p>
+
+<p>JYTHON_CMD=&#8221;startJython&#8221;<br />
+JAVA_LIBS=&#8221;javalib/*.jar&#8221;<br />
+PYTHON_PATH=&#8221;&#8221;</p>
+
+<p>for lib in $JAVA_LIBS<br />
+do<br />
+    PYTHON_PATH=&#8221;$PYTHON_PATH:$lib&#8221;<br />
+done</p>
+
+<p>#echo $PYTHON_PATH<br />
+$JYTHON_CMD -Dpython.path=$PYTHON_PATH</p>
+
+<p>[/cc]</p>
+
+<p><h3>5. Run</h3>
+Finally, it comes to an end. Type jython to execute the interactive shell:
+<i>jython</i>
+<blockquort>
+Jython 2.5.1 (Release_2_5_1:6813, Sep 26 2009, 13:47:54)<br />
+[OpenJDK Server VM (Sun Microsystems Inc.)] on java1.6.0_20<br />
+Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#8220;license&#8221; for more information.<br />
+>>> from org.apache.commons.lang import BitField<br />
+>>> import bottle
+</blockquort></p>
+
+<p>Both Python and Java dependency is accessible. Now it&#8217;s time to get your new start.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-30T00:00:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/zhuang-bei/'>装备</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/12/30/setup-a-jython-development-environment/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/12/30/setup-a-jython-development-environment/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2010/12/28/my-first-http-server-soldat-http/" title="Previous Post: My first http server, soldat-http">&laquo; My first http server, soldat-http</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2011/01/01/happy-new-year/" title="Next Post: Happy New Year!">Happy New Year! &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/12/30/setup-a-jython-development-environment/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/12/30/setup-a-jython-development-environment/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>迁移pylonsbook chapter 8到pylons1.0 - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="Pylonsbook的第八章，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。 首先查看你使用的各种库的版本：
+paster shell development.ini
+[cc lang=&#8221;python&#8221;]
+import pylons &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">迁移pylonsbook Chapter 8到pylons1.0</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-12T00:00:00+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Pylonsbook的<a href="http://pylonsbook.com/en/1.1/starting-the-simplesite-tutorial.html">第八章</a>，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。</p>
+
+<p>首先查看你使用的各种库的版本：
+<i>paster shell development.ini</i>
+[cc lang=&#8221;python&#8221;]<br />
+import pylons<br />
+pylons.__version__<br />
+import sqlalchemy<br />
+sqlalchemy.__version__<br />
+import webhelpers<br />
+webhelpers.__version__<br />
+[/cc]</p>
+
+<p>Pylons 1.0开始鼓励通过继承Base类的声明式ORM（pylonsbook介绍的是pylons 0.9x，sqlalchemy 0.5x，使用mapper的方式）<br />
+对pylons1.0，mode/__init__.py中声明model的代码如下：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from sqlalchemy import *<br />
+from sqlalchemy.orm import relationship</p>
+
+<p>class PageTag(Base):<br />
+    __tablename__ = &#8216;pagetag&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;pagetag_seq_id&#8217;, optional=True), primary_key=True)<br />
+    pageid = Column(&#8216;pageid&#8217;, Integer, ForeignKey(&#8216;page.id&#8217;))<br />
+    tagid = Column(&#8216;tagid&#8217;, Integer, ForeignKey(&#8216;tag.id&#8217;))</p>
+
+<p>class Page(Base):<br />
+    &#8220;&#8221;&#8220;docstring for Page&#8221;&#8220;&#8221;<br />
+    __tablename__ = &#8216;page&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;page_seq_id&#8217;, optional=True), primary_key=True)<br />
+    content = Column(&#8216;content&#8217;, Text, nullable=False)<br />
+    posted = Column(&#8216;posted&#8217;, DateTime, default=now())<br />
+    title = Column(&#8216;title&#8217;, Unicode(255), default=u&#8217;Untitled Page&#8217;)<br />
+    heading = Column(&#8216;heading&#8217;, Unicode(255))</p>
+
+<p>    tags = relationship(PageTag, backref=&#8217;page&#8217;)<br />
+    comments = relationship(&#8220;Comment&#8221;, backref=&#8217;page&#8217;)</p>
+
+<p>class Tag(Base):<br />
+    &#8220;&#8221;&#8220;docstring for Tag&#8221;&#8220;&#8221;<br />
+    __tablename__ = &#8216;tag&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;tag_seq_id&#8217;, optional=True), primary_key=True)<br />
+    name = Column(&#8216;name&#8217;, Unicode(20), nullable=False, unique=True)</p>
+
+<p>class Comment(Base):<br />
+    __tablename__ = &#8216;comment&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;comment_seq_id&#8217;, optional=True), primary_key=True)<br />
+    content = Column(&#8216;content&#8217;, Text, default=u&#8221;)<br />
+    name = Column(&#8216;name&#8217;, Unicode(255))<br />
+    email = Column(&#8216;email&#8217;, Unicode(255), nullable=False)<br />
+    created = Column(&#8216;created&#8217;, TIMESTAMP, default=now())<br />
+    pageid = Column(Integer, ForeignKey(&#8216;page.id&#8217;))</p>
+
+<p>[/cc]</p>
+
+<p><em>init_model</em> 方法的内容也不相同，但是对Session的配置都是在Session.configure里进行。 如果设置autocommit=True，即使设置了autoflush=True仍然需要Session.flush()一下才能把变更写入数据库。否则，则需要显示调用Session.commit()</p>
+
+<p>在写controller的部分，pylonsbook大量用了<br />
+[cc lang=&#8221;python&#8221;]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.get(int(id))<br />
+[/cc]</p>
+
+<p>或<br />
+[cc lang=&#8221;python&#8221;]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.filter_by(id=id).first()<br />
+[/cc]<br />
+在新版本里只需要<br />
+[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
+c.page=Session.query(model.Page).get(id)<br />
+[/cc]<br />
+即可。</p>
+
+<p>在模板部分，pylons现在默认不依赖formbuild，所以文中提到的helper方法要额外安装formbuild库。不过这些也可以用过webhelper来实现，在lib/helpers.py里：<br />
+[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
+from webhelpers.html.tags import *<br />
+[/cc]</p>
+
+<p>在field.html中<br />
+[cc lang=&#8221;html&#8221;]</p>
+
+<p><p>Heading: ${h.text(<br />
+    &#8220;heading&#8221;<br />
+)}
+</p></p>
+
+<p><p>
+Title: ${h.text(<br />
+    &#8220;title&#8221;<br />
+)}
+</p></p>
+
+<p><p>
+Content: ${h.textarea(<br />
+    &#8220;content&#8221;, cols=40, rows=10<br />
+)}
+</p></p>
+
+<p>[/cc]</p>
+
+<p>模板中一个非常常用的方法url_for在pylons1.0里被改为pylons.url，需要修改/lib/helpers.py<br />
+[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
+from pylons import url<br />
+[/cc]</p>
+
+<p>书中所有的重定向都是直接设置response相关属性实现的，实际可以用redirect，结合url：<br />
+[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
+redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.id))<br />
+[/cc]</p>
+
+<p>分页部分，如果你使用的是sqlalchemy 0.6的话，随pylons 1.0发布的Webhelpers 0.6还不支持 sqlalchemy 0.6的query object，需要手动升级到1.2. (<i>easy_install -U webhelpers</i>)</p>
+
+<p>最后关于flash状态，webhelpers里有一个专门的实现，不过还是不太好用：
+<a href="http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/">http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-12T00:00:00+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/shou-yi/'>手艺</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2010/09/10/9%E6%9C%8810%E6%97%A5%E8%BF%90%E8%BD%AC%E8%AE%B0/" title="Previous Post: 9月10日运转记">&laquo; 9月10日运转记</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2010/09/15/hudson-tips/" title="Next Post: Hudson tips">Hudson tips &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

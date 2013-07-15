@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>bottle & fapws3 - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="Bottle是一个Python web框架，兼容wsgi标准，lightweight，self-contained。 提到web框架，自然要和相类似的python框架相比。 Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/07/21/bottle-fapws3">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bottle & Fapws3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-21T00:00:00+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://github.com/defnull/bottle">Bottle</a>是一个Python web框架，兼容<a href="http://www.python.org/dev/peps/pep-0333">wsgi</a>标准，lightweight，self-contained。</p>
+
+<p>提到web框架，自然要和相类似的python框架相比。</p>
+
+<p>Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点，使用Django意味着必须使用关系型数据库进行存储（尽管有一些Model层的其他实现，但绝大多数都是Hack的方式实现），必须使用Django并不非常出色的Template系统。Pylons针对Django的这些问题，采用了松散的方式，数据层可选择由SQLAlchemy实现，模板系统可以选择mako / jinja等。Pylons用paster来管理项目、创建代码模板。借鉴了rails的哲学，目录结构也相类似。可是pylons仍然显得重量级，把注意力放到web.py。只要定义一个router，定义相应的handler就可以处理web请求，handler对象的GET POST等方法分别对应相应的HTTP请求。看起来不错了，不过与bottle相比，webpy仍然显得繁琐、功能有限，而且它本身的db模块就更加鸡肋了。</p>
+
+<p>看一个实例便知：<br />
+定义一个简单的HTTP页面：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from bottle import Bottle, run, mako_view, request<br />
+from bottle import FapwsServer</p>
+
+<p>myapp = Bottle()</p>
+
+<p>@myapp.route(&#8216;/nihao/:name/:count#&#92;d+#&#8217;)<br />
+@mako_view(&#8216;nihao&#8217;)<br />
+def nihao(name, count):<br />
+    return dict(n=name, c=int(count), ip=request.environ.get(&#8216;REMOTE_ADDR&#8217;))</p>
+
+<p>run(app=myapp, server=FapwsServer)</p>
+
+<p>[/cc]<br />
+对应的nihao.tpl模板，用mako引擎实现：<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" /></head></html></p>
+
+<p>    <title>Nihao</title></p>
+
+<p>
+<body>
+    <div id="ip">
+        <h1 id="heading">Request From ${ip}</h1>
+    </div>
+    <%def name="greeting(n)">
+        <div id="name">
+            Nihao ${n}<br />
+        </div>
+    </%def>
+    % for i in range(c):<br />
+        ${greeting(n)}<br />
+    % endfor
+</body>
+
+[/cc]<br />
+仅仅是一些简单的内容，接着只需要：
+<i>python bottle-test.py</i>
+即可运行服务器。</p>
+
+<p>bottle通过decorator定义route规则，还支持url提取参数。通过decorator指定模板、模板引擎。可以说近乎简化到了极致。</p>
+
+<p>bottle遵循单一职责原则，不提供数据层的实现，由用户自己指定，bottle没有任何限制。模板引擎，bottle支持mako / jinja / cheetah，本身还内建一个默认SimpleTemplate引擎。bottle还支持多种wsgi服务器，包括flup / wsgiref / cherrypy / paste / twisted / tornado / fapws3 等等。</p>
+
+<p>最后提一个wsgi的实现<a href="http://github.com/william-os4y/fapws3">fapws3</a>，号称是目前最快的wsgi服务器。fapws3用libev实现，在不同的操作系统上采用不同的多路IO模型以达到高性能。</p>
+
+<p>bottle的作者做过一个关于不同实现的性能比较：
+<a href="http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance">http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-21T00:00:00+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/zhuang-bei/'>装备</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/07/21/bottle-fapws3/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/07/21/bottle-fapws3/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2010/07/17/bayeux-protocol/" title="Previous Post: Bayeux Protocol">&laquo; Bayeux Protocol</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2010/07/26/%E7%94%A8markdown%E4%B9%A6%E5%86%99%E6%96%87%E6%A1%A3/" title="Next Post: 用markdown书写文档">用markdown书写文档 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/07/21/bottle-fapws3/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/07/21/bottle-fapws3/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

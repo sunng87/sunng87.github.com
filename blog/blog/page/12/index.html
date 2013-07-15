@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content=" 今天用正在调试中的heatmap做了一个网站访问量的可视化。数据从google analytics得到，再通过我本地的geonames数据库做了geocoding（用google的就太慢了）。这里有一个live版本。 关于这个heatmap目前还在开发中，很快会介绍给大家的。
+">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/12">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/01/%E7%BD%91%E7%AB%99%E4%BA%94%E6%9C%88%E8%AE%BF%E9%97%AE%E9%87%8F%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96/">网站五月访问量的可视化</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-01T00:00:00+08:00" pubdate data-updated="true">Jun 1<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://i.imgur.com/cc0wj.png" alt="" title="Hosted by imgur.com" /></p>
+
+<p>今天用正在调试中的heatmap做了一个网站访问量的可视化。数据从google analytics得到，再通过我本地的geonames数据库做了geocoding（用google的就太慢了）。<a href="http://sunng.info/heatmap/googlemap.html">这里</a>有一个live版本。</p>
+
+<p>关于这个heatmap目前还在开发中，很快会介绍给大家的。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=a1aebb1c-f22a-8723-aff4-16528e75dae4" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/28/%E6%89%8B%E5%8A%A8%E8%AE%BE%E7%BD%AEfedora15%E7%BD%91%E5%8D%A1/">手动设置Fedora15网卡</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-28T00:00:00+08:00" pubdate data-updated="true">May 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天上午的Fedora更新，版本为<font face="monospace">0.8.999.3</font>的NetworkManager会致使NetworkManager和network service的版本不一致，从而导致网络功能无法使用。而这个时候要通过<font face="monospace">yum downgrade NetworkManager*</font>降级又没有网络连接可用，悲剧。</p>
+
+<p>这时只有手动设置网卡了。<font face="monospace">service network restart</font>和 <font face="monospace">service NetworkManager restart</font>都报告失败，<font face="monospace">ifconfig</font>查看网卡，只有本地回环启动。</p>
+
+<p>接下来接上网线，通过 <font face="monospace">ifconfig -a</font> 查看所有的网卡接口，例如我的接口叫做<font face="monospace">em2</font>.</p>
+
+<p>启动网卡
+<font face="monospace">ifconfig em2 up</font></p>
+
+<p>查看网卡情况
+<font face="monospace">ifconfig em2</font></p>
+
+<p>如果没有获得ip，可以通过dhcpclient获得ip
+<font face="monospace">dhclient -4 em2</font></p>
+
+<p>再查看网卡情况，如果获得了ip，可以尝试<font face="monospace">ping www.baidu.com</font>，如果出现network unreachable的报错，需要再配置一下路由信息，其中gw是你的网关：
+<font face="monospace">route add default gw 192.168.1.1</font></p>
+
+<p>这时你的网络应该暂时可用了，立刻执行<font face="monospace">yum downgrade NetworkManager*</font>降级吧。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=551018aa-7e6c-81e6-b79a-bc1751d9b7be" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/15/jip-0-5-1-released/">Jip 0.5.1 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-15T00:00:00+08:00" pubdate data-updated="true">May 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just rolled out <a href="https://github.com/sunng87/jip/tree/v0.5.1">jip 0.5.1</a> as a bugfix version of 0.5. It has been published to <a href="http://pypi.python.org/pypi/jip">pypi</a> and you can install it with <font face="monospace">pip install jip</font> in your virtualenv.</p>
+
+<p>From 0.5, you have new features available:
+<ul>
+<li>User-Agent &#8217;<font face="monospace">jip/0.5</font>&#8217; is added to http request.</li>
+<li>New command `<font face="monospace">freeze</font>` just like pip.</li>
+<li>Improved jar downloading. By default, at most 3 jars are downloaded in parall.</li>
+</ul></p>
+
+<p>In 0.5.1, bugs were fixed:
+<ul>
+<li>Repositories defined in pom are now included for <font face="monospace">install</font> command.</li>
+<li>Placeholder resolving of <font face="monospace">#{pom.groupId}</font> is corrected. (<a href="http://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2.pom">instance</a>)</li>
+<li><font face="monospace">urllib2.URLError</font> is caught to prevent dump.</li>
+</ul></p>
+
+<p>For any problem and feature request, please refer to <a href="https://github.com/sunng87/jip/issues">github issue tracker</a>.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=cd9406ce-d82b-81e1-b547-7c00f498be8b" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/13/%E7%94%A8coffeescript%E9%87%8D%E5%86%99%E4%BA%86%E9%A6%96%E9%A1%B5/">用coffeescript重写了首页</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-13T00:00:00+08:00" pubdate data-updated="true">May 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午有时间看了一下<a href="http://jashkenas.github.com/coffee-script/">coffeescript</a>，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/apple几家坐下来慢慢聊了，民间的力量就可以实现。</p>
+
+<p>coffeescript的几个特点也属于博采众长：
+<ul>
+<li>类似python的，以缩进取代代码块</li>
+<li>类似ruby/perl，方法调用括号可选</li>
+<li>类似ruby，无须return</li>
+<li>正常的类声明语法</li>
+</ul></p>
+
+<p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
+
+<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/09/%E5%AE%89%E8%A3%85exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6%E5%8F%8Agnome-shell%E6%89%A9%E5%B1%95/">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-09T00:00:00+08:00" pubdate data-updated="true">May 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。</p>
+
+<p><h3>下载</h3>
+从github上下载相应的版本：
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/0.0.10-dbus</pre>
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension/zipball/0.0.1</pre>
+<pre>$ ls
+sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip
+sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
+</pre></p>
+
+<p><h3>解压安装</h3>
+如果你已经安装过exaile豆瓣电台插件，可以先删除旧版本：
+<pre>$ rm -rf ~/.local/share/exaile/plugins/doubanfm</pre></p>
+
+<p>解压缩下载的文件：
+<pre>$ unzip sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
+$ unzip sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip</pre></p>
+
+<p>移动到指定的目录：
+<pre>$ mv sunng87-exaile-doubanfm-plugin-90f7175/ ~/.local/share/exaile/plugins/doubanfm
+$ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome-shell/extensions/exaile-doubanfm-gnome-shell-extension</pre></p>
+
+<p><h3>配置</h3>
+启动Exaile，通过菜单“编辑-&gt;首选项-&gt;插件”，激活doubanfm，<b>禁用lastfm covers</b>。如图设置插件：
+<img src="http://i.imgur.com/TFKU3.png" title="Hosted by imgur.com" /></p>
+
+<p>重启GNOME-Shell，按下alt+f2，输入r，回车。</p>
+
+<p><h3>使用</h3>
+启动exaile，可以通过文件菜单打开豆瓣电台频道。可以通过ctrl+d或者视图菜单切换到豆瓣电台视图：
+<img src="http://i.imgur.com/1vPpz.png" title="Hosted by imgur.com" /></p>
+
+<p>当然也可以通过gnome-shell扩展的菜单控制豆瓣电台的播放。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=ef5913a1-4c72-827d-837e-15abc25dcc92" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/07/gnome-shell-extension-for-exaile-doubanfm-plugin/">GNOME-Shell Extension for Exaile DoubanFM Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-07T00:00:00+08:00" pubdate data-updated="true">May 7<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从有这个动机到基本可用，花了整整一天的时间。现在可以通过GNOME-Shell的一个小菜单从外部控制Exaile豆瓣电台了。它的意思就是说如果你使用Gnome-Shell，你可以把Exaile界面扔到一个你不想看到的地方去，比如第n+1个workspace。然后通过左上角的菜单来控制豆瓣电台的播放。见多识广的你不会对此感到太惊奇，其实它和Ubuntu上的Sound Menu Indicator类似，不过是专门给豆瓣电台设计的。
+<a href="http://www.flickr.com/photos/40741608@N08/5696429062/" title="Exaile with doubanfm plugin by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5104/5696429062_7f62a4d7f2.jpg" alt="Exaile with doubanfm plugin" height="313" width="500" /></a></p>
+
+<p>要实现这个功能，需要播放器通过dbus来expose一些接口供外部程序调用，它和Sound Menu是一样的，通过dbus来解耦。开发起来比较困难的是目前GNOME-Shell的API还不成熟，还没有文档，传统的javascript object inspect方法似乎在这个mozjs的环境里也不能用，所以实在是无从知道一些API。更不要提通过gjs来调用dbus了。网上有一些文档起了很大的作用，如果你也感兴趣，这些文章是：
+<ul><li>开发GNOME-Shell Extension：<a href="http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html">http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html</a></li>
+<li>gjs调用dbus： <a href="http://blog.roodo.com/rocksaying/archives/14229429.html">blog.roodo.com/rocksaying/archives/14229429.html</a></li>
+</ul></p>
+
+<p>支持dbus的exaile-doubanfm-plugin会在stable之后合并到主干供大家使用。现在和gjs一样，它的API也不稳定，所以放在分支中：
+<a href="https://github.com/sunng87/exaile-doubanfm-plugin/tree/dbus">https://github.com/sunng87/exaile-doubanfm-plugin/tree/dbus</a></p>
+
+<p>gnome-shell extension的代码现在也放在github上（其实还不成熟的东西放到bitbucket比较好的）。有兴趣可以了解：
+<a href="https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension">https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension</a></p>
+
+<p>以上都是unstable，仅供吊胃口之用。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=a656b959-d8af-8db6-8cbc-e246c779cf1c" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/">去西安</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-03T00:00:00+08:00" pubdate data-updated="true">May 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>除了02年在北京打了几天酱油，我还没有因为打着去玩的旗号出过远门（到镇江这里就不算远门了）。今年五一痛下决心，卷入五一滚滚洪流，抱着轻度腹胀不下火线的精神，突破了我所到达的经度下限。
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=108.378,33.958,109.39,34.539&amp;layer=mapnik" style="border: 1px solid black"></iframe><br /><small><a href="http://www.openstreetmap.org/?lat=34.2485&amp;lon=108.884&amp;zoom=10&amp;layers=M">View Larger Map</a></small></p>
+
+<p>我坐的K560是一趟开到延安老区的车，老区人民伤不起，一路上尽给到乌鲁木齐到拉萨的车让道了。晚上在上铺作原地翻滚，发现铁皮太厚根本没有信号，为了不虚此行，早晨7点就从上面跳下来，在窗边占个座位打开GPS。抬头一看已经到了开封，不对，才到开封。
+<a href="http://www.openstreetmap.org/user/Sunng/traces/1001751">http://www.openstreetmap.org/user/Sunng/traces/1001751</a></p>
+
+<p>到了西安已经是下午三点半，找到<a href="http://torrge.me/">老支书</a>，见到身强体壮的新版寇巨头。晚上我们就在曲江新区迷了路，冥冥之中深夜里摸到了我国第一个官二代并富二代，胡亥长眠的地方。最后还好老支书迷途知返，及时拿出诺基亚表明自己身份，与二代们划清界限，我们才又绕道大雁塔回了住处。
+<a href="http://www.flickr.com/photos/40741608@N08/5682156883/" title="DSC_0018 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5069/5682156883_de539a9bc6.jpg" alt="DSC_0018" height="335" width="500" /></a></p>
+
+<p>第二天是逛城墙。逛城墙之前先说一下出发前吃的腊汁肉揪片，太好吃了，就是油有点大：我当时就指出如果是吃面条吃出高血脂脂肪肝什么的，跟那帮大鱼大肉的比起来实在是有点冤枉。扯回来，西安现存的城墙是明代以后的，保存完好，不过不大，GPS显示周长在15公里左右。从城墙的东西南北四个门上去都可以租到自行车，默认是100分钟，基本上可以很宽裕地把全程骑行下来。
+<a href="http://www.openstreetmap.org/user/Sunng/traces/1001753">http://www.openstreetmap.org/user/Sunng/traces/1001753</a>
+<a href="http://www.flickr.com/photos/40741608@N08/5682732066/" title="DSC_0025 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5023/5682732066_9d8ea3a532.jpg" alt="DSC_0025" height="500" width="335" /></a></p>
+
+<p>那天天气不太好，本来想拍拍城墙上夕阳斜照点点余辉什么的，结果相机没有被淋雨已经万幸了。况且西安经度比较低，太阳落山的时间要晚不少，执着于点点余辉的话，挑个好天先去吃一顿在上城墙吧。
+<a href="http://www.flickr.com/photos/40741608@N08/5682165935/" title="DSC_0035 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5021/5682165935_ea19227047.jpg" alt="DSC_0035" height="335" width="500" /></a></p>
+
+<p>主题来了，下了城墙我们直奔<del datetime="2011-05-04T12:35:03+00:00">钟</del>鼓楼后面的回民街。用老支书的话说，这都是硬菜，花样繁多个个顶事，瓶颈不再别处，在你的胃。去了才发现战斗力低下，我们前后去了两次，吃了羊肉馅饼、羊肉串、镜糕、桂花糕、灌汤包、小酥肉。我就不一一描述了，说得再好吃也得真正去了才能体会。去不了就看看吧：
+<a href="http://www.flickr.com/photos/40741608@N08/5683869110/" title="DSC_0056 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5024/5683869110_2fe22459fe.jpg" alt="DSC_0056" height="335" width="500" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/5683303271/" title="DSC_0059 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5102/5683303271_4f4490d2b9.jpg" alt="DSC_0059" height="500" width="336" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/5683869494/" title="DSC_0058 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5190/5683869494_7ea613f211.jpg" alt="DSC_0058" height="335" width="500" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/5683305289/" title="DSC_0067 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5105/5683305289_f0f81393ab.jpg" alt="DSC_0067" height="335" width="500" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/5683872666/" title="DSC_0069 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5227/5683872666_fd2a4f9c18.jpg" alt="DSC_0069" height="500" width="336" /></a>
+这个是卖桂花糕的大叔，pose很专业，但是遇到不专业的人拍照。大叔我对不起你啊！
+<a href="http://www.flickr.com/photos/40741608@N08/5683307385/" title="DSC_0077 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5065/5683307385_615a7883d0.jpg" alt="DSC_0077" height="500" width="336" /></a></p>
+
+<p>更多照片请移步到<a href="http://www.flickr.com/photos/40741608@N08/">flickr</a>。此外您应当理解，在这种环境下，是没有心思好好拍照的。</p>
+
+<p>最后感谢老支书无微不至的接待。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=20f8d469-f3be-8f4a-8906-0f0eccb11b3b" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/29/convert-a-python-function-to-java-anonymous-class/">Convert a Python Function to Java Anonymous Class</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-29T00:00:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When calling Java with Jython, anonymous inner class might be an issue because there is no such equivalent in Python.</p>
+
+<p>In GUI programming, jython made additional effort on AWT event processing. You can pass a python function as some types of event listener.<br />
+[cc lang=&#8221;python&#8221;]<br />
+def change_text(event):<br />
+    print &#8216;Clicked!&#8217;</p>
+
+<p>button = JButton(&#8216;Click Me!&#8217;, actionPerformed=change_text)<br />
+frame.add(button)<br />
+[/cc]</p>
+
+<p>Described in the <a href="http://www.jython.org/jythonbook/en/1.0/GUIApplications.html">Definitive Guide of Jython</a>:</p>
+
+<p><blockquote>This works because Jython is able to automatically recognize events in Java code if they have corresponding addEvent()* and *removeEvent() methods. Jython takes the name of the event and makes it accessible using the nice Python syntax as long as the event methods are public. </blockquote></p>
+
+<p>However, it does not work with Runnable, Callable and many other interfaces designed for anonymous usage.</p>
+
+<p>To solve the incompatibility, I created a small decorator that converts Python function to a Java object.
+<script src="https://gist.github.com/947926.js"> </script></p>
+
+<p>Thanks to python&#8217;s dynamic magic, we can create class in runtime and assign modified method to a particular instance. The conversion is performed once the function loaded. Also, you can pass something as arguments to constructor.</p>
+
+<p>With anonymous_class decorator, the example above can be written as:<br />
+[cc lang=&#8221;python&#8221;]<br />
+from javax.swing import JButton, JFrame<br />
+from java.awt.event import ActionListener</p>
+
+<p>frame = JFrame(&#8216;Hello, Jython!&#8217;,<br />
+            defaultCloseOperation = JFrame.EXIT_ON_CLOSE,<br />
+            size = (300, 300)<br />
+        )</p>
+
+<p>@anonymous_class(ActionListener, &#8220;actionPerformed&#8221;)<br />
+def change_text(dummy, event):<br />
+    print &#8216;Clicked!&#8217;</p>
+
+<p>button = JButton(&#8216;Click Me!&#8217;, actionPerformed=change_text)<br />
+frame.add(button)<br />
+frame.visible = True<br />
+[/cc]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/28/gpars%E7%9A%84actor%E5%AE%9E%E7%8E%B0/">GPars的Actor实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-28T00:00:00+08:00" pubdate data-updated="true">Apr 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Actor是一种Continuation技术，可以在少量的线程运行大量Actor对象。Actor对象之间通过消息机制进行交互。而Actor本身线程安全，这样的模型使并发编程的复杂度降低，同时也在一定的场景下实现了可扩展性。</p>
+
+<p>gpars是Java和Groovy都可以使用的并行编程库，他实现了Actor、Agent、DataFlow等模型，旨在为Groovy提供高层的并行编程模型。以下分析gpars 0.12中非阻塞Actor的实现。</p>
+
+<p>[cc lang=&#8221;groovy&#8221;]<br />
+@Grab(&#8220;org.codehaus.gpars:gpars:0.11&#8221;)<br />
+import groovyx.gpars.actor.Actors</p>
+
+<p>def worker = Actors.actor {<br />
+    loop {<br />
+        react {<br />
+            reply it.reverse()<br />
+        }<br />
+    }<br />
+}</p>
+
+<p>def console = Actors.actor {<br />
+    worker << "Hello GPars"<br />
+    react {<br />
+        println it<br />
+    }<br />
+}</p>
+
+<p>console.join()<br />
+[/cc]</p>
+
+<p>首先，在工厂类中Actors里会初始化一个DefaultPGroup用来封装后台的线程池、管理actors。Actors默认使用ResizeablePool，他是JDK Concurrent Framework中的ThreadPoolExecutor的封装，coreSize和maxSize不同所以称Resizeable。</p>
+
+<p>Actors的工厂方法actor生成的是DefaultActor，它是非阻塞actor的默认实现。（ActorGroup:67）</p>
+
+<p>DefaultActor的构造方法接受一个Groovy的闭包对象，将其封装为DefaultActorClosure对象后，调用其父类AbstractLoopingActor的initialize方法（DefaultActor：73）.</p>
+
+<p>initialize方法创建一个Runnable对象AsyncMessagingCore，并将线程池传递给core对象。（AbstractLoopingActor:57）AsyncMessagingCore对象负责消息的传递和处理，是线程池处理的目标对象。</p>
+
+<p>调用start启动actor后，actor会向自己发送一个start消息（AbstractLoopingActor:173）.<br />
+core获得start消息后，调用DefaultActor覆盖的handleStart方法（DefaultActor:328）。</p>
+
+<p>在handleStart中，actor会调用用户传入的闭包方法。上面的例子是一种典型的用法，loop是DefaultActor中的方法，loop也并不是无限空转的，他仅在收到消息被时被触发（DefaultActor:191）react也是DefaultActor中的方法，它将nextContinuation方法设为内部闭包对象，用来处理actor接收的消息。</p>
+
+<p>向Actor发送消息，是通过actor的send方法和重载的leftShift运算符进行操作。（AbstractLoopingActor:236）actor调用core的store方法，将ActorMessage压入core的队列中。入队列之后，core会检查锁对象activeUpdater，判断当前core是否在线程处理中，如果不在，则将core加入线程池中处理。activeUpdater是一个AtomicIntegerFieldUpdater对象，他的compareAndSet可以保证原子性。而通过activeUpdater也可以保证同一时刻只有一个core被线程池处理，从而使actor的线程不安全代码也线程安全地运行。</p>
+
+<p>进入线程池后，core首先将自己放进threadlocal对象中，并保存当前线程的引用。然后会循环消费MessageQueue中的消息直至Queue的可处理部分为空。（AsyncMessagingCore:126）。handleMessage在AbstractLoopingActor中被覆盖，会根据消息的类型进行分发调用（前面提到的start消息就是一种）。默认的业务消息，在DefaultActorClojure中调用DefaultActor的onMessage方法处理。</p>
+
+<p>onMessage中，react的闭包会被调用来处理业务。之后nextContinuation被置为null，这时loop闭包被重新调用，react闭包重新被赋给nextContinuation。这部分代码就是前面所说的loop并非空转，而是在消息处理完成后重新准备而已。</p>
+
+<p>此外，core的MessageQueue的实现是DefaultMessageQueue。它使用两个LinkedList作为输入（向actor输入）队列和输出队列，当输入队列为空时，通过同步方法swap交换输入输出队列。swap是整个actor系统里唯一一个同步方法。这样的机制保证actor的core在线程池中处理时，外界仍然可以向actor发送消息，消息会在actor被调度出线程池之前全部处理掉。不过，他的前提是只有一个线程读这个队列，这个条件在actor系统里，通过core对象的activeUpdater可以有效的保证。</p>
+
+<p>Actor模式采用这种onDemand方式的线程使用，允许大量的actor共存，并只有活跃的actor会占用线程，非活跃状态的actor处在dettach状态，并不消耗计算资源，取消了空转的loop。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou/">GPS Track of Train K221: Nanjing to Guangzhou</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-26T00:00:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>GPS Logger完成了它有生以来最长的一次旅行，1477分钟，行程1767公里，途径江苏、安徽、江西、湖南、广东，包含了宁芜线、浙赣线、京广线等。有了GPS终端，贴地的旅途就变成一件非常严肃的事情。这周末去西安，这个GPS也是16个小时上铺车程唯一的安慰了。
+<a href="http://www.flickr.com/photos/40741608@N08/5657757338/" title="Railway-K221 - Viking by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5305/5657757338_9bbcc6af42.jpg" alt="Railway-K221 - Viking" height="302" width="500" /></a></p>
+
+<p>这个数据分享在OpenStreetMap上，也许你会感兴趣：
+<a href="http://www.openstreetmap.org/user/Sunng/traces/996794">http://www.openstreetmap.org/user/Sunng/traces/996794</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=e4cdedff-8fec-852d-876b-830e16846036" /></div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/11/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

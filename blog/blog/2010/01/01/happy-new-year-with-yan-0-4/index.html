@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Happy new year with Yan 0.4 - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/01/01/happy-new-year-with-yan-0-4">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Happy New Year With Yan 0.4</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the project itself. We have great changes in all modules.  Packages have been rearranged and renamed to be more comprehensible. Let&#8217;s dive into the changeset:
+<h3>Changeset</h3>
+<ul>
+	<li>ApiKey database derby / h2 support, still use hsql as default because it&#8217;s fastest (#9)</li>
+	<li>Captcha provider classes now loaded dynamically on runtime. They are not managed by guice container any longer. (#15)</li>
+	<li>The useless cache module was completely removed (#10)</li>
+	<li>ApiKey CR<span style="text-decoration: line-through;">U</span>D UI has been replaced by RESTful GET/PUT/DELETE interfaces</li>
+	<li>For text-based captcha, just return the question in ticket, no need for (also impossible to)  retrieve it from browser (#8)</li>
+	<li>Resource has been separated from the project file (#14 #18)</li>
+	<li>Add test to make sure the /ticket and /validate request are sent by the same application (#17)</li>
+	<li>Standardized error output: use HTTP error for client(browser), a selected error object for application (#24 #26)</li>
+	<li>/captcha/ request (invoked by client directly) now accepts configuration parameters</li>
+	<li>ApiKey is now binded to specified domain, it will check the /captcha request&#8217;s referer (#27)</li>
+	<li>NEW captcha provider introduced in: Tiled Image Captcha (#12)</li>
+	<li>JMX monitoring support on EhCache (#33)</li>
+	<li>a great deal of code improvements and bug-fixes</li>
+</ul>
+<h3>Interface changes</h3>
+The object return by /ticket has its attribute &#8220;url&#8221; renamed to &#8220;data&#8221;.
+<h3>Screenshots</h3>
+Use visualvm or jconsole the monitor ehcache status and statistics (enabled in 0.4 by default):</p>
+
+<p><img class="alignnone" src="http://farm5.static.flickr.com/4034/4231348850_db1b877ba8.jpg" alt="" width="500" height="313" /></p>
+
+<p>The new captcha provider in ruby and python sample application (<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">Sample Code</a>):</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2645/4230582459_bf63ce6677.jpg" alt="" width="500" height="313" />
+<h3>Download &amp; Deploy</h3>
+Since 0.4, yan package are available for download directly. Please refer to the  <a href="http://bitbucket.org/sunng/yan/downloads/" target="_blank">download page</a>, grab both yan-0.4.war and yan-resource.tar.bz2. Just throw the war package to your servlet container.  Then extract the resource package to your disk. Don&#8217;t forget to set the environment variable:
+<em>export YAN_RESOURCE=/path/to/your/resource</em></p>
+
+<p>Start the servlet container in the same context, browser <em>http://localhost:8080/yan-0.4/</em> to see the test page and emulate the captcha process.
+<h3>Retrieve the code</h3>
+Clone the mercurial repository from bitbucket.org</p>
+
+<p><em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
+
+<p>You will get a copy of whole code repository (because mercurial is a distributed version control system). You are on the default branch at the beginning. The default branch maintains the code of 0.4, if you want to see latest things on Yan, switch to the development branch by</p>
+
+<p><em>$ hg update 0.5-dev</em></p>
+
+<p>Yan 0.5 is already on the way.
+<h3>Reporting Issue</h3>
+Issue reporting and patch submitting are always welcomed. Check the <a href="http://bitbucket.org/sunng/yan/issues/" target="_blank">issue tracker on bitbucket</a>, you will find <a href="http://bitbucket.org/sunng/yan/issues/?kind=proposal&amp;version=0.5" target="_blank">new features</a> in 0.5</p>
+
+<p>Thanks for your support and <img class="alignnone" src="http://farm5.static.flickr.com/4030/4231554900_935d453250_o.png" alt="" width="250" height="40" />!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/ann/'>ANN</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/01/01/happy-new-year-with-yan-0-4/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/01/01/happy-new-year-with-yan-0-4/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2009/12/31/uncle-wang-%E4%BB%96%E5%8E%BB%E5%B9%B4%E9%80%80%E4%BA%86%E4%BC%91/" title="Previous Post: Uncle Wang 他去年退了休">&laquo; Uncle Wang 他去年退了休</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2010/01/04/oauth-step-by-step/" title="Next Post: OAuth Step by Step">OAuth Step by Step &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/01/01/happy-new-year-with-yan-0-4/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/01/01/happy-new-year-with-yan-0-4/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

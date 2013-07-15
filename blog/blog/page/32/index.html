@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="今天下午看到了这个豆瓣架构发展历程的PPT，是今年上半年QCon上的，看了以后感觉很有启发意义。随着用户量的增大，压力的增加，功能的扩展，豆瓣架构上做出相应的变化，从最初一台机器上跑lighttpd/mysql/Quixote/memcached到现在的DoubanFS存储， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/32">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/09/%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95ppt%E8%BD%AC/">豆瓣架构发展PPT[转]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-09T00:00:00+08:00" pubdate data-updated="true">Oct 9<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天下午看到了这个豆瓣架构发展历程的PPT，是今年上半年QCon上的，看了以后感觉很有启发意义。随着用户量的增大，压力的增加，功能的扩展，豆瓣架构上做出相应的变化，从最初一台机器上跑lighttpd/mysql/Quixote/memcached到现在的DoubanFS存储，DoubanDB分布式Key-Value Store，加上多台mysql，多台appserver，专门的后台运算服务器等等。</p>
+
+<p>PPT地址：
+<a href="http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf" target="_blank">http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf</a></p>
+
+<p>可惜因为字体的问题好像在Evince里很多中文字看不到，还得开一下虚拟机。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/08/%E9%98%BF%E5%B7%B4/">阿巴</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-08T00:00:00+08:00" pubdate data-updated="true">Oct 8<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>早晨八点半下楼开自行车锁，突然听见背后有微弱的声音。回头一看是个老太太坐在轮椅上，眼睛直直地盯着我，嘴里含糊不清地发出阿巴阿巴的声音。我自然是听不懂她说什么了，继续开锁。十月份虽然还是阳光普照，但是风里已经有点肃穆的意思了。这样的天气，年纪大了的人独自在外面这么坐着，想起来还是很残酷的。我推车要走，老太太还是盯着我阿巴阿巴地喊。假日的早晨小区里空空荡荡，遇到这样的场面还真有点超出“奇怪”能表达的意思。我又不好意思头也不回就走，推着自行车走上前去，想问老太太点什么，但是好像又无从问起，最后大约问了些“您怎么在这里”，“您的家里人在哪”这类的问题。最终都没有形成对话，老太太还是自顾自颤颤巍巍地喊阿巴阿巴。这个时候旁边单元出来个中年妇女远远说了什么一句，我听不懂，只是听到“神经病”三个字。一看有亲戚在旁边，我想眼前这一切大约都还在别人的可控范围里，可以走了。</p>
+
+<p>也不知道这个阿巴到底是什么意思，或者说于老人自己是什么意思。路上我故意想得戏剧性一些，难道是老太太的什么亲人，早年走失的儿子？当然了，很有可能只是一个老人丧失语言能力之后惟一能发出的声音而已。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/06/%E5%88%B0%E5%A4%B4%E4%BA%86/">到头了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-06T00:00:00+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不管这是不是30号下午我伸直了脖子期待的国庆假期，总之伴随明天早晨8点45分打卡机一声鸣音它是要见鬼去了。8号？8号用来中和后一天的周一综合症吧，不指望了。今年国庆真是无聊到一定程度了，我印象中似乎从来都还没有这么无聊过。本来还想着靠自己一些勉强存在的兴趣爱好来抵抗无聊的，后来发现是不堪一击。概括地说这六天看了整整六天的喜羊羊。上帝啊。好像也不完全是，还听了很多革命歌曲看了一些老电影。总之正经事是没有什么明显的进度，哎呦不说了，我现在连什么是正经事都说不清楚。</p>
+
+<p>在上海一点出门的欲望了都没有，六天以来取得最远的地方就是旁边的超市，其中还有包括今天在内的三天连楼都没下去。豆瓣上本来还有个老电影的活动来着，结果正好是明天加班，想去也去不成。形势危急，主办方发了三封豆邮说大家快去，不然这个活动办不下去了。我想着在北京的时候还有点兴趣爱好什么的，那么严酷的斗争环境，周末还去听个讲座参加个沙龙什么的，在上海就一点胃口都没有了。要不以后还是找机会去北京吧，但是去干什么呢，真无聊。</p>
+
+<p>今天突然冒出个想法，要是能重活一次的话，我马上毫不犹豫爬到楼顶跳下来reset。</p>
+
+<p>好在好在，明天就回公司了，要试着配一下ehcache的集群，有时间的话比较一下RMI方式和JGroup方式的性能，再做下一步打算。对了，还有一个系统的维护指南要写。</p>
+
+<p>我还是想想明天上班Syu时的情景吧。</p>
+
+<p>PS:此文是用Firefox的插件ScribeFire发的</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/06/mapping-geometry-in-grails-and-mysql/">Mapping Geometry in Grails and MySQL</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-06T00:00:00+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>针对地理数据的ORM，有一个Hibernate的扩展<a href="http://www.hibernatespatial.org/" target="_blank">HibernateSpatial</a>项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
+<a href="http://www.grails.org/MySQL+GIS-Geometry+with+Grails" target="_blank">http://www.grails.org/MySQL+GIS-Geometry+with+Grails</a></p>
+
+<p>不过按照这个文章里介绍的方法用，很可能会遭遇这样的报错：
+<blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
+这个问题最终在这里得到了解答：
+<a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
+按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition，对应的Hibernate属性是sql-type。虽然作者承诺会在今后的版本里修改这个问题，不过眼下的M2版本还没有修正这个问题。为此，Grails的用户特地提出在Grails中加入sql-type的支持：
+<a href="http://jira.codehaus.org/browse/GRAILS-3201" target="_blank">http://jira.codehaus.org/browse/GRAILS-3201</a>
+现在按照下面文档的说明，可以在mapping里指定sqlType了：
+<a href="http://grails.org/doc/latest/ref/Database%20Mapping/column.html" target="_blank">http://grails.org/doc/latest/ref/Database%20Mapping/column.html</a></p>
+
+<p>实例代码里的domain定义应该改成：
+<pre class="brush:groovy">
+import com.vividsolutions.jts.geom.Polygon
+import org.hibernatespatial.GeometryUserType</pre></p>
+
+<p>public class MyPoly {<br />
+    String name<br />
+    Polygon poly</p>
+
+<p>    static mapping = {<br />
+        poly type: GeometryUserType， sqlType:&#8221;GEOMETRY&#8221;<br />
+    }</p>
+
+<p>}
+
+于是，再也没有莫名其妙的No Dialect报错了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/05/reading-gps-data-from-exif-using-groovy/">Reading GPS Data From EXIF Using Groovy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-05T00:00:00+08:00" pubdate data-updated="true">Oct 5<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>废话不说了，直接上code吧：</p>
+
+<p><pre class="brush:groovy">
+import com.drew.imaging.jpeg.*;
+import com.drew.metadata.*;
+import com.drew.metadata.exif.*;</pre></p>
+
+<p>file = new File(&#8220;sample.jpg&#8221;);<br />
+meta = JpegMetadataReader.readMetadata(file);</p>
+
+<p>gpsdir = meta.getDirectory(GpsDirectory.class);<br />
+lat = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LATITUDE);<br />
+lon = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LONGITUDE);<br />
+lats = lat[0].doubleValue() + lat[1].doubleValue()/60 + lat[2].doubleValue()/3600;<br />
+lons = lon[0].doubleValue() + lon[1].doubleValue()/60 + lon[2].doubleValue()/3600;<br />
+println(lats);<br />
+println(lons);
+</p>
+
+<p>metadata-extractor似乎是现在惟一的读取exif信息的java库。在ivy中可以添加这样一个依赖：</p>
+
+<p><pre class="brush:xml">
+&lt;dependency org=&quot;com.drewnoakes&quot; name=&quot;metadata-extractor&quot; rev=&quot;2.4.0-beta-1&quot; conf=&quot;runtime&quot;/&gt;
+</pre></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/04/gnome-shell/">Gnome Shell</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-04T00:00:00+08:00" pubdate data-updated="true">Oct 4<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>续昨，好吧，这个无聊的国庆假期就献给karmic了。gnome-shell已经可以在软件仓库里找到了，apt-get安装即可。要使用gnome-shell可以执行
+<em>gnome-shell &#8211;replace</em></p>
+
+<p>要把gnome-shell作为默认的窗口管理器，打开gnome的配置编辑器，找到/desktop/gnome/session/required_components，把panel和windown-manager全部改成gnome-shell，重新登录即可。</p>
+
+<p>上个图：
+<img class="alignnone" src="http://pic.yupoo.com/classicning/0026182bb7d6/medium.jpg" alt="" width="500" height="313" /></p>
+
+<p>当然了，还没有正式release，大家试用尝鲜注意安全第一。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/03/libchamplain-map-widget-of-gnome-desktop/">Libchamplain: Map Widget of Gnome Desktop</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-03T00:00:00+08:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>续昨，虽然昨天升级到了gnome2.28，也安装了libchamplain，但是却没有发现这个库应用。Ubuntu上的Empathy似乎是没有把location support编译进去。看不到效果怎么办，好在<a href="http://www.pierlux.com/" target="_blank">libchamplain的作者</a>还提供了另一个应用。这是一个eog的插件，用于读取照片的exif信息中的gps latitude和longitude，进而将他显示在libchamplain的地图里。</p>
+
+<p><img class="alignnone" src="http://pic.yupoo.com/classicning/2698882a6ac0/medium.jpg" alt="" width="500" height="343" /></p>
+
+<p>安装这个插件可以follow<a href="http://live.gnome.org/EyeOfGnome/Plugins" target="_blank">官方网站上的做法</a>，当然开发包、头文件之类的东西要齐备。</p>
+
+<p>libchamplain使用了<a href="http://www.clutter-project.org/" target="_blank">clutter</a>，在载入地图的时候还有fadein的效果。clutter是将要应用在下一代桌面gnome shell中的图形特效库。</p>
+
+<p>插件是用C写的，可以看成是libchamplain的一个例子，作者说已经有了其他语言的binding，如此未来在gnome桌面上开发tile地图程序会变得简单。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/02/upgrade-to-karmic/">Upgrade to Karmic</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-02T00:00:00+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天凌晨Ubuntu 9.10 Karmic的beta发布了，实在忍耐不到月底了，上午就update-manager -d升级了发行版。从下在到安装完成用了大约三个小时，当然升级不用花什么精力，只要让程序自动去处理就好了，现在跨版本升级越来越轻松了。</p>
+
+<p>配好以后感觉还是很值得升级的，大概多半是因为Kernel 2.6.31，这次桌面性能的提升真的非常大，之前从来没有这么明显的感受。举个例子，很惭愧，我这机器在上一个9.04版本里alt-table的Application Switcher都还会卡，现在已经一如之前不开compositing时的性能了。</p>
+
+<p>既然是ubuntu，还是要提一下面子上的事情。GDM有变化，按照release notes上说的是全部重写了。在从gdm登录到桌面载入之间有了一个loading效果，体验很不错。然后是Ubuntu主题变了，human不再是黄的了，变成了深褐色，有了新的图标主题humanity，尤其是在桌面的右上角区域很有特点。</p>
+
+<p>再有就是Gnome2.28的变化还有Ubuntu对gnome相关的增强了，这次激进了一些，居然赶在arch更新之前在ubuntu上体验了gnome的新版本。主要有几个变化：</p>
+
+<p>indicator变得更强大了，现在indicator和evolution empathy gwibber等等软件有了更好的集成，在indicator-applet里可以看到这些软件的新消息通知，另外indicator和原来Ubuntu的session manager也集成了，可以通过session manager设置empathy的状态。</p>
+
+<p>empathy变化很大，据说已经支持xmpp的geolocation extension了，早先我就转载过一个在osm上显示xmpp好友位置的截图。不过这个功能似乎又没有在ubuntu的版本里找到，可能ubuntu这边还是有点谨慎吧。倒是geoclue这个框架已经被加进apt-get了，可以看出相关的工作确实是在进行中。</p>
+
+<p>epiphany开始用webkit内核了，这样可以把midori彻底踢开了，epiphany也算是找到了自己在linux桌面上存在的意义。empathy可以抢走pidgin的位置，epiphany想强firefox的位置还是挺难的。</p>
+
+<p>还有Ubuntu似乎修改了gnome桌面gnome-panel/panel-menu-item.c里面的参数，之前当places里的书签数大于5之后会产生一个Bookmarks子菜单，现在这个数值似乎变成了8，当然只是猜测，因为gnome的代码里这个值仍然是5。发现这个变化的过程实在比较无聊。。。</p>
+
+<p>据说2.28的Evince看书的时候记annotation了，不过我好像没有发现这个功能，Gnome的release notes上也只是提了一下并没有发截图。</p>
+
+<p>我还是很感激每半年就有很多新特性可以去discover的，这种感觉很不错。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/30/a-shorten-url-app/">A Shorten Url App</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-30T00:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一不小心又是大概有一年多时间没有用过Django了。最近经常有之前部门的同事来讨论Django和Python Web开发，大概是他们用asp做的客服系统终于要换架构了。今天国庆提前放假，用了一个下午的时间重温一下。Django的Template还是相对弱一些，居然无法在template里调用model的方法。这样auth模块里判断用户登录的is_authticated()方法就不能在template里调，如此非得在view判断（Django是MTV模型，它的view即MVC里的controller），那如果是用generic_view，这个似乎就无解了？？</p>
+
+<p>贴个图。体验一下Firefox3.5开始支持的@font-face，Webkit核心和Opera浏览器都支持这个功能。不过我Ubuntu上的Midori貌似遇到Mootools就直接崩溃，看来要等到gnome2.28里epiphany了。<img class="alignnone" src="http://pic.yupoo.com/classicning/65666826c591/medium.jpg" alt="" width="500" height="365" /></p>
+
+<p>忘了提了，域名是我yy的，之所以有这样的效果是修改了hosts</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/29/%E9%A6%96%E9%A1%B5%E6%9B%B4%E6%96%B0/">首页更新</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-29T00:00:00+08:00" pubdate data-updated="true">Sep 29<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>半年没碰那个首页了，最近看到commandlinefu提供了jsonp接口，顺手把commandlinefu加了进来：
+<em>Classicning7.clifu();</em></p>
+
+<p>这个程序是去年此时还在用JavaScript工作的时候写的，隔了一年再看，很难不感慨啊。话说，大家要是发现一些好玩的，好用的JSONP服务可以分享一下。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/31/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

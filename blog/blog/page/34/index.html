@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="在ArchLinux上使用ActiveMQ，执行bin/activemq，报错UnknownHostException，Transport Connection无法建立，可以取到/etc/ec.conf中设置的hostname（默认myhost） 解决方法，编辑/etc/hosts，添加127.0 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/page/34">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/27/activemq-unknownhostexception-on-startup/">ActiveMQ: UnknownHostException on Startup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-27T00:00:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在ArchLinux上使用ActiveMQ，执行bin/activemq，报错UnknownHostException，Transport Connection无法建立，可以取到/etc/ec.conf中设置的hostname（默认myhost）</p>
+
+<p>解决方法，编辑/etc/hosts，添加127.0.0.1 myhost myhost。再次启动即可。Ubuntu上hosts自动把计算机名解析到127.0.0.1，ArchLinux上需要你手动做这件事了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/24/yamb-is-now-hosted-on-kenai-com/">YAMB Is Now Hosted on kenai.com</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-24T00:00:00+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>YAMB(Yet Another Microblogging Tool) which is mentioned several days ago is now hosted on Sun&#8217;s project-kenai licensed with GPL2.
+<a href="http://kenai.com/projects/yamb">http://kenai.com/projects/yamb</a></p>
+
+<p>You can grab the source code from following link via mercurial(hg).
+<a href="https://kenai.com/hg/yamb~hg-repos ">https://kenai.com/hg/yamb~hg-repos</a></p>
+
+<p>Actually, there is nothing new.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/07/inside-grails-flash-scope/">Inside Grails Flash Scope</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true">Aug 7<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.grails.org" target="_blank">Grails</a>的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。</p>
+
+<p>Grails的FlashScope接口定义在org.codehaus.groovy.grails.web.servlet包中，这个接口继承了Map接口，并定义了一个方法next()。</p>
+
+<p>Grails的默认实现在org.codehaus.groovy.grails.web.servlet包中，GrailsFlashScope。这个实现内部定义了两个Map（生命周期为两个请求），current和next，这两个Map不断滚动，保持在一个请求中可以且仅可以访问到当前和前一次请求的上下文。<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public void next() {<br />
+current.clear();<br />
+current = (HashMap)next.clone();<br />
+next.clear();<br />
+reassociateObjectsWithErrors(current);<br />
+}
+[/codesyntax]</p>
+
+<p>put的时候，Grails只把新制放到next表中，因为next将在下一次请求时继续保存<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object put(Object key, Object value) {<br />
+// create the session if it doesn&#8217;t exist<br />
+registerWithSessionIfNecessary();<br />
+if(current.containsKey(key)) {<br />
+current.remove(key);<br />
+}
+storeErrorsIfPossible(next,value);</p>
+
+<p>return next.put(key,value);<br />
+}
+[/codesyntax]</p>
+
+<p>get的时候，Grails在两个Map中查找<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object get(Object key) {<br />
+if(next.containsKey(key))<br />
+return next.get(key);<br />
+return current.get(key);<br />
+}
+[/codesyntax]</p>
+
+<p>此外，FlashScope本身还是被放在session中<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+private void registerWithSessionIfNecessary() {<br />
+GrailsWebRequest webRequest = (GrailsWebRequest) RequestContextHolder.currentRequestAttributes();<br />
+HttpSession session = webRequest.getCurrentRequest().getSession(true);<br />
+if(session.getAttribute(GrailsApplicationAttributes.FLASH_SCOPE) == null)<br />
+session.setAttribute(GrailsApplicationAttributes.FLASH_SCOPE, this);<br />
+}
+[/codesyntax]</p>
+
+<p>然后，滚动FlashScope的行为在GrailsWebRequestFilter中被调用，GrailsWebRequestFilter继承自spring-web的OncePerRequestFilter<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+protected void doFilterInternal(<br />
+HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)<br />
+throws ServletException, IOException {<br />
+&#8230;</p>
+
+<p>// Set the flash scope instance to its next state. We do<br />
+// this here so that the flash is available from Grails<br />
+// filters in a valid state.<br />
+FlashScope fs = webRequest.getAttributes().getFlashScope(request);<br />
+fs.next();<br />
+&#8230;<br />
+}
+[/codesyntax]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/06/%E5%8F%B2%E6%9C%89%E5%85%88%E4%BE%8B%E7%9A%84%E4%B8%80%E8%B7%A4/">史有先例的一跤</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-06T00:00:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>听说要来台风，今天特地想着把自行车推进楼道里。楼道到平地有一个坡道，就是大家都见过的那种坡道。于是我骑着自行车冲了上去，试图把动能转化成势能。不料时间停止在了坡道的三分之二处。现在不仅大脑的并行处理能力下降，小脑更是时常挂起。你说我当时怎么就没有想到使把劲蹬上去呢，我确实没有这么想，连条件反射都没有。事后觉着大概是沉醉于那一刻的静止了。两个轮子终归是不暇流连的，接下来势能没有舍得转化给摩擦，它一定程度上在我的授意之下换了个方向通通变成动能了。躺在地面上的时候我就在想上次如此贴近大地是什么时候了，大约应该在最近三十年之内。整个过程发生在下班回家热火最朝天的时候，我的视界里倒是没有发现其他眼睛，但是可以确定的是此时此刻一定有不少痴痴的目光对着我的后脑勺。希望这一切没有颠覆牛顿们这么多年来给他们建立的世界观，不过其实整个过程更象是风力作用的自然现象，只可惜台风还远，另外，我不知道风是在哪一个方向吹。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/03/another-simple-micro-blogging-tool-initialized/">Another Simple Micro-blogging Tool Initialized</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-03T00:00:00+08:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A simple micro blogging tool based on Java web framework stack (Struts2/Spring/iBatis). It costs me five days to develop such a prototype version which supports basic functions(view, post, follow and tag). And I will try to deploy it on GAE later(I hope it is possible). More improvements will also come up in next severals day.</p>
+
+<p><img class="alignnone" title="Screenshot for YAMB" src="http://pic.yupoo.com/classicning/837997da6200/medium.jpg" alt="" width="500" height="407" /></p>
+
+<p>The prototype is just simple and plain which, i think, might be a good instance for books that titled with &#8220;Teach Yourself Java Web in 7 Days&#8221;,(hough it&#8217;s not a popular topic any more):). I&#8217;m also thinking of the table of content:
+<ol>
+	<li>Introduction to 3-Tier Java Web Develop</li>
+	<li>Setup Your Maven Environment</li>
+	<li>Setup Your Eclipse IDE</li>
+	<li>Creating Domain Objects and Tables</li>
+	<li>Writing Down Your First iBatis DAO</li>
+	<li>Spring for Bean Wiring</li>
+	<li>Unit Test with JUnit in Spring</li>
+	<li>Struts2 in Action</li>
+	<li>Integrating Everything with Spring</li>
+	<li>Create Ajax enabled Frontend</li>
+	<li>Easy Deployment</li>
+</ol>
+This is my first maven managed web project. When using maven with hsqldb, there is no extra configuration needed if you switch develop environment. Really effective!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/02/notes-of-even-faster-web-sites/">Notes of Even Faster Web Sites</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-02T00:00:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><ol>
+	<li>异步、模拟多线程式的JavaScript，防止界面锁死。例如Google Gears，Firefox3.5 WebWorker异步API。</li>
+	<li>拆分JavaScript文件，即需即载入即运行，避免首次载入的高代价。类似dojo的分包机制。</li>
+	<li>普通的script会阻塞页面的载入直至脚本下载执行完成，采用其它方法可以改变这种情况：XHR Evel, XHR Inject, Script DOM, Script Defer, Script in Iframe, Document.write Script Tag。</li>
+	<li>由于外部script和内联代码异步载入造成的冲突，解决方法1. 在外部编码种硬编码回调，2. 在Window.onload中调用 3. 用timer监控载入情况 4.scripttag.onreadystatechange</li>
+	<li>把异步载入外部脚本的方法编写为可复用的module</li>
+	<li>处理内联脚本，解决方法：1.将内联脚本移至页面尾部 2.异步执行JavaScript回调(setTimeout(0)) 3.使用script defer属性 内联脚本执行会被</li>
+	<li>语言级别上提高JavaScript执行效率的一些手段，Zakas</li>
+	<li>Comet的前景和现阶段实现，以及WebSocket</li>
+	<li>优化HTML文件</li>
+	<li>优化图片的utilities和几种格式的特点</li>
+	<li>sharding文件到不同的服务器上增加并行下载</li>
+	<li>正确地使用flush提高部分页面的加载速度 影响因素1.是否开启了Output_Buffer，2.是否使用了chunked encoding， 3.是否启用了gzip并在apache228上运行 4. 是否被代理和AV软件影响了 5.是否因为相同的域名的文件下载被block了 6.是否是webkit阈值以下不能渲染</li>
+	<li>慎用iframe，DOM操作代价过高，在html中设置src的iframe会阻塞onload，iframe与style script标签的位置</li>
+	<li>高性能的CSS选择器，避免全局rule，避免div#sele，避免div.sele，避免使用长选择器，避免使用decendant选择器，避免使用tag-child选择器，查看所有child选择器，使用继承</li>
+</ol></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/01/alexander-sukhanov/">Alexander Sukhanov</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-01T00:00:00+08:00" pubdate data-updated="true">Aug 1<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="alignnone" title="亚历山大 舒克汉诺夫" src="http://www.math.msu.su/~sukh/im11.jpg" alt="" width="448" height="336" /></p>
+
+<p>Alexander Alekseevich Sukhanov，亚历山大.舒克汉诺夫1952年出生，莫斯科大学Mechanics and mathematics faculty, Department of computational mathematics, Laboratory of computing methods 任教，数学博士。他的另一个重要身份是歌手和诗人。从1969年开始创作，拥有近150首作品。</p>
+
+<p>这里可以找到大量作品：
+<a href="http://bards.pp.ru/Suhanov/" target="_blank">http://bards.pp.ru/Suhanov/</a></p>
+
+<p>个人主页：
+<a href="http://www.math.msu.su/~sukh/" target="_blank">http://www.math.msu.su/~sukh/</a></p>
+
+<p>Wiki Page：
+<a href="http://en.wikipedia.org/wiki/Alexander_Sukhanov" target="_blank">http://en.wikipedia.org/wiki/Alexander_Sukhanov</a></p>
+
+<p>魅力啊～
+<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 348px; width: 1px; height: 1px;">个人主页：</div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/27/%E8%B4%9D%E5%A1%94/">贝塔</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-27T00:00:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>[caption id=&#8221;&#8221; align=&#8221;alignnone&#8221; width=&#8221;340&#8221; caption=&#8221;贝塔 inkscape&#8221;]<img title="贝塔" src="http://farm3.static.flickr.com/2426/3762066304_0a56f126f0_o.png" alt="贝塔 inkscape" width="340" height="329" />[/caption]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/27/using-mysql-on-archlinux/">Using MySQL on ArchLinux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-27T00:00:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><ol>
+	<li><em>su -</em></li>
+	<li><em>pacman -S mysql mysql-gui-tools
+</em></li>
+	<li>run <em>mysql_install_db &#8211;user=mysql</em> in <em>/var/lib/mysql</em></li>
+	<li><em>vim /etc/my.cnf</em>, disable <em>skip_networking </em>to allow tcp/ip connection<em>
+</em></li>
+	<li><em>vim /etc/hosts.allow</em>, add <em>mysql:all:allow</em></li>
+	<li><em>/etc/rc.d/mysql start</em></li>
+	<li><em>mysqladmin -u root password #NEW_PASSWORD#</em> to set root password<em>
+</em></li>
+</ol>
+<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">
+<ol>
+	<li></li>
+	<li><em>su -</em></li>
+</ol>
+</div></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/18/osm-static-api-with-javafx/">OSM Static API With JavaFX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-18T00:00:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>OSM(http://www.osm.org) has released their first prototype of static map api. It is aimed to make web mapping easier to refer just like google has done.</p>
+
+<p>All interfaces are listed in following page:
+<a href="http://dev.openstreetmap.org/~pafciu17/" target="_blank">http://dev.openstreetmap.org/~pafciu17/</a></p>
+
+<p>With OSM static api, you can:
+<ul>
+	<li>Show a map centered at a specified point. (using center, height and width)</li>
+	<li>Show a map contains specified bound box. (using bbox, zoom/height/width)</li>
+	<li>Create point/path/polygon in static map.</li>
+	<li>Choose different map render engines.</li>
+	<li>Control logo position in output image.</li>
+</ul>
+I just tested it with a simple javafx applet. For there is no crossdomain.xml on the server of OSM, to get cross-domain images, you will be asked to confirm security. Feel free to change center latitude/longitude and zoom level.</p>
+
+<p></div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/blog/2009/07/18/osm-static-api-with-javafx/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
+    
+    <a href="/blog/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/blog/page/33/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

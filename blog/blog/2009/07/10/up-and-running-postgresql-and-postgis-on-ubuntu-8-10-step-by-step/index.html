@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step By Step - 车水马龙</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。 首先用apt-get下载安装pgsql和postgis的需要的包 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">车水马龙</a></h1>
+  
+    <h2>here comes the sun</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step by Step</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。</p>
+
+<p>首先用apt-get下载安装pgsql和postgis的需要的包</p>
+
+<p><em>sudo apt-get install postgresql-8.3 postgresql-8.3-postgis postgresql-client-8.3 postgresql-contrib-8.3 pgadmin3</em></p>
+
+<p>安装过程中会提示创建一个默认名为<em>postgres</em>的用户。</p>
+
+<p>安装结束后，启动pgsql服务器</p>
+
+<p><em>sudo /etc/init.d/postgresql-8.3 start</em></p>
+
+<p>在默认情况下pgsql ident的设置为postgres用户用ident sameuser的方式登录，这种方式类似于sqlserver使用windows的用户管理。因此要用postgres用户登录系统。</p>
+
+<p>修改postgres用户的密码</p>
+
+<p><em>sudo passwd postgres</em></p>
+
+<p>用新密码登录为postgres</p>
+
+<p><em>su - postgres</em></p>
+
+<p>运行psql，可以检查pgsql的运行情况</p>
+
+<p><em>psql</em></p>
+
+<p>可以在psql中给postgres用户设置数据库密码</p>
+
+<p><em>ALTER USER postgres ENCRYPTED PASSWORD &#8216;yournewpassword&#8217;;</em></p>
+
+<p>继续在psql中创建plsql语言。如果安装时遗漏了contrib包这一步是不能完成的。</p>
+
+<p><em>CREATE LANGUAGE plsql;</em></p>
+
+<p>退出psql，创建Postgis数据库。</p>
+
+<p><em>createdb postgis</em></p>
+
+<p>导入postgis的两个sql文件，其中定义了EPSG数据库和Geometry类型。</p>
+
+<p><em>psql -d postgis -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql<br />
+psql -d postgis -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql</em></p>
+
+<p>进入psql对当前用户GRAND ALL</p>
+
+<p><em>GRANT ALL ON TABLE geometry_columns TO postgres;<br />
+GRANT ALL ON TABLE spatial_ref_sys TO postgres;</em></p>
+
+<p>这样做的结果是这两张表被导入到默认的postgres数据库中。这样今后创建postgis数据库就可以以postgres为template_db，不过这么做的后果是这两张表的owner都是postgres。在GeoServer里创建FeatureType时必须用postgres用户登录，否则权限不足。</p>
+
+<p>这时PostGIS应该可以正常工作了，可以尝试导入shp</p>
+
+<p><em>shp2pgsql /your/shp/file tablename | psql newgisdb</em></p>
+
+<p>创建一个新的数据库用户</p>
+
+<p><em>createuser -p username</em></p>
+
+<p>修改<em>/etc/postgresql/8.3/main/pg_hda.conf</em>，设置数据库访问的认证方式</p>
+
+<p>将local all all一行的验证方式(method)由ident sameuser改为password就可以用密码登录psql了，在python－psycopg中用新建的用户连接pgsql也不会报ident失败了。</p>
+
+<p>将host all 127.0.0.1/32一行的验证方式也改为password就可以在本地用jdbc以用户名密码连接数据库了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/zhuang-bei/'>装备</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="/blog//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2009/07/10/opera-mini/" title="Previous Post: Opera-mini">&laquo; Opera-mini</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/blog/2009/07/13/%D0%BF%D0%BE%D0%B5%D1%82-%D0%B3%D0%B8%D1%82%D0%B0%D1%80%D0%B0/" title="Next Post: Поет гитара">Поет гитара &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
