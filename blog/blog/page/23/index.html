@@ -9,9 +9,12 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：
-https://issues.apache.org/jira/browse/IBATIS-384
-https://issues.apache.org/jira/browse/ &hellip;">
+  <meta name="description" content="昨天搞到3点多，盛大糖果http://t.sdo.com/，昨天晚上终于开放IP给大家访问了。 留一些邀请码给大家 2HlXyYKYz2
+2dKoCcQZYV
+oHBYhO1JPw
+-~YTMDYmN+
+IXKYMq0kE@
+Ub-C@xk8~r 我们后端服务从3月初开始正式开发，11个成员， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +70,54 @@ https://issues.apache.org/jira/browse/ &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/08/t-sdo-com%E4%B8%8A%E7%BA%BF/">t.sdo.com上线</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-08T00:00:00+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天搞到3点多，盛大糖果<a href="http://t.sdo.com/">http://t.sdo.com/</a>，昨天晚上终于开放IP给大家访问了。</p>
+
+<p>留一些邀请码给大家
+<ul>
+<li>2HlXyYKYz2</li>
+<li>2dKoCcQZYV</li>
+<li>oHBYhO1JPw</li>
+<li>-~YTMDYmN+</li>
+<li>IXKYMq0kE@</li>
+<li>Ub-C@xk8~r</li>
+</ul></p>
+
+<p>我们后端服务从3月初开始正式开发，11个成员，加了三个多月的班。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -593,74 +644,6 @@ end<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/30/douban-provider-for-alexandria/">Douban Provider for Alexandria</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-30T00:00:00+08:00" pubdate data-updated="true">Apr 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://alexandria.rubyforge.org/">Alexandra</a> is a desktop book collection manager on gnome written in ruby. With an extensible architecture, Alexandria uses different sources to retrieve book&#8217;s data, including Amazon and many local sites.</p>
-
-<p>Douban.com is considered to be most applicable data source for books published in Chinese. So I write this provider according to Alexandria&#8217;s SPI. Now it&#8217;s possible to add Chinese books and manage reading lists.</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4564768299/" title="alexandria by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4046/4564768299_f424dc2be9.jpg" width="500" height="388" alt="alexandria" /></a></p>
-
-<p>Now the code can be found in Alexandria&#8217;s bug tracker:
-<a href="http://rubyforge.org/tracker/index.php?func=detail&aid=28160&group_id=205&atid=865">http://rubyforge.org/tracker/index.php?func=detail&aid=28160&group_id=205&atid=865</a></p>
-
-<p>However, the patch file of book_providers.rb in that list is for svn trunk head version only. To use it with currently stable version of Ubuntu, first, make sure you have Alexandria version <strong>0.6.5-0ubuntu1</strong> and <strong>libjson-ruby1.8</strong> installed.</p>
-
-<p>Download douban.rb from rubyforge:
-<a href="http://rubyforge.org/tracker/download.php/205/865/28160/4923/douban.rb">http://rubyforge.org/tracker/download.php/205/865/28160/4923/douban.rb</a>
-Copy the file to /usr/lib/ruby/1.8/alexandria/book_providers/ with super user privileges.<br />
-Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
-[cc lang=&#8221;ruby&#8221;]<br />
-310a311,323
-<     begin
-<       begin
-<         require 'json'
-<       rescue LoadError
-<         require 'rubygems'
-<         require 'json'
-<       end
-<       require 'alexandria/book_providers/douban'
-<     rescue LoadError =< ex
-<       log.error{ex}
-<       log.warn {'Fail to load douban as provider'}
-<     end
-<<br />
-[/cc]</p>
-
-<p>Feel free to report issue here.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -678,6 +661,10 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -691,10 +678,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

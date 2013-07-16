@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Cluster support is one of the big thing in slacker 0.6.x. Cluster enables high-availability and load balancing on slacker client and server. Slacker &hellip;">
+  <meta name="description" content="大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击这里报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。 For English readers:
+If &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/">China Clojurians Meetup #2 Is Calling You</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-09T00:00:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击<a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">这里</a>报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。</p>
+
+<p>For English readers:<br />
+If you are interested in Clojure and also living in Beijing, feel free to join our meetup. Please register <a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">here</a>. We will see you there!
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -599,106 +640,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/12/29/%E4%BD%BF%E7%94%A8enlive%E4%BD%9C%E4%B8%BA%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">使用Enlive作为模板引擎</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-29T00:00:00+08:00" pubdate data-updated="true">Dec 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在所有的clojure web开发例子里，对模板的介绍都很少。很多的简单例子都是以hiccup作为页面生成的手段。hiccup是个clojure的html DSL，例子里用这样的DSL生成页面确实很酷，可是他是real world吗，当然不是。</p>
-
-<p>好在clojure世界里早就有了enlive，它不仅是一个通过css selector解析html的库，本身也可以作为模板引擎应用在web开发中。我不知道这种通过css selector的方式是否是enlive首创，不过他实在是非常新颖独特，而且平滑了页面设计和程序的集成。</p>
-
-<p>例如这样一个模板 index.html：<br />
-[cc lang=&#8221;html&#8221;]
-<div id="cc">Sample Text</div>
-[/cc]</p>
-
-<p>在clojure程序中，使用enlive的deftemplate<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(deftemplate index &#8220;index.html&#8221;<br />
-  [ctx]<br />
-  [:div#cc] (content (:data ctx)))<br />
-[/cc]</p>
-
-<p>在控制器里，可以很MVC地渲染页面<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(index {:data &#8220;rendered text&#8221;})<br />
-[/cc]</p>
-
-<p>除了content用于渲染文本，还有html-content可以渲染含html标签的内容，以及set-attr用来修改页面元素的属性。</p>
-
-<p>和传统的模板引擎相比，最大的不同是enlive里没有嵌入模板的直观的控制流，没有循环和条件判断，但是并非不可实现。</p>
-
-<p>循环输出一组list</p>
-
-<p>页面 list.html<br />
-[cc lang=&#8221;html&#8221;]
-<ul id="the-list">
-<li class="list-item"></li>
-</ul>
-[/cc]</p>
-
-<p>定义一个enlive的snippet<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defsnippet item-model &#8220;page.html&#8221; [:.list-item]<br />
-  [ctx]<br />
-  [:.list-item] (content (:data ctx)))<br />
-[/cc]</p>
-
-<p>在页面模板里<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(deftemplate list-page &#8220;list.html&#8221;<br />
-  [ctx]<br />
-  [:ul#the-list] (content (map item-model (:some-list ctx))))<br />
-[/cc]</p>
-
-<p>这样在页面里列表项会被循环输出，而在页面设计时这里可以放任意个li，并且直接交给后台作为模板。</p>
-
-<p>条件判断</p>
-
-<p>页面，设计时显示所有的内容 msg.html<br />
-[cc lang=&#8221;html&#8221;]
-<span id="msg">只在一定条件下显示</span>
-[/cc]</p>
-
-<p>在模板中通过clojure的if进行判断<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(deftemplate msg &#8220;msg.html&#8221;<br />
-  [ctx]<br />
-  [:span#msg] (if (:show ctx) identity (html-content &#8220;&#8221;)))<br />
-[/cc]</p>
-
-<p>解决了这两个问题，基本上用enlive作为模板引擎就没有障碍了。不过enlive也有一点小问题，其一可能是性能的问题，方便的selector显然要比传统的模板语言消耗更多的CPU。另外，在开发过程里，页面文件在服务器启动后不能热加载，修改页面必须重启ring才能看到。也许有时间的话，可以给它加一个reload选项。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/6/">&larr; Older</a>
@@ -716,6 +657,10 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -729,10 +674,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

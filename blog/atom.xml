@@ -4,7 +4,7 @@
   <title><![CDATA[车水马龙]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2013-07-16T21:13:26+08:00</updated>
+  <updated>2013-07-16T21:56:24+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[工作四周年]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2013/07/16/four-years-as-programmer/"/>
+    <updated>2013-07-16T21:33:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2013/07/16/four-years-as-programmer</id>
+    <content type="html"><![CDATA[<p>一不小心工作四年了，四年意味着，工作的时间都超过了上大学的时间。当然这也不能说明什么，接下来还会更快地超过上高中的时间。这些年来，我越来越喜欢把22岁大学毕业作为一个中点，对称着看。往后多少年是什么样，往前多少年又是什么样。这两个样子往往存在这因果关系，离中点近的直接，离中点远的深刻。</p>
+
+<p>我很发愁给自己列计划，所以也不知道当时毕业的时候想的现在，应该是个什么摸样。反正就我照镜子的感受来说，应该没变老。这并不是说保养得好，主要是因为我第一天上班就有人问我是不是来领实习生。而最近都已经有些不开眼的妈妈跟自己的孩子说，还不快谢谢哥哥让座。</p>
+
+<p>工作了四年，四家公司，三个城市，这段说起来太沧桑坎坷，就不提了。前段时间看到某个微薄名人说刚毕业几年，应该多闯几个行业，有好处。我虽然是一直敲键盘写代码，但是也辗转了不同的软件行业。以前以为没有区别，实际上一圈下来最后回到互联网行业里，才知道这大不同，不同到甚至同是程序员你们站在一起一样可能找不到哪怕一个共同话题。互联网行业的节奏快，创新多，年轻人在其中学习的空间最大。</p>
+
+<p>另外我特别认可自己当初下了决定来AVOS。工作的第四年，是完完整整在这里，有机会有舞台面对挑战。我们上线了<a href="http://readwise.net/">美味爱读</a>，现在团队紧张地为<a href="https://delicious.com">Delicious</a>添砖加瓦。6年前我注册这个书签网站的时候，是无论如何想不到今天在上面做修改的人是自己。也就是这样的机会，最为吸引人。</p>
+
+<p>无论是公司，还是我们团队，还是我自己，现在还没有到盘点成绩的时候。希望明年夏天再回顾的时候，能有更多的收获。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Grunt for requirejs projects]]></title>
@@ -559,53 +576,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 <p>再说上周去张家口。现在北京去张家口的主要列车都从丰沙线走，经过丰台，石景山南，三家店进入京西的山区，最后在沙城和老的京张铁路汇合。在车上听人介绍，这段铁路1954年修成。出京经过62个隧道，进京65个。这些隧道全部分布在丰沙线上，据说是这条线是詹天佑最初选定路线，但是因为成本较高只能选了八达岭方向。我乘4447次从北京西出发，进入这段之后风景秀丽，有山有水（官厅水库），打开车窗清风拂面，实在是坐火车的最佳体验。</p>
 
 <p>最后，张家口现在有两个车站。南站位于京包线上，几乎所有经过到达张家口的车都在这里停，是目前主要的车站。它门前是詹天佑的铜像。另一个张家口站是真正的京张铁路终点，也是百年历史，深入张家口市区，现在只有终到张家口的少数几次车。他的样式和我印象里的南京西站几乎一样，地位似乎也和西站类似。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Top Github users in China]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/07/19/top-github-users-in-china/"/>
-    <updated>2012-07-19T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/07/19/top-github-users-in-china</id>
-    <content type="html"><![CDATA[<p>有感于<a href="http://sofish.de/file/demo/github/" target="_blank">这个版本</a>的github中国用户排名，我觉得单纯根据用户的followers数量不能完全说明问题。因此，需要改进一下排名的分数，加入项目Watchers的数量，这样可以让优质项目多的用户排名到前面。</p>
-
-<p>这个策略是：followers + 1.5 * watchers + 2 * forks</p>
-
-<p>得到的排名如下：
-<script src="https://gist.github.com/3141146.js?file=results"></script></p>
-
-<p>另外，这前100名用户里，语言使用的情况如下：<br />
-&#8216;JavaScript&#8217;: 80<br />
-&#8216;Ruby&#8217;: 52<br />
-&#8216;Python&#8217;: 46<br />
-&#8216;C&#8217;: 34<br />
-&#8216;C++&#8217;: 30<br />
-&#8216;Java&#8217;: 28<br />
-&#8216;VimL&#8217;: 28<br />
-&#8216;Shell&#8217;: 24<br />
-&#8216;Objective-C&#8217;: 24<br />
-&#8216;PHP&#8217;: 21<br />
-&#8216;CoffeeScript&#8217;: 13<br />
-&#8216;Perl&#8217;: 10<br />
-&#8216;Erlang&#8217;: 9<br />
-&#8216;Emacs Lisp&#8217;: 9<br />
-&#8216;Lua&#8217;: 6<br />
-&#8216;Haskell&#8217;: 5<br />
-&#8216;Clojure&#8217;: 5<br />
-&#8216;Go&#8217;: 5<br />
-&#8216;ActionScript&#8217;: 4<br />
-&#8216;C#&#8217;: 3<br />
-&#8216;Scheme&#8217;: 2<br />
-&#8216;Common Lisp&#8217;: 2<br />
-&#8216;Elixir&#8217;: 2<br />
-&#8216;Scala&#8217;: 1<br />
-&#8216;Objective-J&#8217;: 1<br />
-&#8216;Vala&#8217;: 1<br />
-&#8216;Nemerle&#8217;: 1</p>
-
-<p>明天我会补充一下城市的排名。</p>
-
-<p></p>
 ]]></content>
   </entry>
   

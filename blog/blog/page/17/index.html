@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Sound menu indicator was introduced in Ubuntu Maverick(10.10). User can control playback from this menu, and view current track information. The &hellip;">
+  <meta name="description" content="上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个tutorials帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/11/29/dbus-python-in-case-you-dont-know/">Dbus-python, in Case You Don&#8217;t Know</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-29T00:00:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html">tutorials</a>帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you don&#8217;t know。</p>
+
+<p><h3>DBus Interface Properties</h3>
+对mpris 2.0中定义的properties用dbus-python应该如何实现呢，似乎没有@dbus.service.properties这种decorator啊。<a href="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">这里</a>的文档对Properties进行了简单的说明，对于python程序，只能这样实现了：<br />
+[cc lang=&#8221;python&#8221;]<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;ss&#8217;, out_signature=&#8217;v&#8217;)<br />
+    def Get(self, interface, prop):<br />
+        &#8230;<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;ssv&#8217;)<br />
+    def Set(self, interface, prop, value):<br />
+        &#8230;<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;s&#8217;, out_signature=&#8217;a{sv}&#8217;)<br />
+    def GetAll(self, interface):<br />
+        &#8230;<br />
+[/cc]<br />
+程序里通过prop判断property名字，返回结果。没办法，就是这样。</p>
+
+<p><h3>指定返回数据的dbus类型</h3>
+对于dbus接口返回的variant类型，dbus-python会guess_signature。可是这部分的功能有的时候并不如我们想象，比如返回一个dict类型，其中的value有字符串有list有int，而out_signature是v。这种情况在Property Get的时候非常常见，如果不能手动指定类型，guess_signature得到的结果，value是统一类型，即，int会报错，如果没有int类型，会将所有字符串转成list（dbus的array）</p>
+
+<p>这种情况需要手动指定返回的类型，用dbus.types模块下的类型对python显示包装，对dict类型，需要用dbus.types.Dictionary()包装，并且在构造函数里传入signature=&#8217;sv‘及相应的<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html#container-types">variant_level</a>即可显示告知类型。同样，对list对象，需要用dbus.types.Array()包装。</p>
+
+<p>这样即可绕过guest_signature，如果用dbus-monitor查看，就可以看到类型为variant string了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -504,67 +562,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/26/exaile-doubanfm-0-0-5/">Exaile 豆瓣电台插件 0.0.5</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-26T00:00:00+08:00" pubdate data-updated="true">Oct 26<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>趁热依旧打铁。Exaile 豆瓣电台插件 0.0.5</p>
-
-<p><h4>Features</h4>
-<ul>
-<li>界面快捷键 加心f 跳过s 删除d</li>
-<li>调整了按钮的顺序，和官方一致</li>
-<li>增强的菜单，可以在豆瓣模式里切换频道、关闭Exaile，无须回到主界面</li>
-<li><strong>推荐当前歌曲到豆瓣</strong>，可以在配置界面配置推荐语模板</li>
-</ul></p>
-
-<p><h4>Installation</h4>
-<a href="http://github.com/sunng87/exaile-doubanfm-plugin/wiki/Installation">Wiki page</a></p>
-
-<p><h4>Downloads</h4>
-<a href="http://github.com/sunng87/exaile-doubanfm-plugin/downloads">Download from Github</a></p>
-
-<p><h4>Screenshots</h4></p>
-
-<p>Douban Mode
-<a href="http://www.flickr.com/photos/40741608@N08/5117860492/" title="screenshot_002 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1318/5117860492_8daa067abf.jpg" width="402" height="148" alt="screenshot_002" /></a></p>
-
-<p>Enhanced Douban Mode Menu
-<a href="http://www.flickr.com/photos/40741608@N08/5117860126/" title="screenshot_001 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4106/5117860126_eb2ca09332.jpg" width="278" height="306" alt="screenshot_001" /></a></p>
-
-<p><h4>More ?</h4>
-<a href="http://sunng.info/doubantu/">豆瓣 on Ubuntu</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/18/">&larr; Older</a>
@@ -582,6 +579,10 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -595,10 +596,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

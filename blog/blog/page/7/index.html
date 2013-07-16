@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="还是关于spark的，一石激起千层浪，每个人心中都有一个spark。其实spark脚本刚出来的时候问题很多，但是就是因为产生了共鸣，众人拾柴pull request多。像redis的作者antirez也忍不住自己用c写了一个aspark。 说完了别人的，那么来看看我的：clspark，common &hellip;">
+  <meta name="description" content="Last week, I prototyped an RPC framework, slacker, by clojure and for clojure. What I did ?
+Suppose you have a sets of clojure functions to expose. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,94 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/11/27/clojure-rpc-prototyping-and-early-thoughts/">Clojure RPC, Prototyping and Early Thoughts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-27T00:00:00+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Last week, I prototyped an RPC framework, <a href="https://github.com/sunng87/slacker" target="_blank">slacker</a>, by clojure and for clojure. </p>
+
+<p><h3>What I did ?</h3>
+Suppose you have a sets of clojure functions to expose. Define them under a namespace:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns slapi)<br />
+(defn timestamp []<br />
+  (System/currentTimeMillis))</p>
+
+<p>;; &#8230;more functions<br />
+[/cc]</p>
+
+<p>Expose the namespace with slacker server, on port 2104:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;slacker.server)<br />
+(start-slacker-server (the-ns &#8216;slapi) 2104)[/cc]</p>
+
+<p>On the client side, we use the `defremote` macro to create a facade for `timestamp` function. This API will keep the client code consistent with local mode.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;slacker.client)<br />
+(def sc (slackerc &#8220;localhost&#8221; 2104))<br />
+(defremote sc timestamp)<br />
+(timestamp)<br />
+[/cc]</p>
+
+<p>Internally, slacker uses <a href="https://github.com/ztellman/aleph" target="_blank">aleph</a> for transport and <a href="https://github.com/revelytix/carbonite" target="_blank">carbonite</a> for serialization. I forked carbonite and made it compatible with clojure 1.2 because the aleph mainline is still running on 1.2. </p>
+
+<p><h3>Going further</h3>
+<h4>High-Order Functions</h4>
+In clojure, functions are treated as first class value. Within memory, you can pass function as parameter to another function. However, this is not supported by serialization framework. So is it possible to add support for that in future?</p>
+
+<p><h4>Lazy sequence as parameter</h4>
+This is another interesting feature in clojure function call. You can pass a lazy-sequence to clojure function. In RPC, it requires parameters to be evaluated on the server side.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defn get-first [& args] (first args))<br />
+(apply get-first (range))<br />
+[/cc]<br />
+Example copied from <a href="http://stackoverflow.com/q/8205446/371141" target="_blank">StackOverflow</a></p>
+
+<p><h4>Coordinated states between several remote servers</h4>
+With RPC, we can update states on several servers. So do we need something like distributed dosync:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defremote a1 update-a1-state)<br />
+(defremote a2 update-a2-state)<br />
+(dosync-distributed<br />
+  (update-a1-state some-value)<br />
+  (update-a2-state some-value))<br />
+[/cc]<br />
+I&#8217;m not sure if this is a valid scenario in real world but I think it&#8217;s an interesting topic.(distributed STM?)</p>
+
+<p><h3>Conclusion</h3>
+RPC is the first step to distributed clojure world. I will keep you updated with my prototype. 
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -615,55 +704,6 @@ bsxfun(@minus, A, B)<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/15/grails%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BE%9D%E8%B5%96%E5%BF%85%E9%A1%BB%E4%BF%9D%E8%AF%81%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%89%88%E6%9C%AC%E4%B8%80%E8%87%B4%EF%BC%81/">Grails的核心依赖必须保证项目中版本一致！</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-15T00:00:00+08:00" pubdate data-updated="true">Oct 15<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>好久没写语录式大标题了，实在是今天玩Grails受害很深很深。</p>
-
-<p>Grails因为本身是通过ivy来管理依赖的，虽然后续的版本和maven的集成不断加深，但是本身还是通过ivy来解析pom.xml。也就是说最后的活还是ivy干的。如果你的项目比较大，选择了通过maven来管理项目，而你的依赖中又牵扯了很多其他的依赖，那么你危险了。</p>
-
-<p><blockquote>:: UNRESOLVED DEPENDENCIES ::</blockquote></p>
-
-<p>:: log4j#log4j;1.2.16: configuration not found in log4j#log4j;1.2.16: &#8216;master&#8217;. It was required from &#8230;;1.7.0 runtime</p>
-
-<p>对maven用户这是一条多么发指的报错！（比如<a href="http://forum.springsource.org/showthread.php?104033-Can-not-load-a-log4J-library" target="_blank">这个</a>）</p>
-
-<p>它的原因其实是你的dependency中有!=1.2.16版本你的log4j，比如1.2.12，即使你在pom里将它添加到了exclusion中也没有用，必须要保持版本的一致！至于你用什么办法让他们保持一致，还是干脆放弃用maven管理你的grails项目：It&#8217;s up to you.</p>
-
-<p>同样的问题还出现在其他核心依赖上，例如commons-pool。
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/8/">&larr; Older</a>
@@ -681,6 +721,10 @@ bsxfun(@minus, A, B)<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -694,10 +738,6 @@ bsxfun(@minus, A, B)<br />
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

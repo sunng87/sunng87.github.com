@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Weekend project &#8220;RageViewer&#8221;最近新增了一些功能： 界面更新 Rages现在持久化到redis中，支持permalink 程序可以直接部署到cloudfoundry上 RageViewer现在也有一个cloudfoundry上部署的版本：
-http &hellip;">
+  <meta name="description" content="Google closure library is shipped with ClojureScript, and could be compiled with ClojureScript into a minimized javascript file. So closure library &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,80 @@ http &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/05/using-google-closure-library-with-clojurescript/">Using Google Closure Library With ClojureScript</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-05T00:00:00+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google closure library is shipped with ClojureScript, and could be compiled with ClojureScript into a minimized javascript file. So closure library is doubtlessly the first candidate when you are considering to use an external Javascript library in your cljs browser application.</p>
+
+<p>However, different from clojure&#8217;s interoperability with Java, ClojureScript has its own characteristics when you are interoperating with JavaScript and JavaScript based libraries.</p>
+
+<p><strong>Clojure types are not fully compatible with JavaScript types</strong>
+In ClojureScript, you can never treat a Clojure map as a JavaScript object although they have similar characteristics. You have to do some conversion before passing a clojure map to javascript functions. Matthew Gilliard made <a href="https://gist.github.com/1098417#file_ajax.cljs" target="_blank">a sample</a> of such conversion.</p>
+
+<p><strong>JavaScript package is not Clojure namespace</strong>
+This could be a common mistake for ClojureScript newbie. Actually, JavaScript doesn&#8217;t have concept of &#8220;Package&#8221; or &#8220;Namespace&#8221;. Many JavaScript libraries(dojo, Google Closure) made enhancement on this. ClojureScript also takes advantage of this mechanism. So before you start to coding with closure, you may browse <a href="http://closure-library.googlecode.com/svn/docs/index.html" target="_blank">closure library API document</a>, and find a module called <em>goog.net</em> which includes lots of types. Then you write this:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net :as gnet]))<br />
+[/cc]</p>
+
+<p>But compiler shows you &#8220;ERROR: JSC_MISSING_PROVIDE_ERROR. required &#8220;goog.net&#8221; namespace never<br />
+provided at &#8230; &#8220;. This is not a PATH issue. The root cause is that closure module has a lower granularity than Clojure ones. Types are often contained in their own modules. You can find closure source code in <em>clojurescript/closure/library/closure</em>. Modules are declare with <em>goog.provide</em> function. Thus, you should require this name instead of the logical module name.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+[/cc]</p>
+
+<p>In addition, ClojureScript does not support &#8216;use&#8217;.</p>
+
+<p><strong>Just use full name for JavaScript class</strong>
+For functions contains in some module, you can refer it with the clojure way:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.dom :as dom]))<br />
+(dom/$ &#8220;element-id&#8221;)<br />
+[/cc]</p>
+
+<p>But for classes, just use the full name and ignore the module alias.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+(def xhr (goog.net.XhrIo.))<br />
+[/cc]</p>
+
+<p>These are basic tips before you start using Closure with ClojureScript. Leveraging on Google&#8217;s closure library, you can create cross-browser JavaScript application with Clojure easily.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -543,56 +616,6 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/07/13/staged-event-driven-architecture/">Staged Event-Driven Architecture</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信，这是线程被任务占用的时间就相对较长。如果请求的并发量很大，容器的线程池耗尽，新的请求就无法被处理，导致并发性无法提高，吞吐量也无法提高。</p>
-
-<p>实际上在大部分应用程序里，所谓代价很高的任务，往往都是I/O Bound。涉及网络通信，磁盘读写，线程被迫wait，CPU却是空闲的。所以，I/O Bound的程序理论上都还有优化的空间。于是有了这种Staged Event-Driven Architecture，即SEDA。</p>
-
-<p>SEDA的思路是将原先由一个线程完成的任务，分割为相对独立的多个阶段。每个阶段由专用的一组线程负责执行，阶段之间用过队列交互。又是上次提到的老话：If you cannot split it, you cannot scale it.</p>
-
-<p>例如，我们的业务逻辑是读取请求，操作数据库，与后端通信，操作数据库，写回结果。如果采用NIO的方式，网络通信可以认为是非阻塞的。而目前与数据库的交互，通常还是阻塞式的风格。这样这五个阶段分别是非阻塞、阻塞、非阻塞、阻塞、非阻塞。组塞操作容易成为性能瓶颈，CPU时间用于等待，占用率不高，所以对组塞操作可以分配相对多的线程；非阻塞操作速度较快，为了避免快速的切换导致sy升高，采用和CPU核数一样多的线程即可。</p>
-
-<p>这样，原本一个线程反复等待的阻塞操作，变成了部分线程等待的同时，其他线程仍然在处理自己的业务，有效使用CPU。利用的多核的优势，提高了CPU的占用，即提高了系统的处理能力。</p>
-
-<p>而对外部接口来说，当读取数据的线程在读取完毕之后，将任务dispatch到相应队列即返回，前端可以保证很高的处理速度，并发性也可以保证。任务被积压在阻塞操作的队列中，而消费阻塞操作的线程要多于提供者，在一定程度上也保证了处理速度。再退一步说，当阻塞操作的速度却是无法消费大量任务时，前端可以根据队列的大小判断当前系统的load，拒绝服务。</p>
-
-<p>当然，采用这种方式，只有在并发量提高到一定程度，并发成为系统瓶颈时才能体现价值。就单个操作而言，由于队列的传递，他的latency一定是有所上升的。</p>
-
-<p>关于SEDA，可以参考<a href="http://matt-welsh.blogspot.com/">Matt Welsh</a>的相关论文：The Staged Event-Driven Architecture for Highly-Concurrent Server Applications。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -610,6 +633,10 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -623,10 +650,6 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

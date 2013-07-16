@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="在ArchLinux上使用ActiveMQ，执行bin/activemq，报错UnknownHostException，Transport Connection无法建立，可以取到/etc/ec.conf中设置的hostname（默认myhost） 解决方法，编辑/etc/hosts，添加127.0 &hellip;">
+  <meta name="description" content="梳理一下。 桂花陆续开了，昨天在衡山路一带飘的时候就问道久违的香味，今天在张江也闻到桂花味道。于是乎，八月了，不早了，今年又这样了。 最近工作还行，公司这部分业务刚刚正规刚刚起步，几个老大都是最近从竞争对手和相关领域挖来的人，这种情况是三月份时根本没有迹象的。公司Java这块还是很缺人的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/06/%E6%A2%B3%E7%90%86/">梳理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-06T00:00:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>梳理一下。
+<ol>
+	<li>桂花陆续开了，昨天在衡山路一带飘的时候就问道久违的香味，今天在张江也闻到桂花味道。于是乎，八月了，不早了，今年又这样了。</li>
+	<li>最近工作还行，公司这部分业务刚刚正规刚刚起步，几个老大都是最近从竞争对手和相关领域挖来的人，这种情况是三月份时根本没有迹象的。公司Java这块还是很缺人的，仔细观察几乎就是类似一个大牛带着一群喽啰。虽然现状不能说非常好，但是情况应该是在上升的，我猜。</li>
+	<li>前两天鲜果机房出了问题，还好不是另一个饭否。我把OPML倒出来开始盘算着用一个桌面的Reader。Gnome上比较有名的Reader是Liferea，Blam和Straw。Liferea貌似吃不消大量的Feed，导入当即就死掉了；Blam是Webkit核心的，不幸中文乱码；Straw勉强能用，然后Straw不支持outline嵌套，即不支持分组，so，也不是非常完美。</li>
+	<li>前几天关注自己blog不够，不小心又被挂了马，而且这次闹得比较大，被google加了黑名单，Twitter立刻也发了malware in profile的通知。好在现在改起来已经驾轻就熟，用fgrep很快就能找到被加恶意代码的文件，只可惜还没有办法杜绝。</li>
+</ol>
+9月20号去看顽主。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -523,60 +566,6 @@ This is my first maven managed web project. When using maven with hsqldb, there 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/07/18/osm-static-api-with-javafx/">OSM Static API With JavaFX</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-18T00:00:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>OSM(http://www.osm.org) has released their first prototype of static map api. It is aimed to make web mapping easier to refer just like google has done.</p>
-
-<p>All interfaces are listed in following page:
-<a href="http://dev.openstreetmap.org/~pafciu17/" target="_blank">http://dev.openstreetmap.org/~pafciu17/</a></p>
-
-<p>With OSM static api, you can:
-<ul>
-	<li>Show a map centered at a specified point. (using center, height and width)</li>
-	<li>Show a map contains specified bound box. (using bbox, zoom/height/width)</li>
-	<li>Create point/path/polygon in static map.</li>
-	<li>Choose different map render engines.</li>
-	<li>Control logo position in output image.</li>
-</ul>
-I just tested it with a simple javafx applet. For there is no crossdomain.xml on the server of OSM, to get cross-domain images, you will be asked to confirm security. Feel free to change center latitude/longitude and zoom level.</p>
-
-<p></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/blog/2009/07/18/osm-static-api-with-javafx/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
@@ -594,6 +583,10 @@ I just tested it with a simple javafx applet. For there is no crossdomain.xml on
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -607,10 +600,6 @@ I just tested it with a simple javafx applet. For there is no crossdomain.xml on
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

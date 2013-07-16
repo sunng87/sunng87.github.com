@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content=" 今天用正在调试中的heatmap做了一个网站访问量的可视化。数据从google analytics得到，再通过我本地的geonames数据库做了geocoding（用google的就太慢了）。这里有一个live版本。 关于这个heatmap目前还在开发中，很快会介绍给大家的。
-">
+  <meta name="description" content="As described in Wikipedia, a heat map is a graphical representation of data in a two-dimensional table. HeatCanvas enables heat map on HTML5 canvas. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/03/heatcanvas-hits-1-0-and-public-available/">HeatCanvas Hits 1.0, and Public Available</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-03T00:00:00+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As described in Wikipedia, a heat map is a graphical representation of data in a two-dimensional table. HeatCanvas enables heat map on HTML5 canvas. With HeatCanvas, you can visualize your data on modern web browser without server-side support.</p>
+
+<p>HeatCanvas is based on <a href="http://sunng.info/blog/2010/02/sunngs-canvas-based-heatmap-api/">the prototype</a> I wrote 15 months ago. I just rewrite the whole with WebWorker API to keep user away from UI frozen and annoying slow-script warning. HeatCanvas is implemented as pixel based, so the image quality is great.</p>
+
+<p><img src="http://i.imgur.com/gNHOw.png" alt="" title="Hosted by imgur.com" /></p>
+
+<p>The API is rather simple. There are only three steps to create a basic heat map.</p>
+
+<p>1. Create the heat map object:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+var heatmap = new HeatCanvas(&#8216;canvasId&#8217;);<br />
+[/cc]</p>
+
+<p>2. Add some data to heat map:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+heatmap.push(223, 98, 10); // x,y and value for this point<br />
+[/cc]</p>
+
+<p>3. Render it:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+heatmap.render();<br />
+[/cc]</p>
+
+<p>In contrast to the base API, HeatCanvas also supports flexible options to customize the rendering. Even custom colour scheme is allowed. You can <a href="https://github.com/sunng87/heatcanvas/blob/master/README.md">refer to the doc</a> for detail.</p>
+
+<p>And for your convenience, we have a GoogleMap plugin, <b>HeatCanvasOverlayView</b>, that wraps HeatCanvas. You can use it in your GoogleMap application.</p>
+
+<p>For live demos, you can find at:
+<a href="http://sunng87.github.com/heatcanvas/">http://sunng87.github.com/heatcanvas/</a></p>
+
+<p>As always, the project is hosted on github:
+<a href="https://github.com/sunng87/heatcanvas">https://github.com/sunng87/heatcanvas</a> .</p>
+
+<p>The three javascript files are only necessary in your application, thus, please ignore the htmls in your deployment. Any feedback is welcomed and also please kindly let me know your application using this API.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9343259e-039c-8fdf-8721-dbd6277de695" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -601,46 +669,6 @@ core获得start消息后，调用DefaultActor覆盖的handleStart方法（Defaul
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou/">GPS Track of Train K221: Nanjing to Guangzhou</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-26T00:00:00+08:00" pubdate data-updated="true">Apr 26<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>GPS Logger完成了它有生以来最长的一次旅行，1477分钟，行程1767公里，途径江苏、安徽、江西、湖南、广东，包含了宁芜线、浙赣线、京广线等。有了GPS终端，贴地的旅途就变成一件非常严肃的事情。这周末去西安，这个GPS也是16个小时上铺车程唯一的安慰了。
-<a href="http://www.flickr.com/photos/40741608@N08/5657757338/" title="Railway-K221 - Viking by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5305/5657757338_9bbcc6af42.jpg" alt="Railway-K221 - Viking" height="302" width="500" /></a></p>
-
-<p>这个数据分享在OpenStreetMap上，也许你会感兴趣：
-<a href="http://www.openstreetmap.org/user/Sunng/traces/996794">http://www.openstreetmap.org/user/Sunng/traces/996794</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=e4cdedff-8fec-852d-876b-830e16846036" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -658,6 +686,10 @@ core获得start消息后，调用DefaultActor覆盖的handleStart方法（Defaul
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -671,10 +703,6 @@ core获得start消息后，调用DefaultActor覆盖的handleStart方法（Defaul
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

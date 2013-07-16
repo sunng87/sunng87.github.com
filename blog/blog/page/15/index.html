@@ -9,7 +9,11 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="家里有两头牛，准确说本来是一头，一个半月前添了新成员。仔细看，都是双眼皮。 瞧这一家子 她是我们家的老成员了 小牛好像还没有长好牙，现在还不吃草，只是添添秸秆，饿了还是得找妈 后面是第二次拍的，到这次的时候小牛已经认识我了，一点都不怕，镜头感十足 双眼皮，长睫毛，和你一样 我最喜欢这张， &hellip;">
+  <meta name="description" content="pgpool是postgresql的中间件，他的主要功能包括： Connection Pooling 连接池
+Replication 双写
+Load Balance 负载均衡
+Limiting Exceeding Connections 连接限制
+Parallel Query 并行查询 除此以外， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +69,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/02/14/pgpoolii%E7%9A%84%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD/">pgpoolII的管理功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-14T00:00:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>pgpool是postgresql的中间件，他的主要功能包括：
+<ul>
+<li>Connection Pooling 连接池</li>
+<li>Replication 双写</li>
+<li>Load Balance 负载均衡</li>
+<li>Limiting Exceeding Connections 连接限制</li>
+<li>Parallel Query 并行查询</li>
+</ul></p>
+
+<p>除此以外，pgpool还提供了对数据库节点的健康检查功能，自动fail over。</p>
+
+<p>对pgpool的管理，pgpool本身除了工作端口（默认5433）以外，还开放一个pcp端口9898，类似FTP的控制端口。通过pcp端口可以获取pgpool的运行时信息，也可以进行运行时的操作。这些功能罗列在：<br />
+http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#reference</p>
+
+<p>封装这些命令的二进制文件也随着pgpool发行，由于是通过网络通信，所以并不要求这些工具与pgpool安装在同一台机器上。</p>
+
+<p>除此以外，为了用户友好，pgpool还有一个具有UI的用户管理工具。这个工具的功能包括：
+<ul>
+<li>系统信息，主要是pcp的信息</li>
+<li>配置文件编辑，这个功能似乎要求pgpooladmin和pgpool安装在一台机器上以便直接都写配置文件</li>
+<li>切分规则编辑</li>
+</ul></p>
+
+<p>另外，pgpool还通过一些自定义的SQL语句允许用户从工作端口提取一些配置信息和运行时信息：<br />
+http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#show-commands</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -638,47 +702,6 @@ You may have internal Nexus, just append to this file following the pattern.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/01/01/happy-new-year/">Happy New Year!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-01T00:00:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5311404087/" title="IMG_0276 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5081/5311404087_fea4651daf.jpg" width="500" height="375" alt="IMG_0276" /></a>
-今天基本上学会了农场主的基本规则，在我看来虽然复杂，但是多少也和波多黎各什么的类似，这大概就是这类桌游的pattern吧。负责任地说，绝对没有两个人玩的晨昏对峙复杂（又是太空又是核武又是战争指数还有全球战场搞神马啊）。这点从桌游店就能看出来，去拿农场主的时候老板还会对你表示一下惊叹和欣赏；可是要玩晨昏对峙呢，根本店里根本找不到。高出不胜寒啊！你一生要是能找到一个棋逢对手的朋友一起玩晨昏对峙，也是一件幸事 -___-。</p>
-
-<p>Anyway，农场主也很好玩，我就喜欢这种卡牌多、道具多的桌游。桌游的道具模型都可以复用了，它的猪和卡卡颂商人扩展里的一模一样。</p>
-
-<p>专心休假，停止劳作。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/16/">&larr; Older</a>
@@ -696,6 +719,10 @@ You may have internal Nexus, just append to this file following the pattern.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -709,10 +736,6 @@ You may have internal Nexus, just append to this file following the pattern.</p>
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

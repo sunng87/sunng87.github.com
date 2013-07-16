@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="This article will show you some basic steps to setup a standalone environment for Jython, with the power of some popular and standard tools. 0. &hellip;">
+  <meta name="description" content="今天基本上学会了农场主的基本规则，在我看来虽然复杂，但是多少也和波多黎各什么的类似，这大概就是这类桌游的pattern吧。负责任地说，绝对没有两个人玩的晨昏对峙复杂（又是太空又是核武又是战争指数还有全球战场搞神马啊）。这点从桌游店就能看出来，去拿农场主的时候老板还会对你表示一下惊叹和欣赏； &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/01/01/happy-new-year/">Happy New Year!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-01T00:00:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5311404087/" title="IMG_0276 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5081/5311404087_fea4651daf.jpg" width="500" height="375" alt="IMG_0276" /></a>
+今天基本上学会了农场主的基本规则，在我看来虽然复杂，但是多少也和波多黎各什么的类似，这大概就是这类桌游的pattern吧。负责任地说，绝对没有两个人玩的晨昏对峙复杂（又是太空又是核武又是战争指数还有全球战场搞神马啊）。这点从桌游店就能看出来，去拿农场主的时候老板还会对你表示一下惊叹和欣赏；可是要玩晨昏对峙呢，根本店里根本找不到。高出不胜寒啊！你一生要是能找到一个棋逢对手的朋友一起玩晨昏对峙，也是一件幸事 -___-。</p>
+
+<p>Anyway，农场主也很好玩，我就喜欢这种卡牌多、道具多的桌游。桌游的道具模型都可以复用了，它的猪和卡卡颂商人扩展里的一模一样。</p>
+
+<p>专心休假，停止劳作。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -637,64 +678,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/11/29/dbus-python-in-case-you-dont-know/">Dbus-python, in Case You Don&#8217;t Know</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-11-29T00:00:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html">tutorials</a>帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you don&#8217;t know。</p>
-
-<p><h3>DBus Interface Properties</h3>
-对mpris 2.0中定义的properties用dbus-python应该如何实现呢，似乎没有@dbus.service.properties这种decorator啊。<a href="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">这里</a>的文档对Properties进行了简单的说明，对于python程序，只能这样实现了：<br />
-[cc lang=&#8221;python&#8221;]<br />
-    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;ss&#8217;, out_signature=&#8217;v&#8217;)<br />
-    def Get(self, interface, prop):<br />
-        &#8230;<br />
-    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;ssv&#8217;)<br />
-    def Set(self, interface, prop, value):<br />
-        &#8230;<br />
-    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature=&#8217;s&#8217;, out_signature=&#8217;a{sv}&#8217;)<br />
-    def GetAll(self, interface):<br />
-        &#8230;<br />
-[/cc]<br />
-程序里通过prop判断property名字，返回结果。没办法，就是这样。</p>
-
-<p><h3>指定返回数据的dbus类型</h3>
-对于dbus接口返回的variant类型，dbus-python会guess_signature。可是这部分的功能有的时候并不如我们想象，比如返回一个dict类型，其中的value有字符串有list有int，而out_signature是v。这种情况在Property Get的时候非常常见，如果不能手动指定类型，guess_signature得到的结果，value是统一类型，即，int会报错，如果没有int类型，会将所有字符串转成list（dbus的array）</p>
-
-<p>这种情况需要手动指定返回的类型，用dbus.types模块下的类型对python显示包装，对dict类型，需要用dbus.types.Dictionary()包装，并且在构造函数里传入signature=&#8217;sv‘及相应的<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html#container-types">variant_level</a>即可显示告知类型。同样，对list对象，需要用dbus.types.Array()包装。</p>
-
-<p>这样即可绕过guest_signature，如果用dbus-monitor查看，就可以看到类型为variant string了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/17/">&larr; Older</a>
@@ -712,6 +695,10 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -725,10 +712,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>

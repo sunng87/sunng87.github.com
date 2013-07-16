@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="一共也没去过几次咖啡店，但是几乎每次要的都是摩卡，感情特深。所谓摩卡就是不明颗粒+奶油(optional)+牛奶+咖啡+巧克力（排名分先后）。我晕，扯这些没用的干啥，先上图： 这是自制摩卡，奶油暂时还做不来，所以放弃了。不明颗粒太麻烦，就拿巧克力代替了。 值得一提的是这次的巧克力是从可可粉熬过来的 &hellip;">
+  <meta name="description" content="按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/13/staged-event-driven-architecture/">Staged Event-Driven Architecture</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>按照传统的编写应用程序的思路，当server接到请求，包装完成之后，分配到线程池中交给一个线程完成，返回。Java的servlet容器就是这么设计的，这么多年大部分的应用程序也是在这种模式下编写的。当任务的代价比较大，比如多次和数据库交互，并且可能和后端其他服务通信，这是线程被任务占用的时间就相对较长。如果请求的并发量很大，容器的线程池耗尽，新的请求就无法被处理，导致并发性无法提高，吞吐量也无法提高。</p>
+
+<p>实际上在大部分应用程序里，所谓代价很高的任务，往往都是I/O Bound。涉及网络通信，磁盘读写，线程被迫wait，CPU却是空闲的。所以，I/O Bound的程序理论上都还有优化的空间。于是有了这种Staged Event-Driven Architecture，即SEDA。</p>
+
+<p>SEDA的思路是将原先由一个线程完成的任务，分割为相对独立的多个阶段。每个阶段由专用的一组线程负责执行，阶段之间用过队列交互。又是上次提到的老话：If you cannot split it, you cannot scale it.</p>
+
+<p>例如，我们的业务逻辑是读取请求，操作数据库，与后端通信，操作数据库，写回结果。如果采用NIO的方式，网络通信可以认为是非阻塞的。而目前与数据库的交互，通常还是阻塞式的风格。这样这五个阶段分别是非阻塞、阻塞、非阻塞、阻塞、非阻塞。组塞操作容易成为性能瓶颈，CPU时间用于等待，占用率不高，所以对组塞操作可以分配相对多的线程；非阻塞操作速度较快，为了避免快速的切换导致sy升高，采用和CPU核数一样多的线程即可。</p>
+
+<p>这样，原本一个线程反复等待的阻塞操作，变成了部分线程等待的同时，其他线程仍然在处理自己的业务，有效使用CPU。利用的多核的优势，提高了CPU的占用，即提高了系统的处理能力。</p>
+
+<p>而对外部接口来说，当读取数据的线程在读取完毕之后，将任务dispatch到相应队列即返回，前端可以保证很高的处理速度，并发性也可以保证。任务被积压在阻塞操作的队列中，而消费阻塞操作的线程要多于提供者，在一定程度上也保证了处理速度。再退一步说，当阻塞操作的速度却是无法消费大量任务时，前端可以根据队列的大小判断当前系统的load，拒绝服务。</p>
+
+<p>当然，采用这种方式，只有在并发量提高到一定程度，并发成为系统瓶颈时才能体现价值。就单个操作而言，由于队列的传递，他的latency一定是有所上升的。</p>
+
+<p>关于SEDA，可以参考<a href="http://matt-welsh.blogspot.com/">Matt Welsh</a>的相关论文：The Staged Event-Driven Architecture for Highly-Concurrent Server Applications。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -613,75 +663,6 @@ map.addLayer(heatmap);<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/06/03/heatcanvas-hits-1-0-and-public-available/">HeatCanvas Hits 1.0, and Public Available</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-03T00:00:00+08:00" pubdate data-updated="true">Jun 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As described in Wikipedia, a heat map is a graphical representation of data in a two-dimensional table. HeatCanvas enables heat map on HTML5 canvas. With HeatCanvas, you can visualize your data on modern web browser without server-side support.</p>
-
-<p>HeatCanvas is based on <a href="http://sunng.info/blog/2010/02/sunngs-canvas-based-heatmap-api/">the prototype</a> I wrote 15 months ago. I just rewrite the whole with WebWorker API to keep user away from UI frozen and annoying slow-script warning. HeatCanvas is implemented as pixel based, so the image quality is great.</p>
-
-<p><img src="http://i.imgur.com/gNHOw.png" alt="" title="Hosted by imgur.com" /></p>
-
-<p>The API is rather simple. There are only three steps to create a basic heat map.</p>
-
-<p>1. Create the heat map object:<br />
-[cc lang=&#8221;javascript&#8221;]<br />
-var heatmap = new HeatCanvas(&#8216;canvasId&#8217;);<br />
-[/cc]</p>
-
-<p>2. Add some data to heat map:<br />
-[cc lang=&#8221;javascript&#8221;]<br />
-heatmap.push(223, 98, 10); // x,y and value for this point<br />
-[/cc]</p>
-
-<p>3. Render it:<br />
-[cc lang=&#8221;javascript&#8221;]<br />
-heatmap.render();<br />
-[/cc]</p>
-
-<p>In contrast to the base API, HeatCanvas also supports flexible options to customize the rendering. Even custom colour scheme is allowed. You can <a href="https://github.com/sunng87/heatcanvas/blob/master/README.md">refer to the doc</a> for detail.</p>
-
-<p>And for your convenience, we have a GoogleMap plugin, <b>HeatCanvasOverlayView</b>, that wraps HeatCanvas. You can use it in your GoogleMap application.</p>
-
-<p>For live demos, you can find at:
-<a href="http://sunng87.github.com/heatcanvas/">http://sunng87.github.com/heatcanvas/</a></p>
-
-<p>As always, the project is hosted on github:
-<a href="https://github.com/sunng87/heatcanvas">https://github.com/sunng87/heatcanvas</a> .</p>
-
-<p>The three javascript files are only necessary in your application, thus, please ignore the htmls in your deployment. Any feedback is welcomed and also please kindly let me know your application using this API.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9343259e-039c-8fdf-8721-dbd6277de695" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/12/">&larr; Older</a>
@@ -699,6 +680,10 @@ heatmap.render();<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
@@ -712,10 +697,6 @@ heatmap.render();<br />
     
       <li class="post">
         <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
       </li>
     
   </ul>
