@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今天基本上学会了农场主的基本规则，在我看来虽然复杂，但是多少也和波多黎各什么的类似，这大概就是这类桌游的pattern吧。负责任地说，绝对没有两个人玩的晨昏对峙复杂（又是太空又是核武又是战争指数还有全球战场搞神马啊）。这点从桌游店就能看出来，去拿农场主的时候老板还会对你表示一下惊叹和欣赏； &hellip;">
+  <meta name="description" content="The original idea is to create a standalone jython environment, I took traditional Java tools, ant and ivy, to resolve Java dependencies. But the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,96 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/01/04/jip-0-1/">Jip 0.1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-04T00:00:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The original idea is to create a standalone jython environment, I took <a href="http://sunng.info/blog/2010/12/setup-a-jython-development-environment/">traditional Java tools, ant and ivy</a>, to resolve Java dependencies. But  the XMLs seem to be verbose and not pythonic. So I decide to create something like pip, that is, resolves and installs dependencies in a pythonic way.  It is jip.</p>
+
+<p>jip will automatically download jars and its <strong>non-optional</strong> <strong>runtime</strong> dependencies from Maven repositories. By default, jip will search your local repository and maven central repository for the requested artifact. Also, you can create a configuration file to overwrite this.</p>
+
+<p>Virtualenv is required by jip. You must run jip within a standalone environment, created by virtualenv:
+<i>virtualenv -p /usr/local/bin/jython jython-env</i>
+<i>cd jython-env</i>
+<i>source bin/activate</i></p>
+
+<p>Don&#8217;t forget to activate it.</p>
+
+<p>Then download jip with pip:
+<i>pip install jip</i></p>
+
+<p>Now you have pip for python and jip for java. To install a Java package, just type:<br />
+jip install &lt;groupId&gt;:&lt;artifactId&gt;:&lt;version&gt;</p>
+
+<p>groupId+artifactId+version is known as the coordinate of a maven artifact. For example, you need spring-core in your jython development:
+<i>jip install org.springframework:spring-core:3.0.5.RELEASE</i></p>
+
+<p>The jars will be stored in <i>javalib</i> directory:
+<i>ls javalib</i>
+<pre>
+commons-logging-1.1.1.jar     spring-core-3.0.5.RELEASE.jar
+spring-asm-3.0.5.RELEASE.jar
+</pre></p>
+
+<p>And When you installed jip, I will provide you a <i>jython-all</i> command to include dependencies by default. So use <i>jython-all</i> instead of <i>jython</i> to run your program and the shell.</p>
+
+<p>For traditional Java user, there is a <i>resolve</i> subcommand to download dependencies defined in a pom file. This is more maintainable, some of you may prefer this way to typing it one by one.
+<i>jip resolve pom.xml</i></p>
+
+<p>To define custom repositories, place a dot file <i>.jip</i> in your home directory:<br />
+[cc lang=&#8217;ini&#8217;]<br />
+[jboss]<br />
+uri=http://repository.jboss.org/maven2/<br />
+type=remote</p>
+
+<p>[local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local</p>
+
+<p>[central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote<br />
+[/cc]<br />
+You may have internal Nexus, just append to this file following the pattern.</p>
+
+<p>Finally, a clean subcommand to remove everything you downloaded.</p>
+
+<p>That&#8217;s all. You can find the project at:
+<ul><li><a href="http://pypi.python.org/pypi/jip">http://pypi.python.org/pypi/jip</a></li>
+<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li></ul></p>
+
+<p>Your feedback is appreciate. Fire an issue in github if you find any bugs or new ideas about this tool.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -618,66 +708,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/12/03/i-am-location-aware/">I Am Location Aware</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-03T00:00:00+08:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>身为一个跟GIS沾过边的人，我直到今年才真正知道我在哪。尽管有了带GPS功能的手机，但是为了能离cartographer更进一步，今天我又买了一个专门的GPS Logger设备Holux M1000C。所谓GPS Logger就是以固定时间间隔采集GPS数据并记录的设备，现在国内的绝大多数GPS设备都是以导航为主，少有这样功能简单价格合理的GPS产品。
-<a href="http://www.flickr.com/photos/40741608@N08/5229058140/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5249/5229058140_cb0e8e44a2.jpg" width="500" height="335" alt="DSC_0006" /></a></p>
-
-<p>这类设备，自带的软件当然都是Windows only的，不过在Linux上也不是没有办法。处理GPS数据最著名的工具叫做BT747，支持多种设备、格式，用Java写的，可以通过jnlp启动，quick and dirty一下还是很不错的。不过如果要找一个长相厮守的命令行工具，还是要用gpsbabel。</p>
-
-<p>以USB连接为例，将M1000C通过USB线连接到电脑，开启设备。可以用dmesg命令查看连接的USB设备，找到该设备（我的机器上设备叫做 /dev/ttyACM0）。M1000C使用的是MTK芯片，gpsbabel的命令为：
-<i>gpsbabel -t -i m241 -f /dev/ttyACM0 -o gpx -F output.gpx</i></p>
-
-<p>其中：
-<ul>
-<li>-t 表示track</li>
-<li>-i 输入格式，可以带参数如 -i m241,erase=1 表示导入并擦除设备上的数据</li>
-<li>-f 输入设备</li>
-<li>-o 输出格式，导出gpx格式</li>
-<li>-F 输出文件</li>
-</ul></p>
-
-<p>有了GPS设备，现在可以名正言顺地为OpenStreetMap贡献了，今天揣着设备把下班的路记录了一下，而且还专门走了小区后面没有路灯的一条路上采集了一下数据，没有路灯还真有点&#8230;
-<a href="http://www.flickr.com/photos/40741608@N08/5228648495/" title="merkator by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5043/5228648495_accb4185cc.jpg" width="500" height="313" alt="merkator" /></a></p>
-
-<p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=121.62538,31.19607,121.64143,31.20659&amp;layer=mapnik" style="border: 1px solid black"></iframe><br /><small><a href="http://www.openstreetmap.org/?lat=31.20133&amp;lon=121.633405&amp;zoom=15&amp;layers=M">View Larger Map</a></small></p>
-
-<p>来吧，加入到OpenStreetMap的贡献者队伍里吧！</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/17/">&larr; Older</a>
@@ -695,6 +725,10 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -708,10 +742,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

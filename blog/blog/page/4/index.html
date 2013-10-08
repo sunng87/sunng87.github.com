@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="WebWorker的路径通常是写在代码源文件中，而且这个路径并非其相对父js文件的相对路径，而似乎是相对页面的路径。所以指定一个正确的可随处部署的路径变得有些麻烦。昨天有人给HeatCanvas提了这个问题我才想到上网搜索了一下，有一个还算挺不错的办法。 写一个getPath函数， &hellip;">
+  <meta name="description" content="In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/04/02/slacker-performance-enhanced/">Slacker Performance Enhanced</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-02T00:00:00+08:00" pubdate data-updated="true">Apr 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure meetup, I will focus on the performance enhancement in next release. </p>
+
+<p>Now I have worked out a testable version. The new slacker core has been moved to a new NIO library, <a href="https://github.com/sunng87/link" target="_blank">link</a>. Compared with aleph, link is a thin wrapper of Netty. It takes some nice features from aleph (gloss codec dsl, elegant API), and drops the heavy abstraction, lamina. The new slacker client runs on a real nonblocking connection. Connection pooling is no longer needed.</p>
+
+<p>I have some performance benchmark to visualize the improvement. The test was made on my laptop (Intel(R) Core(TM)2 Duo CPU     T5870  @ 2.00GHz). It ran 400,000 calls with 40 threads on a local slacker server.</p>
+
+<p>slacker 0.7.0 (clojure 1.2, aleph 0.2.0): <strong>614005.059259msecs</strong>
+slacker 0.7.1-SNAPSHOT (clojure 1.3, aleph 0.2.1-beta2): <strong>409110.909142msecs</strong>
+slacker 0.8.0-SNAPSHOT (clojure 1.3, link 0.2.0-SNAPSHOT): <strong>42468.401522msecs</strong></p>
+
+<p><img src="http://i.imgur.com/gMtdo.jpg" alt="tps chart" /></p>
+
+<p>Check out the new slacker on the <a href="https://github.com/sunng87/slacker/tree/0.8-dev" target="_blank">0.8-dev</a> branch. </p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -676,50 +726,6 @@ pyclj: 1.19659209251</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/02/11/heatcanvas-performance-enhanced/">HeatCanvas Performance Enhanced</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-11T00:00:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://i.imgur.com/6vkpo.png" alt="heatcanvas" /></p>
-
-<p>时隔半年日日沉浸在clojure世界里的时候，多亏了github上<a href="https://github.com/dazuma">Daniel Azuma</a>的提示，现在HeatCanvas通过Image Data数组来绘制图像。过去由于不太熟悉Canvas API，我用的是fillRect来填充1像素大小的区域，模拟像素的渲染。但是这种方式导致浏览器渲染的效率非常低。</p>
-
-<p>ImageDataArray允许用户开辟一个固定大小的buffer，并设置每一像素的像素值，然后一次性地渲染到canvas上。详情可以参考这里：<a href="https://developer.mozilla.org/En/HTML/Canvas/Pixel_manipulation_with_canvas" target="_blank">Pixel manipulation with canvas</a></p>
-
-<p>这次性能的提升基本没有影响API，唯一的区别是如果原先自定义了value-color的映射函数的话，现在不再接受hsl的css字符串了，新的API需要你返回一个四个元素的数组，分别代表h, s, l, a，值域[0-1]。</p>
-
-<p>感谢关注HeatCanvas的朋友。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/5/">&larr; Older</a>
@@ -737,6 +743,10 @@ pyclj: 1.19659209251</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -750,10 +760,6 @@ pyclj: 1.19659209251</p>
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

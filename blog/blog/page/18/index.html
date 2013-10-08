@@ -9,11 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="趁热依旧打铁。Exaile 豆瓣电台插件 0.0.5 Features 界面快捷键 加心f 跳过s 删除d
-调整了按钮的顺序，和官方一致
-增强的菜单，可以在豆瓣模式里切换频道、关闭Exaile，无须回到主界面
-推荐当前歌曲到豆瓣，可以在配置界面配置推荐语模板 Installation
-Wiki &hellip;">
+  <meta name="description" content="The appindicator has been enhanced again in Ubuntu 10.10 Maverick. The new datetime indicator has been introduced in the replace Gnome datetime &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,60 @@ Wiki &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/29/installing-weather-indicator-on-maverick/">Installing Weather Indicator on Maverick</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-29T00:00:00+08:00" pubdate data-updated="true">Oct 29<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The appindicator has been enhanced again in Ubuntu 10.10 Maverick. The new datetime indicator has been introduced in the replace Gnome datetime applet. However, the datetime indicator is quite simple, which drops support for EDS (Evolution data server), location and weather. So you need an indicator api based weather widget, and <a href="http://www.omgubuntu.co.uk/2010/06/weather-indicator-applet-genesis-of-an-itch-into-an-app-updated-with-ppa/">omgubuntu</a> says there is already such a project of <a href="https://launchpad.net/weather-indicator">weather-indicator</a>, on launchpad.</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5125055279/" title="indicator-weather by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4145/5125055279_19997d4c15_m.jpg" width="200" height="240" alt="indicator-weather" /></a></p>
+
+<p>However, any attempt to install this package will result in a failure of 404. The ppa is no long maintained (Even the project has been in silent for a long time.) Fortunately, we can still build it from sources.</p>
+
+<p>First, check out the sources with bzr:
+<i>bzr branch lp:weather-indicator</i></p>
+
+<p>Then, change directory into <i>weather-indicator</i>, package it with debuild:
+<i>debuild binary</i></p>
+
+<p>You will get the result in the parent directory:
+<i>indicator-weather_10.07.16_all.deb</i></p>
+
+<p>Then you simply install the debian package with dpkg:
+<i>sudo dpkg -i indicator-weather_10.07.16_all.deb</i></p>
+
+<p>Enjoy !</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -662,44 +712,6 @@ Unpack and run install script with super user privilege:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/06/rhythmbox-plugin-for-douban-fm/">Rhythmbox Plugin for Douban FM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-06T00:00:00+08:00" pubdate data-updated="true">Oct 6<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://code.google.com/p/dbfmplugin/">Rhythmbox 豆瓣电台插件</a>是由cdredfox基于<a href="http://github.com/sunng87/exaile-doubanfm-plugin/blob/master/libdoubanfm.py">libdoubanfm</a>开发的另一个Linux桌面豆瓣电台客户端。如果您是Rhythmbox的忠实用户，现在您有一个新的选择了。</p>
-
-<p><image src="http://hnyangfei.appspot.com/media/aglobnlhbmdmZWlyDQsSBU1lZGlhGImbBAw/%E8%96%9B%E5%87%AF%E7%90%AA%20-%20%E5%A4%8D%E5%88%BB%E5%9B%9E%E5%BF%86_007.png" width="500" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/19/">&larr; Older</a>
@@ -717,6 +729,10 @@ Unpack and run install script with super user privilege:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -730,10 +746,6 @@ Unpack and run install script with super user privilege:
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

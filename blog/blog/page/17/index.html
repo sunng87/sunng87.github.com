@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个tutorials帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you &hellip;">
+  <meta name="description" content="身为一个跟GIS沾过边的人，我直到今年才真正知道我在哪。尽管有了带GPS功能的手机，但是为了能离cartographer更进一步，今天我又买了一个专门的GPS Logger设备Holux M1000C。所谓GPS Logger就是以固定时间间隔采集GPS数据并记录的设备， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/12/03/i-am-location-aware/">I Am Location Aware</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-03T00:00:00+08:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>身为一个跟GIS沾过边的人，我直到今年才真正知道我在哪。尽管有了带GPS功能的手机，但是为了能离cartographer更进一步，今天我又买了一个专门的GPS Logger设备Holux M1000C。所谓GPS Logger就是以固定时间间隔采集GPS数据并记录的设备，现在国内的绝大多数GPS设备都是以导航为主，少有这样功能简单价格合理的GPS产品。
+<a href="http://www.flickr.com/photos/40741608@N08/5229058140/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5249/5229058140_cb0e8e44a2.jpg" width="500" height="335" alt="DSC_0006" /></a></p>
+
+<p>这类设备，自带的软件当然都是Windows only的，不过在Linux上也不是没有办法。处理GPS数据最著名的工具叫做BT747，支持多种设备、格式，用Java写的，可以通过jnlp启动，quick and dirty一下还是很不错的。不过如果要找一个长相厮守的命令行工具，还是要用gpsbabel。</p>
+
+<p>以USB连接为例，将M1000C通过USB线连接到电脑，开启设备。可以用dmesg命令查看连接的USB设备，找到该设备（我的机器上设备叫做 /dev/ttyACM0）。M1000C使用的是MTK芯片，gpsbabel的命令为：
+<i>gpsbabel -t -i m241 -f /dev/ttyACM0 -o gpx -F output.gpx</i></p>
+
+<p>其中：
+<ul>
+<li>-t 表示track</li>
+<li>-i 输入格式，可以带参数如 -i m241,erase=1 表示导入并擦除设备上的数据</li>
+<li>-f 输入设备</li>
+<li>-o 输出格式，导出gpx格式</li>
+<li>-F 输出文件</li>
+</ul></p>
+
+<p>有了GPS设备，现在可以名正言顺地为OpenStreetMap贡献了，今天揣着设备把下班的路记录了一下，而且还专门走了小区后面没有路灯的一条路上采集了一下数据，没有路灯还真有点&#8230;
+<a href="http://www.flickr.com/photos/40741608@N08/5228648495/" title="merkator by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5043/5228648495_accb4185cc.jpg" width="500" height="313" alt="merkator" /></a></p>
+
+<p><iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=121.62538,31.19607,121.64143,31.20659&amp;layer=mapnik" style="border: 1px solid black"></iframe><br /><small><a href="http://www.openstreetmap.org/?lat=31.20133&amp;lon=121.633405&amp;zoom=15&amp;layers=M">View Larger Map</a></small></p>
+
+<p>来吧，加入到OpenStreetMap的贡献者队伍里吧！</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -508,60 +568,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/29/installing-weather-indicator-on-maverick/">Installing Weather Indicator on Maverick</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-29T00:00:00+08:00" pubdate data-updated="true">Oct 29<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The appindicator has been enhanced again in Ubuntu 10.10 Maverick. The new datetime indicator has been introduced in the replace Gnome datetime applet. However, the datetime indicator is quite simple, which drops support for EDS (Evolution data server), location and weather. So you need an indicator api based weather widget, and <a href="http://www.omgubuntu.co.uk/2010/06/weather-indicator-applet-genesis-of-an-itch-into-an-app-updated-with-ppa/">omgubuntu</a> says there is already such a project of <a href="https://launchpad.net/weather-indicator">weather-indicator</a>, on launchpad.</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/5125055279/" title="indicator-weather by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4145/5125055279_19997d4c15_m.jpg" width="200" height="240" alt="indicator-weather" /></a></p>
-
-<p>However, any attempt to install this package will result in a failure of 404. The ppa is no long maintained (Even the project has been in silent for a long time.) Fortunately, we can still build it from sources.</p>
-
-<p>First, check out the sources with bzr:
-<i>bzr branch lp:weather-indicator</i></p>
-
-<p>Then, change directory into <i>weather-indicator</i>, package it with debuild:
-<i>debuild binary</i></p>
-
-<p>You will get the result in the parent directory:
-<i>indicator-weather_10.07.16_all.deb</i></p>
-
-<p>Then you simply install the debian package with dpkg:
-<i>sudo dpkg -i indicator-weather_10.07.16_all.deb</i></p>
-
-<p>Enjoy !</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/18/">&larr; Older</a>
@@ -579,6 +585,10 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -592,10 +602,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

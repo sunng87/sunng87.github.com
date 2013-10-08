@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="The Exaile plugin &#8220;Douban Covers&#8221; has been upgraded to 0.0.2. Now there is a new preference pane inside exaile preference dialog. This &hellip;">
+  <meta name="description" content="如果还不算太晚的话，大家抬头看看木星拱月吧，一张笑脸少了一只眼睛。今年这木星和月亮已经腻味了半年了。我倒是清楚记得去年冬天这场面也出现过，那时依稀是火星跟金星，没今天这亮但总归比今天齐全。当然不能太强求完整不是。 我们班刚工作的同学除了在张江的两位都回去考研了，顺利的话60%的大家又要团聚了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/23/%E8%BF%99%E4%B8%80%E5%88%87%E6%B2%A1%E6%9C%89%E6%83%B3%E8%B1%A1%E7%9A%84%E9%82%A3%E4%B9%88%E7%B3%9F/">这一切没有想象的那么糟</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-23T00:00:00+08:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果还不算太晚的话，大家抬头看看木星拱月吧，一张笑脸少了一只眼睛。今年这木星和月亮已经腻味了半年了。我倒是清楚记得去年冬天这场面也出现过，那时依稀是火星跟金星，没今天这亮但总归比今天齐全。当然不能太强求完整不是。</p>
+
+<p>我们班刚工作的同学除了在张江的两位都回去考研了，顺利的话60%的大家又要团聚了。我想经历过这半年的同学回去以后肯定有更深刻的体会，我们这个专业找工作阻力很多很大，有的是没办法的事情。现在我又是在旁观者的角度看别人了，冷暖自知，自己的状况，也只有大家自己心里有数。</p>
+
+<p>话说，好久没有码字了，下班一路上想了不少事情，回来写起来却非常吃力，表达能力进一步退化，恶性循环。</p>
+
+<p>又，发现冬天听广播很有感觉，最早听广播还是某个冬天晚上六点半左右电视坏了寻找的替代，一晃今年正好是第十年。至于为什么时间记得这么清楚，呵，因为当时的节目到现在印象还很深。话说现在很多人肯定不能想象，我还有过打热线电话中奖的经历，不过中的什么门票到最后也没用着。那会南京电台还在著名的延龄巷50号，这个难找的地方着实花了我很长时间去领奖。</p>
+
+<p>再，这个月公司也十周年，不过到现在都没看出有什么特别的动静，也没什么可透露的，估计是比不了马云家的大场面的。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -524,56 +568,6 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/25/restore-nautilus-to-open-gnome-menu-after-installed-pcmanfm/">Restore Nautilus to Open Gnome Menu After Installed PCManFM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-25T00:00:00+08:00" pubdate data-updated="true">Oct 25<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After installed PCMan File Manager with LXDE,  the gnome &#8220;places&#8221; menu items were opened by PCManFM as default. To switch back to nautilus, follow these steps:
-<ol>
-	<li>check <em>/usr/share/applications/nautilus-folder-hanlder.desktop</em>
-make sure the line &#8221;<em>Exec=nautilus</em>&#8221; is not modified. (There are lots of hack article that teach user to change default file manager by modify this)</li>
-	<li>check <em>/usr/share/applications/defaults.list</em>
-grep the line &#8220;x-directory&#8221; by
-<em>cat /usr/share/applications/defaults.list | grep x-directory </em>
-make sure the value was kept as &#8220;nautilus-folder-handler.desktop&#8221;, if not, restore it.<br />
-Then grep the line &#8220;inode&#8221; by
-<em>cat /usr/share/applications/defaults.list | grep inode</em>
-also be sure about the result &#8220;nautilus-folder-handler.desktop&#8221;. if not, restore it again.</li>
-	<li>So it must be your own configuration that has been changed. check <em>~/.local/share/applications/defaults.list</em>
-grep the two lines described above, it must be changed to &#8220;pcmanfm-folder-handler.desktop&#8221;, so replace them by &#8220;nautilus-folder-handler.desktop&#8221;</li>
-</ol>
-To check the result, click menu item at once (no restart or logout needed), again, you see the slow file manager&#8230;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -591,6 +585,10 @@ To check the result, click menu item at once (no restart or logout needed), agai
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -604,10 +602,6 @@ To check the result, click menu item at once (no restart or logout needed), agai
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

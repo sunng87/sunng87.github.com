@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="梳理一下。 桂花陆续开了，昨天在衡山路一带飘的时候就问道久违的香味，今天在张江也闻到桂花味道。于是乎，八月了，不早了，今年又这样了。 最近工作还行，公司这部分业务刚刚正规刚刚起步，几个老大都是最近从竞争对手和相关领域挖来的人，这种情况是三月份时根本没有迹象的。公司Java这块还是很缺人的， &hellip;">
+  <meta name="description" content="JConsole
+下午给验证码做压力测试，用JMX监控Tomcat性能情况，200并发。Tomcat的配置，initial memory pool是512M，Max是768M。在15:30时我手动执行了一次GC。 Netpanzer
+跨平台的联机坦克游戏，今天才知道可以和Bot玩， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/10/two-screenshots/">3 Screenshots</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-10T00:00:00+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><h3>JConsole</h3>
+下午给验证码做压力测试，用JMX监控Tomcat性能情况，200并发。Tomcat的配置，initial memory pool是512M，Max是768M。在15:30时我手动执行了一次GC。</p>
+
+<p><img class="alignnone" title="jconsole" src="http://pic.yupoo.com/classicning/8583480c7842/medium.jpg" alt="" width="500" height="417" />
+<h3>Netpanzer</h3>
+跨平台的联机坦克游戏，今天才知道可以和Bot玩，来看看这种寂寞的玩法。<br />
+开一个terminal（或者用screen也可以）：
+<em>netpanzer -d </em></p>
+
+<p>再开一个terminal，添加两个bot
+<em>netpanzer -b localhost &amp;<br />
+netpanzer -b localhost &amp;</em></p>
+
+<p>自己进游戏
+<em>netpanzer -c localhost</em></p>
+
+<p>之前一直不知道，也怪自己，不知道打游戏也可以<em>&#8211;help</em></p>
+
+<p><img class="alignnone" title="netpanzer" src="http://pic.yupoo.com/classicning/4416780c6f23/medium.jpg" alt="" width="500" height="378" />
+<h3>VirtualBox</h3>
+VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核的冲突，阔别已久的arch在VirtualBox上终于又可以运行了，但是：</p>
+
+<p><img class="alignnone" title="arch" src="http://pic.yupoo.com/classicning/4844580c74c5/medium.jpg" alt="" width="500" height="354" />
+<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">Two Screenshots</div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -513,59 +574,6 @@ This is my first maven managed web project. When using maven with hsqldb, there 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/07/27/using-mysql-on-archlinux/">Using MySQL on ArchLinux</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-27T00:00:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><ol>
-	<li><em>su -</em></li>
-	<li><em>pacman -S mysql mysql-gui-tools
-</em></li>
-	<li>run <em>mysql_install_db &#8211;user=mysql</em> in <em>/var/lib/mysql</em></li>
-	<li><em>vim /etc/my.cnf</em>, disable <em>skip_networking </em>to allow tcp/ip connection<em>
-</em></li>
-	<li><em>vim /etc/hosts.allow</em>, add <em>mysql:all:allow</em></li>
-	<li><em>/etc/rc.d/mysql start</em></li>
-	<li><em>mysqladmin -u root password #NEW_PASSWORD#</em> to set root password<em>
-</em></li>
-</ol>
-<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">
-<ol>
-	<li></li>
-	<li><em>su -</em></li>
-</ol>
-</div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
@@ -583,6 +591,10 @@ This is my first maven managed web project. When using maven with hsqldb, there 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -596,10 +608,6 @@ This is my first maven managed web project. When using maven with hsqldb, there 
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="OSM(http://www.osm.org) has released their first prototype of static map api. It is aimed to make web mapping easier to refer just like google has &hellip;">
+  <meta name="description" content="su - pacman -S mysql mysql-gui-tools run mysql_install_db &#8211;user=mysql in /var/lib/mysql vim /etc/my.cnf, disable skip_networking to allow tcp/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/27/using-mysql-on-archlinux/">Using MySQL on ArchLinux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-27T00:00:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><ol>
+	<li><em>su -</em></li>
+	<li><em>pacman -S mysql mysql-gui-tools
+</em></li>
+	<li>run <em>mysql_install_db &#8211;user=mysql</em> in <em>/var/lib/mysql</em></li>
+	<li><em>vim /etc/my.cnf</em>, disable <em>skip_networking </em>to allow tcp/ip connection<em>
+</em></li>
+	<li><em>vim /etc/hosts.allow</em>, add <em>mysql:all:allow</em></li>
+	<li><em>/etc/rc.d/mysql start</em></li>
+	<li><em>mysqladmin -u root password #NEW_PASSWORD#</em> to set root password<em>
+</em></li>
+</ol>
+<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">
+<ol>
+	<li></li>
+	<li><em>su -</em></li>
+</ol>
+</div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -542,42 +595,6 @@ to<em> yourapp/libs/helper.py</em> .</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/06/17/20090617/">20090617</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-06-17T00:00:00+08:00" pubdate data-updated="true">Jun 17<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Nobody talks about techniques and related any more.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/36/">&larr; Older</a>
@@ -595,6 +612,10 @@ to<em> yourapp/libs/helper.py</em> .</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -608,10 +629,6 @@ to<em> yourapp/libs/helper.py</em> .</p>
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

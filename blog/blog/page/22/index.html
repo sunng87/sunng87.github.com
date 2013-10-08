@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Exaile doubanfm plugin 0.0.2 预览版，目标是在Linux桌面提供豆瓣电台的完整体验。 目前插件只能运行在Exaile 0.3.1版本上。 0.0.2增加了豆瓣电台专用的视图： 相比第一版通过rating来实现豆瓣电台喜欢、跳过和删除的功能，在专用视图上有专门的按钮来操作 &hellip;">
+  <meta name="description" content="搬家了，搬了一条街，从马路这边搬到马路那边。从二楼搬到四楼，告别了潮湿发霉的小屋，换了新环境迎接工作第二年。本来想搬出这个玉兰香苑，但是看了一圈不是太远就是太贵。都说现在是不炒房价改炒房租了，别的不知道，反正我原来那屋房租就涨了200，而且我搬出去那天就租出去了。
+妈妈来上海，晚上可以一起玩桌游 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/10/update-2/">Update</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><ol>
+<li>搬家了，搬了一条街，从马路这边搬到马路那边。从二楼搬到四楼，告别了潮湿发霉的小屋，换了新环境迎接工作第二年。本来想搬出这个玉兰香苑，但是看了一圈不是太远就是太贵。都说现在是不炒房价改炒房租了，别的不知道，反正我原来那屋房租就涨了200，而且我搬出去那天就租出去了。</li>
+<li>妈妈来上海，晚上可以一起玩桌游。妈妈对卡卡松还挺感兴趣的，我们一开始玩基础版，然后加河流扩展、旅馆教堂扩展。卡卡松绝对是家庭娱乐的好工具，各位常年在外的童鞋休假回家可以带一个和父母一起玩，调节气氛，增进和谐，居家旅行，必备良方。</li>
+<li>周五盛大创新院，人间网介绍mongodb实践。人间网的用户不多，数据量不大，mongodb用来存储timeline里的status id，至今有不到900M的数据和900M的索引。交流活动持续一个小时，最火爆的环节是Q&A。人间网用mongodb的经验也不是非常丰富，很多问题也解释不清楚，最后多亏了我们组<a href="http://www.ccdaisy.com/">一位上海程序员界的新星</a>救场，除了解决了四面八方有意义无意义的问题以外，也引来了全场的叹为观止，以至于都有人说这是SDO的人嘛。其实不完全是，其实人家才大三。</li>
+<li>工作一年了，下周安静下来总结一下吧。</li>
+</ol></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -582,61 +626,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/12/rpc-serialization-and-schema/">RPC, Serialization and Schema</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-12T00:00:00+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-
-<p>糖果项目的后端用Java编写，我负责service gateway的开发（暂且叫sergent），服务以Java接口+Annotation的形式声明，与Spring集成使用，Java对象被序列化为JSON和XML（通过jackson和castor）与外部系统交互。专门的JSON Schema和XML Schema是可选的，系统交互通过简明的文档和人工确认。</p>
-
-<p>RPC框架是跨进程、跨系统交互的重要工具，RPC框架中又包括远程调用、网络传输和序列化反序列化等等部分。流行的工具包括Facebook的<a href="http://incubator.apache.org/thrift/">thrift</a>，Google的<a href="http://code.google.com/p/protobuf/">Protobuf</a>和原先Hadoop项目下的<a href="http://avro.apache.org/">avro</a>。其中thrift包含远程调用、反序列化、网络等等全部的功能。Protobuf本身是一个序列化反序列化库，另有很多<a href="http://code.google.com/p/protobuf/wiki/ThirdPartyAddOns#RPC_Implementations">第三方RPC实现</a>，avro目前除了序列化和反序列化的功能，也包含了ipc的HTTP Server和SocketServer等实现。在序列化的格式方面，Thrift支持JSON和二进制协议，Protobuf本身<a href="http://code.google.com/p/protobuf/issues/detail?id=82">仅有二进制支持</a>，但已经存在<a href="http://code.google.com/p/protobuf-java-format/">第三方的其他格式实现</a>。 avro原生支持二进制和JSON格式。</p>
-
-<p>从效率上来说，二进制方式的序列化要比文本方式的快。Google Code上（最近迁往了github）有一个<a href="http://wiki.github.com/eishay/jvm-serializers/">tpc项目</a>（thrift-protobuf-compare），根据这个项目的最新的比较结果（与原先不同）：
-<img src="http://chart.apis.google.com/chart?chtt=total&chf=c||lg||0||FFFFFF||1||76A4FB||0|bg||s||EFEFEF&chs=700x426&chd=t:3234,4375,4583,5094,5712,6949,7199,7817,9228,9532,11160,11265,12575,12698,13233,14117,14950,16244,17187,23282,28258,31018,37012,43989,61663,74099,113707,141689,218143,225905,227399,227943,228237&chds=0,251061.7483&chxt=y&chxl=0:|woodstox-xstream|fastinfo-xstream|xml%2Fxstream|aalto-xstream|json%2Fgoogle-gson|json%2Fprotobuf|scala%2Fjava-built-in|java-built-in|xml%2Fxstream%2Bc|fastinfo-xstream%2Bc|woodstox-xstream%2Bc|xml%2Fmanual-fastinfo|aalto-xstream%2Bc|hessian|json%2Fjackson-databind|xml%2Fmanual-woodstox|xml%2Fjavolution|json%2Fprotostuff-runtime|avro-generic|json%2Fprotostuff-core|avro|json%2Fjackson-manual|xml%2Fmanual-aalto|thrift-compact|thrift|scala%2Fsbinary|protobuf%2Factivemq%2Balt|protobuf|protobuf%2Fprotostuff-runtime|protobuf%2Fprotostuff-core|kryo|kryo-opt|java-manual&chm=N%20*f*,000000,0,-1,10&lklk&chdlp=t&chco=660000|660033|660066|660099|6600CC|6600FF|663300|663333|663366|663399|6633CC|6633FF|666600|666633|666666&cht=bhg&chbh=6,0,6&nonsense=aaa.png" title="" alt="" /></p>
-
-<p>protobuf成为了三者中耗时最少的框架，之后是thrift和avro，这次avro的耗时甚至超过了文本方式的jackson（主要在反序列化上）。</p>
-
-<p>但是二进制协议通常都需要定义Schema，thrift / protobuf / avro三者各自定义了Schema的格式，没有类似XSD和Json Schema的统一标准，也就是说，当你需要传输一个对象，就要为它编写一个Schema文件。按照通常的习惯，都是先编写Schema，然后通过命令行工具或者自动构建工具来生成Java source。对于新系统还好说，对旧系统这个改造就比较麻烦了。另外，二进制协议不便于调试，所以各个thrift/protobuf/avro先后也都有JSON的实现，在文本的序列化格式上，JSON对XML的优势是全方位的。</p>
-
-<p>所以综合起来，很难说有一种完美的解决方案。二进制协议的效率高，但是改造、编写Schema的代价并不小，还要面对核心Model被绑架到具体框架的风险。文本协议开发简便，不需要Schema，直接POJO就可以序列化和反序列化，但是在时间和空间上都不如二进制的方式。</p>
-
-<p>补充<br />
-从tpc项目的结果上看，kryo在时间、空间上都击败了所有对手，而且，kryo的API非常简洁，不需要Schema文件就可以序列化POJO，听起来太完美了，看来以后sergent要借鉴一下的。</p>
-
-<p><strong>补充 2010-06-14</strong>
-发现avro现在也有ReflectDatumReader和ReflectDatumWriter，可以通过反射内部自动映射生成Schema，可以尝试一下。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/23/">&larr; Older</a>
@@ -654,6 +643,10 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -667,10 +660,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

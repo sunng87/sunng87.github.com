@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="上周Ubuntu 10.10 Maverick Meerkat beta发布了，本人向来是在Beta版发布的时候更新，然后经历一个月的黑白颠倒最终走向光明走向stable。因为我安装的规模有点大，这次升级总共要下载两千八百多个包，花了我两天的时间。 升级到Meerkat后，由于内核版本变成了2.6 &hellip;">
+  <meta name="description" content="The last version of my home page was initialized at 2008.9. After two years, the page is completely obsolete, some features were broken due to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/09/07/newly-designed-front-page/">Newly Designed Front Page</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-07T00:00:00+08:00" pubdate data-updated="true">Sep 7<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The last version of my home page was initialized at 2008.9. After two years, the page is completely obsolete,  some features were broken due to different reasons. (fanfou.com has been shutdown and twitter was banned).</p>
+
+<p>So I just bring you this:
+<a href="http://www.flickr.com/photos/40741608@N08/4967665544/" title="screenshot_001 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4124/4967665544_1b607edbf5.jpg" width="500" height="294" alt="screenshot_001" /></a></p>
+
+<p>The page is extremely simple, without any JavaScript or image. Some CSS3 features have been applied to it, including gradient background, css border radius (also web font will be added when I find a suitable font).</p>
+
+<p>The photo is taken at Expo, outside the  Holland Pavilion.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -885,82 +928,6 @@ It all started one night when I got home very late from work (where I get to pla
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/08/11/beanstalkd/">Beanstalkd</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-11T00:00:00+08:00" pubdate data-updated="true">Aug 11<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://kr.github.com/beanstalkd/">beanstalkd</a>是一个极轻量级的消息队列服务，作者的说法叫做Work Queue。</p>
-
-<p><h3>概念</h3></p>
-
-<p>Beanstalkd里包含以下几个概念：
-<ul>
-<li>Producer</li>
-<li>Worker</li>
-<li>Job</li>
-<li>Tube</li>
-</ul></p>
-
-<p>Producer 与传统的消息队列服务中的概念类似，是Job的生产者。这个角色通过put命令来创建Job。</p>
-
-<p>Worker 即消费者，worker通过reserve / release / bury / delete 等命令操作job的生命周期。</p>
-
-<p>Job 是beanstalkd中的基本单元，一个job包含id和body，从属于一个tube。Job的生命周期是beanstalkd中的核心概念，它包含DELAYED / READY / RESERVED / BURIED / DELETED等状态。beanstalkd文档中的这个图对Job的声明周期进行了说明：
-<a href="http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81">http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81</a></p>
-
-<p>Tube 是类似namespace的概念，Producer在生产Job前通过use指定相应的Tube。而Worker通过watch / Ignore命令来决定从哪些Tube中获得Job。</p>
-
-<p><h3>安装</h3></p>
-
-<p>Beanstalkd 可以通过很多Linux发行版的包管理器直接安装。依赖libevent 1.4.1 以上版本。<br />
-通过以下命令启动即可</p>
-
-<p><i>beanstalkd -d -p &lt;PORT&gt;</i></p>
-
-<p><h3>协议</h3>
-Beanstalkd在各方面都继承memcached的风格，协议也与memcached类似，同样是基于文本的：</p>
-
-<p>命令 参数 [参数&#8230;] [命令体字节数]\r\n<br />
-[命令体]\r\n</p>
-
-<p>beanstalkd很多命令的返回是yaml格式，但是系统对命令体的格式并没有限制。</p>
-
-<p><h3>客户端</h3></p>
-
-<p>Beanstalkd协议见简单，有各种语言的客户端实现。python有一个非常简单的beanstalkc，可以通过easy_install安装。不过，这个客户端缺少断线重连机制，正式发布的0.2.0版本也有一些严重的bug。可以从github上下载源代码安装，并在使用时控制重连。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -978,6 +945,10 @@ Beanstalkd在各方面都继承memcached的风格，协议也与memcached类似�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -991,10 +962,6 @@ Beanstalkd在各方面都继承memcached的风格，协议也与memcached类似�
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

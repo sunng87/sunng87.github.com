@@ -9,11 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="pgpool是postgresql的中间件，他的主要功能包括： Connection Pooling 连接池
-Replication 双写
-Load Balance 负载均衡
-Limiting Exceeding Connections 连接限制
-Parallel Query 并行查询 除此以外， &hellip;">
+  <meta name="description" content="Native audio support was introduced in since Firefox 3.5 . Ogg is one of the media format supported by Firefox. However, sometimes you may find it &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,56 @@ Parallel Query 并行查询 除此以外， &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/02/15/fix-oggoga-not-play-in-firefox-3-6/">Fix Ogg/oga Not Play in Firefox 3.6</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-15T00:00:00+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Native audio support was introduced in since Firefox 3.5 . Ogg is one of the media format supported by Firefox. However, sometimes you may find it doesn&#8217;t work even if you set the right source path.  And you just check the network status of audio element:</p>
+
+<p><i>document.getElementsByTagName(&#8220;audio&#8221;)[0].networkState</i></p>
+
+<p>Then you get the constant of a 4, which is HTMLMediaElement.NETWORK_NO_SOURCE.</p>
+
+<p>This is because firefox checks the Content-Type header to make sure it&#8217;s a media file. (Webkit based browsers don&#8217;t have this restriction.) However, ogg format is not configured on most http servers. You can check the content type by:
+<i>curl -I &lt;url-to-media-file&gt;</i></p>
+
+<p>Take Apache as example, you can add following content to your configuration file:
+<i>AddType audio/ogg .oga</i>
+<i>AddType video/ogg .ogv .ogg</i></p>
+
+<p>For more, check this article:
+<a href="https://developer.mozilla.org/en/Configuring_servers_for_Ogg_media">https://developer.mozilla.org/en/Configuring_servers_for_Ogg_media</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -612,96 +658,6 @@ input[required=&#8221;required&#8221;]:after {<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/01/04/jip-0-1/">Jip 0.1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-04T00:00:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The original idea is to create a standalone jython environment, I took <a href="http://sunng.info/blog/2010/12/setup-a-jython-development-environment/">traditional Java tools, ant and ivy</a>, to resolve Java dependencies. But  the XMLs seem to be verbose and not pythonic. So I decide to create something like pip, that is, resolves and installs dependencies in a pythonic way.  It is jip.</p>
-
-<p>jip will automatically download jars and its <strong>non-optional</strong> <strong>runtime</strong> dependencies from Maven repositories. By default, jip will search your local repository and maven central repository for the requested artifact. Also, you can create a configuration file to overwrite this.</p>
-
-<p>Virtualenv is required by jip. You must run jip within a standalone environment, created by virtualenv:
-<i>virtualenv -p /usr/local/bin/jython jython-env</i>
-<i>cd jython-env</i>
-<i>source bin/activate</i></p>
-
-<p>Don&#8217;t forget to activate it.</p>
-
-<p>Then download jip with pip:
-<i>pip install jip</i></p>
-
-<p>Now you have pip for python and jip for java. To install a Java package, just type:<br />
-jip install &lt;groupId&gt;:&lt;artifactId&gt;:&lt;version&gt;</p>
-
-<p>groupId+artifactId+version is known as the coordinate of a maven artifact. For example, you need spring-core in your jython development:
-<i>jip install org.springframework:spring-core:3.0.5.RELEASE</i></p>
-
-<p>The jars will be stored in <i>javalib</i> directory:
-<i>ls javalib</i>
-<pre>
-commons-logging-1.1.1.jar     spring-core-3.0.5.RELEASE.jar
-spring-asm-3.0.5.RELEASE.jar
-</pre></p>
-
-<p>And When you installed jip, I will provide you a <i>jython-all</i> command to include dependencies by default. So use <i>jython-all</i> instead of <i>jython</i> to run your program and the shell.</p>
-
-<p>For traditional Java user, there is a <i>resolve</i> subcommand to download dependencies defined in a pom file. This is more maintainable, some of you may prefer this way to typing it one by one.
-<i>jip resolve pom.xml</i></p>
-
-<p>To define custom repositories, place a dot file <i>.jip</i> in your home directory:<br />
-[cc lang=&#8217;ini&#8217;]<br />
-[jboss]<br />
-uri=http://repository.jboss.org/maven2/<br />
-type=remote</p>
-
-<p>[local]<br />
-uri=/home/sun/.m2/repository/<br />
-type=local</p>
-
-<p>[central]<br />
-uri=http://repo1.maven.org/maven2/<br />
-type=remote<br />
-[/cc]<br />
-You may have internal Nexus, just append to this file following the pattern.</p>
-
-<p>Finally, a clean subcommand to remove everything you downloaded.</p>
-
-<p>That&#8217;s all. You can find the project at:
-<ul><li><a href="http://pypi.python.org/pypi/jip">http://pypi.python.org/pypi/jip</a></li>
-<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li></ul></p>
-
-<p>Your feedback is appreciate. Fire an issue in github if you find any bugs or new ideas about this tool.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/16/">&larr; Older</a>
@@ -719,6 +675,10 @@ You may have internal Nexus, just append to this file following the pattern.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -732,10 +692,6 @@ You may have internal Nexus, just append to this file following the pattern.</p>
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

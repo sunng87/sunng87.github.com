@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="半年没碰那个首页了，最近看到commandlinefu提供了jsonp接口，顺手把commandlinefu加了进来：
-Classicning7.clifu(); 这个程序是去年此时还在用JavaScript工作的时候写的，隔了一年再看，很难不感慨啊。话说，大家要是发现一些好玩的， &hellip;">
+  <meta name="description" content="一不小心又是大概有一年多时间没有用过Django了。最近经常有之前部门的同事来讨论Django和Python Web开发，大概是他们用asp做的客服系统终于要换架构了。今天国庆提前放假，用了一个下午的时间重温一下。Django的Template还是相对弱一些， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,46 @@ Classicning7.clifu(); 这个程序是去年此时还在用JavaScript工作的时
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/30/a-shorten-url-app/">A Shorten Url App</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-30T00:00:00+08:00" pubdate data-updated="true">Sep 30<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一不小心又是大概有一年多时间没有用过Django了。最近经常有之前部门的同事来讨论Django和Python Web开发，大概是他们用asp做的客服系统终于要换架构了。今天国庆提前放假，用了一个下午的时间重温一下。Django的Template还是相对弱一些，居然无法在template里调用model的方法。这样auth模块里判断用户登录的is_authticated()方法就不能在template里调，如此非得在view判断（Django是MTV模型，它的view即MVC里的controller），那如果是用generic_view，这个似乎就无解了？？</p>
+
+<p>贴个图。体验一下Firefox3.5开始支持的@font-face，Webkit核心和Opera浏览器都支持这个功能。不过我Ubuntu上的Midori貌似遇到Mootools就直接崩溃，看来要等到gnome2.28里epiphany了。<img class="alignnone" src="http://pic.yupoo.com/classicning/65666826c591/medium.jpg" alt="" width="500" height="365" /></p>
+
+<p>忘了提了，域名是我yy的，之所以有这样的效果是修改了hosts</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -700,65 +739,6 @@ got:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/10/two-screenshots/">3 Screenshots</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-10T00:00:00+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>JConsole</h3>
-下午给验证码做压力测试，用JMX监控Tomcat性能情况，200并发。Tomcat的配置，initial memory pool是512M，Max是768M。在15:30时我手动执行了一次GC。</p>
-
-<p><img class="alignnone" title="jconsole" src="http://pic.yupoo.com/classicning/8583480c7842/medium.jpg" alt="" width="500" height="417" />
-<h3>Netpanzer</h3>
-跨平台的联机坦克游戏，今天才知道可以和Bot玩，来看看这种寂寞的玩法。<br />
-开一个terminal（或者用screen也可以）：
-<em>netpanzer -d </em></p>
-
-<p>再开一个terminal，添加两个bot
-<em>netpanzer -b localhost &amp;<br />
-netpanzer -b localhost &amp;</em></p>
-
-<p>自己进游戏
-<em>netpanzer -c localhost</em></p>
-
-<p>之前一直不知道，也怪自己，不知道打游戏也可以<em>&#8211;help</em></p>
-
-<p><img class="alignnone" title="netpanzer" src="http://pic.yupoo.com/classicning/4416780c6f23/medium.jpg" alt="" width="500" height="378" />
-<h3>VirtualBox</h3>
-VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核的冲突，阔别已久的arch在VirtualBox上终于又可以运行了，但是：</p>
-
-<p><img class="alignnone" title="arch" src="http://pic.yupoo.com/classicning/4844580c74c5/medium.jpg" alt="" width="500" height="354" />
-<div id="_mcePaste" style="overflow: hidden; position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px;">Two Screenshots</div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -776,6 +756,10 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -789,10 +773,6 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

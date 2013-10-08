@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="GPS Logger完成了它有生以来最长的一次旅行，1477分钟，行程1767公里，途径江苏、安徽、江西、湖南、广东，包含了宁芜线、浙赣线、京广线等。有了GPS终端，贴地的旅途就变成一件非常严肃的事情。这周末去西安，这个GPS也是16个小时上铺车程唯一的安慰了。 &hellip;">
+  <meta name="description" content="Actor是一种Continuation技术，可以在少量的线程运行大量Actor对象。Actor对象之间通过消息机制进行交互。而Actor本身线程安全，这样的模型使并发编程的复杂度降低，同时也在一定的场景下实现了可扩展性。 gpars是Java和Groovy都可以使用的并行编程库， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,89 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/28/gpars%E7%9A%84actor%E5%AE%9E%E7%8E%B0/">GPars的Actor实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-28T00:00:00+08:00" pubdate data-updated="true">Apr 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Actor是一种Continuation技术，可以在少量的线程运行大量Actor对象。Actor对象之间通过消息机制进行交互。而Actor本身线程安全，这样的模型使并发编程的复杂度降低，同时也在一定的场景下实现了可扩展性。</p>
+
+<p>gpars是Java和Groovy都可以使用的并行编程库，他实现了Actor、Agent、DataFlow等模型，旨在为Groovy提供高层的并行编程模型。以下分析gpars 0.12中非阻塞Actor的实现。</p>
+
+<p>[cc lang=&#8221;groovy&#8221;]<br />
+@Grab(&#8220;org.codehaus.gpars:gpars:0.11&#8221;)<br />
+import groovyx.gpars.actor.Actors</p>
+
+<p>def worker = Actors.actor {<br />
+    loop {<br />
+        react {<br />
+            reply it.reverse()<br />
+        }<br />
+    }<br />
+}</p>
+
+<p>def console = Actors.actor {<br />
+    worker << "Hello GPars"<br />
+    react {<br />
+        println it<br />
+    }<br />
+}</p>
+
+<p>console.join()<br />
+[/cc]</p>
+
+<p>首先，在工厂类中Actors里会初始化一个DefaultPGroup用来封装后台的线程池、管理actors。Actors默认使用ResizeablePool，他是JDK Concurrent Framework中的ThreadPoolExecutor的封装，coreSize和maxSize不同所以称Resizeable。</p>
+
+<p>Actors的工厂方法actor生成的是DefaultActor，它是非阻塞actor的默认实现。（ActorGroup:67）</p>
+
+<p>DefaultActor的构造方法接受一个Groovy的闭包对象，将其封装为DefaultActorClosure对象后，调用其父类AbstractLoopingActor的initialize方法（DefaultActor：73）.</p>
+
+<p>initialize方法创建一个Runnable对象AsyncMessagingCore，并将线程池传递给core对象。（AbstractLoopingActor:57）AsyncMessagingCore对象负责消息的传递和处理，是线程池处理的目标对象。</p>
+
+<p>调用start启动actor后，actor会向自己发送一个start消息（AbstractLoopingActor:173）.<br />
+core获得start消息后，调用DefaultActor覆盖的handleStart方法（DefaultActor:328）。</p>
+
+<p>在handleStart中，actor会调用用户传入的闭包方法。上面的例子是一种典型的用法，loop是DefaultActor中的方法，loop也并不是无限空转的，他仅在收到消息被时被触发（DefaultActor:191）react也是DefaultActor中的方法，它将nextContinuation方法设为内部闭包对象，用来处理actor接收的消息。</p>
+
+<p>向Actor发送消息，是通过actor的send方法和重载的leftShift运算符进行操作。（AbstractLoopingActor:236）actor调用core的store方法，将ActorMessage压入core的队列中。入队列之后，core会检查锁对象activeUpdater，判断当前core是否在线程处理中，如果不在，则将core加入线程池中处理。activeUpdater是一个AtomicIntegerFieldUpdater对象，他的compareAndSet可以保证原子性。而通过activeUpdater也可以保证同一时刻只有一个core被线程池处理，从而使actor的线程不安全代码也线程安全地运行。</p>
+
+<p>进入线程池后，core首先将自己放进threadlocal对象中，并保存当前线程的引用。然后会循环消费MessageQueue中的消息直至Queue的可处理部分为空。（AsyncMessagingCore:126）。handleMessage在AbstractLoopingActor中被覆盖，会根据消息的类型进行分发调用（前面提到的start消息就是一种）。默认的业务消息，在DefaultActorClojure中调用DefaultActor的onMessage方法处理。</p>
+
+<p>onMessage中，react的闭包会被调用来处理业务。之后nextContinuation被置为null，这时loop闭包被重新调用，react闭包重新被赋给nextContinuation。这部分代码就是前面所说的loop并非空转，而是在消息处理完成后重新准备而已。</p>
+
+<p>此外，core的MessageQueue的实现是DefaultMessageQueue。它使用两个LinkedList作为输入（向actor输入）队列和输出队列，当输入队列为空时，通过同步方法swap交换输入输出队列。swap是整个actor系统里唯一一个同步方法。这样的机制保证actor的core在线程池中处理时，外界仍然可以向actor发送消息，消息会在actor被调度出线程池之前全部处理掉。不过，他的前提是只有一个线程读这个队列，这个条件在actor系统里，通过core对象的activeUpdater可以有效的保证。</p>
+
+<p>Actor模式采用这种onDemand方式的线程使用，允许大量的actor共存，并只有活跃的actor会占用线程，非活跃状态的actor处在dettach状态，并不消耗计算资源，取消了空转的loop。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -728,169 +811,6 @@ easy_install -U jip</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/03/27/setting-up-soldat-and-gefr/">Setting Up Soldat and Gefr</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-27T00:00:00+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文介绍soldat服务器和gefr WSGI适配器的环境搭建，以及jip的基本使用。</p>
-
-<p><h4>安装python工具</h4>
-virtualenv和pip是python开发的关键工具<br />
-sudo apt-get install python-virtualenv<br />
-sudo apt-get install python-pip</p>
-
-<p>jython需要您手动下载安装。推荐安装到/usr/local/下，并建立软连接到/usr/local/bin/中，下文将假设您是这么做的。</p>
-
-<p><h4>创建虚拟jython环境</h4>
-virtualenv -p /usr/local/bin/jython gefr-test<br />
-cd gefr-test<br />
-source bin/activate</p>
-
-<p><h4>安装jip</h4>
-pip install jip</p>
-
-<p><h4>配置jip</h4>
-在$HOME下创建文件.jip，内容为：</p>
-
-<p>[cc lang=&#8221;ini&#8221;]<br />
-[repos:oss]<br />
-uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
-type=remote</p>
-
-<p>[repos:central]<br />
-uri=http://repo1.maven.org/maven2/<br />
-type=remote</p>
-
-<p>[repos:local]<br />
-uri=/home/sun/.m2/repository/<br />
-type=local<br />
-[/cc]</p>
-
-<p><h4>安装soldat</h4>
-配置完jip后，可以使用jip来安装soldat<br />
-jip install info.sunng.soldat:soldat:1.0-SNAPSHOT</p>
-
-<p>文件将被下载到 javalib 目录中，您可以检查安装的正确性：<br />
-$ ls javalib/<br />
-log4j-1.2.16.jar     slf4j-log4j12-1.6.1.jar<br />
-slf4j-api-1.6.1.jar  soldat-1.0-SNAPSHOT.jar</p>
-
-<p><h4>安装gefr</h4>
-pip install gefr==0.1dev2</p>
-
-<p><h4>创建一个简单的Python WSGI程序</h4>
-创建test.py</p>
-
-<p>[cc lang=&#8221;python&#8221;]<br />
-from gefr import Gefr</p>
-
-<p>def wsgiapp(environ, start_response):<br />
-    status = &#8216;200 OK&#8217;<br />
-    res_body = &#8221;<html><head><title>Welcome</title></head><body><h1>It works!</h1></body></html>&#8221;<br />
-    res_headers = [(&#8216;Content-Type&#8217;, &#8216;text/html&#8217;),<br />
-            (&#8216;Content-Length&#8217;, str(len(res_body)))]<br />
-    start_response(status, res_headers)<br />
-    return [res_body]</p>
-
-<p>Gefr(wsgiapp, host=&#8217;0.0.0.0&#8217;, port=8000).start()<br />
-[/cc]</p>
-
-<p><h4>启动服务</h4>
-使用jip附带的jython-all<br />
-jython-all test.py</p>
-
-<p>打开浏览器，访问 http://localhost:8000/</p>
-
-<p><h4>用ab测试服务性能</h4>
-$ ab -n 10000 -c 100 http://localhost:8000/
-<pre>
-This is ApacheBench, Version 2.3 <$Revision: 655654 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/</pre></p>
-
-<p>Benchmarking localhost (be patient)<br />
-Completed 1000 requests<br />
-Completed 2000 requests<br />
-Completed 3000 requests<br />
-Completed 4000 requests<br />
-Completed 5000 requests<br />
-Completed 6000 requests<br />
-Completed 7000 requests<br />
-Completed 8000 requests<br />
-Completed 9000 requests<br />
-Completed 10000 requests<br />
-Finished 10000 requests</p>
-
-<p>Server Software:        gefr/0.1dev<br />
-Server Hostname:        localhost<br />
-Server Port:            8000</p>
-
-<p>Document Path:          /<br />
-Document Length:        79 bytes</p>
-
-<p>Concurrency Level:      100<br />
-Time taken for tests:   2.539 seconds<br />
-Complete requests:      10000<br />
-Failed requests:        0<br />
-Write errors:           0<br />
-Total transferred:      1640000 bytes<br />
-HTML transferred:       790000 bytes<br />
-Requests per second:    3938.11 [#/sec] (mean)<br />
-Time per request:       25.393 [ms] (mean)<br />
-Time per request:       0.254 [ms] (mean, across all concurrent requests)<br />
-Transfer rate:          630.71 [Kbytes/sec] received</p>
-
-<p>Connection Times (ms)<br />
-              min  mean[+/-sd] median   max<br />
-Connect:        0    0   0.6      0       8<br />
-Processing:     9   25  22.4     21     239<br />
-Waiting:        9   25  22.4     21     239<br />
-Total:         13   25  22.3     21     239</p>
-
-<p>Percentage of the requests served within a certain time (ms)<br />
-  50%     21<br />
-  66%     22<br />
-  75%     22<br />
-  80%     23<br />
-  90%     26<br />
-  95%     40<br />
-  98%     65<br />
-  99%    233<br />
- 100%    239 (longest request)
-</p>
-
-<p>Good Luck!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
@@ -908,6 +828,10 @@ Total:         13   25  22.3     21     239</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -921,10 +845,6 @@ Total:         13   25  22.3     21     239</p>
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>

@@ -9,12 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="昨天搞到3点多，盛大糖果http://t.sdo.com/，昨天晚上终于开放IP给大家访问了。 留一些邀请码给大家 2HlXyYKYz2
-2dKoCcQZYV
-oHBYhO1JPw
--~YTMDYmN+
-IXKYMq0kE@
-Ub-C@xk8~r 我们后端服务从3月初开始正式开发，11个成员， &hellip;">
+  <meta name="description" content="The post is brought to you by lekhonee v0.7 糖果项目的后端用Java编写，我负责service gateway的开发（暂且叫sergent），服务以Java接口+Annotation的形式声明，与Spring集成使用， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +65,61 @@ Ub-C@xk8~r 我们后端服务从3月初开始正式开发，11个成员， &hell
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/12/rpc-serialization-and-schema/">RPC, Serialization and Schema</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-12T00:00:00+08:00" pubdate data-updated="true">Jun 12<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+
+<p>糖果项目的后端用Java编写，我负责service gateway的开发（暂且叫sergent），服务以Java接口+Annotation的形式声明，与Spring集成使用，Java对象被序列化为JSON和XML（通过jackson和castor）与外部系统交互。专门的JSON Schema和XML Schema是可选的，系统交互通过简明的文档和人工确认。</p>
+
+<p>RPC框架是跨进程、跨系统交互的重要工具，RPC框架中又包括远程调用、网络传输和序列化反序列化等等部分。流行的工具包括Facebook的<a href="http://incubator.apache.org/thrift/">thrift</a>，Google的<a href="http://code.google.com/p/protobuf/">Protobuf</a>和原先Hadoop项目下的<a href="http://avro.apache.org/">avro</a>。其中thrift包含远程调用、反序列化、网络等等全部的功能。Protobuf本身是一个序列化反序列化库，另有很多<a href="http://code.google.com/p/protobuf/wiki/ThirdPartyAddOns#RPC_Implementations">第三方RPC实现</a>，avro目前除了序列化和反序列化的功能，也包含了ipc的HTTP Server和SocketServer等实现。在序列化的格式方面，Thrift支持JSON和二进制协议，Protobuf本身<a href="http://code.google.com/p/protobuf/issues/detail?id=82">仅有二进制支持</a>，但已经存在<a href="http://code.google.com/p/protobuf-java-format/">第三方的其他格式实现</a>。 avro原生支持二进制和JSON格式。</p>
+
+<p>从效率上来说，二进制方式的序列化要比文本方式的快。Google Code上（最近迁往了github）有一个<a href="http://wiki.github.com/eishay/jvm-serializers/">tpc项目</a>（thrift-protobuf-compare），根据这个项目的最新的比较结果（与原先不同）：
+<img src="http://chart.apis.google.com/chart?chtt=total&chf=c||lg||0||FFFFFF||1||76A4FB||0|bg||s||EFEFEF&chs=700x426&chd=t:3234,4375,4583,5094,5712,6949,7199,7817,9228,9532,11160,11265,12575,12698,13233,14117,14950,16244,17187,23282,28258,31018,37012,43989,61663,74099,113707,141689,218143,225905,227399,227943,228237&chds=0,251061.7483&chxt=y&chxl=0:|woodstox-xstream|fastinfo-xstream|xml%2Fxstream|aalto-xstream|json%2Fgoogle-gson|json%2Fprotobuf|scala%2Fjava-built-in|java-built-in|xml%2Fxstream%2Bc|fastinfo-xstream%2Bc|woodstox-xstream%2Bc|xml%2Fmanual-fastinfo|aalto-xstream%2Bc|hessian|json%2Fjackson-databind|xml%2Fmanual-woodstox|xml%2Fjavolution|json%2Fprotostuff-runtime|avro-generic|json%2Fprotostuff-core|avro|json%2Fjackson-manual|xml%2Fmanual-aalto|thrift-compact|thrift|scala%2Fsbinary|protobuf%2Factivemq%2Balt|protobuf|protobuf%2Fprotostuff-runtime|protobuf%2Fprotostuff-core|kryo|kryo-opt|java-manual&chm=N%20*f*,000000,0,-1,10&lklk&chdlp=t&chco=660000|660033|660066|660099|6600CC|6600FF|663300|663333|663366|663399|6633CC|6633FF|666600|666633|666666&cht=bhg&chbh=6,0,6&nonsense=aaa.png" title="" alt="" /></p>
+
+<p>protobuf成为了三者中耗时最少的框架，之后是thrift和avro，这次avro的耗时甚至超过了文本方式的jackson（主要在反序列化上）。</p>
+
+<p>但是二进制协议通常都需要定义Schema，thrift / protobuf / avro三者各自定义了Schema的格式，没有类似XSD和Json Schema的统一标准，也就是说，当你需要传输一个对象，就要为它编写一个Schema文件。按照通常的习惯，都是先编写Schema，然后通过命令行工具或者自动构建工具来生成Java source。对于新系统还好说，对旧系统这个改造就比较麻烦了。另外，二进制协议不便于调试，所以各个thrift/protobuf/avro先后也都有JSON的实现，在文本的序列化格式上，JSON对XML的优势是全方位的。</p>
+
+<p>所以综合起来，很难说有一种完美的解决方案。二进制协议的效率高，但是改造、编写Schema的代价并不小，还要面对核心Model被绑架到具体框架的风险。文本协议开发简便，不需要Schema，直接POJO就可以序列化和反序列化，但是在时间和空间上都不如二进制的方式。</p>
+
+<p>补充<br />
+从tpc项目的结果上看，kryo在时间、空间上都击败了所有对手，而且，kryo的API非常简洁，不需要Schema文件就可以序列化POJO，听起来太完美了，看来以后sergent要借鉴一下的。</p>
+
+<p><strong>补充 2010-06-14</strong>
+发现avro现在也有ReflectDatumReader和ReflectDatumWriter，可以通过反射内部自动映射生成Schema，可以尝试一下。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -586,64 +636,6 @@ def get_local_ip():<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/05/01/%E4%BA%94%E6%9C%88%E4%B8%80%E5%8F%B7/">五月一号</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-01T00:00:00+08:00" pubdate data-updated="true">May 1<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天值得说的事情挺多的。首先，Ubuntu 10.04发布以后，Sun JDK 被放到了partner 仓库里，要使用Sun JDK，添加这个仓库：
-<em>sudo apt-add-repository &#8220;deb http://archive.canonical.com/ lucid partner&#8221;</em></p>
-
-<p>这是悲剧的开始，早晨七点四十起床，添加了这个仓库，把机器上的Sun JDK升级到6u20，为此到了八点三十五才出门。现在没有自行车不比从前了，等公交加上下来走到公司最后九点零六分打上卡。进了办公室一看大家整整齐齐地坐着了，这才听到悲剧：三薪工作日不能迟到，否则只算半天。就为了6分钟，一天半的工资没了。这事现在想起来我都郁闷，发自内心的郁闷啊。</p>
-
-<p>在上班的公交车上恰好收到邮件，是rubyforge的更新，昨天提交的patch已经被接受了，放进了svn仓库，会随Alexandria的0.6.6版本发布。项目的负责人修改了代码，把我那些\t都换成了空格。另外，豆瓣的API接口是json格式的，解析需要依赖libjson-ruby1.8这个库，这段代码被负责人修改了，真的很神奇，原来json可以就这样被转换成yaml<br />
-[cc lang=&#8221;ruby&#8221;]<br />
-def json2yaml(json)<br />
-    # insert spaces after : and , except within strings<br />
-    yaml = json.gsub(/(\:|\,)([^A-Za-z\/&#92;])/) do |match|<br />
-        &#8220;#{$1} #{$2}&#8221;<br />
-    end<br />
-    yaml.gsub!(/&#92;\//, &#8216;/&#8217;) # unescape forward slashes<br />
-    yaml<br />
-end<br />
-[/cc]<br />
-震惊了，不过我之前也太了解yaml，也许这个技巧在ruby世界是众所周知的吧。这下json模块的依赖就可以去除了，真没想到会这么简单。</p>
-
-<p>想起来我给另一个开源软件fantasdic提交的google translate的patch，作者已经认可了，但是至今还没有被加进仓库里。这位作者在日本读书不亦乐乎看来心思已经完全不在这个项目上了。</p>
-
-<p>下午下班回家又是坐公交车，越想越忿忿，晚上又去买了一辆新自行车，于是今天基本上就算是白干了。之前的自行车被偷，多半的原因是后来买的锁强度太弱。先前的锁呢又因为生锈最后没法用了，归根结底，还是我保养地不好。其实保养锁很简单的，买个肉包，把里面的肉吃掉之后，那钥匙蘸蘸剩下的油，放到锁眼里捅捅就成。</p>
-
-<p>五一了，世博了。和奥运会一样，还是和我没有什么直接关系。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -661,6 +653,10 @@ end<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
@@ -674,10 +670,6 @@ end<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
       </li>
     
   </ul>
