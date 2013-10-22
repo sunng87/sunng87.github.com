@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="成功人士是不写总结的，所以我来写个总结。 今年的coding从ABAP开始，这个很多人现在不知道以后也不用知道最好永远也不要知道的语言和他的平台，是一个脱胎于Pascal，在发展过程里又杂糅了SQL和C++的怪物，最后几乎变成了满屏幕关键字。再加上缺乏文档，实在是一段不堪回首的记忆。 3月份开始， &hellip;">
+  <meta name="description" content="Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release. Breaking Changes New maven coordinator &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/01/04/slacker-0-4-0-released/">Slacker 0.4.0 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-04T00:00:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release.</p>
+
+<p><h3>Breaking Changes</h3></p>
+
+<p><ul>
+	<li>New maven coordinator: [slacker &#8220;0.4.0&#8221;] (groupId renamed to slakcer)</li>
+	<li>defremote renamed to <strong>defn-remote</strong></li>
+	<li>SlackerException removed. slacker now uses slingshot for exception handling</li>
+	<li>Rename :async option of defn-remote to <strong>:async?</strong></li></ul></p>
+
+<p></p>
+
+<p><h3>What&#8217;s new in 0.4.0</h3>
+<ul>
+	<li>Add new serialization type <strong>:clj</strong></li>
+	<li>New interceptors: execution time stats, args logger, slow watch dog</li>
+	<li>New HTTP interface</li>
+	<li>Server inspect commands	</li></ul></p>
+
+<p><li> utility functions/macros <strong>defn-remote-all</strong>, <strong>defn-remote-batch</strong> and <strong>meta-remote</strong></li></p>
+
+<p></p>
+
+<p>Get more information on <a href="https://github.com/sunng87/slacker" target="_blank">github</a>.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -703,62 +763,6 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/12/02/slacker-0-1-0-is-out/">Slacker 0.1.0 Is Out</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-02T00:00:00+08:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Glad to roll out the first release of the <strong>slacker</strong> framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of non-invasive APIs for both server and client. The remote invocation is completely transparent to user.</p>
-
-<p>In addition to APIs introduced in <a href="http://sunng.info/blog/2011/11/clojure-rpc-prototyping-and-early-thoughts/">last post</a>, asynchronous approach is supported in client API :<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defremote remote-func :async true)<br />
-@(remote-func)<br />
-[/cc]<br />
-If you add option `:async` to defremote, then the function facade will return a promise. You have to deref it by yourself. Also you can use the `:callback` option in defremote to specify a callback function.<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defremote remote-func :callback #(println %))<br />
-(remote-func)<br />
-[/cc]</p>
-
-<p>This gives you much more flexibility of using remote function. But be careful it will break consistency between local and remote mode. </p>
-
-<p>To use slacker, add it to your project.clj<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-:dependencies [[info.sunng/slacker &#8220;0.1.0&#8221;]]<br />
-[/cc]</p>
-
-<p>You can find examples on the <a href="https://github.com/sunng87/slacker" target="_blank">github page</a>. </p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/7/">&larr; Older</a>
@@ -776,6 +780,10 @@ If you add option `:async` to defremote, then the function facade will return a 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -789,10 +797,6 @@ If you add option `:async` to defremote, then the function facade will return a 
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

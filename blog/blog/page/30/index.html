@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="如果还不算太晚的话，大家抬头看看木星拱月吧，一张笑脸少了一只眼睛。今年这木星和月亮已经腻味了半年了。我倒是清楚记得去年冬天这场面也出现过，那时依稀是火星跟金星，没今天这亮但总归比今天齐全。当然不能太强求完整不是。 我们班刚工作的同学除了在张江的两位都回去考研了，顺利的话60%的大家又要团聚了。 &hellip;">
+  <meta name="description" content="前些天看到一个Nginx的Module，用来是实现Comet，今天简单试了一下功能。作者名叫Leo Ponomarev，项目地址：http://pushmodule.slact.net/
+安装
+Module需要在编译时加入nginx，同时下载nginx和nginx-push-module， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,132 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/26/nginx-http-push/">Nginx HTTP Push</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前些天看到一个Nginx的Module，用来是实现Comet，今天简单试了一下功能。作者名叫Leo Ponomarev，项目地址：http://pushmodule.slact.net/
+<h3>安装</h3>
+Module需要在编译时加入nginx，同时下载nginx和nginx-push-module，在nginx configure时增加一个参数：
+<em>./configure &#8211;add-module=path/to/nginx_http_push_module</em>
+<h3>使用</h3>
+编写一个非常基本的nginx配置文件：
+<pre class="brush:plain">events{
+	worker_connections 1024;
+}
+http{
+	server {
+		listen	80;
+		server_name	localhost;</pre></p>
+
+<p>		location /publish {<br />
+			set $push_channel_id $arg_id;</p>
+
+<p>			push_publisher;</p>
+
+<p>			push_store_messages on;<br />
+			push_message_timeout 2h;<br />
+			push_max_message_buffer_length 10;<br />
+			push_min_message_recipients 0;<br />
+		}</p>
+
+<p>		location /subscribe{<br />
+			push_subscriber;</p>
+
+<p>			push_subscriber_concurrency broadcast;<br />
+			set $push_channel_id $arg_id;<br />
+			default_type text/plain;<br />
+		}</p>
+
+<p>	}<br />
+}
+一个简单的Server定义了两个路径分别用于publish和subscribe。所有相关的配置项可以在项目主页找到解释，不作赘述。</p>
+
+<p>启动nginx
+<em>nginx -c /home/sun/nginxpush/nginx-push.conf</em></p>
+
+<p><em><span style="font-style: normal; background-color: #ffffff;">打开一个终端访问subscribe
+<em> curl -X GET http://localhost/subscribe?id=0</em></span></em></p>
+
+<p><span style="background-color: #ffffff;">可以看到HTTP请求被阻塞</span></p>
+
+<p><span style="background-color: #ffffff;">打开另一个终端访问publish
+<em> curl -X POST http://localhost/publish?id=0 -d &#8220;Hello World&#8221; </em></span></p>
+
+<p><span style="background-color: #ffffff;">此时subscriber收到字符串&#8221;Hello World&#8221; ，完成HTTP请求。</span></p>
+
+<p><span style="background-color: #ffffff;">subscriber可以通过设置HTTP头来对消息进行过滤，如
+<em> curl -X POST http://localhost/publish?id=0 -d &#8220;Hello World&#8221;</em>
+<em> curl -X GET http://localhost/subscribe?id=0 &#8211;verbose</em></span>
+<div><em>*</em><span style="background-color: #ffffff;"><em> About to connect() to localhost port 80 (#0)</em></span></div>
+<div><span style="background-color: #ffffff;"><em>*   Trying 127.0.0.1&#8230; connected</em></span></div>
+<div><span style="background-color: #ffffff;"><em>* Connected to localhost (127.0.0.1) port 80 (#0)</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&gt; GET /subscribe?id=0 HTTP/1.1</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&gt; User-Agent: curl/7.19.7 (i686-pc-linux-gnu) libcurl/7.19.7 OpenSSL/0.9.8l zlib/1.2.3.3</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&gt; Host: localhost</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&gt; Accept: */*</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&gt; </em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; HTTP/1.1 200 OK</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Server: nginx/0.8.28</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Date: Thu, 26 Nov 2009 09:45:25 GMT</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Content-Type: application/x-www-form-urlencoded</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Content-Length: 10</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Last-Modified: Thu, 26 Nov 2009 09:44:59 GMT</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Connection: keep-alive</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Etag: 0</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; Vary: If-None-Match, If-Modified-Since</em></span></div>
+<div><span style="background-color: #ffffff;"><em>&lt; </em></span></div>
+<div><span style="background-color: #ffffff;"><em>* Connection #0 to host localhost left intact</em></span></div>
+<div><span style="background-color: #ffffff;"><em>* Closing connection #0</em></span></div>
+<em>HelloWorld</em></p>
+
+<p>从响应的头部可以看到Last-Modified: Thu, 26 Nov 2009 09:44:59 GMT的时间是上一次publish的时间，并且通过Vary字段提示了两个选项
+<ul>
+	<li>If-None-Match</li>
+	<li>If-Modified-Since</li>
+</ul>
+RFC中对Vary头是这样解释的：</p>
+
+<p>The Vary field value indicates the set of request-header fields that fully determines, while the response is fresh, whether a cache is permitted to use the response to reply to a subsequent request without revalidation.</p>
+
+<p>即可以通过发送If-Modified-Since来获取指定时间之后的数据</p>
+
+<p><em>curl -X GET -H &#8220;If-Modified-Since: Thu, 26 Nov 2009 09:44:50 GMT&#8221; http://localhost/subscribe?id=0 &#8211;verbose</em></p>
+
+<p>这时subscribe会重新被阻塞而不是接收上次publish的数据，充分利用了HTTP的语义。</p>
+
+<p>这样用push module来做Web-IM、聊天室的思路就非常清晰了：<span style="background-color: #ffffff;">每个浏览器保持一个subscriber连接，在接收到消息后连接关闭。把消息打印出来，并根据消息响应的头部Last-Modified请求重新subscribe。</span></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -530,44 +658,6 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/28/%E8%8A%A6%E8%8D%9F%E5%92%8C%E6%A1%94%E5%AD%90%E4%BB%AC/">芦荟和桔子们</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-28T00:00:00+08:00" pubdate data-updated="true">Oct 28<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="alignnone" src="http://farm3.static.flickr.com/2585/4052990160_e76583aed9.jpg" alt="" width="500" height="333" /></p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2772/4052990354_1f83589f87.jpg" alt="" width="500" height="333" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -585,6 +675,10 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -598,10 +692,6 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

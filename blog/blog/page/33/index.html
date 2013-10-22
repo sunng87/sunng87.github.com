@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="一不小心又是大概有一年多时间没有用过Django了。最近经常有之前部门的同事来讨论Django和Python Web开发，大概是他们用asp做的客服系统终于要换架构了。今天国庆提前放假，用了一个下午的时间重温一下。Django的Template还是相对弱一些， &hellip;">
+  <meta name="description" content="今天凌晨Ubuntu 9.10 Karmic的beta发布了，实在忍耐不到月底了，上午就update-manager -d升级了发行版。从下在到安装完成用了大约三个小时，当然升级不用花什么精力，只要让程序自动去处理就好了，现在跨版本升级越来越轻松了。 配好以后感觉还是很值得升级的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/02/upgrade-to-karmic/">Upgrade to Karmic</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-02T00:00:00+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天凌晨Ubuntu 9.10 Karmic的beta发布了，实在忍耐不到月底了，上午就update-manager -d升级了发行版。从下在到安装完成用了大约三个小时，当然升级不用花什么精力，只要让程序自动去处理就好了，现在跨版本升级越来越轻松了。</p>
+
+<p>配好以后感觉还是很值得升级的，大概多半是因为Kernel 2.6.31，这次桌面性能的提升真的非常大，之前从来没有这么明显的感受。举个例子，很惭愧，我这机器在上一个9.04版本里alt-table的Application Switcher都还会卡，现在已经一如之前不开compositing时的性能了。</p>
+
+<p>既然是ubuntu，还是要提一下面子上的事情。GDM有变化，按照release notes上说的是全部重写了。在从gdm登录到桌面载入之间有了一个loading效果，体验很不错。然后是Ubuntu主题变了，human不再是黄的了，变成了深褐色，有了新的图标主题humanity，尤其是在桌面的右上角区域很有特点。</p>
+
+<p>再有就是Gnome2.28的变化还有Ubuntu对gnome相关的增强了，这次激进了一些，居然赶在arch更新之前在ubuntu上体验了gnome的新版本。主要有几个变化：</p>
+
+<p>indicator变得更强大了，现在indicator和evolution empathy gwibber等等软件有了更好的集成，在indicator-applet里可以看到这些软件的新消息通知，另外indicator和原来Ubuntu的session manager也集成了，可以通过session manager设置empathy的状态。</p>
+
+<p>empathy变化很大，据说已经支持xmpp的geolocation extension了，早先我就转载过一个在osm上显示xmpp好友位置的截图。不过这个功能似乎又没有在ubuntu的版本里找到，可能ubuntu这边还是有点谨慎吧。倒是geoclue这个框架已经被加进apt-get了，可以看出相关的工作确实是在进行中。</p>
+
+<p>epiphany开始用webkit内核了，这样可以把midori彻底踢开了，epiphany也算是找到了自己在linux桌面上存在的意义。empathy可以抢走pidgin的位置，epiphany想强firefox的位置还是挺难的。</p>
+
+<p>还有Ubuntu似乎修改了gnome桌面gnome-panel/panel-menu-item.c里面的参数，之前当places里的书签数大于5之后会产生一个Bookmarks子菜单，现在这个数值似乎变成了8，当然只是猜测，因为gnome的代码里这个值仍然是5。发现这个变化的过程实在比较无聊。。。</p>
+
+<p>据说2.28的Evince看书的时候记annotation了，不过我好像没有发现这个功能，Gnome的release notes上也只是提了一下并没有发截图。</p>
+
+<p>我还是很感激每半年就有很多新特性可以去discover的，这种感觉很不错。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -653,92 +707,6 @@ static void encode_geohash(double latitude, double longitude, int precision, cha
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/13/rdf-sparql-query-with-python/">RDF, Sparql Query With Python</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-13T00:00:00+08:00" pubdate data-updated="true">Sep 13<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A simple query to test <a href="http://en.wikipedia.org/wiki/Resource_Description_Framework">rdf</a> and <a href="http://en.wikipedia.org/wiki/Sparql">sparql</a>.
-<pre>[codesyntax lang="python"]
-import sys
-import rdflib
-from rdflib.Graph import ConjunctiveGraph</pre></p>
-
-<p>g = ConjunctiveGraph()</p>
-
-<p>g.parse(sys.argv[1], format=&#8221;xml&#8221;)</p>
-
-<p>fbns = rdflib.Namespace(&#8220;http://rdf.freebase.com/ns/&#8221;)</p>
-
-<p>player_refs = g.query(&#8220;&#8221;&#8220;SELECT ?player<br />
-        WHERE {<br />
-            ?root fb:soccer.football_roster_position.player ?player .<br />
-        }&#8221;&#8220;&#8221;, initNs={&#8216;fb&#8217;:fbns})<br />
-players = []<br />
-for player in player_refs:<br />
-    gp = ConjunctiveGraph()<br />
-    gp.parse(player[0], format=&#8221;xml&#8221;)<br />
-    results = gp.query(&#8220;&#8221;&#8220;SELECT ?player_name ?player_position<br />
-        WHERE {<br />
-            ?player fb:type.object.name ?player_name .<br />
-            ?player fb:soccer.football_player.position_s ?player_position .<br />
-        }&#8221;&#8220;&#8221;, initNs={&#8216;fb&#8217;:fbns})<br />
-    l = list(results)<br />
-    for r in l:<br />
-        if r[0].language == &#8216;en&#8217;:<br />
-            players.append(r)</p>
-
-<p>for player in players:<br />
-    print player</p>
-
-<p>[/codesyntax]
-The query will return all player-position tuple from freebase&#8217;s db for specified resource.<br />
-To query for players of AC Milan, execute the script with resource location:
-<em>python rdfquery.py http://rdf.freebase.com/rdf/en/ac_milan</em>
-got:
-<em>(rdflib.Literal(&#8216;Yoann Gourcuff&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))<br />
-(rdflib.Literal(&#8216;Andrea Pirlo&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))<br />
-(rdflib.Literal(&#8216;Paolo Maldini&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
-(rdflib.Literal(&#8216;Gianluca Zambrotta&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
-(rdflib.Literal(&#8216;Davide Facchin&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/guid.9202a8c04000641f8000000000c75e75&#8217;))<br />
-(rdflib.Literal(&#8216;Marcus Plinio Diniz Paixao&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
-&#8230;</em></p>
-
-<p>All resources are stored as rdf:resource references. If you are also Milan fan like me, take a quick look at the players, well, the data is not up to date:)</p>
-
-<p>I have also tried to fetch data for my favorite local team.
-<em>python rdfquery.py http://rdf.freebase.com/rdf/en/jiangsu_shuntian<br />
-(rdflib.Literal(&#8216;Yao Hanlin&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))</em></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -756,6 +724,10 @@ got:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -769,10 +741,6 @@ got:
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="是coffee不是Java也不是CoffeeScript。买了两个月的咖啡机，到今天才终于把磨豆机和拉花杯都制备齐了。我上周用搪瓷缸打牛奶场面真是残不忍睹。不过我发现其实设备区别不大，蒸汽的掌握还是很重要的；牛奶的选择也很重要，鉴于家里没有其他牛奶可选，这部分跳过。蒸汽喷嘴与牛奶的举例很重要， &hellip;">
+  <meta name="description" content="As the screenshot shows, now you can embed HeatCanavs in your OpenLayers application, as well as OpenSteetMap. Three steps to create such kind of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/06/openlayers-extension-for-heatcanvas/">OpenLayers Extension for HeatCanvas</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-06T00:00:00+08:00" pubdate data-updated="true">Jun 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://i.imgur.com/rtEuI.png" alt="" title="Hosted by imgur.com" /></p>
+
+<p>As the screenshot shows, now you can embed HeatCanavs in your OpenLayers application, as well as OpenSteetMap.</p>
+
+<p>Three steps to create such kind of map:</p>
+
+<p>1. Create HeatCanvas layer:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+// constructor params:<br />
+// name, OpenLayers map instance, OpenLayers layer options, HeatCanvas options<br />
+var heatmap = new OpenLayers.Layer.HeatCanvas(&#8220;HeatCanvas&#8221;, map, {},<br />
+        {&#8216;step&#8217;:0.3, &#8216;degree&#8217;:HeatCanvas.QUAD, &#8216;opacity&#8217;:0.8});<br />
+[/cc]</p>
+
+<p>2. Feed some data on layer:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+heatmap.pushData(latitude, longitude, value);<br />
+[/cc]</p>
+
+<p>3. Add layer to map:<br />
+[cc lang=&#8221;javascript&#8221;]<br />
+map.addLayer(heatmap);<br />
+[/cc]</p>
+
+<p>The live demo is hosted on github:
+<a href="http://sunng87.github.com/heatcanvas/openstreetmap.html">http://sunng87.github.com/heatcanvas/openstreetmap.html</a></p>
+
+<p><a href="https://github.com/sunng87/heatcanvas">HeatCanavs</a> is a heat map implementation on HTML5 canvas and WebWorker API.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c938a108-0a36-8a66-b89a-693e8cf88e05" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -563,81 +626,6 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/04/29/convert-a-python-function-to-java-anonymous-class/">Convert a Python Function to Java Anonymous Class</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-29T00:00:00+08:00" pubdate data-updated="true">Apr 29<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When calling Java with Jython, anonymous inner class might be an issue because there is no such equivalent in Python.</p>
-
-<p>In GUI programming, jython made additional effort on AWT event processing. You can pass a python function as some types of event listener.<br />
-[cc lang=&#8221;python&#8221;]<br />
-def change_text(event):<br />
-    print &#8216;Clicked!&#8217;</p>
-
-<p>button = JButton(&#8216;Click Me!&#8217;, actionPerformed=change_text)<br />
-frame.add(button)<br />
-[/cc]</p>
-
-<p>Described in the <a href="http://www.jython.org/jythonbook/en/1.0/GUIApplications.html">Definitive Guide of Jython</a>:</p>
-
-<p><blockquote>This works because Jython is able to automatically recognize events in Java code if they have corresponding addEvent()* and *removeEvent() methods. Jython takes the name of the event and makes it accessible using the nice Python syntax as long as the event methods are public. </blockquote></p>
-
-<p>However, it does not work with Runnable, Callable and many other interfaces designed for anonymous usage.</p>
-
-<p>To solve the incompatibility, I created a small decorator that converts Python function to a Java object.
-<script src="https://gist.github.com/947926.js"> </script></p>
-
-<p>Thanks to python&#8217;s dynamic magic, we can create class in runtime and assign modified method to a particular instance. The conversion is performed once the function loaded. Also, you can pass something as arguments to constructor.</p>
-
-<p>With anonymous_class decorator, the example above can be written as:<br />
-[cc lang=&#8221;python&#8221;]<br />
-from javax.swing import JButton, JFrame<br />
-from java.awt.event import ActionListener</p>
-
-<p>frame = JFrame(&#8216;Hello, Jython!&#8217;,<br />
-            defaultCloseOperation = JFrame.EXIT_ON_CLOSE,<br />
-            size = (300, 300)<br />
-        )</p>
-
-<p>@anonymous_class(ActionListener, &#8220;actionPerformed&#8221;)<br />
-def change_text(dummy, event):<br />
-    print &#8216;Clicked!&#8217;</p>
-
-<p>button = JButton(&#8216;Click Me!&#8217;, actionPerformed=change_text)<br />
-frame.add(button)<br />
-frame.visible = True<br />
-[/cc]</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -655,6 +643,10 @@ frame.visible = True<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -668,10 +660,6 @@ frame.visible = True<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

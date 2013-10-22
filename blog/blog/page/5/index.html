@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="时隔半年日日沉浸在clojure世界里的时候，多亏了github上Daniel Azuma的提示，现在HeatCanvas通过Image Data数组来绘制图像。过去由于不太熟悉Canvas API，我用的是fillRect来填充1像素大小的区域，模拟像素的渲染。 &hellip;">
+  <meta name="description" content="Inspired by meh&#8217;s Ruby-Clj module, I created the python equivalent &#8220;pyclj&#8221; last weekend. Pyclj is a clojure literal reader/writer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,151 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/">Python&#8217;s Valentines Day Gift to Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-14T00:00:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Inspired by meh&#8217;s <a href="https://github.com/meh/ruby-clj" target="_blank">Ruby-Clj</a> module, I created the python equivalent &#8220;pyclj&#8221; last weekend. Pyclj is a clojure literal reader/writer for python. It enables data exchange between python and clojure, in a clojure-native way. It&#8217;s Valentines Day today, I&#8217;d like to release it as the gift of python to clojure :)</p>
+
+<p>The API is very simple. It&#8217;s all like python&#8217;s data modules (json, pickle)</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+import clj</p>
+
+<p>clj.loads(&#8220;[1 2 3]&#8221;)<br />
+clj.dumps({&#8220;a&#8221;:1, &#8220;b&#8221;:2})<br />
+[/cc]</p>
+
+<p>Clojure types are mapping to python data structures :</p>
+
+<p><table border="1">
+<tbody><tr>
+<th>Clojure</th>
+<th>Python</th>
+</tr>
+<tr>
+<td>list</td>
+<td>list</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>list</td>
+</tr>
+<tr>
+<td>set</td>
+<td>set</td>
+</tr>
+<tr>
+<td>map</td>
+<td>dict</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>None</td>
+</tr>
+<tr>
+<td>string</td>
+<td>string</td>
+</tr>
+<tr>
+<td>int</td>
+<td>int</td>
+</tr>
+<tr>
+<td>float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>char</td>
+<td>string</td>
+</tr>
+<tr>
+<td>keyword</td>
+<td>string</td>
+</tr>
+</tbody></table></p>
+
+<p>But how we win clojure&#8217;s heart from ruby? </p>
+
+<p>We are faster.</p>
+
+<p>Considering clojure literal below:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+[1 2 3 true false nil {:a 21.3 :b 43.2} &#8220;Hello&#8221;]<br />
+[/cc]</p>
+
+<p>Comparing ruby-clj(0.0.4.5, ruby 1.9.3p0) and pyclj(0.1.3 python 2.7.2):<br />
+[cc lang=&#8221;ruby&#8221;]<br />
+require &#8216;clj&#8217;</p>
+
+<p>s = &#8220;[1 2 3 true false nil {:a 21.3 :b 43.2} &#34;Hello&#34;]&#8221;</p>
+
+<p>t1 = Time.now()<br />
+for i in 0&#8230;10000<br />
+  Clojure.parse(s)<br />
+end<br />
+puts Time.now()-t1<br />
+[/cc]</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+import clj<br />
+import time</p>
+
+<p>s = &#8220;[1 2 3 true false nil {:a 21.3 :b 43.2} &#34;Hello&#34;]&#8221;</p>
+
+<p>t1 = time.time()<br />
+for i in range(10000):<br />
+  clj.loads(s)<br />
+print time.time()-t1<br />
+[/cc]</p>
+
+<p>The result:<br />
+ruby: <del datetime="2012-02-16T05:30:18+00:00"><strong>13.451157809</strong></del>
+python: <del datetime="2012-02-16T05:30:18+00:00"><strong>0.712423086166</strong></del>
+Edit 20120216 13:30<br />
+ruby-clj 0.0.5.3 has resolved the performance issue :) <br />
+The new result ruby-clj/0.0.5.4 Vs pyclj0.1.4 (on my laptop):<br />
+ruby-clj: 2.044872364<br />
+pyclj: 1.19659209251</p>
+
+<p>The project is hosted on <a href="https://github.com/sunng87/pyclj" target="_blank">github</a>. Feel free to join the development and enhance it.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -563,66 +708,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/01/04/slacker-0-4-0-released/">Slacker 0.4.0 Released</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-04T00:00:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release.</p>
-
-<p><h3>Breaking Changes</h3></p>
-
-<p><ul>
-	<li>New maven coordinator: [slacker &#8220;0.4.0&#8221;] (groupId renamed to slakcer)</li>
-	<li>defremote renamed to <strong>defn-remote</strong></li>
-	<li>SlackerException removed. slacker now uses slingshot for exception handling</li>
-	<li>Rename :async option of defn-remote to <strong>:async?</strong></li></ul></p>
-
-<p></p>
-
-<p><h3>What&#8217;s new in 0.4.0</h3>
-<ul>
-	<li>Add new serialization type <strong>:clj</strong></li>
-	<li>New interceptors: execution time stats, args logger, slow watch dog</li>
-	<li>New HTTP interface</li>
-	<li>Server inspect commands	</li></ul></p>
-
-<p><li> utility functions/macros <strong>defn-remote-all</strong>, <strong>defn-remote-batch</strong> and <strong>meta-remote</strong></li></p>
-
-<p></p>
-
-<p>Get more information on <a href="https://github.com/sunng87/slacker" target="_blank">github</a>.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/6/">&larr; Older</a>
@@ -640,6 +725,10 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -653,10 +742,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

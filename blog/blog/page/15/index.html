@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Native audio support was introduced in since Firefox 3.5 . Ogg is one of the media format supported by Firefox. However, sometimes you may find it &hellip;">
+  <meta name="description" content="dojo.require uses XMLHttpRequest to load additional components. On default Chrome settings, XMLHttpRequest on local file system is not allowed. This &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/02/21/using-dojo-on-chromechromium-from-local-file-system/">Using Dojo on Chrome/Chromium From Local File System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-21T00:00:00+08:00" pubdate data-updated="true">Feb 21<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>dojo.require uses XMLHttpRequest to load additional components. On default Chrome settings, XMLHttpRequest on local file system is not allowed. This will break whole dojo system.</p>
+
+<p>To change the default policy, you can start Chrome with a command line option <i>&#8211;allow-file-access-from-files</i>.</p>
+
+<p>This issue is a well known one for Chromium project and still under active discussion:
+<a href="http://code.google.com/p/chromium/issues/detail?id=40787">http://code.google.com/p/chromium/issues/detail?id=40787</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -605,59 +646,6 @@ input[required=&#8221;required&#8221;]:after {<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/01/08/soldat-gefr/">Soldat & Gefr</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-08T00:00:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我的这一套stack正在走向完整。上次贴了一张soldat-http的图，现在基于soldat的wsgi服务器也已经有了一个基本可以运行的实现，名字叫做gefr（我的命名出处参考<a href="http://en.wikipedia.org/wiki/Rank_insignia_of_the_German_armed_forces">这里</a>）。现在gefr上已经可以跑基于bottle框架的wsgi程序了，也就是说一些基于python的web应用可能可以通过jython来运行在soldat上。为了搞定jython的环境，这几天我还花了不少时间做了jip帮我从maven仓库里自动下载依赖的jar包。</p>
-
-<p>soldat和gefr的代码都放在我的bitbucket上：
-<ul>
-<li>soldat <a href="https://bitbucket.org/sunng/soldat">https://bitbucket.org/sunng/soldat</a></li>
-<li>gefr <a href="https://bitbucket.org/sunng/gefr">https://bitbucket.org/sunng/gefr</a></li>
-</ul></p>
-
-<p>此外，这两个项目也分别发布到了<a href="https://oss.sonatype.org/content/repositories/snapshots/">sonatype oss仓库</a>和<a href="http://pypi.python.org/pypi/gefr">python cheese shop</a>。</p>
-
-<p>现在还有几个问题：
-<ul>
-<li>soldat在读buffer的时候先获得buffer的limit，再去读相应长度的buffer有时会出现BufferUnderflowException。这个可能存在线程安全问题，现在还没发现。</li>
-<li>gefr启动之后可以通过在jvisualvm里找到这个进程，但是绑定profiler之后很诡异的是gefr就不再处理请求了。</li>
-<li>直接用soldat的处理http请求，吞吐量可以上万；但是在上面加上jython的gefr，再加上bottle框架，同样的功能吞吐量就剩下原来的十分之一了。就是因为没法做profile，所以还不知道时间花到哪里去了。</li>
-</ul></p>
-
-<p>简单地 announce 一下，这样我有更多的动力来继续把这两个小东西做好。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/16/">&larr; Older</a>
@@ -675,6 +663,10 @@ input[required=&#8221;required&#8221;]:after {<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -688,10 +680,6 @@ input[required=&#8221;required&#8221;]:after {<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>

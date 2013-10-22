@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="很高兴时隔半年后我继续发布了Exaile豆瓣电台插件的更新，从第一个版本发布到现在已经有一年半的时间，这期间豆瓣电台插件已经陆续出现在Rhythmbox、Banshee等播放器上。作为第一个视图把豆瓣电台移植到本地的尝试，我感到甚是欣慰：） 这次的更新修正了长久依赖困绕用户登录问题， &hellip;">
+  <meta name="description" content="Glad to roll out the first release of the slacker framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/12/02/slacker-0-1-0-is-out/">Slacker 0.1.0 Is Out</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-02T00:00:00+08:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Glad to roll out the first release of the <strong>slacker</strong> framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of non-invasive APIs for both server and client. The remote invocation is completely transparent to user.</p>
+
+<p>In addition to APIs introduced in <a href="http://sunng.info/blog/2011/11/clojure-rpc-prototyping-and-early-thoughts/">last post</a>, asynchronous approach is supported in client API :<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defremote remote-func :async true)<br />
+@(remote-func)<br />
+[/cc]<br />
+If you add option `:async` to defremote, then the function facade will return a promise. You have to deref it by yourself. Also you can use the `:callback` option in defremote to specify a callback function.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defremote remote-func :callback #(println %))<br />
+(remote-func)<br />
+[/cc]</p>
+
+<p>This gives you much more flexibility of using remote function. But be careful it will break consistency between local and remote mode. </p>
+
+<p>To use slacker, add it to your project.clj<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+:dependencies [[info.sunng/slacker &#8220;0.1.0&#8221;]]<br />
+[/cc]</p>
+
+<p>You can find examples on the <a href="https://github.com/sunng87/slacker" target="_blank">github page</a>. </p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -643,77 +699,6 @@ while(true) <br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/21/substract-a-vector-from-a-matrix-in-octave/">Substract a Vector From a Matrix in Octave</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-21T00:00:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>假设你有一个矩阵：</p>
-
-<p>[cc lang=&#8221;text&#8221;]<br />
-A = [1,2;3,4;5,6]<br />
-[/cc]</p>
-
-<p>以及一个矢量：</p>
-
-<p>[cc lang=&#8221;text&#8221;]<br />
-B = [2,5]<br />
-[/cc]</p>
-
-<p>你希望对A的每一行元素对元素地减B，例如第一行<br />
-[cc lang=&#8221;text&#8221;]<br />
-[1-2,2-5]<br />
-[/cc]</p>
-
-<p>但你不希望用循环完成这个工作，那么你可能想到利用B创建一个和A一样维度的矩阵然后进行.-：<br />
-[cc lang=&#8221;text&#8221;]<br />
-C = [2,5;2,5;2,5]<br />
-A .- C<br />
-[/cc]</p>
-
-<p>在Octave中可以利用repmat这个函数获得C：<br />
-[cc lang=&#8221;text&#8221;]<br />
-C = repmat(B, length(A), 1)<br />
-[/cc]<br />
-但是对于大矩阵来说这是一种对内存的浪费。</p>
-
-<p>更好的方法是利用bsxfun：<br />
-[cc lang=&#8221;text&#8221;]<br />
-bsxfun(@minus, A, B)<br />
-[/cc]</p>
-
-<p>bsxfun在octave的文档中似乎鲜有提及。
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/8/">&larr; Older</a>
@@ -731,6 +716,10 @@ bsxfun(@minus, A, B)<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
@@ -744,10 +733,6 @@ bsxfun(@minus, A, B)<br />
     
       <li class="post">
         <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
       </li>
     
   </ul>
