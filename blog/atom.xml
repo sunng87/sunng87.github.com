@@ -4,7 +4,7 @@
   <title><![CDATA[车水马龙]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-03-05T00:05:04+08:00</updated>
+  <updated>2014-03-05T00:15:21+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -24,7 +24,7 @@
 
 <h3>link</h3>
 
-<p>There&rsquo;s two releases in the <a href="https://github.com/sunng87/link">link</a> library, features include:</p>
+<p>There are two releases in the <a href="https://github.com/sunng87/link">link</a> library, features include:</p>
 
 <ul>
 <li>Ported to Netty 4</li>
