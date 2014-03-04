@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="六月见底，我是无暇总结和回顾自己难堪的大学生活了，只是对这越来越近的离愁别绪多少开始有些感慨。 今天三胖在上海签证遭遇了坎坷，后面的日程又发生了变化。这样原本计划的一次聚会怕是随风了。中午老大坐上了回家的火车，虽说是三十号就要回来了，但可能因为带回去的行李比较多，心中的化学反应也强烈了一些。 &hellip;">
+  <meta name="description" content="All scripts created by paster(paster create, paster controller and etc.) uses 4 spaces as indent while many editors(vim) uses tabs automatically. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/02/pylons-tips/">Pylons Tips</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-02T00:00:00+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>All scripts created by paster(paster create, paster controller and etc.) uses 4 spaces as indent while many editors(vim) uses tabs automatically. Different indent in one file will cause fatal error.</p>
+
+<p><em>h.url_for</em> is a popular helper function in many books and tutorials which to solve url mapping. This tool is no longer available by default since 0.97. If you got error message like &#8220;AttributeError: &#8216;module&#8217; object has no attribute &#8216;url_for&#8217;&#8221;, just add</p>
+
+<p>[codesyntax lang=&#8221;python&#8221;]from routes import url_for[/codesyntax]<br />
+to<em> yourapp/libs/helper.py</em> .</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -470,77 +511,6 @@ esac</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/04/22/%E6%8A%8Awx%E7%9A%84%E7%AA%97%E4%BD%93%E7%BB%98%E5%9B%BE%E8%BE%93%E5%87%BA%E5%88%B0%E4%BD%8D%E5%9B%BE/">把wx的窗体绘图输出到位图</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-04-22T00:00:00+08:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我想用这种低调的含糊不清的标题也没有什么坏处。</p>
-
-<p>问题很简单，我们要把在wx窗体上绘制的图形保存到一个位图文件中去。</p>
-
-<p>首先看一下wx的绘图机制，所有和绘图相关的操作，都从wx.DC这样一个父类继承。DC即Device Context，文档里对这个类的功能有这样的描述
-<blockquote>A wx.DC is a device context onto which graphics and text can be drawn. It is intended to represent a number of output devices in a generic way, so a window can have a device context associated with it, and a printer also has a device context. In this way, the same piece of code may write to a number of different devices, if the device context is used as a parameter.</blockquote>
-进而，这样的DC包括子类WindowDC，PrinterDC等等，用于在不同的设备上画图。WindowDC又有两个子类ClientDC和MemoryDC。在窗体上画图，就是在EVT_PAINT事件里，应该使用ClientDC的子类PaintDC。而MemoryDC就是在内存中的位图上绘图。要把窗体上的图形输出到位图文件中去，只要把PaintDC中的绘制的图形数据拷贝到MemoryDC上就可以了。</p>
-
-<p>以下是一个典型的OnPaint方法<br />
-[codesyntax lang=&#8221;python&#8221; lines=&#8221;fancy&#8221;]<br />
-class CanvasAlpha(wx.Panel):<br />
-    def __init__(self, parent):<br />
-        wx.Panel.__init__(self, parent, -1)<br />
-        self.SetBackgroundColour(wx.Color(255, 255, 255))<br />
-        self.Bind(wx.EVT_PAINT, self.OnPaint)</p>
-
-<p>    def OnPaint(self, evt):<br />
-        dc = wx.PaintDC(self)<br />
-        gc = wx.GraphicsContext.Create(dc)</p>
-
-<p>        ## draw &#8230;<br />
-[/codesyntax]<br />
-在拷贝之前，首先创建一个新的位图并且指定他的宽高<br />
-bitmap = wx.EmptyBitmap(width, height, -1)<br />
-获得memoryDC<br />
-memDC = wx.MemoryDC()<br />
-指定memoryDC的内存对象<br />
-memDC.SelectObject(bitmap)<br />
-利用DC中一个非常重要的Blit方法，把PaintDC上的图形轻松地拷贝到MemoryDC上（关于参数的意义请参考wx的文档了）<br />
-memDC.Blit(0, 0, width, height, dc, 0, 0)<br />
-这还没有完，将memoryDC的内存对象设置为null，即传入一个null对象。这一步相当于flush。<br />
-memDC.SelectObject(wx.NullBitmap)<br />
-最后，用bitmap的Save方法就可以非常轻松地输出图片了<br />
-bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
-
-<p>这样，在窗口中截图也就实现了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/37/">&larr; Older</a>
@@ -558,6 +528,10 @@ bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -571,10 +545,6 @@ bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -626,7 +596,7 @@ bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

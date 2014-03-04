@@ -9,7 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="从后天起，我就要被封闭开发了。地点在公司对面的酒店里，问具体的情况据老大说，是要去一个“有人给你做饭，有人给你洗衣服”的地方，说得跟人间天堂似的。去年刚到公司实习的时候就赶上有组封闭开发，印象中好像封了有一个多月。老实说封闭开发也是没办法的事情，我们这个菜场式的办公环境，一个人手上又有多个项目， &hellip;">
+  <meta name="description" content="JTS最近发布了1.11版本，新增了： 对Delaunay三角网、Voronoi多边形的支持；
+把Geometry对象转换为AWT的Shape对象的功能
+对几何对象进行densify的操作（增加结点）；
+计算Hausdorff相似度和Area相似度的支持 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,325 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/03/03/new-features-in-jts-1-11/">New Features in JTS 1.11</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-03T00:00:00+08:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://lin-ear-th-inking.blogspot.com/2010/03/jts-version-111-released.html">JTS最近发布了1.11版本</a>，新增了：
+<ul>
+<li>对<a href="http://en.wikipedia.org/wiki/Delaunay_triangulation">Delaunay三角网</a>、<a href="http://en.wikipedia.org/wiki/Voronoi">Voronoi多边形</a>的支持；</li>
+<li>把Geometry对象转换为AWT的Shape对象的功能</li>
+<li>对几何对象进行densify的操作（增加结点）；</li>
+<li>计算<a href="http://en.wikipedia.org/wiki/Hausdorff_distance">Hausdorff相似度</a>和Area相似度的支持</li>
+</ul>
+计算Delaunay三角网和Voronoi多边形：<br />
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.geom.Coordinate</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.geom.Geometry</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.geom.GeometryCollection</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.geom.GeometryFactory</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.triangulate.DelaunayTriangulationBuilder</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">com.vividsolutions.jts.triangulate.VoronoiDiagramBuilder</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * @author Sun Ning/SNDA</span>
+</span><span class='line'><span class="cm"> * @since 2010-3-3</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DelaunayAndVoronoiApp</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="cm">/**</span>
+</span><span class='line'><span class="cm">	 * create some predefined sites</span>
+</span><span class='line'><span class="cm">	 * @return</span>
+</span><span class='line'><span class="cm">	 */</span>
+</span><span class='line'>	<span class="kd">public</span> <span class="kd">static</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;</span> <span class="nf">getPredefinedSites</span><span class="o">(){</span>
+</span><span class='line'>		<span class="kt">double</span><span class="o">[][]</span> <span class="n">coords</span> <span class="o">=</span>  <span class="o">{{</span><span class="mi">100</span><span class="o">,</span><span class="mi">27</span><span class="o">},{</span><span class="mi">28</span><span class="o">,</span> <span class="mi">50</span><span class="o">},{</span><span class="mi">29</span><span class="o">,</span>
+</span><span class='line'>	 <span class="mi">40</span><span class="o">},{</span><span class="mi">32</span><span class="o">,</span> <span class="mi">90</span><span class="o">},</span> <span class="o">{</span><span class="mi">12</span><span class="o">,</span> <span class="mi">26</span>  <span class="o">}};</span>
+</span><span class='line'>		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;</span> <span class="n">coordinates</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;(</span><span class="n">coords</span><span class="o">.</span><span class="na">length</span><span class="o">);&lt;/</span><span class="n">coordinate</span><span class="o">&gt;&lt;/</span><span class="n">coordinate</span><span class="o">&gt;&lt;/</span><span class="n">coordinate</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">coords</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>			<span class="n">coordinates</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Coordinate</span><span class="o">(</span><span class="n">coords</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">0</span><span class="o">],</span> <span class="n">coords</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="mi">1</span><span class="o">]));</span>
+</span><span class='line'>		<span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>		<span class="k">return</span> <span class="n">coordinates</span><span class="o">;</span>
+</span><span class='line'>	<span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="cm">/**</span>
+</span><span class='line'><span class="cm">	 *</span>
+</span><span class='line'><span class="cm">	 * @param coords</span>
+</span><span class='line'><span class="cm">	 * @return a geometry collection of triangulations</span>
+</span><span class='line'><span class="cm">	 */</span>
+</span><span class='line'>	<span class="kd">public</span> <span class="kd">static</span> <span class="n">Geometry</span> <span class="nf">buildDelaunayTriangulation</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;</span> <span class="n">coords</span><span class="o">){</span>
+</span><span class='line'>		<span class="n">DelaunayTriangulationBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelaunayTriangulationBuilder</span><span class="o">();</span>
+</span><span class='line'>		<span class="n">builder</span><span class="o">.</span><span class="na">setSites</span><span class="o">(</span><span class="n">coords</span><span class="o">);</span>
+</span><span class='line'>		<span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">getTriangles</span><span class="o">(</span><span class="k">new</span> <span class="n">GeometryFactory</span><span class="o">());</span>
+</span><span class='line'>	<span class="o">}</span>
+</span><span class='line'>	<span class="cm">/**</span>
+</span><span class='line'><span class="cm">	 *</span>
+</span><span class='line'><span class="cm">	 * @param coords</span>
+</span><span class='line'><span class="cm">	 * @return a collection of polygons</span>
+</span><span class='line'><span class="cm">	 */</span>
+</span><span class='line'>	<span class="kd">public</span> <span class="kd">static</span> <span class="n">Geometry</span> <span class="nf">buildVoronoiDiagram</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;</span> <span class="n">coords</span><span class="o">){</span>
+</span><span class='line'>		<span class="n">VoronoiDiagramBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VoronoiDiagramBuilder</span><span class="o">();</span>
+</span><span class='line'>		<span class="n">builder</span><span class="o">.</span><span class="na">setSites</span><span class="o">(</span><span class="n">coords</span><span class="o">);</span>
+</span><span class='line'>		<span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="na">getDiagram</span><span class="o">(</span><span class="k">new</span> <span class="n">GeometryFactory</span><span class="o">());</span>
+</span><span class='line'>	<span class="o">}&lt;/</span><span class="n">coordinate</span><span class="o">&gt;&lt;/</span><span class="n">coordinate</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>	<span class="cm">/**</span>
+</span><span class='line'><span class="cm">	 *</span>
+</span><span class='line'><span class="cm">	 * @param args</span>
+</span><span class='line'><span class="cm">	 */</span>
+</span><span class='line'>	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+</span><span class='line'>		<span class="n">Collection</span><span class="o">&lt;</span><span class="n">coordinate</span><span class="o">&gt;</span> <span class="n">coordinates</span> <span class="o">=</span> <span class="n">getPredefinedSites</span><span class="o">();&lt;/</span><span class="n">coordinate</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>		<span class="cm">/**</span>
+</span><span class='line'><span class="cm">		 * Delauny</span>
+</span><span class='line'><span class="cm">		 */</span>
+</span><span class='line'>		<span class="n">GeometryCollection</span> <span class="n">triangulations</span>
+</span><span class='line'>				<span class="o">=</span> <span class="o">(</span><span class="n">GeometryCollection</span><span class="o">)</span><span class="n">buildDelaunayTriangulation</span><span class="o">(</span><span class="n">coordinates</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>		<span class="kt">int</span> <span class="n">total</span> <span class="o">=</span> <span class="n">triangulations</span><span class="o">.</span><span class="na">getNumGeometries</span><span class="o">();</span>
+</span><span class='line'>		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;Total triangulations: %d\n&quot;</span><span class="o">,</span> <span class="n">total</span><span class="o">);</span>
+</span><span class='line'>		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">total</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>			<span class="n">Geometry</span> <span class="n">g</span> <span class="o">=</span> <span class="n">triangulations</span><span class="o">.</span><span class="na">getGeometryN</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span><span class='line'>			<span class="n">Coordinate</span><span class="o">[]</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="na">getCoordinates</span><span class="o">();</span>
+</span><span class='line'>			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;Triangulation %d: &quot;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'>			<span class="k">for</span><span class="o">(</span><span class="n">Coordinate</span> <span class="n">c</span> <span class="o">:</span> <span class="n">coords</span><span class="o">){</span>
+</span><span class='line'>				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;(%.3f, %.3f) &quot;</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+</span><span class='line'>			<span class="o">}</span>
+</span><span class='line'>			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</span><span class='line'>		<span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>		<span class="cm">/**</span>
+</span><span class='line'><span class="cm">		 * Voronoi</span>
+</span><span class='line'><span class="cm">		 */</span>
+</span><span class='line'>		<span class="n">GeometryCollection</span> <span class="n">diagram</span> <span class="o">=</span> <span class="o">(</span><span class="n">GeometryCollection</span><span class="o">)</span>
+</span><span class='line'>				<span class="n">buildVoronoiDiagram</span><span class="o">(</span><span class="n">coordinates</span><span class="o">);</span>
+</span><span class='line'>		<span class="kt">int</span> <span class="n">totalDia</span> <span class="o">=</span> <span class="n">diagram</span><span class="o">.</span><span class="na">getNumGeometries</span><span class="o">();</span>
+</span><span class='line'>		<span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">totalDia</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>			<span class="n">Geometry</span> <span class="n">g</span> <span class="o">=</span> <span class="n">diagram</span><span class="o">.</span><span class="na">getGeometryN</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span><span class='line'>			<span class="n">Coordinate</span><span class="o">[]</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="na">getCoordinates</span><span class="o">();</span>
+</span><span class='line'>			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;Diagram %d: &quot;</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'>			<span class="k">for</span><span class="o">(</span><span class="n">Coordinate</span> <span class="n">c</span> <span class="o">:</span> <span class="n">coords</span><span class="o">){</span>
+</span><span class='line'>				<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;(%.3f, %.3f) &quot;</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">x</span><span class="o">,</span> <span class="n">c</span><span class="o">.</span><span class="na">y</span><span class="o">);</span>
+</span><span class='line'>			<span class="o">}</span>
+</span><span class='line'>			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+</span><span class='line'>		<span class="o">}</span>
+</span><span class='line'>	<span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+输出：<br />
+[cc lang=&#8221;text&#8221;]<br />
+Total triangulations: 5<br />
+Triangulation 0: (32.000, 90.000) (12.000, 26.000) (28.000, 50.000) (32.000, 90.000)<br />
+Triangulation 1: (32.000, 90.000) (28.000, 50.000) (100.000, 27.000) (32.000, 90.000)<br />
+Triangulation 2: (100.000, 27.000) (28.000, 50.000) (29.000, 40.000) (100.000, 27.000)<br />
+Triangulation 3: (100.000, 27.000) (29.000, 40.000) (12.000, 26.000) (100.000, 27.000)<br />
+Triangulation 4: (12.000, 26.000) (29.000, 40.000) (28.000, 50.000) (12.000, 26.000)<br />
+Diagram 0: (-76.000, 88.625) (-76.000, 178.000) (176.713, 178.000) (72.699, 65.730) (-38.235, 76.824) (-76.000, 88.625)<br />
+Diagram 1: (-76.000, -62.000) (-76.000, 88.625) (-38.235, 76.824) (11.978, 43.348) (56.422, -10.619) (57.006, -62.000) (-76.000, -62.000)<br />
+Diagram 2: (11.978, 43.348) (-38.235, 76.824) (72.699, 65.730) (67.316, 48.882) (11.978, 43.348)<br />
+Diagram 3: (176.713, 178.000) (188.000, 178.000) (188.000, -62.000) (57.006, -62.000) (56.422, -10.619) (67.316, 48.882) (72.699, 65.730) (176.713, 178.000)<br />
+Diagram 4: (11.978, 43.348) (67.316, 48.882) (56.422, -10.619) (11.978, 43.348)<br />
+[/cc]</p>
+
+<p>将Geometry对象转换成Shape对象，绘制在JPanel上：<br />
+[cc lang=&#8221;java&#8221;]<br />
+import java.awt.Color;<br />
+import java.awt.Dimension;<br />
+import java.awt.Graphics;<br />
+import java.awt.Graphics2D;<br />
+import java.awt.Shape;<br />
+import java.util.Collection;<br />
+import javax.swing.JFrame;<br />
+import javax.swing.JPanel;</p>
+
+<p>import com.vividsolutions.jts.awt.ShapeWriter;<br />
+import com.vividsolutions.jts.geom.Coordinate;<br />
+import com.vividsolutions.jts.geom.Geometry;<br />
+import java.util.Random;</p>
+
+<p>/**<br />
+ *<br />
+ * @author Sun Ning/SNDA<br />
+ * @since 2010-3-3<br />
+ */<br />
+public class JTS2Awt {</p>
+
+<p>	public static void showUI(final Shape&#8230; shape){<br />
+		JFrame jframe = new JFrame(&#8220;JTS Geometry to AWT Shape&#8221;);</p>
+
+<p>		JPanel jp = new JPanel(){<br />
+			@Override<br />
+			public void paint(Graphics g){<br />
+				super.paint(g);<br />
+				Graphics2D g2d = (Graphics2D)g;<br />
+				if(shape != null){<br />
+					for(Shape s: shape){<br />
+						g2d.setColor(new Color(Color.HSBtoRGB(new Random().nextFloat(), 1f, 0.6f)));<br />
+						g2d.draw(s);<br />
+					}<br />
+				}<br />
+			}<br />
+		};<br />
+		jp.setPreferredSize(new Dimension(150, 150));</p>
+
+<p>		jframe.getContentPane().add(jp);<br />
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);<br />
+		jframe.pack();<br />
+		jframe.setVisible(true);<br />
+	}</p>
+
+<p>	public static Shape toShape(Geometry geom){<br />
+		ShapeWriter writer = new ShapeWriter();<br />
+		return writer.toShape(geom);<br />
+	}</p>
+
+<p>	public static void main(String[] args){<br />
+		Collection<coordinate> coords = DelaunayAndVoronoiApp.getPredefinedSites();<br />
+		Geometry geomT = DelaunayAndVoronoiApp.buildDelaunayTriangulation(coords);<br />
+		Geometry geomD = DelaunayAndVoronoiApp.buildVoronoiDiagram(coords);</coordinate></p>
+
+<p>		showUI(toShape(geomT), toShape(geomD));<br />
+	}</p>
+
+<p>}</p>
+
+<p>[/cc]
+<a href="http://www.flickr.com/photos/40741608@N08/4403349474/" title="jts by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4010/4403349474_cc3db44369_o.png" width="158" height="177" alt="jts" /></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -590,64 +912,6 @@ then click heatmap button!
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/02/10/%E6%97%A0%E9%A2%98/">无题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-10T00:00:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我草，这是真的吗，同志们是3:0吗？？！！</p>
-
-<p>是不是电视显示错了？？！</p>
-
-<p>我有生之年居然看到这一幕了！！！</p>
-
-<p>人生啊，这是人生吗</p>
-
-<p>见证历史了！！！</p>
-
-<p>牛逼！！这是真的吗，这是他妈真的吗</p>
-
-<p>邓卓翔！！</p>
-
-<p>牛逼！！！</p>
-
-<p>娘的，要下载录像</p>
-
-<p>这他妈是真的吗？？！！</p>
-
-<p>去你妈的CCTV</p>
-
-<p>去你妈的江和平</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/27/">&larr; Older</a>
@@ -665,6 +929,10 @@ then click heatmap button!
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -678,10 +946,6 @@ then click heatmap button!
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -733,7 +997,7 @@ then click heatmap button!
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

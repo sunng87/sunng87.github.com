@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Douban support on gwibber, tested on Gwibber 2.32.0-ubuntu2 or 2.32.0.1-ubuntu1 , Ubuntu Maverick. You can download it from bitbucket:
-http:// &hellip;">
+  <meta name="description" content="从 Redis 2.0 开始，Redis的作者就不断地被问道，你为什么要自己造一个VM轮子呢。尽管作者在FAQ里说明了，但是仍然有很多不同意见。 反向代理Varnish的开发人员，Poul-Henning Kamp 写了一篇文章，What&#8217;s wrong with 1975 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,63 @@ http:// &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/08/the-4k-story/">The 4k Story</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-08T00:00:00+08:00" pubdate data-updated="true">Oct 8<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从 Redis 2.0 开始，Redis的作者就不断地被问道，你为什么要自己造一个VM轮子呢。尽管作者在<a href="http://code.google.com/p/redis/wiki/FAQ#Do_you_plan_to_implement_Virtual_Memory_in_Redis?_Why_don%27t">FAQ</a>里说明了，但是仍然有很多不同意见。</p>
+
+<p>反向代理Varnish的开发人员，Poul-Henning Kamp 写了一篇文章，<a href="http://www.varnish-cache.org/trac/wiki/ArchitectNotes">What&#8217;s wrong with 1975 programming ?</a>，锋芒毕露，矛头直指竞争对手Squid，顺便也打击一大片牵连到了Redis的作者Antirez。他说：
+<blockquote>I have spent many years working on the FreeBSD kernel, and only rarely did I venture into userland programming, but when I had occation to do so, I invariably found that people programmed like it was still 1975. </blockquote>
+Kamp兄有来到user-space之后一夜回到解放前的感觉，又好像摇晃着饮料瓶子对着Antirez说：你Out啦！也许是因为作者就是个内核开发者，所以Varnish对操作系统的Virtual Memory机制充分信任，把Squid对内存的手动管理称为wasted work。&#8221;So Welcome to Varnish, a 2006 architecture program. &#8221;</p>
+
+<p>还有<a href="http://blog.kennejima.com/post/1226487020/thoughts-on-redis">用户</a>也提出
+<blockquote>
+Redis doesn’t use OS swap. According to Salvatore Sanfilippo, the creator of Redis, it was because the page size of 4KB was too big. I personally don’t think that helps but it’d be better if Redis preallocated specified amount of buffer pool and bring related objects to the same page to increase locality of reference, instead of letting the heap manager blindly fragment objects. In my opinion, the page size of 32 bytes is too small, considering that the hardware architectures and the compilers are optimized for the conventional page size. In that scale, even the latency of reading something from RAM could be dominant (RAM is too slow for CPU, therefore it’s got L1/L2 cache), and RAM has the pipelined burst mode to pre-fetche memory contents at a few clock cycles, before they are actually requested.
+</blockquote></p>
+
+<p>5号，Antirez在博客上写了回击 <a href="http://antirez.com/post/what-is-wrong-with-2006-programming.html">What&#8217;s wrong with 2006 programming?</a>，他认为：
+<ul>
+<li>OS Swap在一些情况下会导致客户端阻塞</li>
+<li>4K大小的Page可能包含很多key，其中总有一些被访问到，导致操作系统无法swap这些page</li>
+<li>使用自己实现的Paging为程序提供了极大的自由度，包括作者提到的2.2将会引入的数据压缩、新的数据结构以及自定义的过期算法</li>
+</ul></p>
+
+<p>前段时间，Foursquare用MongoDB时，因为Sharding方法一些疏漏把大量的数据集中到了一台机器上，导致一台EC2实例内存耗尽无法工作。Mongodb的内部机制就是mmap，我的同事做过相关的测试，当内存耗尽时，读写操作都使用磁盘，这时mongodb的性能是完全无法使用的。事后10gen的开发人员Horowitz总结出现问题的原因<a href="http://groups.google.com/group/mongodb-user/browse_thread/thread/528a94f287e9d77e">总结出现问题的原因</a>时，其中很重要的一点是
+<blockquote>Document size is less than 4k. Such documents, when moved, may be too small to free up pages and, thus, memory. </blockquote></p>
+
+<p>看了这个原因，Redis的作者Twitter上大喜：&#8221;Real world instance of my 4k page + small objects concerns&#8221;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -552,157 +608,6 @@ sudo make install<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/">迁移pylonsbook Chapter 8到pylons1.0</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-12T00:00:00+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Pylonsbook的<a href="http://pylonsbook.com/en/1.1/starting-the-simplesite-tutorial.html">第八章</a>，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。</p>
-
-<p>首先查看你使用的各种库的版本：
-<i>paster shell development.ini</i>
-[cc lang=&#8221;python&#8221;]<br />
-import pylons<br />
-pylons.__version__<br />
-import sqlalchemy<br />
-sqlalchemy.__version__<br />
-import webhelpers<br />
-webhelpers.__version__<br />
-[/cc]</p>
-
-<p>Pylons 1.0开始鼓励通过继承Base类的声明式ORM（pylonsbook介绍的是pylons 0.9x，sqlalchemy 0.5x，使用mapper的方式）<br />
-对pylons1.0，mode/__init__.py中声明model的代码如下：<br />
-[cc lang=&#8221;python&#8221;]<br />
-from sqlalchemy import *<br />
-from sqlalchemy.orm import relationship</p>
-
-<p>class PageTag(Base):<br />
-    __tablename__ = &#8216;pagetag&#8217;<br />
-    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;pagetag_seq_id&#8217;, optional=True), primary_key=True)<br />
-    pageid = Column(&#8216;pageid&#8217;, Integer, ForeignKey(&#8216;page.id&#8217;))<br />
-    tagid = Column(&#8216;tagid&#8217;, Integer, ForeignKey(&#8216;tag.id&#8217;))</p>
-
-<p>class Page(Base):<br />
-    &#8220;&#8221;&#8220;docstring for Page&#8221;&#8220;&#8221;<br />
-    __tablename__ = &#8216;page&#8217;<br />
-    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;page_seq_id&#8217;, optional=True), primary_key=True)<br />
-    content = Column(&#8216;content&#8217;, Text, nullable=False)<br />
-    posted = Column(&#8216;posted&#8217;, DateTime, default=now())<br />
-    title = Column(&#8216;title&#8217;, Unicode(255), default=u&#8217;Untitled Page&#8217;)<br />
-    heading = Column(&#8216;heading&#8217;, Unicode(255))</p>
-
-<p>    tags = relationship(PageTag, backref=&#8217;page&#8217;)<br />
-    comments = relationship(&#8220;Comment&#8221;, backref=&#8217;page&#8217;)</p>
-
-<p>class Tag(Base):<br />
-    &#8220;&#8221;&#8220;docstring for Tag&#8221;&#8220;&#8221;<br />
-    __tablename__ = &#8216;tag&#8217;<br />
-    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;tag_seq_id&#8217;, optional=True), primary_key=True)<br />
-    name = Column(&#8216;name&#8217;, Unicode(20), nullable=False, unique=True)</p>
-
-<p>class Comment(Base):<br />
-    __tablename__ = &#8216;comment&#8217;<br />
-    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;comment_seq_id&#8217;, optional=True), primary_key=True)<br />
-    content = Column(&#8216;content&#8217;, Text, default=u&#8221;)<br />
-    name = Column(&#8216;name&#8217;, Unicode(255))<br />
-    email = Column(&#8216;email&#8217;, Unicode(255), nullable=False)<br />
-    created = Column(&#8216;created&#8217;, TIMESTAMP, default=now())<br />
-    pageid = Column(Integer, ForeignKey(&#8216;page.id&#8217;))</p>
-
-<p>[/cc]</p>
-
-<p><em>init_model</em> 方法的内容也不相同，但是对Session的配置都是在Session.configure里进行。 如果设置autocommit=True，即使设置了autoflush=True仍然需要Session.flush()一下才能把变更写入数据库。否则，则需要显示调用Session.commit()</p>
-
-<p>在写controller的部分，pylonsbook大量用了<br />
-[cc lang=&#8221;python&#8221;]<br />
-page_q = model.meta.Session.query(model.Page)<br />
-c.page = page_q.get(int(id))<br />
-[/cc]</p>
-
-<p>或<br />
-[cc lang=&#8221;python&#8221;]<br />
-page_q = model.meta.Session.query(model.Page)<br />
-c.page = page_q.filter_by(id=id).first()<br />
-[/cc]<br />
-在新版本里只需要<br />
-[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
-c.page=Session.query(model.Page).get(id)<br />
-[/cc]<br />
-即可。</p>
-
-<p>在模板部分，pylons现在默认不依赖formbuild，所以文中提到的helper方法要额外安装formbuild库。不过这些也可以用过webhelper来实现，在lib/helpers.py里：<br />
-[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
-from webhelpers.html.tags import *<br />
-[/cc]</p>
-
-<p>在field.html中<br />
-[cc lang=&#8221;html&#8221;]</p>
-
-<p><p>Heading: ${h.text(<br />
-    &#8220;heading&#8221;<br />
-)}
-</p></p>
-
-<p><p>
-Title: ${h.text(<br />
-    &#8220;title&#8221;<br />
-)}
-</p></p>
-
-<p><p>
-Content: ${h.textarea(<br />
-    &#8220;content&#8221;, cols=40, rows=10<br />
-)}
-</p></p>
-
-<p>[/cc]</p>
-
-<p>模板中一个非常常用的方法url_for在pylons1.0里被改为pylons.url，需要修改/lib/helpers.py<br />
-[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
-from pylons import url<br />
-[/cc]</p>
-
-<p>书中所有的重定向都是直接设置response相关属性实现的，实际可以用redirect，结合url：<br />
-[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
-redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.id))<br />
-[/cc]</p>
-
-<p>分页部分，如果你使用的是sqlalchemy 0.6的话，随pylons 1.0发布的Webhelpers 0.6还不支持 sqlalchemy 0.6的query object，需要手动升级到1.2. (<i>easy_install -U webhelpers</i>)</p>
-
-<p>最后关于flash状态，webhelpers里有一个专门的实现，不过还是不太好用：
-<a href="http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/">http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/</a></p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -720,6 +625,10 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -733,10 +642,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -788,7 +693,7 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

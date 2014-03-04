@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="来了北京以后一直没有停止到处游走的脚步，这周末去了丰宁的坝上草原。第一回去草原，第一回骑马，第一回看日出。 丰宁在承德市，我们去的地方叫大滩镇，在丰宁县的北部。晚上九点从北京出发，达到大滩的农家院已经是半夜两点了。农家院的住宿条件还不错。当天天气晴朗，晚上抬头能看到多年未见漫天星辰。 &hellip;">
+  <meta name="description" content="I almost forgot to announce this library I made half of a year ago. This library is aiming to bring Clojure to GIS. So you can manipulate geometry &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/">Cljts: Java Topology Suite for Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-15T00:00:00+08:00" pubdate data-updated="true">Sep 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I almost forgot to announce this library I made half of a year ago. This library is aiming to bring Clojure to GIS. So you can manipulate geometry objects with a set of clojure functions.</p>
+
+<p>The library covers :
+<ul>
+	<li>Geometries defined in Simple Feature Spec</li>
+	<li>Spatial relationship test, based on DE-9IM.</li>
+	<li>IO functions, WKT and WKB support</li>
+	<li>some spatial analysis functions such as buffer, convex-hull</li>
+</ul></p>
+
+<p>Also, this week Alexey Pushkin sent pull request and added support for Perpared Geometry and Affine transformations.</p>
+
+<p>The current release of cljts is 0.2.0-SNAPSHOT. You can find API document at <a href="http://sunng87.github.com/cljts/">here</a>. </p>
+
+<p>If you are also interested in bringing clojure to GIS, feel free to get connected and hope I could help you.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -590,56 +641,6 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/04/20/visualizing-openstreetmap-nanjing-contribution/">Visualizing OpenStreetMap Nanjing Contribution</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-20T00:00:00+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>早上在prismatic上看到mapbox的一篇<a href="http://mapbox.com/blog/how-to-map-contributions-openstreetmap/" target="_blank">博客</a>，介绍通过TileMill可视化OSM的贡献者，非常酷。于是我在南京的地图上也做了一个这样的可视化。</p>
-
-<p><img src="http://i.imgur.com/U2yXK.png" alt="" /></p>
-
-<p>一个详细的大图在<a href="http://i.imgur.com/YnULm.png" target="_blank">这里</a>。虽然只做了南京的五个主要贡献者，基本上涵盖了大部分数据。</p>
-
-<p>图例就不专门输出了<br />
-[user = &#8216;Sunng&#8217;] { marker-fill: @magenta;} <br />
-[user = &#8216;fuwuyuan&#8217;] { marker-fill: @blue;}<br />
-[user = &#8216;sinopitt&#8217;] {marker-fill: @yellow;}<br />
-[user = &#8216;larryy&#8217;] {marker-fill: @green;}<br />
-[user = &#8216;zhengz&#8217;] {marker-fill: @red;}</p>
-
-<p>MapBox家的东西真的非常酷，这家的技术以nodejs为主，围绕osm开发了不少产品。最近比较大的新闻，比如4sq转到osm上，其实就是转到这家的osm服务上。有兴趣你可以关注一下！
-<img src="http://i.imgur.com/Hum2r.png" alt="" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/4/">&larr; Older</a>
@@ -657,6 +658,10 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -670,10 +675,6 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -725,7 +726,7 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

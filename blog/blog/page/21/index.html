@@ -9,10 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="我这个人一般不八卦，你知道的。但是个别时候实在是情难以堪。
-Bug 626593 - Gnome ate my boyfriend! Help!
-https://bugzilla.gnome.org/show_bug.cgi?id=626593
-这位女士在GNOME bugzilla上提交bug， &hellip;">
+  <meta name="description" content="虽然现在不做前段了，但是发现好的工具还是很兴奋。今天在twitter上看到Grails in Action的作者 @pledbrook 转了一个geb 0.4的消息，顺带看了一下这个工具
+http://geb.codehaus.org geb项目旨在创造一套groovy &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +66,70 @@ https://bugzilla.gnome.org/show_bug.cgi?id=626593
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/08/17/geb-for-browser-functional-testing/">Geb for Browser Functional Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-17T00:00:00+08:00" pubdate data-updated="true">Aug 17<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>虽然现在不做前段了，但是发现好的工具还是很兴奋。今天在twitter上看到Grails in Action的作者 @pledbrook 转了一个geb 0.4的消息，顺带看了一下这个工具<br />
+http://geb.codehaus.org</p>
+
+<p>geb项目旨在创造一套groovy dsl帮助人们进行webapp的functional test。它是对selenium的封装，举例：<br />
+[cc lang=&#8221;groovy&#8221;]<br />
+@Grapes([<br />
+    @Grab(&#8216;org.seleniumhq.selenium:selenium-firefox-driver:latest.release&#8217;),<br />
+    @Grab(&#8216;org.codehaus.geb:geb-core:latest.release&#8217;)<br />
+])<br />
+import geb.*</p>
+
+<p>println &#8220;Dependencies downloaded, ready for testing&#8221;<br />
+Browser.drive(&#8216;http://sunng.info:8000/Pacajus&#8217;){<br />
+    assert title== &#8216;Pacajus&#8217;</p>
+
+<p>    assert $(&#8220;p&#8221;, 3).text() == &#8216;Population: 41558&#8217;<br />
+}
+println &#8220;Tested, bye&#8221;<br />
+[/cc]</p>
+
+<p>打开页面，执行断言。如果断言失败，driver方法会报null：<br />
+Caught: geb.error.DriveException: null</p>
+
+<p>只要在命令行用groovy执行即可，grapes会搞定依赖关系。</p>
+
+<p>很方便吧，文档上说还可以跟grails / junit等等集成，快去看看吧
+<a href="http://geb.codehaus.org/manual/latest/index.html">http://geb.codehaus.org/manual/latest/index.html</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -833,107 +895,6 @@ WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/07/15/clojure-recur/">Clojure Recur</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-15T00:00:00+08:00" pubdate data-updated="true">Jul 15<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数：</p>
-
-<p>[cc lang=&#8221;lisp&#8221;]<br />
-(defn addup<br />
-    ([limit] (addup limit 0 0))<br />
-    ([limit current sum]<br />
-        (if (< limit current)<br />
-            sum<br />
-            (addup limit (+ 1 current) (+ current sum)))))<br />
-[/cc]</p>
-
-<p>调用</p>
-
-<p>(addup 10)</p>
-
-<p>可以得到55</p>
-
-<p>但是调用</p>
-
-<p>(addup 50000)</p>
-
-<p>不出意外，出现了StackOverflowException， 这是递归典型的错误。</p>
-
-<p>为此，需要进行优化。尾递归优化是指如果递归满足一定条件，编译器可以将递归展开，避免出现栈溢出的问题。这里的条件，就是递归的最后一次调用是否是其本身，比如上面的代码，最后一次操作仍然是addup，即满足尾递归的条件，而如果同样的代码写成：</p>
-
-<p>[cc lang=&#8221;lisp&#8221;]<br />
-(defn addup2<br />
-    ([limit] (addup2 limit 0))<br />
-    ([limit current]<br />
-        (if (< limit current)<br />
-            0<br />
-            (+ current (addup2 limit (+ current 1))))))[/cc]</p>
-
-<p>最后一个操作是+，不满足尾递归循环，无法进行优化。</p>
-
-<p>clojure默认不进行尾递归优化，需要使用关键字recur来保证优化，把第一段代码写成：</p>
-
-<p>[cc lang=&#8221;lisp&#8221;]<br />
-(defn addup<br />
-    ([limit] (addup limit 0 0))<br />
-    ([limit current sum]<br />
-        (if (< limit current)<br />
-            sum<br />
-            (recur limit (+ 1 current) (+ current sum)))))<br />
-[/cc]</p>
-
-<p>社区的解释是，如果程序员在无法进行尾递归优化的代码中使用recur会发生报错，这样有助于他们发现代码中潜在的缺陷。</p>
-
-<p>在第二段代码中使用recur，会得到异常：</p>
-
-<p>java.lang.UnsupportedOperationException: Can only recur from tail position</p>
-
-<p>此外，clojure提供loop函数简化书写：</p>
-
-<p>[cc lang=&#8221;lisp&#8221;]<br />
-(defn addup3<br />
-    ([limit]<br />
-    (loop [current 0 sum 0]<br />
-        (if (< limit current)<br />
-            sum<br />
-            (recur (+ current 1) (+ current sum))))))<br />
-[/cc]</p>
-
-<p>这种写法同样可以应用尾递归优化而不会导致栈溢出。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/22/">&larr; Older</a>
@@ -951,6 +912,10 @@ WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -964,10 +929,6 @@ WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -1019,7 +980,7 @@ WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content=" ">
+  <meta name="description" content="我想用这种低调的含糊不清的标题也没有什么坏处。 问题很简单，我们要把在wx窗体上绘制的图形保存到一个位图文件中去。 首先看一下wx的绘图机制，所有和绘图相关的操作，都从wx.DC这样一个父类继承。DC即Device Context，文档里对这个类的功能有这样的描述
+A wx.DC is a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/04/22/%E6%8A%8Awx%E7%9A%84%E7%AA%97%E4%BD%93%E7%BB%98%E5%9B%BE%E8%BE%93%E5%87%BA%E5%88%B0%E4%BD%8D%E5%9B%BE/">把wx的窗体绘图输出到位图</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-22T00:00:00+08:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我想用这种低调的含糊不清的标题也没有什么坏处。</p>
+
+<p>问题很简单，我们要把在wx窗体上绘制的图形保存到一个位图文件中去。</p>
+
+<p>首先看一下wx的绘图机制，所有和绘图相关的操作，都从wx.DC这样一个父类继承。DC即Device Context，文档里对这个类的功能有这样的描述
+<blockquote>A wx.DC is a device context onto which graphics and text can be drawn. It is intended to represent a number of output devices in a generic way, so a window can have a device context associated with it, and a printer also has a device context. In this way, the same piece of code may write to a number of different devices, if the device context is used as a parameter.</blockquote>
+进而，这样的DC包括子类WindowDC，PrinterDC等等，用于在不同的设备上画图。WindowDC又有两个子类ClientDC和MemoryDC。在窗体上画图，就是在EVT_PAINT事件里，应该使用ClientDC的子类PaintDC。而MemoryDC就是在内存中的位图上绘图。要把窗体上的图形输出到位图文件中去，只要把PaintDC中的绘制的图形数据拷贝到MemoryDC上就可以了。</p>
+
+<p>以下是一个典型的OnPaint方法<br />
+[codesyntax lang=&#8221;python&#8221; lines=&#8221;fancy&#8221;]<br />
+class CanvasAlpha(wx.Panel):<br />
+    def __init__(self, parent):<br />
+        wx.Panel.__init__(self, parent, -1)<br />
+        self.SetBackgroundColour(wx.Color(255, 255, 255))<br />
+        self.Bind(wx.EVT_PAINT, self.OnPaint)</p>
+
+<p>    def OnPaint(self, evt):<br />
+        dc = wx.PaintDC(self)<br />
+        gc = wx.GraphicsContext.Create(dc)</p>
+
+<p>        ## draw &#8230;<br />
+[/codesyntax]<br />
+在拷贝之前，首先创建一个新的位图并且指定他的宽高<br />
+bitmap = wx.EmptyBitmap(width, height, -1)<br />
+获得memoryDC<br />
+memDC = wx.MemoryDC()<br />
+指定memoryDC的内存对象<br />
+memDC.SelectObject(bitmap)<br />
+利用DC中一个非常重要的Blit方法，把PaintDC上的图形轻松地拷贝到MemoryDC上（关于参数的意义请参考wx的文档了）<br />
+memDC.Blit(0, 0, width, height, dc, 0, 0)<br />
+这还没有完，将memoryDC的内存对象设置为null，即传入一个null对象。这一步相当于flush。<br />
+memDC.SelectObject(wx.NullBitmap)<br />
+最后，用bitmap的Save方法就可以非常轻松地输出图片了<br />
+bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
+
+<p>这样，在窗口中截图也就实现了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -510,73 +582,6 @@ public class Main {</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/02/20/python%E8%AF%BB%E5%8F%96%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6/">Python读取二进制文件</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-02-20T00:00:00+08:00" pubdate data-updated="true">Feb 20<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Python里虽然可以通过&#8217;b&#8217;的标记来区别普通文件和二进制文件，但是依然是把二进制文件当作普通文本处理。要读写二进制文件，需要用struct库来作pack和unpack。</p>
-
-<p>比如我最近拿到一个如下数据结构的二进制文件</p>
-
-<p>[codesyntax lang=&#8221;c&#8221; lines=&#8221;fancy&#8221;]<br />
-struct DEMTYPE {<br />
-	int row;<br />
-	int col;<br />
-	float xmin;<br />
-	float ymin;<br />
-	float xmax;<br />
-	float ymax;<br />
-	float size;<br />
-	float vmin;<br />
-	float vmax;<br />
-	float scale;<br />
-	float *data;<br />
-};<br />
-[/codesyntax]</p>
-
-<p>其中data是一个长度为row*col的数组。要读取这样一个二进制文件，可以用这样的代码<br />
-[codesyntax lang=&#8221;python&#8221; lines=&#8221;fancy&#8221;]<br />
-row, col, xmin, ymin, xmax, ymax, size, vmin, vmax, scale = \<br />
-        struct.unpack(&#8216;&lt;2i8f&#8217;, datastring[:(4*2+4*8)])<br />
-vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastring[(4*2+4*8):])<br />
-[/codesyntax]<br />
-核心是unpack的第一个参数，用来标识二进制数据的格式，其中&lt;表示little-endian，i表示整型数，f表示单精度浮点数，数字是量词。</p>
-
-<p>更详细的说明可以看manual：
-<a href="http://docs.python.org/library/struct.html" target="_blank">http://docs.python.org/library/struct.html</a></p>
-
-<p>好吧，我承认我写这个是来测试highlight插件的。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/38/">&larr; Older</a>
@@ -594,6 +599,10 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -607,10 +616,6 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -662,7 +667,7 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

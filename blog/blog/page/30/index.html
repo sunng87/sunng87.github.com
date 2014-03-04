@@ -9,9 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="前些天看到一个Nginx的Module，用来是实现Comet，今天简单试了一下功能。作者名叫Leo Ponomarev，项目地址：http://pushmodule.slact.net/
-安装
-Module需要在编译时加入nginx，同时下载nginx和nginx-push-module， &hellip;">
+  <meta name="description" content="在一台赤裸裸的RHEL4上部署web.py程序，一切从几乎是从零开始。以下操作均以root用户操作。
+1. 安装MySQL数据库
+下载安装MySQL
+wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +68,97 @@ Module需要在编译时加入nginx，同时下载nginx和nginx-push-module， &
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/27/%E5%9C%A8rhel4%E4%B8%8A%E6%90%AD%E5%BB%BApythonlighttpdfastcgi%E7%8E%AF%E5%A2%83/">在RHEL4上搭建Python/Lighttpd/FastCGI环境</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-27T00:00:00+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在一台赤裸裸的RHEL4上部署web.py程序，一切从几乎是从零开始。以下操作均以root用户操作。
+<h2>1. 安装MySQL数据库</h2>
+<strong>下载安装MySQL</strong>
+<em>wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686-glibc23.tar.gz/from/http://mirror.services.wisc.edu/mysql/</em>
+解压，按照INSTALL文件说明进行安装，不多赘述
+<h2>2. 安装Python环境</h2>
+<h3>下载Python源码</h3>
+<em>wget http://www.python.org/ftp/python/2.6.4/Python-2.6.4.tar.bz2</em>
+解压，编译安装，不需要特殊操作。
+<h3>下载Easy_install</h3>
+<em>wget http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg</em>
+安装
+<em>sh setuptools-0.6c11-py2.6.egg</em>
+<h3>安装相关Packages</h3>
+<em>easy_install DBUtils<br />
+easy_install flup<br />
+easy_install web.py</em>
+<h3>安装mysql-python</h3>
+mysql-python包不能用easy_install安装，手动下载
+<em>wget http://downloads.sourceforge.net/project/mysql-python/mysql-python-test/1.2.3b1/MySQL-python-1.2.3b1.tar.gz?use_mirror=softlayer</em>
+加压，编辑site.cfg<br />
+指定mysql_config的路径，注意是新安装的mysql路径
+<em>mysql_config=/usr/local/mysql/bin/mysql_config</em>
+编译、安装
+<em>python setup.py build<br />
+python setup.py install</em>
+声明libmysqlclient路径
+<em>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mysql/lib</em>
+<h2>3. 安装服务器环境</h2>
+<h3>下载安装fastcgi头文件</h3>
+<em>wget http://www.fastcgi.com/dist/fcgi.tar.gz</em>
+解压，默认编译安装
+<h3>下载安装PCRE</h3>
+<em>wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.00.tar.bz2</em>
+解压，默认编译安装
+<h3>下载lighttpd</h3>
+<em>wget http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.25.tar.bz2</em>
+configure时指定<em>&#8211;prefix=/usr/local/lighttpd</em>
+编译，安装
+<h2>4. 配置</h2>
+lighttpd fastcgi运行web.py程序请参考
+<a href="http://www.classicning.com/blog/2009/11/lighttpd%e9%80%9a%e8%bf%87fastcgi%e8%bf%90%e8%a1%8cweb-py%e7%a8%8b%e5%ba%8f/">http://www.classicning.com/blog/2009/11/lighttpd%e9%80%9a%e8%bf%87fastcgi%e8%bf%90%e8%a1%8cweb-py%e7%a8%8b%e5%ba%8f/</a></p>
+
+<p>非常重要的几点注意：
+<ul>
+	<li>通过fastcgi运行的python脚本必须具有可执行权限，<em> chmod u+x web/main.py</em>；</li>
+	<li>重启fastcgi程序需要删除/tmp/fastcgi.socket*</li>
+</ul>
+任何Python程序出错、权限错误都会导致lighttpd这样的报错：
+<em>2009-11-27 18:12:02: (mod_fastcgi.c.1108) child exited with status 13 /home/admin/web/main.py<br />
+2009-11-27 18:12:02: (mod_fastcgi.c.1111) If you&#8217;re trying to run your app as a FastCGI backend, make sure you&#8217;re using the FastCGI-enabled version.<br />
+If this is PHP on Gentoo, add &#8216;fastcgi&#8217; to the USE flags.<br />
+2009-11-27 18:12:02: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed.<br />
+2009-11-27 18:12:02: (server.c.931) Configuration of plugins failed. Going down.</em></p>
+
+<p>报错会提示fastcgi未正确安装，而实际上仅仅是程序错误或权限问题而已。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -580,84 +672,6 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/11/02/lighttpd%E9%80%9A%E8%BF%87fastcgi%E8%BF%90%E8%A1%8Cweb-py%E7%A8%8B%E5%BA%8F/">Lighttpd通过FastCGI运行web.py程序</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-02T00:00:00+08:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://webpy.org/" target="_blank">web.py</a>是个很小的python框架，特点就是小，连session都没有实现人家就发布了。前几天KungfuRails大会上他们吹牛说<a href="http://www.sinatrarb.com" target="_blank">Sinatra</a>可以写出世界上最小的Webapp，但是有web.py的化，那个最小至少要加上个“之一”。</p>
-
-<p>Web.py在Lighttpd上通过fastcgi运行的配置，可以在web.py的网站上找到文档：
-<a href="http://webpy.org/cookbook/fastcgi-lighttpd">http://webpy.org/cookbook/fastcgi-lighttpd</a></p>
-
-<p>实际我用的时候把静态的index.html用作首页，稍改动一下：
-<pre class="brush:plain">server.document-root = "/home/sun/projects/sdostatweb"</pre></p>
-
-<p>server.modules   += ( &#8220;mod_fastcgi&#8221; )<br />
-server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
-
-<p>server.port = 4000</p>
-
-<p>mimetype.assign = (<br />
-    &#8220;.html&#8221; =&gt; &#8220;text/html&#8221;<br />
-)</p>
-
-<p>index-file.names = ( &#8220;index.html&#8221; )</p>
-
-<p>fastcgi.server = ( &#8220;/sdostatweb.py&#8221; =&gt;<br />
-(( &#8220;socket&#8221; =&gt; &#8220;/tmp/fastcgi.socket&#8221;,<br />
-        &#8220;bin-path&#8221; =&gt; &#8220;/home/sun/projects/sdostatweb/sdostatweb.py&#8221;,<br />
-        &#8220;max-procs&#8221; =&gt; 5,<br />
-        &#8220;bin-environment&#8221; =&gt; (<br />
-        &#8220;REAL_SCRIPT_NAME&#8221; =&gt; &#8220;&#8221;<br />
-    ),<br />
-        &#8220;check-local&#8221; =&gt; &#8220;disable&#8221;<br />
-    ))<br />
-)</p>
-
-<p>url.rewrite-once = (<br />
-    &#8220;^/$&#8221; =&gt; &#8220;/static/index.html&#8221;,<br />
-    &#8220;^/flotr/(.*)$&#8221; =&gt; &#8220;/static/flotr/$1&#8221;,<br />
-    &#8220;^/static/(.*)$&#8221; =&gt; &#8220;/static/$1&#8221;,<br />
-    &#8220;^/(.*)$&#8221; =&gt; &#8220;/sdostatweb.py/$1&#8221;,</p>
-
-<p>)
-另外用fastcgi的方式使用web.py，需要安装flup。</p>
-
-<p>详细的事，可以看看新浪的Tim Yang的优化：
-<a href="http://timyang.net/python/python-webpy-lighttpd/">http://timyang.net/python/python-webpy-lighttpd/</a></p>
-
-<p>我之前真不敢相信搜狐Mail是跑在web.py上。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -675,6 +689,10 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -688,10 +706,6 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -743,7 +757,7 @@ server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

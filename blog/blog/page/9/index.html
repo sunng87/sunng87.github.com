@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这是用新入的Nikon 55-300mm的长焦镜头300端排的远处的塔吊，它与本文没有直接关系。如果实在要计算间接关系，它是我等待fedora无尽的启动时间里消磨时光的手段之一。 这周开始fedora彻底崩溃了，现在在默认的run-level下NetworkManager根本无法启动， &hellip;">
+  <meta name="description" content="ArchLinux最大的魅力就在于Rolling Release，所有的悲喜剧你都比别人早一步见证。 升级到GNOME 3.2后，我的gnome-settings-daemon不能正常工作，导致gtk+的主题都无效。如果没有经验你可能不太容易注意到它的真实原因。最后找到了同病相怜的人， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/10/02/upgraded-to-gnome-3-2/">Upgraded to GNOME 3.2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-02T00:00:00+08:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ArchLinux最大的魅力就在于Rolling Release，所有的悲喜剧你都比别人早一步见证。</p>
+
+<p>升级到GNOME 3.2后，我的gnome-settings-daemon不能正常工作，导致gtk+的主题都无效。如果没有经验你可能不太容易注意到它的真实原因。最后找到了同病相怜的人，这个问题被报告在<a href="https://bugzilla.gnome.org/show_bug.cgi?id=660664" target="_blank">这里</a>。恰好是在我发现这个问题几个小时之前。在gnome解决这个问题之前，有一个简单的workaround：
+<em>sudo mv /usr/lib/gnome-settings-daemon-3.0/libcolor.so /usr/lib/gnome-settings-daemon-3.0/libcolor.so~</em></p>
+
+<p>库加载失败后gnome-settings-daemon会自动禁用这个插件，避免出现Segmentation fault。以上的操作，at your own risk。</p>
+
+<p>此外，gnome-shell升级到3.2以后有些api的变化，我更新了exaile豆瓣电台的gnome-shell插件，你可以顺手git pull一下。
+<a href="http://www.flickr.com/photos/40741608@N08/6203348334/" title="Screenshot at 2011-10-02 17:48:51 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6162/6203348334_c71d757170.jpg" width="500" height="157" alt="Screenshot at 2011-10-02 17:48:51" /></a></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -587,71 +633,6 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/08/27/clojure-developers-you-should-follow/">Clojure Developers You Should Follow</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-27T00:00:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>介绍一下Clojure社区的活跃人物，有助于大家更好地学习和了解clojure，以下罗列的前提是包含但不限于，排名亦不分先后。</p>
-
-<p><h3>Rich Hickey (richhickey)</h3>
-Clojure的创始人。</p>
-
-<p><h3>Michael Fogus (fogus)</h3>
-The joy of clojure一书的作者，clojure社区的活跃人物，Clojure/core的成员。参与和维护着很多clojure项目。</p>
-
-<p><h3>James Reeves (weavejester)</h3>
-Compojure等一系列web框架的作者。是Clojure web开发方面的先驱，还维护着大量的clojure项目。</p>
-
-<p><h3>Mark McGranaghan (mmcgrana)</h3>
-Clojure web规范Ring的创始人，还维护着clj-redis等项目。</p>
-
-<p><h3>Stuart Hallowa (stuarthalloway)</h3>
-Programming Clojure一书的作者，Clojure的核心开发人员之一。</p>
-
-<p><h3>Christophe Grand (cgrand)</h3>
-cgrand是clojure web开发方面的专家，维护了enlive moustache等库。</p>
-
-<p><h3>Phil Hagelberg (technomancy)</h3>
-Clojure构建工具leiningen的作者。</p>
-
-<p><h3>Zach Tellman (ztellman)</h3>
-Zach是框架aleph/lamina/gloss的作者，是clojure网络编程的专家。</p>
-
-<p><h3>Nathan Marz (nathanmarz)</h3>
-Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目。</p>
-
-<p>以上列举的人都可以在github和twitter上找到。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=eafeb545-d70d-8011-8df5-66febda32431" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/10/">&larr; Older</a>
@@ -669,6 +650,10 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -682,10 +667,6 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -737,7 +718,7 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

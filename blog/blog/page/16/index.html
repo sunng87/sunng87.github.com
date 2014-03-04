@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="我的这一套stack正在走向完整。上次贴了一张soldat-http的图，现在基于soldat的wsgi服务器也已经有了一个基本可以运行的实现，名字叫做gefr（我的命名出处参考这里）。现在gefr上已经可以跑基于bottle框架的wsgi程序了， &hellip;">
+  <meta name="description" content="严格意义上我现在已经不能算是个web guy了，不过托Web开放的特性，咱也能评论一下。最近做个小的界面，考虑到要面向未来，HTML5又提供了丰富的表单增强。这些特性中，Firefox 3.6基本上还没有支持，Chromium 8.0有少部分支持，而真正支持比较完整的是Opera 11. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/01/12/html5-form-in-opera-11/">HTML5 Form in Opera 11</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-12T00:00:00+08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>严格意义上我现在已经不能算是个web guy了，不过托Web开放的特性，咱也能评论一下。最近做个小的界面，考虑到要面向未来，HTML5又提供了丰富的表单增强。这些特性中，Firefox 3.6基本上还没有支持，Chromium 8.0有少部分支持，而真正支持比较完整的是Opera 11.</p>
+
+<p><strong>autofocus</strong>
+页面载入后自动将焦点转到某个input，就如以前的onload时候xxx.focus()</p>
+
+<p><strong>required</strong>
+指定某个input为必填，提交时会有validation，在Opera11里还会给你这样的警告并且禁止提交：
+<a href="http://www.flickr.com/photos/40741608@N08/5349345730/" title="Screenshot - 01122011 - 10:53:41 PM by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5083/5349345730_f6696fd07e.jpg" width="329" height="144" alt="Screenshot - 01122011 - 10:53:41 PM" /></a></p>
+
+<p><strong>email / url</strong>
+指定某个input的特殊类型，提交时也会有对应的格式检查：
+<a href="http://www.flickr.com/photos/40741608@N08/5348736441/" title="Screenshot - 01122011 - 10:54:41 PM by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5081/5348736441_78accc61ac.jpg" width="344" height="140" alt="Screenshot - 01122011 - 10:54:41 PM" /></a></p>
+
+<p>这样的提示可能满足不了你的替用户着想的产品经理，但是你清楚他帮你省了多少事情。而且，在DiveInfoHtml5里提到，iphone甚至为这个input做了优化，在软件盘上把空格键变得很小（因为输入邮件地址用不着），并且提供了一个@键；这就是工程师的用户体验啊。</p>
+
+<p><strong>placeholder</strong>
+在input里显示提示文本：
+<a href="http://www.flickr.com/photos/40741608@N08/5349345562/" title="Screenshot - 01122011 - 10:52:18 PM by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5209/5349345562_d658665b92.jpg" width="441" height="63" alt="Screenshot - 01122011 - 10:52:18 PM" /></a></p>
+
+<p>注意到后面的红色星号了吗。这本来是我设计的一个workaround，既然Firefox 3都还不支持required validation，那么我们通过CSS来显示一个必填的提示：<br />
+[cc lang=&#8221;css&#8221;]<br />
+input[required=&#8221;required&#8221;]:after {<br />
+	content: &#8216;(*)&#8217;;<br />
+	color: #F00;<br />
+}
+[/cc]</p>
+
+<p>结果这个伪类最后只有在Opera里实现了预期的效果，看<a href="http://stackoverflow.com/questions/2587669/css-after-pseudo-element-on-input-field">在Stackoverflow上的讨论</a>才得知input的:after和:before伪类只有Opera支持。</p>
+
+<p>HTML5 Form这部分是一个真正务实的标准，你可以看到几乎每一个特性都是我们日常每时每刻都需要，几乎每个网站的JS都要实现的功能。标准是沟通上下游（浏览器和应用开发人员）的契约，一个真正反应相互需求的标准才是有实际价值的。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -645,49 +710,6 @@ http://chat.carleton.ca/~narthorn/project/patterns/BlackboardPattern-display.htm
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/12/11/douban-is-now-available-as-a-cover-provider-of-covergloobus/">Douban Is Now Available as a Cover Provider of CoverGloobus</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-11T00:00:00+08:00" pubdate data-updated="true">Dec 11<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a feature requested by <a href="http://www.douban.com/people/4350866/">a douban user</a>, we need a provider for <a href="https://launchpad.net/covergloobus">CoverGloobus</a> to retrieve covers from douban.com</p>
-
-<p>I just modify the code of exaile-douban-cover, and adapt to CoverGloobus 1.7 API. In 1.7, CoverGloobus has simplfied SPI for cover providers, which has much enhancement from 1.6 . So this provider is only compatible with CoverGloobus 1.7 .</p>
-
-<p>The patch is now merged into the bazaar repository, you can find it at:<br />
-http://bazaar.launchpad.net/~gloobus-dev/covergloobus/trunk/files/head%3A/src/covers/</p>
-
-<p>Chinese user will benefit from this patch that CoverGloobus will try to download album art if it&#8217;s not available from your music player.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/17/">&larr; Older</a>
@@ -705,6 +727,10 @@ http://bazaar.launchpad.net/~gloobus-dev/covergloobus/trunk/files/head%3A/src/co
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -718,10 +744,6 @@ http://bazaar.launchpad.net/~gloobus-dev/covergloobus/trunk/files/head%3A/src/co
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -773,7 +795,7 @@ http://bazaar.launchpad.net/~gloobus-dev/covergloobus/trunk/files/head%3A/src/co
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

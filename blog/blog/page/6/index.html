@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release. Breaking Changes New maven coordinator &hellip;">
+  <meta name="description" content="发布一个典型的weekend project, 名字叫做LazyPress.顾名思义,这是一个在线的写作系统. 取名Lazy, 除了因为它用Clojure写成,更因为他的简单: 没有繁琐的注册,没有繁琐的分类tag,没有繁琐的格式化,无论是使用还是开发都力求做到最简单. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/01/08/weekend-project-lazypress/">Weekend Project: LazyPress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-08T00:00:00+08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>发布一个典型的weekend project, 名字叫做<a href="http://lazypress.cloundfoundry.com">LazyPress</a>.顾名思义,这是一个在线的写作系统. 取名Lazy, 除了因为它用Clojure写成,更因为他的简单: 没有繁琐的注册,没有繁琐的分类tag,没有繁琐的格式化,无论是使用还是开发都力求做到最简单.<br />
+LazyPress采用Mozilla刚刚发布的<a href="http://browserid.org/">BrowserID</a>. 技术作为账号系统, 用户只需要在首次登录后提供一个ID即可(原本这一步也可以省略, 但是为了保护您的邮箱隐私, 现在需要一个LazyPress专用的ID). 这样LazyPress本身不存储用户的密码,也简化了用户账号管理的代价. BrowserID的登录流程非常简单, 速度也比传统的OpenID和OAuth要快, 用户体验要比多次跳转好很多.<br />
+LazyPress使用Markdown进行文本格式化, 简单的编辑器可以支持绝大多数格式的要求. 另外,在浏览器后台LazyPress使用HTML5 LocalStorage技术自动保存用户的文本草稿, 如果用户没有成功发布, 可以在下次浏览器打开时进行恢复.</p>
+
+<p>LazyPress后台存储采用mongodb. 正是mongodb的schema free特性降低了项目功能重构的成本, 促进了人们更快更频繁地优化产品的模型. 这应该是文档型数据库之于传统关系型数据库最大的优势. (犹如git之于svn, 开分支的成本要低得多, 看似是一个普通的功能改进, 实则鼓励促进了开发人员通过开分支实现自己的修改)<br />
+LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标准的Java web应用直接部署在cloudfoundry上. 前端继续使用的是我偏爱的Mootools库, 因为使用了很多新的浏览器技术, 所以目前只能保证在最新的Firefox和Chromium/Chrome上正常使用.</p>
+
+<p>Fork me on github: <a href="http://github.com/sunng87/lazypress">http://github.com/sunng87/lazypress</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -718,51 +761,6 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/12/03/%E4%BB%8Egnome%E7%BD%91%E7%AB%99%E5%AE%89%E8%A3%85exaile-doubanfm-gnome-shell-extension/">从GNOME网站安装exaile-doubanfm-gnome-shell-extension</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-03T00:00:00+08:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近GNOME发布了期待已久的extension.gnome.org，这个网站允许你直接通过浏览器安装和管理gnome-shell扩展，有点类似app store的感觉，混乱的~/.local/share/gnome-shell/extensions/终于有了一个官方的界面。</p>
-
-<p>网站开通的第一时间，我提交了exaile-doubanfm-gnome-shell-extension，经过review和修改，这个扩展也得到了进一步的完善，适配了gnome-shell 3.2的风格。</p>
-
-<p>你可以从这个地址直接安装启用
-<a href="https://extensions.gnome.org/extension/24/exaile-doubanfm-control/" target="_blank">https://extensions.gnome.org/extension/24/exaile-doubanfm-control/</a></p>
-
-<p>它会在exaile douban.fm启动后显示一个菜单在gnome-shell上，你可以通过这个菜单进行基本的操作。</p>
-
-<p>如果喜欢，别忘了在extension.gnome.org上vote一下 ：）</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/7/">&larr; Older</a>
@@ -780,6 +778,10 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
       </li>
     
@@ -793,10 +795,6 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
     
       <li class="post">
         <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
       </li>
     
   </ul>
@@ -848,7 +846,7 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Sun Ning -
+  Copyright &copy; 2014 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
