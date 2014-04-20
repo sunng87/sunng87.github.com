@@ -9,10 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="在一台赤裸裸的RHEL4上部署web.py程序，一切从几乎是从零开始。以下操作均以root用户操作。
-1. 安装MySQL数据库
-下载安装MySQL
-wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686- &hellip;">
+  <meta name="description" content="在Ubuntu上安装GIS软件，可以添加这个PPA源：
+deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu karmic main 导入GPG KEY
+gpg &#8211;keyserver subkeys.pgp. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,11 +26,11 @@ wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686- &hell
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -74,6 +73,54 @@ wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686- &hell
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/29/adding-ubuntu-gis-repository/">Adding Ubuntu-GIS Repository</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在Ubuntu上安装GIS软件，可以添加这个PPA源：<em>
+deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu karmic main</em></p>
+
+<p>导入GPG KEY
+<em>gpg &#8211;keyserver subkeys.pgp.net &#8211;recv 089EBE08314DF160<br />
+gpg &#8211;export &#8211;armor 089EBE08314DF160 | sudo apt-key add -</em></p>
+
+<p>这个源中目前包含了最新版本的GIS软件：
+<ul>
+	<li>gdal 1.6</li>
+	<li>grass</li>
+	<li>qgis</li>
+</ul></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2009/11/27/%E5%9C%A8rhel4%E4%B8%8A%E6%90%AD%E5%BB%BApythonlighttpdfastcgi%E7%8E%AF%E5%A2%83/">在RHEL4上搭建Python/Lighttpd/FastCGI环境</a></h1>
     
     
@@ -90,7 +137,7 @@ wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686- &hell
   
 
 
-<time datetime="2009-11-27T00:00:00+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2009</time>
+<time datetime="2009-11-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -181,7 +228,7 @@ If this is PHP on Gentoo, add &#8216;fastcgi&#8217; to the USE flags.<br />
   
 
 
-<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2009</time>
+<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -307,7 +354,7 @@ RFC中对Vary头是这样解释的：</p>
   
 
 
-<time datetime="2009-11-23T00:00:00+08:00" pubdate data-updated="true">Nov 23<span>rd</span>, 2009</time>
+<time datetime="2009-11-23T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -351,7 +398,7 @@ RFC中对Vary头是这样解释的：</p>
   
 
 
-<time datetime="2009-11-22T00:00:00+08:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2009</time>
+<time datetime="2009-11-22T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -397,7 +444,7 @@ RFC中对Vary头是这样解释的：</p>
   
 
 
-<time datetime="2009-11-20T00:00:00+08:00" pubdate data-updated="true">Nov 20<span>th</span>, 2009</time>
+<time datetime="2009-11-20T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -447,7 +494,7 @@ RFC中对Vary头是这样解释的：</p>
   
 
 
-<time datetime="2009-11-15T00:00:00+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2009</time>
+<time datetime="2009-11-15T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -502,7 +549,7 @@ RFC中对Vary头是这样解释的：</p>
   
 
 
-<time datetime="2009-11-12T00:00:00+08:00" pubdate data-updated="true">Nov 12<span>th</span>, 2009</time>
+<time datetime="2009-11-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -555,7 +602,7 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
   
 
 
-<time datetime="2009-11-10T00:00:00+08:00" pubdate data-updated="true">Nov 10<span>th</span>, 2009</time>
+<time datetime="2009-11-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -599,7 +646,7 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
   
 
 
-<time datetime="2009-11-10T00:00:00+08:00" pubdate data-updated="true">Nov 10<span>th</span>, 2009</time>
+<time datetime="2009-11-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -611,60 +658,6 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
 <p>现在问题基本解决在可预见的将来网站的可访问性暂时不会再有问题了大家也不用担心打开本人网站的时候被执行广告代码或者重定向到什么世外桃源去了。</p>
 
 <p>在清理病毒期间正好在<a href="http://linuxtoy.org/archives/douban-covers.html" target="_blank">linuxtoy上发了一篇文章</a>可惜因为清理病毒没有赚到点击量和知名度了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/11/05/exaile-cover-plugin-douban-covers/">Exaile Cover Plugin: Douban Covers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-05T00:00:00+08:00" pubdate data-updated="true">Nov 5<span>th</span>, 2009</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have created a plugin for <a href="http://exaile.org" target="_blank">exaile</a> which fetches album cover from <a href="http://douban.com" target="_blank">douban.com</a></p>
-
-<p>You can download the plugin archive from:
-<a href="You can download the plugin archive from: http://bitbucket.org/sunng/exailedoubancovers/downloads/">http://bitbucket.org/sunng/exailedoubancovers/downloads/</a></p>
-
-<p>To install it, open exaile, click menu edit &gt;&gt; preference &gt;&gt; plugins, hit button &#8220;install plugin file&#8221;, select &#8220;doubancovers.tgz&#8221;(if you cannot find the file, just change filter to &#8220;all files&#8221;)</p>
-
-<p>In some cases, the plugin could not be shown in the list at once, you can close the preference dialog and open it again, then active it.</p>
-
-<p>To get album art, right click the album art icon, select &#8220;fetch cover&#8221; and wait for right cover downloaded.</p>
-
-<p>The plugin is open sourced under GPL v2, you can grab the code from bitbucket using mercurial:
-<em>hg clone http://bitbucket.org/sunng/exailedoubancovers/</em></p>
-
-<p>Some screenshots for you:</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2628/4074746549_2398351bef.jpg" alt="" width="500" height="414" /></p>
-
-<p><img class="alignnone" src="http://farm4.static.flickr.com/3512/4075502050_325281d63a_o.png" alt="" width="358" height="375" /></p>
 </div>
   
   
@@ -689,11 +682,15 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -702,10 +699,6 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -772,7 +765,7 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

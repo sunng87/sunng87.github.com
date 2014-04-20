@@ -9,8 +9,11 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数： [cc lang=&#8221;lisp&#8221;]
-(defn addup ([limit] (addup limit 0 0)) ([limit current &hellip;">
+  <meta name="description" content="下午用jetty的WekSocketServlet写了一个简单的WebIM程序，正好第一次瞥见WebSocket的狰容。 服务器端
+jetty 7.1.5
+客户端
+Chromium 5.0.375.86 通过wireshark抓包获得这样一些数据：
+var _ws = new WebSocket &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,11 +28,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -72,6 +75,95 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/16/websocket-protocol/">Websocket Protocol</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午用jetty的WekSocketServlet写了一个简单的WebIM程序，正好第一次瞥见WebSocket的狰容。</p>
+
+<p>服务器端<br />
+jetty 7.1.5<br />
+客户端<br />
+Chromium 5.0.375.86</p>
+
+<p>通过wireshark抓包获得这样一些数据：
+<em>var _ws = new WebSocket(&#8220;ws://127.0.0.1:8080/nothing&#8221;)</em>
+这个环节创建WebSocket，浏览器与服务器端进行handshake，发送请求</p>
+
+<p><blockquote>GET /nothing HTTP/1.1<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+Host: 127.0.0.1:8080<br />
+Origin: http://127.0.0.1:8080</blockquote></p>
+
+<p>客户端发出一个Upgrade头，upgrade头在<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.42">RFC2616 14.42</a>定义</p>
+
+<p><blockquote>The Upgrade general-header allows the client to specify what additional communication protocols it supports and would like to use if the server finds it appropriate to switch protocols. </blockquote></p>
+
+<p>Upgrade必须被放入Connection头中标示这是一个Upgrade请求<br />
+Connection定义在<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.10">RFC2616 14.10</a>中：</p>
+
+<p><blockquote>The Connection general-header field allows the sender to specify options that are desired for that particular connection and MUST NOT be communicated by proxies over further connections. </blockquote></p>
+
+<p>Origin头还没有进入RFC，他的标准草案可以在<a href="http://tools.ietf.org/html/draft-abarth-origin-07">这里</a>找到，W3C的标准草案<a href="http://dev.w3.org/2006/waf/access-control/">Cross-Origin Resource Sharing</a>里<a href="http://dev.w3.org/2006/waf/access-control/#origin-request-header">定义</a>Origin Header：</p>
+
+<p><blockquote>The Origin  header indicates where the cross-origin request or preflight request  originates from. </blockquote></p>
+
+<p>Origin头的提出是为了解决<a href="http://en.wikipedia.org/wiki/Cross_Site_Request_Forgery">CSRF</a>的潜在危险，通过Origin服务器端可以获知请求的来源，进而判断其合法性。也就是说将跨域安全性检查的责任交给了服务器端，浏览器端采取信任的策略，避免了原先对跨域一棍子打死的做法。<br />
+Jetty 7的org.eclipse.jetty.servlets.CrossOriginFilter对这个头进行了处理。</p>
+
+<p>此外，handshake请求的header中还允许一个Sec-WebSocket-Protocol，用于对服务器端指定一个子协议（应用协议）。</p>
+
+<p>服务器端应答</p>
+
+<p><blockquote>HTTP/1.1 101 Web Socket Protocol Handshake<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+WebSocket-Origin: http://127.0.0.1:8080<br />
+WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
+
+<p>Websocket连接建立。此后，服务器端和客户端可以实现bidirectional的通信，消息体即websocket.send(msg)中的纯文本。要实现这样的机制，浏览器和服务器间需要建立至少两个连接。目前，<a href="http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-76#4">WebSocket协议</a>中还没有规定客户端对服务器端的连接数限制。不过关于这个限制，RFC2616（HTTP1.1）中<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.4">规定</a>：</p>
+
+<p><blockquote>Clients that use persistent connections SHOULD limit the number of simultaneous connections that they maintain to a given server. A single-user client SHOULD NOT maintain more than 2 connections with any server or proxy. </blockquote></p>
+
+<p>对此，另一个Bayeux协议倒是已经有了明确的限制：</p>
+
+<p><blockquote>the Bayeux protocol MUST NOT require any more than 2 HTTP requests to be simultaneously handled by a server in order to handle all application (Bayeux based or otherwise) requests from a client. </blockquote></p>
+
+<p>到此，客户端和服务器端已经可以建立双工的通信，这也是浏览器级别实现WebSocket协议的最大优点。而对于Firefox 3.x， IE x.x等等，只能在现有的HTTP连接机制上实现WebSocket，如通过long polling和callback polling的方式，但终归无法实现真正双工的通信。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2010/07/15/clojure-recur/">Clojure Recur</a></h1>
     
     
@@ -88,7 +180,7 @@
   
 
 
-<time datetime="2010-07-15T00:00:00+08:00" pubdate data-updated="true">Jul 15<span>th</span>, 2010</time>
+<time datetime="2010-07-15T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -189,7 +281,7 @@
   
 
 
-<time datetime="2010-07-13T00:00:00+08:00" pubdate data-updated="true">Jul 13<span>th</span>, 2010</time>
+<time datetime="2010-07-13T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -252,7 +344,7 @@ Make sure you have xulrunner-dev installed:
   
 
 
-<time datetime="2010-07-10T00:00:00+08:00" pubdate data-updated="true">Jul 10<span>th</span>, 2010</time>
+<time datetime="2010-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -295,7 +387,7 @@ Make sure you have xulrunner-dev installed:
   
 
 
-<time datetime="2010-07-04T00:00:00+08:00" pubdate data-updated="true">Jul 4<span>th</span>, 2010</time>
+<time datetime="2010-07-04T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -370,7 +462,7 @@ mv doubanfm ~/.local/share/exaile/plugins/</p>
   
 
 
-<time datetime="2010-07-02T00:00:00+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2010</time>
+<time datetime="2010-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -439,7 +531,7 @@ mv doubanfm ~/.local/share/exaile/plugins/</p>
   
 
 
-<time datetime="2010-06-30T00:00:00+08:00" pubdate data-updated="true">Jun 30<span>th</span>, 2010</time>
+<time datetime="2010-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -484,7 +576,7 @@ mv doubanfm ~/.local/share/exaile/plugins/</p>
   
 
 
-<time datetime="2010-06-27T00:00:00+08:00" pubdate data-updated="true">Jun 27<span>th</span>, 2010</time>
+<time datetime="2010-06-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -527,7 +619,7 @@ mv doubanfm ~/.local/share/exaile/plugins/</p>
   
 
 
-<time datetime="2010-06-24T00:00:00+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2010</time>
+<time datetime="2010-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -612,7 +704,7 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   
 
 
-<time datetime="2010-06-22T00:00:00+08:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2010</time>
+<time datetime="2010-06-22T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -629,64 +721,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 <a href="http://isdo.cn/10CM">http://isdo.cn/10CM</a></p>
 
 <p>这就睡觉去，今天不用上班了。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/18/%E8%BF%91%E6%97%A5%E7%90%90%E4%BA%8B/">近日琐事</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-18T00:00:00+08:00" pubdate data-updated="true">Jun 18<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近创作激情很是强烈，又赶上大家在博客上踊跃留言，我继续无聊闲扯吧。</p>
-
-<p>做现在这个项目以来，我总是被需要同时处理多件事情的状况困扰。多任务处理，今天终于发现自己是LIFO的方式，后进先出，总是在做最近发生的事情，之前的就压栈，栈满了没准栈底就自动丢失了（策略就是java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy）。用这种方式，耗时较长的任务往往花掉的时间非常长而且不断被打断。</p>
-
-<p>今天公司新鲜事，我们的工牌的带子终于换掉了。这以前带子的颜色表明了森严的等级制度，员工深蓝色，中层红色，高层黄色，访客绿色，外包白色，物业粉色，平时走在公司里花花绿绿的实在是他妈的一道景观。这事还在twitter上被冯大辉retweet了一下搞得地球人都知道了，今天通通换成了统一的红色。对于一个员工来说，今天看见自己领子上挂着一个鲜艳的中层颜色的带子，时常还是有那么一点错觉。</p>
-
-<p>还得说说世界杯，这是我看得第四届世界杯了，已经说不上自己支持哪个队了，为此我都怀疑自己已经是伪球迷了。眼看着当初看球时候的球星现在陆陆续续当了教练，那种沧桑感啊。98年的时候还在收集方便面里的球星卡，那时候法国的5号布兰科，人家今年世界杯以后就要上任了。而像比埃尔霍夫这样96年欧洲杯一战成名的，现在都是德国队领队了。大伙再瞧瞧踢了四届世界杯的球员：
-<ul>
-<li>亨利  	法国  	1998/2002/2006/2010</li>
-<li>布冯 	意大利 	1998/2002/2006/2010</li>
-<li>卡纳瓦罗 	意大利 	1998/2002/2006/2010</li>
-<li>李云在 	韩国 	1998/2002/2006/2010</li>
-<li>楢崎正刚 	日本 	1998/2002/2006/2010</li>
-<li>川口能活 	日本 	1998/2002/2006/2010</li>
-<li>里戈贝特-宋 	喀麦隆 	1994/1998/2002/2010</li>
-</ul>
-98年大家都说法国队锋线不行，其实那是是亨利和特雷泽盖的组合，不过这二位确实从2000年欧洲杯才开始成熟。布冯98年的时候还是打酱油吧，卡纳瓦罗那时倒是已经有点名气了。李云在，包括十多年来轮着换的楢崎正刚和川口能活现在都打不上主力了，不过一个个都算是现象。</p>
-
-<p>昨天收到了新买的桌游“全球传染病”(PANDEMIC，名字是恶心了点)，这是一个合作性质的游戏，参与的人扮演不同的角色拥有不同的技能为达到相同目标。昨晚自个玩了一局，难度不小，一颗CPU是搞不定了，下回小聚的时候和大伙一起玩吧。话说不知不觉现在我有卡卡松（加四个扩展），三国杀，UNO，矮人金矿和全球传染病，这发展下去要开店了。。。</p>
-
-<p>都是玩的事情了，正经事都没提。最近准备看<a href="http://www.apress.com/book/view/9781430272311">Practical Clojure</a>，看看Clojure如何Practical吧。</p>
 
 <p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
 </div>
@@ -713,11 +747,15 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -726,10 +764,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -796,7 +830,7 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

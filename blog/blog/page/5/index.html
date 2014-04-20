@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="作为几乎是很多人脑海里南京最北端的地方，燕子矶平时算是人迹罕至。我上一次去这个公园是99年小学毕业的夏天，一晃都已经13年（13年！）过去了。 当年通往燕子矶的小街已经被新修的永济大道取代，不过当时的和平街、临江街依然存在。燕子矶公园的门原本开在临江街上，现在这个门已经几乎倒掉， &hellip;">
+  <meta name="description" content="Discussed in clojure-cn mailing list, we come up with an extensible dosync block with event listener: on-start, on-retry and on-committed. With these &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,11 +24,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -71,6 +71,50 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/24/dosync-dosync-with-event-listener/">Dosync+: Dosync With Event Listener</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Discussed in clojure-cn mailing list, we come up with an extensible dosync block with event listener: on-start, on-retry and on-committed.</p>
+
+<p><script src="https://gist.github.com/1898383.js?file=dosync-plus.clj"></script></p>
+
+<p>With these extension points, you can bind STM monitor to a transaction. And I believe there will more advanced use cases on this.</p>
+
+<p><script src="https://gist.github.com/1898383.js?file=main.clj"></script></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2012/02/18/%E7%87%95%E5%AD%90%E7%9F%B6/">燕子矶</a></h1>
     
     
@@ -87,7 +131,7 @@
   
 
 
-<time datetime="2012-02-18T00:00:00+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2012</time>
+<time datetime="2012-02-18T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -147,7 +191,7 @@
   
 
 
-<time datetime="2012-02-14T00:00:00+08:00" pubdate data-updated="true">Feb 14<span>th</span>, 2012</time>
+<time datetime="2012-02-14T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -292,7 +336,7 @@ pyclj: 1.19659209251</p>
   
 
 
-<time datetime="2012-02-11T00:00:00+08:00" pubdate data-updated="true">Feb 11<span>th</span>, 2012</time>
+<time datetime="2012-02-11T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -336,7 +380,7 @@ pyclj: 1.19659209251</p>
   
 
 
-<time datetime="2012-02-09T00:00:00+08:00" pubdate data-updated="true">Feb 9<span>th</span>, 2012</time>
+<time datetime="2012-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -376,7 +420,7 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   
 
 
-<time datetime="2012-02-04T00:00:00+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+<time datetime="2012-02-04T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -445,7 +489,7 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   
 
 
-<time datetime="2012-02-03T00:00:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2012</time>
+<time datetime="2012-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -522,7 +566,7 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   
 
 
-<time datetime="2012-02-01T00:00:00+08:00" pubdate data-updated="true">Feb 1<span>st</span>, 2012</time>
+<time datetime="2012-02-01T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -562,7 +606,7 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   
 
 
-<time datetime="2012-01-24T00:00:00+08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2012</time>
+<time datetime="2012-01-24T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -616,7 +660,7 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   
 
 
-<time datetime="2012-01-19T00:00:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2012</time>
+<time datetime="2012-01-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -628,96 +672,6 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
 <p>这是2011年OpenStreetMap上，南京的编辑情况。高亮的部分是2011年创建或更新的要素。从这张图上可以看出最近的这一年，南京的数据从无到有到逐渐的完善，这里面倾注了本地几位贡献者结结实实的心血。</p>
 
 <p>对这个可视化感兴趣，可以参考<a href="https://gist.github.com/1639915" target="_blank">这里的代码和样式表</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/01/13/clojure-on-cloudfoundry/">Clojure on CloudFoundry</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-13T00:00:00+08:00" pubdate data-updated="true">Jan 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In this article, I will show you how to develop and deploy clojure web application on CloudFoundry. As you may know, CloudFoundry is an opensource PaaS backed by VMWare. Java, Ruby and Nodejs are officially supported. As a JVM language, clojure is born to be also available on this platform, although it&#8217;s not listed. </p>
-
-<p>CloudFoundry accepts a .war file for Java web application deployment. So you don&#8217;t need the ring-jetty-adaptor and a procfile as heroku requires. To help your development and deployment, I strongly recommend the lein-ring plugin:</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-  :dev-dependencies [[lein-ring &#8220;0.5.4&#8221;]]<br />
-[/cc]</p>
-
-<p>CloudFoundry provides backend services like mysql, redis, mongodb and more. The connection information are stored as environment variables. <a href="http://env.cloudfoundry.com/env" target="_blank">Here</a> you can find a subset of them. </p>
-
-<p>Take mongodb as example, connection information (host, port, username and password) are encoded as JSON, stored in environment variables. You can get them with this function:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defn mongo-config [key]<br />
-  (if-let [services (System/getenv &#8220;VCAP_SERVICES&#8221;)]<br />
-    (let [services-dict (json/read-json services false)]<br />
-      (-> services-dict<br />
-        (get &#8220;mongodb-1.8&#8221;)<br />
-        first<br />
-        (get &#8220;credentials&#8221;)<br />
-        (get key)))))<br />
-[/cc]</p>
-
-<p>In the server bootstrap function, create the mongodb connection:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defn app-init []<br />
-  (def db-conn (make-connection<br />
-                 (or (mongo-config &#8220;db&#8221;) &#8220;lazypress&#8221;)<br />
-                   :host (or (mongo-config &#8220;hostname&#8221;) &#8220;localhost&#8221;)<br />
-                   :port (or (mongo-config &#8220;port&#8221;) 27017)))<br />
-  (when-not (nil? (mongo-config &#8220;username&#8221;))<br />
-    (authenticate db-conn<br />
-      (mongo-config &#8220;username&#8221;)<br />
-      (mongo-config &#8220;password&#8221;)))<br />
-[/cc]<br />
-By adding check for nil, local databased is also supported. This is pretty convenience for local development. These environment variables are consistent on all cloudfoundry application, so it&#8217;s possible to deploy the application on multiple accounts without any changes.</p>
-
-<p>Then you can add your web stuff just like standard clojure web development. (If you are using compojure, place your static files under resource/public.)</p>
-
-<p>Finally, package it. (Suppose your application is named as &#8220;lazypress&#8221;)<br />
-[cc lang=&#8221;bash&#8221;]<br />
-lein ring uberwar lazypress.war<br />
-[/cc]</p>
-
-<p>Use the vmc tool to deploy it:<br />
-[cc lang=&#8221;bash&#8221;]<br />
-vmc update lazypress<br />
-[/cc]</p>
-
-<p>For more usage about the vmc tool, you can read <a href="http://blog.cloudfoundry.com/post/13481010498/simplified-application-deployment-with-cloud-foundry-manifest" target="_blank">this article</a>.</p>
-
-<p>So you have finished deploying your clojure web application to cloudfoundry.</p>
-
-<p>Backed by spring and vmware, cloudfoundry is more Java-friendly than other PaaS like heroku. You don&#8217;t have to start a Java process by yourself (&#8220;lein run&#8221; isn&#8217;t a graceful way to start your app in product environment). And you don&#8217;t have to worry about your web container settings (configure jetty with limited options via ring-jetty-adaptor). All you have to do is package the application as a portable war file, which you can deploy to tomcat, glassfish, and also cloudfoundry. The vmc tool could detect you war file and handle it correctly.</p>
-
-<p></p>
 </div>
   
   
@@ -742,11 +696,15 @@ vmc update lazypress<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -755,10 +713,6 @@ vmc update lazypress<br />
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -825,7 +779,7 @@ vmc update lazypress<br />
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Clojure | 车水马龙]]></title>
+  <link href="http://sunng87.github.io/blog//blog/categories/clojure/atom.xml" rel="self"/>
+  <link href="http://sunng87.github.io/blog//"/>
+  <updated>2014-04-20T16:48:46+08:00</updated>
+  <id>http://sunng87.github.io/blog//</id>
+  <author>
+    <name><![CDATA[Sun Ning]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Slacker Library Updated]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/03/04/slacker-0-dot-11-released/"/>
+    <updated>2014-03-04T23:40:00+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/03/04/slacker-0-dot-11-released</id>
+    <content type="html"><![CDATA[<p>After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as integration solution between clojure systems.</p>
+
+<p>The recent update in slacker, slacker-cluster and link are:</p>
+
+<h3>link</h3>
+
+<p>There are two releases in the <a href="https://github.com/sunng87/link">link</a> library, features include:</p>
+
+<ul>
+<li>Ported to Netty 4</li>
+<li>WebSocket server handler</li>
+<li>Ability to shutdown server</li>
+<li>Ability to use core.async with link ring adapter</li>
+</ul>
+
+
+<h3>slacker</h3>
+
+<p>The most recent release of <a href="https://github.com/sunng87/slacker">slacker</a> is 0.11.0:</p>
+
+<ul>
+<li>New ping-interval option for clients</li>
+<li>Async callback will accept two argument, and can handle exceptions</li>
+<li>Slingshot removed, we are now using clojure built-in ex-info</li>
+<li>All client creation functions and defn-remote are delayed</li>
+<li>Bugfix for issue when several clients started in a process</li>
+</ul>
+
+
+<h3>slacker-cluster</h3>
+
+<p>There&rsquo;s major enhancement in <a href="https://github.com/sunng87/slacker-cluster">slacker cluster</a> 0.11.0</p>
+
+<ul>
+<li>Server exception no longer blocks client</li>
+<li>Added options to call functions on multiple servers, control return type and exception handling</li>
+</ul>
+
+
+<p>All these libraries are available on github. I will write more about how we use them in AVOS Cloud in future.</p>
+]]></content>
+  </entry>
+  
+</feed>

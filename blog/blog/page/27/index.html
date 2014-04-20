@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="我草，这是真的吗，同志们是3:0吗？？！！ 是不是电视显示错了？？！ 我有生之年居然看到这一幕了！！！ 人生啊，这是人生吗 见证历史了！！！ 牛逼！！这是真的吗，这是他妈真的吗 邓卓翔！！ 牛逼！！！ 娘的，要下载录像 这他妈是真的吗？？！！ 去你妈的CCTV 去你妈的江和平
-">
+  <meta name="description" content="Glad to announce my works this morning: A simple heatmap API based on HTML5 canvas. The programming interface is rather simple now. To create such a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,11 +24,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -72,6 +71,93 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/11/sunngs-canvas-based-heatmap-api/">Sunng&#8217;s Canvas Based Heatmap API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Glad to announce my works this morning: A simple heatmap API based on HTML5 canvas.
+<a href="http://www.flickr.com/photos/40741608@N08/4347604245/" title="canvas by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4071/4347604245_486bd3a12e_o.jpg" width="300" height="215" alt="canvas" /></a></p>
+
+<p>The programming interface is rather simple now. To create such a heatmap, you just new a heatmap object by:
+<pre class="brush:html">
+&lt;canvas width="300" height="215" id="canv"&gt;&lt;/canvas&gt;
+</pre>
+<pre class="brush:javascript">
+heatmap = new HeatMap("canv");
+</pre></p>
+
+<p>Then read your dataset and push data into the heatmap:
+<pre class="brush:javascript">
+heatmap.push(x, y, value);
+</pre></p>
+
+<p>At last, spread the data and get the canvas rendered:
+<pre class="brush:javascript">
+heatmap.spread();
+heatmap.render();
+</pre>
+Now you got it.</p>
+
+<p>For advanced usage, you can specify the resolution of heatmap by px:
+<pre class="brush:javascript">
+heatmap = new HeatMap("canv", 2);
+</pre>
+Large value will gain performance with low image quality.</p>
+
+<p>Also, you can specify a value to define the attenuation value of each px.
+<pre class="brush:javascript">
+heatmap.spread(5);
+</pre></p>
+
+<p>Finally, there is an option to use your own color schema for heatmap generation.
+<pre class="brush:javascript">
+heatmap.render(function(value, maxValue){
+    var light = value / maxValue * 100;
+    return "hsl(20, 75%, "+light+"%)";
+});
+</pre>
+The parameters passed in are current pixel value and max value in whole context.</p>
+
+<p>That&#8217;s all the toolkit. More functionality and options might be added in future. Grab it from my bitbucket page:
+<a href="http://bitbucket.org/sunng/daily-coding/src/tip/canvas-heatmap/">http://bitbucket.org/sunng/daily-coding/src/tip/canvas-heatmap/</a></p>
+
+<p>There is a demo page which you can test the api by clicking canvas:
+<a href="http://www.flickr.com/photos/40741608@N08/4347650163/" title="canvas-raw by 贝小塔, on Flickr"><img src="http://farm3.static.flickr.com/2733/4347650163_ea740356e4_o.jpg" width="326" height="284" alt="canvas-raw" /></a>
+then click heatmap button!
+<a href="http://www.flickr.com/photos/40741608@N08/4348397874/" title="canvas2 by 贝小塔, on Flickr"><img src="http://farm3.static.flickr.com/2796/4348397874_8ac80b0756_o.jpg" width="314" height="275" alt="canvas2" /></a></p>
+
+<p>This is the new year gift for my readers and my dear friends !</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2010/02/10/%E6%97%A0%E9%A2%98/">无题</a></h1>
     
     
@@ -88,7 +174,7 @@
   
 
 
-<time datetime="2010-02-10T00:00:00+08:00" pubdate data-updated="true">Feb 10<span>th</span>, 2010</time>
+<time datetime="2010-02-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -146,7 +232,7 @@
   
 
 
-<time datetime="2010-02-08T00:00:00+08:00" pubdate data-updated="true">Feb 8<span>th</span>, 2010</time>
+<time datetime="2010-02-08T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -237,7 +323,7 @@ Now it works, however, simple-xml won&#8217;t be able to deserialize xml generat
   
 
 
-<time datetime="2010-02-07T00:00:00+08:00" pubdate data-updated="true">Feb 7<span>th</span>, 2010</time>
+<time datetime="2010-02-07T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -322,7 +408,7 @@ index PATH_TO_INDEX<br />
   
 
 
-<time datetime="2010-02-03T00:00:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2010</time>
+<time datetime="2010-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -367,7 +453,7 @@ sudo apt-get install icecat</em></p>
   
 
 
-<time datetime="2010-02-02T00:00:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+<time datetime="2010-02-02T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -421,7 +507,7 @@ sudo patch google_translate.rb /home/sun/google_translate.rb.diff</em></p>
   
 
 
-<time datetime="2010-01-31T00:00:00+08:00" pubdate data-updated="true">Jan 31<span>st</span>, 2010</time>
+<time datetime="2010-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -479,7 +565,7 @@ sudo patch google_translate.rb /home/sun/google_translate.rb.diff</em></p>
   
 
 
-<time datetime="2010-01-30T00:00:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2010-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -546,7 +632,7 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
   
 
 
-<time datetime="2010-01-28T00:00:00+08:00" pubdate data-updated="true">Jan 28<span>th</span>, 2010</time>
+<time datetime="2010-01-28T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -592,7 +678,7 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
   
 
 
-<time datetime="2010-01-27T00:00:00+08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2010</time>
+<time datetime="2010-01-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -609,50 +695,6 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
 <p>Ar = As * (1 – Ad )<br />
 Cr = Cs * (1 – Ad )<br />
 用语言描述就是叠加区域的透明度为0. 使用这种机制必须采用BufferedImage.TYPE_INT_ARGB的图像，并且输出支持alpha通道的格式。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/01/19/%E8%BF%91%E5%86%B5/">近况</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-19T00:00:00+08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><ol>
-	<li>这是经历了又一次长时间的unavailable回来。</li>
-	<li>最近挺忙，新项目启动了，旧项目月底要上线，早先的项目deadline也要到了，还不见动静不知道什么情况，今天又被叫去说数据部门的老大又有新想法了，娘勒，四个，四个啊。</li>
-	<li>即使有四个，我发现我在twitter上还是那么神情自若，rabr自动取新消息的功能太害人了，忍不住就想点点看看，看了就想点，很影响注意力的集中。于是最近改用lynx / w3m这样的命令行浏览器上rabr。rabr做的还真是非常不错，在没有Javascript支持的情况下依然能用。诚心推荐大家一起来复古，w3m很powerful，支持vim和lynx的快捷键切换，居然还能显示图片，当时我就shock了。</li>
-	<li>YAN有了200次commit，接下来的主要工作是把它拆成多个maven module，以便未来开发的方便。尽管之前做了一些准备了，但是这个过程预计不会太轻松。最近精力有限，暂时先不全砸在上面吧。</li>
-	<li>业余的项目还要做下去，分为multimodule之后YAN的开发也就差不多了；之前写的Exaile的豆瓣Cover插件也没有后续开发的必要了，大家有什么点子欢迎分享。</li>
-	<li>上周去上图发现楼上的阅览室资源很多，我决定以后每个月至少花一天泡在图书馆。</li>
-	<li>有时候想想我真凄凉啊，哎</li>
-</ol></p>
 </div>
   
   
@@ -677,11 +719,15 @@ Cr = Cs * (1 – Ad )<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -690,10 +736,6 @@ Cr = Cs * (1 – Ad )<br />
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -760,7 +802,7 @@ Cr = Cs * (1 – Ad )<br />
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

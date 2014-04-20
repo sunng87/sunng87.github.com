@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Python里虽然可以通过&#8217;b&#8217;的标记来区别普通文件和二进制文件，但是依然是把二进制文件当作普通文本处理。要读写二进制文件，需要用struct库来作pack和unpack。 比如我最近拿到一个如下数据结构的二进制文件 [codesyntax lang=&#8221;c&# &hellip;">
+  <meta name="description" content="SQuirrel SQL Client是一个用Java写的数据库客户端，用JDBC统一数据库访问接口以后，可以通过一个统一的用户界面来操作MySQL PostgreSQL MSSQL Oracle等等任何支持JDBC访问的数据库。使用起来非常方便。而且，SQuirrel SQL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,11 +24,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -71,6 +71,46 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2009/02/22/squirrel-sql-client-3%E5%8F%91%E5%B8%83%E4%BA%86/">SQuirrel SQL Client 3发布了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SQuirrel SQL Client是一个用Java写的数据库客户端，用JDBC统一数据库访问接口以后，可以通过一个统一的用户界面来操作MySQL PostgreSQL MSSQL Oracle等等任何支持JDBC访问的数据库。使用起来非常方便。而且，SQuirrel SQL Client还是一个典型的Swing程序，也算是Swing的一个比较成功的应用了。</p>
+
+<p>2.x版本的SQuirrel SQL Client一直是用JDesktopPane和JInternalFrame来组织界面。这次发布的3.0最大的变化就是改用现在更加流行的Dock方式组织窗口。</p>
+
+<p>07年开始我一直用这个工具，后来在某处实习时，意外地发现组里以前也有人用这个工具（不过后来没有人再用了），一问，原来也是之前我们学校的同学。看来，一个学校的果然还是有一点相同，呵呵。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2009/02/20/python%E8%AF%BB%E5%8F%96%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6/">Python读取二进制文件</a></h1>
     
     
@@ -87,7 +127,7 @@
   
 
 
-<time datetime="2009-02-20T00:00:00+08:00" pubdate data-updated="true">Feb 20<span>th</span>, 2009</time>
+<time datetime="2009-02-20T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -154,7 +194,7 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
   
 
 
-<time datetime="2009-02-18T00:00:00+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2009</time>
+<time datetime="2009-02-18T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -190,11 +230,15 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -203,10 +247,6 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -273,7 +313,7 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

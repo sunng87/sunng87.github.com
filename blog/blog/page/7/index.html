@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="最近GNOME发布了期待已久的extension.gnome.org，这个网站允许你直接通过浏览器安装和管理gnome-shell扩展，有点类似app store的感觉，混乱的~/.local/share/gnome-shell/extensions/终于有了一个官方的界面。 网站开通的第一时间， &hellip;">
+  <meta name="description" content="Slacker 0.2.0 has been pushed to clojars today. Connection pooling and json serialization are available in this release. Connection Pool
+Generally, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,11 +25,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -71,6 +72,88 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/blog/2011/12/10/slacker-0-2-0-is-out/">Slacker 0.2.0 Is Out</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sunng87/slacker">Slacker 0.2.0</a> has been pushed to clojars today. Connection pooling and json serialization are available in this release.</p>
+
+<p><h4>Connection Pool</h4>
+Generally, pooling connection is a good idea in high concurrence application. To make slacker for real world, connection pool support is a high-prioritized feature in its development. The new connection pool is backended by commons-pool which you might familiar with. To use connection pool, just create slacker client with a new function `slackerc-pool`</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(def scp (slackerc-pool &#8220;localhost&#8221; 2104))<br />
+[/cc]</p>
+
+<p>Then you can use this pool just like a single client.</p>
+
+<p>Some options are available to configure the pool by your wish:
+<ul>
+	<li><em>:max-active</em>, max connections opened by the pool</li>
+	<li><em>:exhausted-action</em> <br />
+            <ul>
+               <li><em>:fail</em> throw an exception when pool exhausted.</li>
+<li><em>:block</em> block current thread and wait until max-wait exceed (throw an exception)</li>
+	<li><em>:grow</em> automatically create new connection and add it to pool</li></ul></li></ul></p>
+
+<p>            
+<li><em>:max-wait</em> max wait time before throwing an exception</li>
+	<li><em>:min-idle</em> minimal number of pool hold idle connections </li></p>
+
+<p>
+The options are inherited from GenericObjectPool, you can find detailed information from their <a href="http://commons.apache.org/pool/apidocs/org/apache/commons/pool/impl/GenericObjectPool.html">javadoc</a>.</p>
+
+<p><h4>JSON Serialization</h4>
+slacker just added json serialization provided by clj-json. According to my test, clj-json is 1x faster than carbonite in serialization. <br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(def sc (slackerc &#8220;localhost&#8221; 2104 :content-type :json))<br />
+[/cc]</p>
+
+<p>However, with json serialization, you may lost some clojure types like keyword and set in type conversion. You should be caution when using json as serialization method. </p>
+
+<p>In next release, I am planning to use <a href="https://github.com/AlibabaTech/fastjson/" target="_blank">fastjson</a> as json lib which provides option to write type name into json so it could be a full featured serialization for clojure. And fastjson is claimed even faster than jackson.</p>
+
+<p><h4>Performance</h4>
+slacker gains high performance with its non-blocking server, serialization and direct function call. As tested on a dual 6 core server,  it reaches 10000+ TPS for a single client (50 connections, 50 threads). The server just use 35% CPU so I consider it could have even more TPS if there is two or more client machines.</p>
+
+<p>So if you are interested in some benchmarks, you can test it with client like <a href="https://gist.github.com/1449860" target="_blank">this</a>. All the requests are using synchronous call because I believe it&#8217;s the most common case you use slacker.</p>
+
+<p><h4>Next steps</h4>
+Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" target="_blank">cn-clojure</a> mailing list, I&#8217;m going to add HTTP transport for slacker. With HTTP transport, it&#8217;s easier to debug and evaluate your clojure functions, it also makes slacker available to ClojureScript. </p>
+
+<p>At lst, thanks Zach Tellman for reviewing my client code. 
+</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/blog/2011/12/03/%E4%BB%8Egnome%E7%BD%91%E7%AB%99%E5%AE%89%E8%A3%85exaile-doubanfm-gnome-shell-extension/">从GNOME网站安装exaile-doubanfm-gnome-shell-extension</a></h1>
     
     
@@ -87,7 +170,7 @@
   
 
 
-<time datetime="2011-12-03T00:00:00+08:00" pubdate data-updated="true">Dec 3<span>rd</span>, 2011</time>
+<time datetime="2011-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -132,7 +215,7 @@
   
 
 
-<time datetime="2011-12-02T00:00:00+08:00" pubdate data-updated="true">Dec 2<span>nd</span>, 2011</time>
+<time datetime="2011-12-02T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -188,7 +271,7 @@ If you add option `:async` to defremote, then the function facade will return a 
   
 
 
-<time datetime="2011-12-01T00:00:00+08:00" pubdate data-updated="true">Dec 1<span>st</span>, 2011</time>
+<time datetime="2011-12-01T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -243,7 +326,7 @@ If you add option `:async` to defremote, then the function facade will return a 
   
 
 
-<time datetime="2011-11-27T00:00:00+08:00" pubdate data-updated="true">Nov 27<span>th</span>, 2011</time>
+<time datetime="2011-11-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -331,7 +414,7 @@ RPC is the first step to distributed clojure world. I will keep you updated with
   
 
 
-<time datetime="2011-11-19T00:00:00+08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2011</time>
+<time datetime="2011-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -377,7 +460,7 @@ RPC is the first step to distributed clojure world. I will keep you updated with
   
 
 
-<time datetime="2011-11-16T00:00:00+08:00" pubdate data-updated="true">Nov 16<span>th</span>, 2011</time>
+<time datetime="2011-11-16T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -427,7 +510,7 @@ summary = /path/to/your/script<br />
   
 
 
-<time datetime="2011-11-04T00:00:00+08:00" pubdate data-updated="true">Nov 4<span>th</span>, 2011</time>
+<time datetime="2011-11-04T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -504,7 +587,7 @@ summary = /path/to/your/script<br />
   
 
 
-<time datetime="2011-11-01T00:00:00+08:00" pubdate data-updated="true">Nov 1<span>st</span>, 2011</time>
+<time datetime="2011-11-01T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -586,7 +669,7 @@ More detailed instructions could be found <a href="https://github.com/sunng87/le
   
 
 
-<time datetime="2011-10-30T00:00:00+08:00" pubdate data-updated="true">Oct 30<span>th</span>, 2011</time>
+<time datetime="2011-10-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -612,59 +695,6 @@ gource上的wiki里，ffmpeg如果报错File for preset &#8216;slow&#8217; not f
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/27/visualize-reddit-upvotes-by-subreddit/">Visualize Reddit Upvotes by Subreddit</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-27T00:00:00+08:00" pubdate data-updated="true">Oct 27<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是我reddit上所有的upvote在各个subreddit上的分布情况，这个情况还是可以说明我是个普通青年。
-<img src="http://i.imgur.com/jfXyK.png" alt="Reddit upvotes visualization" width="500px" /></p>
-
-<p>排在前几位的分别是
-<ul>
-	<li>Programming</li>
-	<li>Linux</li>
-	<li>Python</li>
-	<li>f7u12</li>
-	<li>Clojure</li>
-	<li>Ubuntu</li>
-</ul></p>
-
-<p>如果你还不了解什么是Reddit：Reddit是一个巨大的社会书签+论坛网站，他的频道叫做subreddit，每个频道有一个相应的主题，涵盖了从IT技术到新闻到生活的各个角落。</p>
-
-<p>这些数据是通过下面的Clojure程序获得（使用reddit.clj库），并通过jfreechart展现出来的。
-<script src="https://gist.github.com/1315572.js"> </script>
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/8/">&larr; Older</a>
@@ -682,11 +712,15 @@ gource上的wiki里，ffmpeg如果报错File for preset &#8216;slow&#8217; not f
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -695,10 +729,6 @@ gource上的wiki里，ffmpeg如果报错File for preset &#8216;slow&#8217; not f
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -765,7 +795,7 @@ gource上的wiki里，ffmpeg如果报错File for preset &#8216;slow&#8217; not f
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>

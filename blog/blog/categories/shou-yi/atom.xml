@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 手艺 | 车水马龙]]></title>
   <link href="http://sunng87.github.io/blog//blog/categories/shou-yi/atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-03-05T00:15:21+08:00</updated>
+  <updated>2014-04-20T16:48:46+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[OSM reporter]]></title>
+    <title type="html"><![CDATA[OSM Reporter]]></title>
     <link href="http://sunng87.github.io/blog//blog/2012/12/24/osm-reporter/"/>
     <updated>2012-12-24T00:00:00+08:00</updated>
     <id>http://sunng87.github.io/blog//blog/2012/12/24/osm-reporter</id>
@@ -213,7 +213,7 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Slacker performance enhanced]]></title>
+    <title type="html"><![CDATA[Slacker Performance Enhanced]]></title>
     <link href="http://sunng87.github.io/blog//blog/2012/04/02/slacker-performance-enhanced/"/>
     <updated>2012-04-02T00:00:00+08:00</updated>
     <id>http://sunng87.github.io/blog//blog/2012/04/02/slacker-performance-enhanced</id>

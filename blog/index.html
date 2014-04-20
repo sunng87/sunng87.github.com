@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as &hellip;">
+  <meta name="description" content="本文原载于2014年3月《程序员》杂志编程语言专题。 Rust 语言是近两年来 Mozilla 正在开发的一种新编程语言，它以并发，安全和实用为口号，主要使用场景是系统编程，用来取代C++语言的角色。有人戏称 Mozilla 由于大量使用 C++，深知其弊端，所以诞生了 Rust。目前，Rust &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -24,11 +24,11 @@
   <link href="/blog/atom.xml" rel="alternate" title="车水马龙" type="application/atom+xml">
   <script src="/blog/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
 
@@ -65,6 +65,192 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-20T16:31:54+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文原载于2014年3月《程序员》杂志编程语言专题。</p>
+
+<p>Rust 语言是近两年来 Mozilla 正在开发的一种新编程语言，它以并发，安全和实用为口号，主要使用场景是系统编程，用来取代C++语言的角色。有人戏称 Mozilla 由于大量使用 C++，深知其弊端，所以诞生了 Rust。目前，Rust 的两个主要产品是 Mozilla 下一代的浏览器布局引擎 Servo 和 Rust 编译器。由于语言在快速的开发和演进中，每个版本都会产生一些不兼容的变更，所以现在并非是学习这门语言细节并真正使用它的最佳时机。不过，这并不影响我们了解 Rust 语言：作为多年来鲜有的新系统编程语言，他本身有很多新颖之处，也可以帮助我们了解一些编程语言设计的流行趋势。</p>
+
+<h2>并发</h2>
+
+<p>和现在流行的很多新语言一样，Rust 在语言层面支持了绿色线程（Green threads）：Task。Task 作为并发执行的单元，是用户空间的“线程”，创建和调度成本较低，可以大量共存。Task之间通过消息传递通信，没有直接的共享数据。从最近的流行趋势来看，绿色线程几乎已经成为并发方案大战最终的赢家。除了Rust，之前流行的Go语言，Erlang，Python的Gevent，以及最近Clojure世界里正在发展的core.async，采用的都是这种绿色线程的模式。</p>
+
+<p>绿色线程的程序与传统多线程程序的写法几乎一致。在编写服务器程序时，与事件驱动的回调机制相比，编写更简单，表义更清晰。当并发任务增多时，传统的多线程程序由于启动线程和调度线程的成本高而使系统整体性能降低。而绿色线程可以基本不受限制，随意创建。Rust的文档指出在32位系统上可以支持数十万个Task同时存在。</p>
+
+<p>Task也是Rust程序的基础单元，一个Rust进程又多个并行的task组成，main函数本身也是一个Task。Task之间通过一个 (Port, Chan) 元组传递数据。Port和Chan相当于管道的两端，Port用于取数据，Chan用于发送数据。下面的例子里，我们通过do spawn语法（类似Ruby的block语法），启动一个新Task，并打印收到的数据。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">(){</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="n">Chan</span><span class="o">::</span><span class="n">new</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">chan</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">do</span> <span class="n">spawn</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">received_msg</span> <span class="o">=</span> <span class="n">port</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">received_msg</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>引用系统</h2>
+
+<p>Rust 语言设计的核心是安全性（这里安全性指safety，而非 security）。Rust 希望通过语言的机制和编译器的功能，把程序员易于犯错，不易检查的问题解决在编译期，避免运行时的Segmentation Fault。Rust 的设计可以说是处处小心。Clojure语言强调可变性给编程带来的复杂性，在 Rust 语言中，设计者对这点也有格外的重视。除非特别声明为 mut，所有 Rust 的局部变量默认都是不可变的，对不可变变量值的修改会导致 编译器直接报错。</p>
+
+<p>Rust 的安全性还通过独有的引用类型系统来实现。</p>
+
+<p>Rust 语言中堆内存块的引用类型叫做box。最新版本的Rust 在语言层面只保留了一种owned box，它在使用时具有一种所有权（ownership）的概念，只有具有所有权的变量才可以访问这段内存。Owned box在同一时刻只允许一个变量作为所有者，它的变量赋值称为move。一旦owned pointer被赋值，用户就无法通过原先的引用访问这块数据，这种错误会在编译时检查。
+一个简单的例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">a</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="o">~</span><span class="m">50</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">b</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>~ 代表owned box，这里我们把一个包含值为50的owned box赋给owned pointer a。然后把a的所有权通过赋值的形式move给b。最后我们试图通过 <code>*a</code> 访问这个值。在C语言里，这时a和b同时指向统一块内存，可以通过<code>*a</code>访问到这里的值。但Rust的所有权机制给予了这段内存额外的保护。编译这段程序将失败：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">4</span><span class="o">:</span><span class="m">23</span><span class="o">:</span> <span class="m">4</span><span class="o">:</span><span class="m">24</span> <span class="n">error</span><span class="o">:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="o">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span>
+</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">4</span>     <span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
+</span><span class='line'>                               <span class="o">^</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">3</span><span class="o">:</span><span class="m">9</span><span class="o">:</span> <span class="m">3</span><span class="o">:</span><span class="m">10</span> <span class="k">note</span><span class="o">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span> <span class="n">moved</span> <span class="n">here</span> <span class="n">because</span> <span class="n">it</span> <span class="n">has</span> <span class="k">type</span> <span class="err">`</span><span class="o">~</span><span class="k">int</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">is</span> <span class="n">moved</span> <span class="n">by</span> <span class="n">default</span> <span class="p">(</span><span class="k">use</span> <span class="err">`</span><span class="n">ref</span><span class="err">`</span> <span class="n">to</span> <span class="n">override</span><span class="p">)</span>
+</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">3</span>     <span class="k">let</span> <span class="n">b</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span><span class='line'>                 <span class="o">^</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译器会明确地指出错误的引用在何处被move。事实上所有owned box的生命周期管理都是直接在编译时完成的，编译器通过静态检查跟踪使用情况，完成内存开辟和回收。这是Rust 确保编程正确、安全的重要手段。</p>
+
+<p>新版本的Rust在标准库中提供 <code>std::rc::Rc</code>（引用计数） 和 <code>std::gc::Gc</code> （垃圾回收）类型，取代了原先的managed box，用来提供可以有限共享的引用类型。</p>
+
+<p>在 Task 间传递数据，如果要避免数据拷贝，也有专门的引用类型：用于不可变数据的<code>extra::arc::Arc</code> (atomically reference counted ，原子的引用计数类型) , 以及用于可变数据的 RWArc（带读写锁的原子引用计数类型） 。RWArc在操作可变数据时，通过内在的读写锁控制对共享数据的访问，从而在API层面实现安全性。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="n">extern</span> <span class="k">mod</span> <span class="n">extra</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">extra</span><span class="o">::</span><span class="n">arc</span><span class="o">::</span><span class="p">{</span><span class="n">RWArc</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="o">~</span><span class="s">&quot;hello world&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">arc_ref</span> <span class="o">=</span> <span class="n">RWArc</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="n">Chan</span><span class="o">::</span><span class="n">new</span><span class="p">();</span>
+</span><span class='line'>        <span class="n">chan</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">arc_ref</span><span class="p">.</span><span class="n">clone</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">do</span> <span class="n">spawn</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">let</span> <span class="n">arc_local_ref</span> <span class="o">=</span> <span class="n">port</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">arc_local_ref</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">str</span><span class="p">.</span><span class="n">push_char</span><span class="p">(</span><span class="sc">&#39;!&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">arc_local_ref</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">println</span><span class="p">(</span><span class="o">*</span><span class="n">str</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rust谨慎地定义如此繁多，各具功能的引用类型，就是希望用户在编程过程中，根据应用场景、引用的功能职责，选择合适的类型，进而在引用类型系统和编译器的保护下，减少在运行时出错的机会。这一点也和Clojure的4种引用类型的设计初衷类似，不过Clojure并不能提供太多编译时的安全保护。</p>
+
+<h2>更多</h2>
+
+<p>篇幅所限，我只选择了Rust最具特点的两个部分介绍。Rust是一门具备自身显著特点，精心设计的语言，而绝非普通的“又一门编程语言”。在语法层面，它包含了模式匹配，闭包，泛型等流行功能，作为系统编程语言，使用的舒适度不亚于脚本语言。另外还可以通过FFI（Foreign Function Interface）调用已有的C语言库，满足了实用性的需要。</p>
+
+<p>如果你也开始对这门新语言感兴趣，可以：</p>
+
+<ul>
+<li>通过<a href="http://static.rust-lang.org/doc/master/tutorial.html">它的文档</a>学习最新版本的语法和细节</li>
+<li>加入<a href="https://mail.mozilla.org/listinfo/rust-dev">rust-dev邮件列表</a>了解开发者的讨论</li>
+<li>关注<a href="https://github.com/mozilla/rust">Rust项目代码仓库</a></li>
+<li>关注<a href="https://delicious.com/tag/rust">Delicious</a> 和 <a href="http://www.reddit.com/r/rust">Reddit</a> 上流行的 rust 链接</li>
+<li>关注<a href="http://cmr.github.io/">The week in Rust</a>，介绍每周 Rust 语言正在发生的变化</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -146,7 +332,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a></h1>
+      <h1 class="entry-title"><a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a></h1>
     
     
       <p class="meta">
@@ -320,7 +506,7 @@
   
 
 
-<time datetime="2013-07-05T00:00:00+08:00" pubdate data-updated="true">Jul 5<span>th</span>, 2013</time>
+<time datetime="2013-07-05T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -414,7 +600,7 @@
   
 
 
-<time datetime="2013-06-29T00:00:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
+<time datetime="2013-06-29T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -464,7 +650,7 @@
   
 
 
-<time datetime="2013-06-07T00:00:00+08:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-07T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -504,7 +690,7 @@
   
 
 
-<time datetime="2013-04-24T00:00:00+08:00" pubdate data-updated="true">Apr 24<span>th</span>, 2013</time>
+<time datetime="2013-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -620,7 +806,7 @@ And also find the project is <a href="https://github.com/sunng87/ring-jetty9-ada
   
 
 
-<time datetime="2013-04-12T00:00:00+08:00" pubdate data-updated="true">Apr 12<span>th</span>, 2013</time>
+<time datetime="2013-04-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -634,50 +820,6 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
 <p>Available on clojars [hbs &#8220;0.4.1&#8221;], code and docs on <a href="https://github.com/readwise/hbs" target="_blank">github</a>. We have been using hbs on <a href="http://readwise.net" target="_blank">readwise.net</a> for a long time.</p>
 
 <p></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/02/23/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BC%80%E5%85%B3/">第一个开关</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T00:00:00+08:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://i.imgur.com/3S4WPUG.jpg" alt="" /></p>
-
-<p>过年回家路上无聊看了一些关于电子制作的书，知道了 Android 上的开发板 IOIO。另外认识了 Arduino 的程序，感觉要比想象中还要简单。本来担心还要学一门新的语言，看了之后发现完全是多虑。</p>
-
-<p>在淘宝上找 IOIO 的时候正好发现了<a href="http://item.taobao.com/item.htm?id=13115078082">一整套元件</a>。买回来以后看看可能价格是贵了，但是对我这样的新手来说，省去了自己找元件的麻烦。因为找元件实在是很容易让人退缩。</p>
-
-<p>点亮 Arduino 基本上没什么问题。但是在 Archlinux 上访问 serial port 需要一些配置。首先要把用户加入 uucp 组确保可以访问 /dev/tty* 的设备。其次，需要给当前用户访问 /run/lock 的权限，否则 Arduino IDE 还是无法访问到 Arduino，这点在 Archlinux 的 Wiki 上有提及。</p>
-
-<p>我这个开关电路太简单了就不详细说了，参考书是一本 Getting started with Arduino。据说这本书出第二版了，第一版上 Arduino 的版本不是 Uno，所以图片有一些出入，不过接口都没有变化。这第一个二极管开关的电路还是挺有成就感的，晚上我就可以让台灯什么的都退了休吧。</p>
 </div>
   
   
@@ -700,11 +842,15 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
       <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 梧桐更换硬盘</a>
+        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
       <li class="post">
@@ -713,10 +859,6 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
     
       <li class="post">
         <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
       </li>
     
   </ul>
@@ -783,7 +925,7 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
