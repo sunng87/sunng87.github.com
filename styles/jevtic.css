@@ -55,7 +55,6 @@ ul.links li {
     display: inline-block;
     font-size:0.8em;
     padding-right:8px;
-    border-right:1px #FFF solid;
 }
 ul.links li:last-child {
     border:0;
