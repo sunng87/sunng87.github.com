@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="本文原载于2014年3月《程序员》杂志编程语言专题。 Rust 语言是近两年来 Mozilla 正在开发的一种新编程语言，它以并发，安全和实用为口号，主要使用场景是系统编程，用来取代C++语言的角色。有人戏称 Mozilla 由于大量使用 C++，深知其弊端，所以诞生了 Rust。目前，Rust &hellip;">
+  <meta name="description" content="According to wikipedia, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-20T17:21:44+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&rsquo;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
+
+<p>The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don&rsquo;t have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it&rsquo;s a fixed thread pool with <em>(processors * 4) + 42</em> threads. That&rsquo;s much flexible and efficient.</p>
+
+<p>Papaline takes advantages of this feature. The base concept in papaline is <strong>stage</strong> and <strong>pipeline</strong>. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels.</p>
+
+<p>When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage&rsquo;s inbound channel. The user-visible behavior is much like <code>comp</code>, but in concurrent.</p>
+
+<p>Also core.async offers different type of channel buffers: fixed <code>buffer</code>, <code>sliding-buffer</code> and <code>dropping-buffer</code>. They are channels equivalent to j.u.c thread pool&rsquo;s <code>RejectedExecutionHandler</code>.</p>
+
+<p>We have already deployed papaline in our asynchronous system and it works great by far. Find the project on <a href="https://github.com/sunng87/papaline">github</a> if you are interested in.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -785,48 +831,6 @@ And also find the project is <a href="https://github.com/sunng87/ring-jetty9-ada
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-12T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The ONLY real-world modern clojure templating system. <br />
-I just can&#8217;t believe that the clojure world doesn&#8217;t build web application with server-side template.<br />
-hiccup and enlive are neither **real-world**. So people tends to use single page architecture for a clojure backend. That&#8217;s PAINFUL.</p>
-
-<p>Available on clojars [hbs &#8220;0.4.1&#8221;], code and docs on <a href="https://github.com/readwise/hbs" target="_blank">github</a>. We have been using hbs on <a href="http://readwise.net" target="_blank">readwise.net</a> for a long time.</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -838,8 +842,16 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -855,10 +867,6 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

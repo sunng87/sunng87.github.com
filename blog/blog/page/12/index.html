@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="HeatCanvas的百度地图扩展 感谢@lbt05姐的无私贡献，现在HeatCanvas又增加了百度地图API支持。你可以在你的百度地图中使用heat map了。详情可以参考@lbt05姐撰写的文档，而这里是一个简单的live demo。此外，@ &hellip;">
+  <meta name="description" content="每天上下班要花掉两个多小时，这一路只好浏览一些新闻、reddit以及HN。reddit的app相对来说不算多，找了一圈倒是在market里没找到的reddit-is-fun最好用，功能最全。HN的app最近添加的一个小功能非常实用，通过viewtext.org打开链接。使用这个服务， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/15/checkout-my-forked-version-of-reddit-is-fun/">Checkout My Forked Version of Reddit-is-fun</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>每天上下班要花掉两个多小时，这一路只好浏览一些新闻、reddit以及HN。reddit的app相对来说不算多，找了一圈倒是在market里没找到的reddit-is-fun最好用，功能最全。HN的app最近添加的一个小功能非常实用，通过viewtext.org打开链接。使用这个服务，可以提取出页面的正文部分，既减少了流量又提高了阅读体验。于是我想到给reddit-is-fun添加这个功能。reddit-is-fun是个GPLv3的软件，程序本身就在github上，对Android一无所知的我花了两个小时完成了这个功能。感谢IDEA，感谢IDEA的Android插件。</p>
+
+<p>给作者发了<a href="https://github.com/talklittle/reddit-is-fun/pull/149">pull request</a>，不过作者最近似乎没有什么实质性的动作。不等他了，今天先把包含这个功能的fork放出来，大家如果感兴趣可以下载安装。这个fork的版本为1.1.4-sunng0，应该不会影响未来升级的吧（我猜啊）。</p>
+
+<p>可以通过这个码下载：
+<img src="https://chart.googleapis.com/chart?cht=qr&amp;chs=300x300&amp;chl=https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk" alt="https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk" /></p>
+
+<p>链接地址：
+<a href="https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk">https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9d42ee6d-b2e5-8b52-a96c-e6e2dcd87c53" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -633,75 +677,6 @@ heatmap.render();<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/05/09/%E5%AE%89%E8%A3%85exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6%E5%8F%8Agnome-shell%E6%89%A9%E5%B1%95/">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。</p>
-
-<p><h3>下载</h3>
-从github上下载相应的版本：
-<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/0.0.10-dbus</pre>
-<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension/zipball/0.0.1</pre>
-<pre>$ ls
-sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip
-sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
-</pre></p>
-
-<p><h3>解压安装</h3>
-如果你已经安装过exaile豆瓣电台插件，可以先删除旧版本：
-<pre>$ rm -rf ~/.local/share/exaile/plugins/doubanfm</pre></p>
-
-<p>解压缩下载的文件：
-<pre>$ unzip sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
-$ unzip sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip</pre></p>
-
-<p>移动到指定的目录：
-<pre>$ mv sunng87-exaile-doubanfm-plugin-90f7175/ ~/.local/share/exaile/plugins/doubanfm
-$ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome-shell/extensions/exaile-doubanfm-gnome-shell-extension</pre></p>
-
-<p><h3>配置</h3>
-启动Exaile，通过菜单“编辑-&gt;首选项-&gt;插件”，激活doubanfm，<b>禁用lastfm covers</b>。如图设置插件：
-<img src="http://i.imgur.com/TFKU3.png" title="Hosted by imgur.com" /></p>
-
-<p>重启GNOME-Shell，按下alt+f2，输入r，回车。</p>
-
-<p><h3>使用</h3>
-启动exaile，可以通过文件菜单打开豆瓣电台频道。可以通过ctrl+d或者视图菜单切换到豆瓣电台视图：
-<img src="http://i.imgur.com/1vPpz.png" title="Hosted by imgur.com" /></p>
-
-<p>当然也可以通过gnome-shell扩展的菜单控制豆瓣电台的播放。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=ef5913a1-4c72-827d-837e-15abc25dcc92" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -715,8 +690,16 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -732,10 +715,6 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

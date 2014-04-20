@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Jetty7.0上周发布了，这是jetty迁进eclipse社区之后的第一个正式版本。但是下载之后发现这个版本居然没有jsp支持。原来，jetty的jsp实现一直使用的是glassfish的实现，嵌入eclipse社区之后，这变成了一个问题。功能完全的版本（hightide） &hellip;">
+  <meta name="description" content="今天又讨论了一种验证码服务的机制，这种机制相对前两天说的简化的验证码生成的部分，由两步生成变成了一步生成，当然由于生成图片的接口直接暴露给用户，存在被刷的可能。 用户浏览器向应用服务器请求包含验证码的页面； 应用服务器将包含验证码地址的网页发送给用户浏览器； &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/15/%E5%8F%A6%E4%B8%80%E7%A7%8D%E9%AA%8C%E8%AF%81%E7%A0%81%E6%96%B9%E5%BC%8F/">另一种验证码方式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天又讨论了一种验证码服务的机制，这种机制相对前两天说的简化的验证码生成的部分，由两步生成变成了一步生成，当然由于生成图片的接口直接暴露给用户，存在被刷的可能。</p>
+
+<p><img class="alignnone" src="http://farm4.static.flickr.com/3499/4013396855_6c5a02b7c7.jpg" alt="" width="500" height="310" />
+<ol>
+	<li>用户浏览器向应用服务器请求包含验证码的页面；</li>
+	<li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
+	<li>用户浏览器通过img的src中的固定链接向验证码服务器请求验证码图片；</li>
+	<li>验证码服务器输出验证码图片流到用户浏览器，将sessionid写入cookie；</li>
+	<li>用户判读验证码图片，提交表单；</li>
+	<li>应用服务器取出cookie中的sessionid和用户输入发往验证码服务器；</li>
+	<li>验证码服务器进行验证，返回通过或拒绝；</li>
+	<li>应用服务器根据验证码服务器结果进行响应。</li>
+</ol>
+优点：<br />
+固定链接，简化了接入，便于接入静态页面；</p>
+
+<p>缺点：<br />
+写cookie受到域的限制，只能在相同的域中使用该服务；<br />
+验证码接口暴露给用户，可能被穷举</p>
+
+<p>百度和腾讯使用的都是这种方式。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -534,65 +590,6 @@ import org.hibernatespatial.GeometryUserType</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/05/reading-gps-data-from-exif-using-groovy/">Reading GPS Data From EXIF Using Groovy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>废话不说了，直接上code吧：</p>
-
-<p><pre class="brush:groovy">
-import com.drew.imaging.jpeg.*;
-import com.drew.metadata.*;
-import com.drew.metadata.exif.*;</pre></p>
-
-<p>file = new File(&#8220;sample.jpg&#8221;);<br />
-meta = JpegMetadataReader.readMetadata(file);</p>
-
-<p>gpsdir = meta.getDirectory(GpsDirectory.class);<br />
-lat = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LATITUDE);<br />
-lon = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LONGITUDE);<br />
-lats = lat[0].doubleValue() + lat[1].doubleValue()/60 + lat[2].doubleValue()/3600;<br />
-lons = lon[0].doubleValue() + lon[1].doubleValue()/60 + lon[2].doubleValue()/3600;<br />
-println(lats);<br />
-println(lons);
-</p>
-
-<p>metadata-extractor似乎是现在惟一的读取exif信息的java库。在ivy中可以添加这样一个依赖：</p>
-
-<p><pre class="brush:xml">
-&lt;dependency org=&quot;com.drewnoakes&quot; name=&quot;metadata-extractor&quot; rev=&quot;2.4.0-beta-1&quot; conf=&quot;runtime&quot;/&gt;
-</pre></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
@@ -606,8 +603,16 @@ println(lons);
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -623,10 +628,6 @@ println(lons);
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

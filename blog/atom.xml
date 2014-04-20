@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-04-20T17:11:03+08:00</updated>
+  <updated>2014-04-20T19:46:58+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Papaline: Concurrent Pipeline With core.async]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
+    <updated>2014-04-20T17:21:44+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/04/20/concurrent-pipeline-with-core-async</id>
+    <content type="html"><![CDATA[<p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&rsquo;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
+
+<p>The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don&rsquo;t have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it&rsquo;s a fixed thread pool with <em>(processors * 4) + 42</em> threads. That&rsquo;s much flexible and efficient.</p>
+
+<p>Papaline takes advantages of this feature. The base concept in papaline is <strong>stage</strong> and <strong>pipeline</strong>. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels.</p>
+
+<p>When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage&rsquo;s inbound channel. The user-visible behavior is much like <code>comp</code>, but in concurrent.</p>
+
+<p>Also core.async offers different type of channel buffers: fixed <code>buffer</code>, <code>sliding-buffer</code> and <code>dropping-buffer</code>. They are channels equivalent to j.u.c thread pool&rsquo;s <code>RejectedExecutionHandler</code>.</p>
+
+<p>We have already deployed papaline in our asynchronous system and it works great by far. Find the project on <a href="https://github.com/sunng87/papaline">github</a> if you are interested in.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rust语言：安全的并发]]></title>
@@ -705,34 +724,6 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
 Adding -var-missing is just an attempt to implement lazy loading of vars. And it provides another smooth syntax for writing DSLs. But actually, Clojure&#8217;s macro system provides a great metaprogramming mechanism. So in most case, you don&#8217;t have to hack into the Compiler like this. Just put your DSL into a top level macro, and you can get them done all in clojure scripts. </p>
 
 <p></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[New Shake Syntax]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/09/23/new-shake-syntax/"/>
-    <updated>2012-09-23T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/09/23/new-shake-syntax</id>
-    <content type="html"><![CDATA[<p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p>
-
-<p>Using vars, local bindings in shake macros:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(require &#8216;[shake.core :as sh])</p>
-
-<p>(let [x &#8220;/home/nsun&#8221;]<br />
-  (sh/ls -l $x))<br />
-[/cc]</p>
-
-<p>So you have to prefix the clojure variable with a dollar sign. This is quite similar to what we did in shell programming.</p>
-
-<p>And more interesting, you can also use a $ prefixed clojure form in shake:</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(sh/curl $(format &#8220;https://github.com/%s&#8221; &#8220;sunng87&#8221;))<br />
-[/cc]</p>
-
-<p>Thanks to Clojure macro system, it has great flexibility to manipulate symbols and code lists, making inventing new syntax much easier than other languages. Shake can be a great example in describing macro system.
-</p>
 ]]></content>
   </entry>
   

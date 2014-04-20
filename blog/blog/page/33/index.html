@@ -9,8 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="续昨，好吧，这个无聊的国庆假期就献给karmic了。gnome-shell已经可以在软件仓库里找到了，apt-get安装即可。要使用gnome-shell可以执行
-gnome-shell &#8211;replace 要把gnome-shell作为默认的窗口管理器，打开gnome的配置编辑器，找到 &hellip;">
+  <meta name="description" content="废话不说了，直接上code吧： import com.drew.imaging.jpeg.*;
+import com.drew.metadata.*;
+import com.drew.metadata.exif.*; file = new File(&#8220;sample.jpg&#8221 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,65 @@ gnome-shell &#8211;replace 要把gnome-shell作为默认的窗口管理器，打
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/05/reading-gps-data-from-exif-using-groovy/">Reading GPS Data From EXIF Using Groovy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>废话不说了，直接上code吧：</p>
+
+<p><pre class="brush:groovy">
+import com.drew.imaging.jpeg.*;
+import com.drew.metadata.*;
+import com.drew.metadata.exif.*;</pre></p>
+
+<p>file = new File(&#8220;sample.jpg&#8221;);<br />
+meta = JpegMetadataReader.readMetadata(file);</p>
+
+<p>gpsdir = meta.getDirectory(GpsDirectory.class);<br />
+lat = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LATITUDE);<br />
+lon = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LONGITUDE);<br />
+lats = lat[0].doubleValue() + lat[1].doubleValue()/60 + lat[2].doubleValue()/3600;<br />
+lons = lon[0].doubleValue() + lon[1].doubleValue()/60 + lon[2].doubleValue()/3600;<br />
+println(lats);<br />
+println(lons);
+</p>
+
+<p>metadata-extractor似乎是现在惟一的读取exif信息的java库。在ivy中可以添加这样一个依赖：</p>
+
+<p><pre class="brush:xml">
+&lt;dependency org=&quot;com.drewnoakes&quot; name=&quot;metadata-extractor&quot; rev=&quot;2.4.0-beta-1&quot; conf=&quot;runtime&quot;/&gt;
+</pre></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -581,62 +641,6 @@ from datetime import date, timedelta</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/20/%E7%83%A7%E9%A5%AD%E5%86%8D/">烧饭再</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://blog.samsonis.me/2009/09/update-20/" target="_blank">看了烧饭1，就想看烧饭2</a>.可是我思前想后，烧饭2这个标题总有那么一点不太对劲（大家自己体会），于是还是叫烧饭再吧。</p>
-
-<p>今天介绍酱爆鸡丁，娘的，在北京的夏天吃这个吃得都快吐了，时隔一年本人亲自操刀上阵，不为别的，只为再吐一次。</p>
-
-<p>用料：鸡胸肉一块，黄瓜一根，甜面酱，葱，料酒，酱油，盐，味精，淀粉，糖，自来水，菜刀，案板，锅，电磁炉，油烟机，自行车。。。</p>
-
-<p>主要步骤如下：
-<ol>
-	<li>鸡肉化冻，黄瓜大葱洗干净；</li>
-	<li>鸡肉切丁，大小以大块熟了小块还没有糊为宜，放碗里加淀粉、盐，抓之；</li>
-	<li>黄瓜切丁，大小自便，装盘；</li>
-	<li>葱切段，葱的用量大约根据以下公式计算： 葱用量=家里储备葱的总长度/未来可预计的几天內做菜总次数；</li>
-	<li>小碗装酱油、料酒、味精、水淀粉、糖搅和成汁备用；</li>
-	<li>开火倒油加热冒烟，把1/3葱和鸡丁扔进锅里，炒到洁白的鸡丁如嚼过的口香糖一般出锅；</li>
-	<li>锅里留一些油，油少了可以再加一些，待油热，放两勺甜面酱（这里用的是李锦记的沪式甜酱，这个味道比较符合本人年幼时候对甜面酱的最初记忆），把剩下的葱一起扔锅里炒到寂寞为止；</li>
-	<li>加黄瓜丁，盐，炒，加鸡丁，炒，加第5步准备的汁，炒；</li>
-	<li>等到粘稠之后即可出锅，如果没有粘稠也见好就收吧；</li>
-	<li>#</li>
-</ol>
-有图不一定是真相：
-<img class="alignnone" title="-" src="http://pic.yupoo.com/classicning/484888192078/medium.jpg" alt="" width="500" height="336" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -650,8 +654,16 @@ from datetime import date, timedelta</pre></p>
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -667,10 +679,6 @@ from datetime import date, timedelta</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

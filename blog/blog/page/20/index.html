@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Hudson的项目有三种状态，分别是failed, Success, Unstable。当单元测试未能通过时，Hudson不会fail掉整个build而是设置为ubstable，并且继续执行post build scripts和actions。这就为集成的版本带来了一些不可知因素。取消这个设置， &hellip;">
+  <meta name="description" content=" Get artificial301 at:
+http://github.com/sunng87/Artificial301/downloads The post is brought to you by lekhonee v0.7
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/09/16/artificial301/">Artificial301</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/4995443949/" title="screenshot_002 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4130/4995443949_fd2f7b8fa4_z.jpg" width="640" height="441" alt="screenshot_002" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4995474823/" title="screenshot_003 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4107/4995474823_d0cee8e91c.jpg" width="394" height="228" alt="screenshot_003" /></a></p>
+
+<p>Get artificial301 at:
+<a href="http://github.com/sunng87/Artificial301/downloads">http://github.com/sunng87/Artificial301/downloads</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -729,257 +774,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/08/23/bason-a-bson-serialization-code-generator/">Bason: A BSON Serialization Code Generator</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Bason is a code generator for object to bson serialization and deserialization. Different from tranditional reflection way, bason uses an annotation processor to generate serialization manager at compile time. You just add Bason as compilation dependency and drop it in the runtime.</p>
-
-<p>To use Bason, you simply add annotation to JavaBeans:<br />
-[cc lang=&#8221;java&#8221;]<br />
-/**<br />
- *<br />
- */<br />
-package info.sunng.bason.example;</p>
-
-<p>import java.util.Date;</p>
-
-<p>import info.sunng.bason.annotations.BsonAlias;<br />
-import info.sunng.bason.annotations.BsonDocument;<br />
-import info.sunng.bason.annotations.BsonIgnore;</p>
-
-<p>/**<br />
- * @author SunNing<br />
- *<br />
- * @since Aug 18, 2010<br />
- */<br />
-@BsonDocument<br />
-public class Passenger {</p>
-
-<p>	private double packageWeight;</p>
-
-<p>	private long ticketId;</p>
-
-<p>	private String name;</p>
-
-<p>	private Date createdDate;</p>
-
-<p>	private Flight flight;</p>
-
-<p>	/**<br />
-	 * @return the packageWeight<br />
-	 */<br />
-	@BsonIgnore<br />
-	public double getPackageWeight() {<br />
-		return packageWeight;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @param packageWeight the packageWeight to set<br />
-	 */<br />
-	public void setPackageWeight(double packageWeight) {<br />
-		this.packageWeight = packageWeight;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @return the ticketId<br />
-	 */<br />
-	@BsonAlias(&#8220;ticket&#8221;)<br />
-	public long getTicketId() {<br />
-		return ticketId;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @param ticketId the ticketId to set<br />
-	 */<br />
-	public void setTicketId(long ticketId) {<br />
-		this.ticketId = ticketId;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @return the name<br />
-	 */<br />
-	public String getName() {<br />
-		return name;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @param name the name to set<br />
-	 */<br />
-	public void setName(String name) {<br />
-		this.name = name;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @param createdDate the createdDate to set<br />
-	 */<br />
-	public void setCreatedDate(Date createdDate) {<br />
-		this.createdDate = createdDate;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @return the createdDate<br />
-	 */<br />
-	public Date getCreatedDate() {<br />
-		return createdDate;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @param flight the flight to set<br />
-	 */<br />
-	public void setFlight(Flight flight) {<br />
-		this.flight = flight;<br />
-	}</p>
-
-<p>	/**<br />
-	 * @return the flight<br />
-	 */<br />
-	public Flight getFlight() {<br />
-		return flight;<br />
-	}</p>
-
-<p>}</p>
-
-<p>[/cc]
-<ul>
-<li>@BsonDocument marks this bean to be processed by bason processor. Serialization and deserialization support for this bean will be added to the manager. The bean must follow the Java Bean specification that has a getter and a setter for each property.</li>
-<li>@BsonAlias on the getter allows user the specify a name for bson document instead of the default java bean property name.</li>
-<li>@BsonIgnore on the getter marks a property to be transient when serialization and deserialization.</li>
-</ul></p>
-
-<p>Then you need a <i>bason.properties</i> at the root of classpath which looks like<br />
-[cc lang=&#8221;properties&#8221;]<br />
-bason.managerClassName=info.sunng.bason.BasonManager<br />
-[/cc]<br />
-You specify the manager class name here. This name can not be duplicated if you use Bason in multiple modules.</p>
-
-<p>Take maven configuration as an example:<br />
-[cc lang=&#8221;xml&#8221;]<br />
-	<dependencies>
-		<dependency>
-			<groupid>info.sunng.bason</groupid>
-			<artifactid>bason-annotation</artifactid>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupid>info.sunng.bason</groupid>
-			<artifactid>bason-internal</artifactid>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupid>org.mongodb</groupid>
-			<artifactid>mongo-java-driver</artifactid>
-		</dependency>
-	</dependencies></p>
-
-<p>	<build>
-		<finalname>${project.artifactId}</finalname></build></p>
-
-<p>		<plugins>
-			<plugin>
-				<groupid>org.apache.maven.plugins</groupid>
-				<artifactid>maven-compiler-plugin</artifactid></plugin></plugins></p>
-
-<p>				<configuration>
-					<source>1.6</source>
-					<target>1.6</target></configuration></p>
-
-<p>					<compilerarguments>
-						<processor>info.sunng.bason.internal.BasonProcessor</processor>
-					</compilerarguments>
-				
-			
-		
-	
-[/cc]</p>
-
-<p> when everything is ready, run <i>mvn compile</i> to generate the manager source file. By default, in a standard maven project, the generated file will be placed at:
-<i>/bason-example/target/generated-sources/annotations/</i>
-[cc lang=&#8221;java&#8221;]<br />
-package info.sunng.bason;<br />
-import org.bson.*;<br />
-import javax.annotation.Generated;<br />
-@Generated({&#8220;info.sunng.bason.BasonManager&#8221;})<br />
-public final class BasonManager{<br />
-    public static final BSONObject toBson(info.sunng.bason.example.Passenger o){<br />
-        if (o == null) {<br />
-            throw new NullPointerException();<br />
-        }<br />
-        BSONObject bson = new BasicBSONObject();<br />
-        bson.put(&#8220;ticket&#8221;,o.getTicketId());<br />
-        bson.put(&#8220;name&#8221;,o.getName());<br />
-        bson.put(&#8220;createdDate&#8221;,o.getCreatedDate());<br />
-        bson.put(&#8220;flight&#8221;,toBson(o.getFlight()));<br />
-        return bson;<br />
-    }<br />
-    public static final info.sunng.bason.example.Passenger fromBson(info.sunng.bason.example.Passenger o, BSONObject bson){<br />
-        if (o == null || bson == null) {<br />
-            throw new NullPointerException();<br />
-        }<br />
-        o.setTicketId((java.lang.Long)bson.get(&#8220;ticket&#8221;));<br />
-        o.setName((java.lang.String)bson.get(&#8220;name&#8221;));<br />
-        o.setCreatedDate((java.util.Date)bson.get(&#8220;createdDate&#8221;));<br />
-        o.setFlight(fromBson(new info.sunng.bason.example.Flight(), (BSONObject)bson.get(&#8220;flight&#8221;)));<br />
-        return o;<br />
-    }<br />
-    public static final BSONObject toBson(info.sunng.bason.example.Flight o){<br />
-        if (o == null) {<br />
-            throw new NullPointerException();<br />
-        }<br />
-        BSONObject bson = new BasicBSONObject();<br />
-        bson.put(&#8220;company&#8221;,o.getCompany());<br />
-        bson.put(&#8220;flightId&#8221;,o.getFlightId());<br />
-        return bson;<br />
-    }<br />
-    public static final info.sunng.bason.example.Flight fromBson(info.sunng.bason.example.Flight o, BSONObject bson){<br />
-        if (o == null || bson == null) {<br />
-            throw new NullPointerException();<br />
-        }<br />
-        o.setCompany((java.lang.String)bson.get(&#8220;company&#8221;));<br />
-        o.setFlightId((java.lang.String)bson.get(&#8220;flightId&#8221;));<br />
-        return o;<br />
-    }<br />
-}</p>
-
-<p>[/cc]</p>
-
-<p>The project is hosted at
-<a href="http://github.com/sunng87/bason">http://github.com/sunng87/bason</a></p>
-
-<p>If you have any ideas, just let me know.</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -993,8 +787,16 @@ public final class BasonManager{<br />
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -1010,10 +812,6 @@ public final class BasonManager{<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

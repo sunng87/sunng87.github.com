@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="我都不好意思跟人说我去了上海，因为我很快就要窝在张江这么个村不村镇不镇的地方了。也说不清是好是坏，远离闹市中心倒是求得清静；但是真住在陌生城市最边缘的地方心里倒是一阵失落，还要花着血汗钱养活黑心的房东，我这是干什么来了。以上是例行的牢骚，我也无力阻止它的生成。好在有像WG和Samson这样的好友， &hellip;">
+  <meta name="description" content="I caught chroot first time when attempting to install gentoo linux. Of course, its a tool of great useful. Two months ago I had my laptop crashed, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/10/db-dump-with-chroot/">DB Dump With Chroot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I caught chroot first time when attempting to install gentoo linux. Of course, its a tool of great useful. Two months ago I had my laptop crashed, and all static files were recovery easily by copy while raw db data file seems to be difficult to handle.</p>
+
+<p>The old file system is in a mobile disk, mounted at /media/disk-1/. Now I try to use chroot to rollback to that environment, so that all standard dump tools will be available.</p>
+
+<p>Before you chroot to the system, don&#8217;t forget to bind /dev to new location. Or you might get error prompt such as &#8220;/dev/null Permission Denied&#8221; (it&#8217;s a common error). Just execute command below:
+<em>$ sudo mount &#8211;bind /dev /media/disk-1/dev</em></p>
+
+<p>Then change root to my old system:
+<em>$ sudo chroot /media/disk-1</em></p>
+
+<p>Now you become root user automatically.
+<h3>MySQL Dump</h3>
+In a standard ubuntu mysql installation, we should launch mysql db from init.d by:
+<em># /etc/init.d/mysql start</em></p>
+
+<p>But it&#8217;s no longer available in such environment. Fortunately, there is a direct way:
+<em># mysqld_safe &amp;</em></p>
+
+<p>OK, go on to dump database with mysqldump:
+<em># mysqldump &#8211;all-databases &gt; mysql_dump_file</em>
+<h3>Postgresql Dump</h3>
+We cannot use init.d to start pgsql either. Therefore, try to run it by:
+<em># su postgres -c &#8220;/usr/lib/postgresql/8.3/bin/pg_ctl start -D /etc/postgresql/8.3/main&#8221;</em></p>
+
+<p><em>/etc/postgresql/8.3/main</em> is the default data directory in standard installation(with apt-get). This directory is supposed to contain a file named with &#8220;postgesql.conf&#8221;</p>
+
+<p>Now pgsql db is also running. As root user we have no privilege to run pgsql utilities. so take following steps:
+<em># touch pgsql_dump_file<br />
+# chmod a+w pgsql_dump_file<br />
+# su postgres -c &#8220;pg_dumpall -f pgsql_dump_file&#8221;</em>
+<h3>Conclusion</h3>
+Personally, I found it&#8217;s too complex and low efficiency to backup and restore data with mysql and postgresql. If there is no critical requirement(just like personal data management), file based db(Surely I mean sqlite) is no doubt better choice. Easy management(lots of gui tool now provided), smooth copy and move, standard db interface for programming, and enough functionality.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -452,50 +519,6 @@ gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=li
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/05/08/lily-studio-new-official-site/">Lily Studio New Official Site</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-08T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>江山带有人才出啊，自从看到<a href="http://remember.yo2.cn/" target="_parent">Remember2015</a>和<a href="http://www.lightory.net/" target="_parent">Lightory</a>这么伟岸的人才们之后，我都不敢想像后面的人再出来以后我上哪蹲着去了。</p>
-
-<p>隆重推出工作室的全新官网：
-<a href="http://www.lilystudio.org">http://www.lilystudio.org/</a>
-如果没有搞错的话，美工Remember2015，编辑Lightory，这个组合太强大了，嗯。</p>
-
-<p>Any feedback? Try http://www.lilystudio.org/bbs/</p>
-
-<p>最后引用何勇的一句名言：感谢大家的工作！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/37/">&larr; Older</a>
@@ -509,8 +532,16 @@ gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=li
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -526,10 +557,6 @@ gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=li
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

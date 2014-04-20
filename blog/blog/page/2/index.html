@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="过年回家路上无聊看了一些关于电子制作的书，知道了 Android 上的开发板 IOIO。另外认识了 Arduino 的程序，感觉要比想象中还要简单。本来担心还要学一门新的语言，看了之后发现完全是多虑。 在淘宝上找 IOIO 的时候正好发现了一整套元件。买回来以后看看可能价格是贵了， &hellip;">
+  <meta name="description" content="The ONLY real-world modern clojure templating system. I just can&#8217;t believe that the clojure world doesn&#8217;t build web application with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The ONLY real-world modern clojure templating system. <br />
+I just can&#8217;t believe that the clojure world doesn&#8217;t build web application with server-side template.<br />
+hiccup and enlive are neither **real-world**. So people tends to use single page architecture for a clojure backend. That&#8217;s PAINFUL.</p>
+
+<p>Available on clojars [hbs &#8220;0.4.1&#8221;], code and docs on <a href="https://github.com/readwise/hbs" target="_blank">github</a>. We have been using hbs on <a href="http://readwise.net" target="_blank">readwise.net</a> for a long time.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -513,61 +555,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/09/23/new-shake-syntax/">New Shake Syntax</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p>
-
-<p>Using vars, local bindings in shake macros:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(require &#8216;[shake.core :as sh])</p>
-
-<p>(let [x &#8220;/home/nsun&#8221;]<br />
-  (sh/ls -l $x))<br />
-[/cc]</p>
-
-<p>So you have to prefix the clojure variable with a dollar sign. This is quite similar to what we did in shell programming.</p>
-
-<p>And more interesting, you can also use a $ prefixed clojure form in shake:</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(sh/curl $(format &#8220;https://github.com/%s&#8221; &#8220;sunng87&#8221;))<br />
-[/cc]</p>
-
-<p>Thanks to Clojure macro system, it has great flexibility to manipulate symbols and code lists, making inventing new syntax much easier than other languages. Shake can be a great example in describing macro system.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/3/">&larr; Older</a>
@@ -581,8 +568,16 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -598,10 +593,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

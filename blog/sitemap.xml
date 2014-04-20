@@ -1887,12 +1887,18 @@
         <lastmod>2014-04-20T16:47:15+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://sunng87.github.io/blog//blog/2014/04/20/concurrent-pipeline-with-core-async/
+        </loc>
+        <lastmod>2014-04-20T19:42:25+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://sunng87.github.io/blog//</loc>
-        <lastmod>2014-04-20T16:47:15+08:00</lastmod>
+        <lastmod>2014-04-20T19:42:25+08:00</lastmod>
     </url>
     <url>
         <loc>http://sunng87.github.io/blog//blog/archives/</loc>
-        <lastmod>2014-04-20T16:47:15+08:00</lastmod>
+        <lastmod>2014-04-20T19:42:25+08:00</lastmod>
     </url>
     <url>
         <loc>http://sunng87.github.io/blog//robots.txt</loc>

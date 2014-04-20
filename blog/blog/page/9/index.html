@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这居然是我第一次踏上浙江的土地。 浙江西塘，是个人很多车也很多的地方，油炸臭豆腐烤肉串更多的地方。 浙江乌镇是一个人更多车更多，但是没有油炸臭豆腐烤肉串而只有红烧羊肉的地方。 回程的路上很多游客反映，乌镇没有西塘好玩。我想还是油炸臭豆腐符合大家的口味，羊肉不是所有人都吃得惯的。 ">
+  <meta name="description" content="简单介绍一下通过GPS采集道路数据并上传到OpenStreetMap的流程。 采集
+首先你需要一个GPS数据记录器，或者叫做GPS Logger。这类产品在淘宝上可以找到很多，台湾的长天(HOLUX)是相对价廉物美的品牌。我的设备是HOLUX m1000c，下文以此为例。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,86 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/10/05/gps%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8Eopenstreetmap%E7%BC%96%E8%BE%91/">GPS数据采集与OpenStreetMap编辑</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>简单介绍一下通过GPS采集道路数据并上传到OpenStreetMap的流程。</p>
+
+<p><h3>采集</h3>
+首先你需要一个GPS数据记录器，或者叫做GPS Logger。这类产品在淘宝上可以找到很多，台湾的长天(HOLUX)是相对价廉物美的品牌。我的设备是HOLUX m1000c，下文以此为例。</p>
+
+<p>m1000c的使用非常简单。开机之后，指示GPS的黄灯点亮，设备开始搜索GPS卫星。根据你所出的位置、遮挡情况以及天气情况，搜星的时间略有不同。当GPS黄灯开始闪烁时Logger即开始记录数据，默认情况下m1000c每隔5秒记录一次数据。每次重启后，Logger都会新开一条记录。</p>
+
+<p><h3>导入</h3>
+对Windows用户，将Logger通过USB线与电脑连接后，可以利用随机附带的软件将数据导入为GPX格式。对Linux用户，可以利用<a href="http://www.gpsbabel.org/" target="_blank">gpsbabel</a>导入数据：
+<em>gpsbabel -t -i m241 -f /dev/ttyACM0 -o gpx -F myfile.gpx</em></p>
+
+<p>其中：
+<ul>
+	<li>-t 表示数据为track类型</li>
+	<li>-i m241 输入格式为HOLUX m241，m1000c使用的是这种格式</li>
+	<li>-f /dev/ttyACM0 输入设备是/dev/ttyACM0</li>
+	<li>-o gpx 输出格式是gpx</li>
+	<li>-F 输出文件myfile.gpx</li>
+</ul></p>
+
+<p>在一些发行版上，需要root权限访问/dev/ttyACM0，所以不要忘记将输出的文件chown给普通用户。</p>
+
+<p>导入完成后可以利用下面的命令清空Logger
+<em>gpsbabel -i m241,erase_only=1 -f /dev/ttyACM0</em></p>
+
+<p>在Windows和Linux上都可以使用<a href="http://sourceforge.net/apps/mediawiki/viking/index.php?title=Main_Page" target="_blank">Viking</a>查看导入的数据：
+<ul>
+	<li>启动viking</li>
+	<li>添加一个OSM地图图层： Layers->New Map Layer</li>
+	<li>导入GPX数据： File->Append File&#8230;</li>
+	<li>下载OSM地图，右键点击左侧的Map图层，Download Missing Onscreen Maps</li>
+</ul></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6213079184/" title="Screenshot at 2011-10-05 09:45:20 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6103/6213079184_f653ca2ca6.jpg" width="500" height="387" alt="Screenshot at 2011-10-05 09:45:20" /></a></p>
+
+<p><h3>编辑</h3>
+Windows和Linux用户都可以通过<a href="http://merkaartor.be/" target="_blank">Merkaartor</a>编辑OSM数据。</p>
+
+<p>启动Merkaartor，导入GPS数据： File->Import。<br />
+选择左侧的GPS图层，对需要导入的数据，右键点击Extract Drawing Layer将GPS转换为可编辑数据。
+<a href="http://www.flickr.com/photos/40741608@N08/6213247680/" title="Screenshot at 2011-10-05 10:57:17 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6167/6213247680_046e360c63.jpg" width="500" height="303" alt="Screenshot at 2011-10-05 10:57:17" /></a></p>
+
+<p>根据实际情况编辑道路数据的属性。对GPS转换的数据，选择菜单Feature->Force Upload，将其加入dirty set准备上传。点击Upload即可将数据上传到OpenStreetMap。</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -622,62 +703,6 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/09/03/%E7%9B%9B%E5%A4%A7%E7%9A%84%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%89%A9/">盛大的中秋礼物</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>真没想到，离开盛大快一年了，人事部门还记着给我寄东西。过年收到大礼包算是惊喜，这次收到月饼就是有点感动了。难得啊，居然还有人惦记着咱，而且因为离开上海当时登记的电话也失效了，负责的人事还辗转了一番才找到我。当然这个不是针对我，所有的离职员工貌似都收到了盛大寄来的中秋礼物。能做到这点的公司，全世界不多吧。</p>
-
-<p>拆开邮包是一如既往的红得喜人的logo
-<a href="http://www.flickr.com/photos/40741608@N08/6108619640/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6080/6108619640_b3dd2fa262.jpg" alt="DSC_0001" height="335" width="500" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6108071971/" title="DSC_0002 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6187/6108071971_172b77714c.jpg" alt="DSC_0002" height="500" width="335" /></a>
-（插一句，终于有盛大的环保袋了，以前用的都是08年找工作时候顺的百度腾讯支付宝的）</p>
-
-<p>月饼包装盒
-<a href="http://www.flickr.com/photos/40741608@N08/6108073551/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6210/6108073551_eb1f2db129.jpg" alt="DSC_0003" height="335" width="500" /></a></p>
-
-<p>月饼和茶叶
-<a href="http://www.flickr.com/photos/40741608@N08/6108075239/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6195/6108075239_3d13e10e03.jpg" alt="DSC_0004" height="335" width="500" /></a></p>
-
-<p>我琢磨了半天，请教了原来的同事才知道这是个U盘。
-<a href="http://www.flickr.com/photos/40741608@N08/6108076517/" title="DSC_0005 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6079/6108076517_f972c472d2.jpg" alt="DSC_0005" height="335" width="500" /></a></p>
-
-<p>这是盛大在线（SDO）的企业文化宣传册
-<a href="http://www.flickr.com/photos/40741608@N08/6108626622/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6090/6108626622_e17a01d480.jpg" alt="DSC_0006" height="500" width="335" /></a></p>
-
-<p>我这里就不为前前东家摇旗呐喊了，说得多了也有吃人嘴短的嫌疑。总之能有今天，离不开在盛大在线一年多的工作和学习，离不开同事们的帮助。希望公司能够越来越强大！<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=b9d6ce29-52b2-8e5b-9e0a-6318d6a3cc11" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/10/">&larr; Older</a>
@@ -691,8 +716,16 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -708,10 +741,6 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这是经历了又一次长时间的unavailable回来。 最近挺忙，新项目启动了，旧项目月底要上线，早先的项目deadline也要到了，还不见动静不知道什么情况，今天又被叫去说数据部门的老大又有新想法了，娘勒，四个，四个啊。 即使有四个，我发现我在twitter上还是那么神情自若， &hellip;">
+  <meta name="description" content="recaptcha的验证码新增了alpha composite的新机制取代干扰线，今天用了一些时间在YAN上也实现了这种绘图机制。 使用Java2D的AlphaComposite实现，选用的Rule为alpha 1.0的SrcOut，即通过公式 Ar = As * (1 – Ad )
+Cr = &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/27/new-composite-based-captcha-image/">New Composite Based Captcha Image</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>recaptcha的验证码新增了alpha composite的新机制取代干扰线，今天用了一些时间在<a href="http://bitbucket.org/sunng/yan/" target="_blank">YAN</a>上也实现了这种绘图机制。</p>
+
+<p><a title="30a2512d899641a8ab79a7c86946ff71 by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4308533479/"><img src="http://farm3.static.flickr.com/2752/4308533479_42337f4525_o.png" alt="30a2512d899641a8ab79a7c86946ff71" width="300" height="100" /></a>
+<a title="f03ec596b91b4ce985c5b5af4a79e961 by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4308533483/"><img src="http://farm5.static.flickr.com/4068/4308533483_a9e687b74c_o.png" alt="f03ec596b91b4ce985c5b5af4a79e961" width="300" height="100" /></a></p>
+
+<p>使用Java2D的AlphaComposite实现，选用的Rule为alpha 1.0的SrcOut，即通过公式</p>
+
+<p>Ar = As * (1 – Ad )<br />
+Cr = Cs * (1 – Ad )<br />
+用语言描述就是叠加区域的透明度为0. 使用这种机制必须采用BufferedImage.TYPE_INT_ARGB的图像，并且输出支持alpha通道的格式。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -602,56 +648,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/26/web-2-0-icon-captcha/">Web 2.0 Icon Captcha</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yan 新增了一种验证码类型，Web 2.0 图标验证码。用户根据图标的内容和提示的信息，提交验证码。验证码图片如下：</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2556/4215434144_f589085acd_o.png" alt="" width="256" height="192" /></p>
-
-<p>提示文字： Please figure out twitter icons.</p>
-
-<p>用户输入Twitter图标左上角上的字母，即可进行验证。在Yan的测试界面上使用如图：</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2565/4214663971_cdc2168f69_o.png" alt="" width="394" height="503" /></p>
-
-<p>Web2.0 Icon实际上是Yan中新增的拼图验证码的一个实例，利用拼图验证码可以生成相似的更有创意的验证码。在我的开发环境中生成这样一张图片大约需要80ms。</p>
-
-<p>项目中使用的图标均从互联网收集，遵循CC等协议或经作者授权，详情参考项目中README文件。</p>
-
-<p>祝DAF同学生日快乐。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -665,8 +661,16 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -682,10 +686,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

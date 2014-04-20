@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="As you may know, jip is a dependency management tool for Jython/Java development. It resolves and downloads Java packages from maven-compatible &hellip;">
+  <meta name="description" content="I have been working on gefr this week to add apache MINA backend for it. The goal of gefr is to provide adapters between Python&#8217;s WSGI and Java &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,193 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/09/gefr-with-multiple-backends-support/">Gefr With Multiple Backends Support</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have been working on <a href="https://bitbucket.org/sunng/gefr">gefr</a> this week to add apache MINA backend for it. The goal of gefr is to provide adapters between Python&#8217;s WSGI and Java network infrastructures. In cPython world, most WSGI servers are implemented with C code(fapws, meinheld, etc.), which is not applicable on Jython platform. However, the Java world has its own reliable network foundations. So my gefr turns them into WSGI servers. The ultimate goal of gefr is to make it possible to port any of your WSGI web applications to Jython seamlessly.</p>
+
+<p>There has been many attempts to use Jython in Java web development. Most of them is focusing on applying Jython in Servlet framework. This is helpful, but it doesn&#8217;t take the whole advantage of Python web programming. The most valuable thing in Python web development is its various web frameworks and agile tools. But inside servlet framework, we can hardly apply them, the only things we have is Jython&#8217;s beautiful syntax. That should not be enough.</p>
+
+<p>OK. You are eager to meet gefr?  Let&#8217;s get hands dirty with some setup. I just assume that you have some essential software installed in the right place. Is it true for you?</p>
+
+<p>Create Jython virtual environment:
+<font face="monospace">
+$ virtualenv -p /usr/local/bin/jython gefr-test<br />
+$ cd gefr-test<br />
+$ source bin/activate
+</font></p>
+
+<p>Install jip. <a href="https://github.com/sunng87/jip">jip</a> is a great tool to manage Java dependencies for your Jython application. jip&gt;=0.3 is required in this guide, and pip will handle this for you.
+<font face="monospace">$ pip install jip</font></p>
+
+<p>Install gefr. Since gefr is a pure Python package, pip is still helpful.
+<font face="monospace">$ pip install gefr</font></p>
+
+<p>Now create a jip configuration file called <b>.jip</b> in your virtual home. We should add sonatype oss repository.<br />
+[cc lang=&#8221;ini&#8221;]<br />
+[repos:oss]<br />
+uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
+type=remote</p>
+
+<p>[repos:central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote</p>
+
+<p>[repos:local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local<br />
+[/cc]</p>
+
+<p>New in jip 0.3, we can use a single command to resolve dependencies of gefr.
+<font face="monospace">$ jip install-dependencies info.sunng.gefr:gefr:0.2-SNAPSHOT</font></p>
+
+<p>OK. Then everything is ready. Create your first Jython WSGI application. Actually, there is no difference.<br />
+I just copy the example of gefr here, you can find it in the code repository.<br />
+[cc lang=&#8221;python&#8221;]<br />
+#! /usr/bin/python</p>
+
+<p>__author__=&#8221;Sun Ning <classicning@gmail.com>&#8220;<br />
+__date__ =&#8221;$Jan 5, 2011 10:14:27 PM$&#8221;</p>
+
+<p>import sys<br />
+from gefr.core import Gefr</p>
+
+<p>def simple(environ, start_response):<br />
+    &#8220;&#8221;&#8220;a static app&#8221;&#8220;&#8221;<br />
+    headers = []<br />
+    headers.append((&#8216;Content-Type&#8217;, &#8220;text/html&#8221;))<br />
+    start_response(&#8220;200 OK&#8221;, headers)</p>
+
+<p>    return [&#8221;<h1>it works.</h1>&#8221;]</p>
+
+<p>if __name__ == &#8220;__main__&#8221;:<br />
+    from optparse import OptionParser<br />
+    parser = OptionParser()<br />
+    parser.add_option(&#8216;-b&#8217;, &#8216;&#8211;backend&#8217;, dest=&#8217;backend&#8217;, help=&#8217;server backend&#8217;)<br />
+    (options, args) = parser.parse_args()</p>
+
+<p>    if options.backend == &#8216;soldat&#8217;:<br />
+        from gefr.backends.soldat import SoldatBackend as backend<br />
+    elif options.backend == &#8216;mina&#8217;:<br />
+        from gefr.backends.mina import MinaBackend as backend<br />
+    else:<br />
+        print &#8216;backend %s not supported.&#8217; % options.backend<br />
+        sys.exit(1)</p>
+
+<p>    g = Gefr(simple, backend)<br />
+    g.start()<br />
+[/cc]<br />
+With the command line options, you can control which backend to be used. Now start it with:
+<font face="monospace">$ jython-all example.py -b soldat</font>
+or
+<font face="monospace">$ jython-all example.py -b mina</font></p>
+
+<p><a href="https://bitbucket.org/sunng/soldat">Soldat</a> is another network framework written by myself. And MINA, you must know. Open your browser, redirect it to http://localhost:8080 , now you see it works.</p>
+
+<p>Sure, that&#8217;s not enough for your needs. Let&#8217;s have an advanced example. Among all the web frameworks in Python, I like <a href="https://github.com/defnull/bottle">bottle</a> most. So we just build a simple application with GET and POST in bottle.</p>
+
+<p><font face="monospace">$ pip install bottle<br />
+$ pip install mako<br />
+$ mkdir bottleapp<br />
+$ cd bottleapp</font></p>
+
+<p>The bottle application looks like:<br />
+echo.py<br />
+[cc lang=&#8221;python&#8221;]<br />
+# -*- coding:utf-8 -*-</p>
+
+<p>from bottle import Bottle, mako_view, request<br />
+from gefr.core import Gefr<br />
+from gefr.backends.mina import MinaBackend</p>
+
+<p>bapp = Bottle()</p>
+
+<p>@bapp.get(&#8216;/&#8217;)<br />
+@mako_view(&#8216;edit&#8217;)<br />
+def display_form():<br />
+    return dict(ip=request.environ.get(&#8216;REMOTE_ADDR&#8217;))</p>
+
+<p>@bapp.post(&#8216;/&#8217;)<br />
+@mako_view(&#8216;show&#8217;)<br />
+def display_content():<br />
+    content = request.POST.get(&#8216;content&#8217;)<br />
+    return dict(content=content)</p>
+
+<p>Gefr(bapp, MinaBackend).start()<br />
+[/cc]</p>
+
+<p>The simple mako templates are:</p>
+
+<p>edit.tpl<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+<head>
+    <title>Bottle on MINA</title>
+</head>
+<body>
+    <h1>Bottle on MINA</h1>
+    <p>User from ${ip}, leave your words please:</p>
+    <form action="/" method="post">
+        <textarea cols="60" rows="20" name="content"></textarea>
+        <p><input type="submit" /></p>
+    </form>
+</body>
+</html>
+[/cc]</p>
+
+<p>show.tpl<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+    <head>
+        <title>Bottle on MINA</title>
+    </head>
+    <body>
+        <h1>Bottle on MINA</h1>
+        <pre>${content | h}</pre></body></html></p>
+
+<p>    
+
+[/cc]</p>
+
+<p>Start the bottle app:
+<font face="monospace">$ jython-all echo.py</font></p>
+
+<p>This is rather simple but it covers the most basic features of a web server.</p>
+
+<p>I should say thank you for reaching here. Gefr is still an experimental project in early development. So there must be bugs and potential performance improvements in it. Feel free to contact me if you are also interested in it. The project is hosted on bitbucket:
+<a href="https://bitbucket.org/sunng/gefr">https://bitbucket.org/sunng/gefr</a></classicning@gmail.com><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=473ecd63-8d12-88ec-aa8e-ff8244fe6861" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -634,80 +821,6 @@ Total:         13   25  22.3     21     239</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/03/05/when-nodejs-meets-mapnik/">When Nodejs Meets Mapnik</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>tilelive.js是一个基于nodejs的web地图工具，帮助用户快速查看他们创建的地图样式。tilelive.js是Mapbox众多产品中的一个，你可以通过<a href="http://mapbox.github.com/tilemill/">tilemill</a>了解更多。</p>
-
-<p>要运行tilelive.js，你需要安装一系列软件。</p>
-
-<p><h3>安装mapnik</h3>
-首先需要安装mapnik2，注意并非是目前的稳定版本0.7.1，而是开发版本。<br />
-签出SVN代码：
-<code>svn co http://svn.mapnik.org/trunk mapnik-trunk</code></p>
-
-<p>按照Mapnik的<a href="http://trac.mapnik.org/browser/trunk/INSTALL">文档</a>描述进行安装。</p>
-
-<p><h3>安装node依赖</h3>
-推荐你安装最新的node 0.4.2和npm 0.3.1。</p>
-
-<p>安装npm后执行
-<code>npm config set unsafe-perm true</code>
-去除超级用户运行npm时的警告。</p>
-
-<p>接下来就可以安装一系列node modules了：
-<code>sudo npm install mapnik</code>
-<code>sudo npm install carto</code>
-<code>sudo npm install generic-pool</code>
-<code>sudo npm install underscore</code>
-<code>sudo npm install node-get</code>
-<code>sudo npm install step</code>
-<code>sudo npm install express</code>
-<code>sudo npm install sqlite3</code>
-<code>sudo npm install compress</code></p>
-
-<p><h3>签出 tilelive.js</h3>
-tilelive.js并不兼容最新的node 0.4.x和express 2.0.0，所以你可以签出我fork的版本：
-<code>git clone git://github.com/sunng87/tilelive.js.git</code>
-<code>git checkout new-fork</code></p>
-
-<p>运行：
-<code>./bin/tilelive_server.js examples/stysheet.xml</code></p>
-
-<p>打开浏览器，访问 http://localhost:8888/ 即可
-<a href="http://www.flickr.com/photos/40741608@N08/5498409697/" title="screenshot_001 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5177/5498409697_6bf280e8fb.jpg" width="500" height="405" alt="screenshot_001" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/15/">&larr; Older</a>
@@ -721,8 +834,16 @@ tilelive.js并不兼容最新的node 0.4.x和express 2.0.0，所以你可以签�
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -738,10 +859,6 @@ tilelive.js并不兼容最新的node 0.4.x和express 2.0.0，所以你可以签�
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

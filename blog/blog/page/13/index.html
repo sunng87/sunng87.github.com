@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="从有这个动机到基本可用，花了整整一天的时间。现在可以通过GNOME-Shell的一个小菜单从外部控制Exaile豆瓣电台了。它的意思就是说如果你使用Gnome-Shell，你可以把Exaile界面扔到一个你不想看到的地方去，比如第n+1个workspace。然后通过左上角的菜单来控制豆瓣电台的播放 &hellip;">
+  <meta name="description" content="介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。 下载
+从github上下载相应的版本：
+$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/09/%E5%AE%89%E8%A3%85exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6%E5%8F%8Agnome-shell%E6%89%A9%E5%B1%95/">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。</p>
+
+<p><h3>下载</h3>
+从github上下载相应的版本：
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/0.0.10-dbus</pre>
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension/zipball/0.0.1</pre>
+<pre>$ ls
+sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip
+sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
+</pre></p>
+
+<p><h3>解压安装</h3>
+如果你已经安装过exaile豆瓣电台插件，可以先删除旧版本：
+<pre>$ rm -rf ~/.local/share/exaile/plugins/doubanfm</pre></p>
+
+<p>解压缩下载的文件：
+<pre>$ unzip sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
+$ unzip sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip</pre></p>
+
+<p>移动到指定的目录：
+<pre>$ mv sunng87-exaile-doubanfm-plugin-90f7175/ ~/.local/share/exaile/plugins/doubanfm
+$ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome-shell/extensions/exaile-doubanfm-gnome-shell-extension</pre></p>
+
+<p><h3>配置</h3>
+启动Exaile，通过菜单“编辑-&gt;首选项-&gt;插件”，激活doubanfm，<b>禁用lastfm covers</b>。如图设置插件：
+<img src="http://i.imgur.com/TFKU3.png" title="Hosted by imgur.com" /></p>
+
+<p>重启GNOME-Shell，按下alt+f2，输入r，回车。</p>
+
+<p><h3>使用</h3>
+启动exaile，可以通过文件菜单打开豆瓣电台频道。可以通过ctrl+d或者视图菜单切换到豆瓣电台视图：
+<img src="http://i.imgur.com/1vPpz.png" title="Hosted by imgur.com" /></p>
+
+<p>当然也可以通过gnome-shell扩展的菜单控制豆瓣电台的播放。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=ef5913a1-4c72-827d-837e-15abc25dcc92" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -667,193 +738,6 @@ You should write a guide forcing users to use your jython application within <a 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/04/09/gefr-with-multiple-backends-support/">Gefr With Multiple Backends Support</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have been working on <a href="https://bitbucket.org/sunng/gefr">gefr</a> this week to add apache MINA backend for it. The goal of gefr is to provide adapters between Python&#8217;s WSGI and Java network infrastructures. In cPython world, most WSGI servers are implemented with C code(fapws, meinheld, etc.), which is not applicable on Jython platform. However, the Java world has its own reliable network foundations. So my gefr turns them into WSGI servers. The ultimate goal of gefr is to make it possible to port any of your WSGI web applications to Jython seamlessly.</p>
-
-<p>There has been many attempts to use Jython in Java web development. Most of them is focusing on applying Jython in Servlet framework. This is helpful, but it doesn&#8217;t take the whole advantage of Python web programming. The most valuable thing in Python web development is its various web frameworks and agile tools. But inside servlet framework, we can hardly apply them, the only things we have is Jython&#8217;s beautiful syntax. That should not be enough.</p>
-
-<p>OK. You are eager to meet gefr?  Let&#8217;s get hands dirty with some setup. I just assume that you have some essential software installed in the right place. Is it true for you?</p>
-
-<p>Create Jython virtual environment:
-<font face="monospace">
-$ virtualenv -p /usr/local/bin/jython gefr-test<br />
-$ cd gefr-test<br />
-$ source bin/activate
-</font></p>
-
-<p>Install jip. <a href="https://github.com/sunng87/jip">jip</a> is a great tool to manage Java dependencies for your Jython application. jip&gt;=0.3 is required in this guide, and pip will handle this for you.
-<font face="monospace">$ pip install jip</font></p>
-
-<p>Install gefr. Since gefr is a pure Python package, pip is still helpful.
-<font face="monospace">$ pip install gefr</font></p>
-
-<p>Now create a jip configuration file called <b>.jip</b> in your virtual home. We should add sonatype oss repository.<br />
-[cc lang=&#8221;ini&#8221;]<br />
-[repos:oss]<br />
-uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
-type=remote</p>
-
-<p>[repos:central]<br />
-uri=http://repo1.maven.org/maven2/<br />
-type=remote</p>
-
-<p>[repos:local]<br />
-uri=/home/sun/.m2/repository/<br />
-type=local<br />
-[/cc]</p>
-
-<p>New in jip 0.3, we can use a single command to resolve dependencies of gefr.
-<font face="monospace">$ jip install-dependencies info.sunng.gefr:gefr:0.2-SNAPSHOT</font></p>
-
-<p>OK. Then everything is ready. Create your first Jython WSGI application. Actually, there is no difference.<br />
-I just copy the example of gefr here, you can find it in the code repository.<br />
-[cc lang=&#8221;python&#8221;]<br />
-#! /usr/bin/python</p>
-
-<p>__author__=&#8221;Sun Ning <classicning@gmail.com>&#8220;<br />
-__date__ =&#8221;$Jan 5, 2011 10:14:27 PM$&#8221;</p>
-
-<p>import sys<br />
-from gefr.core import Gefr</p>
-
-<p>def simple(environ, start_response):<br />
-    &#8220;&#8221;&#8220;a static app&#8221;&#8220;&#8221;<br />
-    headers = []<br />
-    headers.append((&#8216;Content-Type&#8217;, &#8220;text/html&#8221;))<br />
-    start_response(&#8220;200 OK&#8221;, headers)</p>
-
-<p>    return [&#8221;<h1>it works.</h1>&#8221;]</p>
-
-<p>if __name__ == &#8220;__main__&#8221;:<br />
-    from optparse import OptionParser<br />
-    parser = OptionParser()<br />
-    parser.add_option(&#8216;-b&#8217;, &#8216;&#8211;backend&#8217;, dest=&#8217;backend&#8217;, help=&#8217;server backend&#8217;)<br />
-    (options, args) = parser.parse_args()</p>
-
-<p>    if options.backend == &#8216;soldat&#8217;:<br />
-        from gefr.backends.soldat import SoldatBackend as backend<br />
-    elif options.backend == &#8216;mina&#8217;:<br />
-        from gefr.backends.mina import MinaBackend as backend<br />
-    else:<br />
-        print &#8216;backend %s not supported.&#8217; % options.backend<br />
-        sys.exit(1)</p>
-
-<p>    g = Gefr(simple, backend)<br />
-    g.start()<br />
-[/cc]<br />
-With the command line options, you can control which backend to be used. Now start it with:
-<font face="monospace">$ jython-all example.py -b soldat</font>
-or
-<font face="monospace">$ jython-all example.py -b mina</font></p>
-
-<p><a href="https://bitbucket.org/sunng/soldat">Soldat</a> is another network framework written by myself. And MINA, you must know. Open your browser, redirect it to http://localhost:8080 , now you see it works.</p>
-
-<p>Sure, that&#8217;s not enough for your needs. Let&#8217;s have an advanced example. Among all the web frameworks in Python, I like <a href="https://github.com/defnull/bottle">bottle</a> most. So we just build a simple application with GET and POST in bottle.</p>
-
-<p><font face="monospace">$ pip install bottle<br />
-$ pip install mako<br />
-$ mkdir bottleapp<br />
-$ cd bottleapp</font></p>
-
-<p>The bottle application looks like:<br />
-echo.py<br />
-[cc lang=&#8221;python&#8221;]<br />
-# -*- coding:utf-8 -*-</p>
-
-<p>from bottle import Bottle, mako_view, request<br />
-from gefr.core import Gefr<br />
-from gefr.backends.mina import MinaBackend</p>
-
-<p>bapp = Bottle()</p>
-
-<p>@bapp.get(&#8216;/&#8217;)<br />
-@mako_view(&#8216;edit&#8217;)<br />
-def display_form():<br />
-    return dict(ip=request.environ.get(&#8216;REMOTE_ADDR&#8217;))</p>
-
-<p>@bapp.post(&#8216;/&#8217;)<br />
-@mako_view(&#8216;show&#8217;)<br />
-def display_content():<br />
-    content = request.POST.get(&#8216;content&#8217;)<br />
-    return dict(content=content)</p>
-
-<p>Gefr(bapp, MinaBackend).start()<br />
-[/cc]</p>
-
-<p>The simple mako templates are:</p>
-
-<p>edit.tpl<br />
-[cc lang=&#8221;html&#8221;]
-<html>
-<head>
-    <title>Bottle on MINA</title>
-</head>
-<body>
-    <h1>Bottle on MINA</h1>
-    <p>User from ${ip}, leave your words please:</p>
-    <form action="/" method="post">
-        <textarea cols="60" rows="20" name="content"></textarea>
-        <p><input type="submit" /></p>
-    </form>
-</body>
-</html>
-[/cc]</p>
-
-<p>show.tpl<br />
-[cc lang=&#8221;html&#8221;]
-<html>
-    <head>
-        <title>Bottle on MINA</title>
-    </head>
-    <body>
-        <h1>Bottle on MINA</h1>
-        <pre>${content | h}</pre></body></html></p>
-
-<p>    
-
-[/cc]</p>
-
-<p>Start the bottle app:
-<font face="monospace">$ jython-all echo.py</font></p>
-
-<p>This is rather simple but it covers the most basic features of a web server.</p>
-
-<p>I should say thank you for reaching here. Gefr is still an experimental project in early development. So there must be bugs and potential performance improvements in it. Feel free to contact me if you are also interested in it. The project is hosted on bitbucket:
-<a href="https://bitbucket.org/sunng/gefr">https://bitbucket.org/sunng/gefr</a></classicning@gmail.com><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=473ecd63-8d12-88ec-aa8e-ff8244fe6861" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
@@ -867,8 +751,16 @@ def display_content():<br />
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -884,10 +776,6 @@ def display_content():<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

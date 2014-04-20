@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="You might have heard of sh, which brings python an interface to call subprocesses. The API of sh is pretty cool: Every command can be treated as a &hellip;">
+  <meta name="description" content="As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/09/23/new-shake-syntax/">New Shake Syntax</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p>
+
+<p>Using vars, local bindings in shake macros:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(require &#8216;[shake.core :as sh])</p>
+
+<p>(let [x &#8220;/home/nsun&#8221;]<br />
+  (sh/ls -l $x))<br />
+[/cc]</p>
+
+<p>So you have to prefix the clojure variable with a dollar sign. This is quite similar to what we did in shell programming.</p>
+
+<p>And more interesting, you can also use a $ prefixed clojure form in shake:</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(sh/curl $(format &#8220;https://github.com/%s&#8221; &#8220;sunng87&#8221;))<br />
+[/cc]</p>
+
+<p>Thanks to Clojure macro system, it has great flexibility to manipulate symbols and code lists, making inventing new syntax much easier than other languages. Shake can be a great example in describing macro system.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -581,48 +636,6 @@ start[1341215254682] time[1000] tag[demo]</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/05/11/%E5%8A%A0%E5%85%A5%E4%BA%86%E7%BE%8E%E5%91%B3%E4%B9%A6%E7%AD%BE/">加入了美味书签</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-11T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>距离上次更新已经有大半个月的时间了，最近一直忙着搬家和适应新环境。现在我又跑到北京来工作，好在这次终于不是在上地。我记得在写工作第三年的愿望的时候，有一条就是能加入一个优秀的小团队。那么目前看来一切顺利，美味书签这样的团队就是我一直希望能找到的。</p>
-
-<p>我们的团队是Youtube创始人陈士骏的<a href="http://avos.com" target="_blank">AVOS公司</a>中国分支，中国团队由江宏带领，目前有20人，包括技术（前端、后端、移动），编辑等等。我们的团队网站上一一介绍了每个成员，我就不重复了。</p>
-
-<p>在工作上，眼下最好的事情，是我终于可以利用自己喜爱和擅长的技术，来主导一些系统的开发。我们会尽可能地用热爱的语言（毫无疑问是clojure）开发，这想起来就让人兴奋。我这个人对技术还是有一些洁癖和偏执的。这样虽然路漫漫坑无数，但是收获一定不小，过程也在把握中，青春岁月不可再蹉跎了。</p>
-
-<p>最后欢迎大家都来用<a href="http://mei.fm" target="_blank">我们的产品</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/4/">&larr; Older</a>
@@ -636,8 +649,16 @@ start[1341215254682] time[1000] tag[demo]</p>
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -653,10 +674,6 @@ start[1341215254682] time[1000] tag[demo]</p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

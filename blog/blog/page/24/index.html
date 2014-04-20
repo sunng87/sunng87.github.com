@@ -9,10 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="问题： 多个root pom的dependencyManagement有重复的内容，希望统一管理。
-解决：
-新建一个空pom.xml，在dependencyManagement中指定这些依赖，如
-[cc lang=&#8221;xml&#8221;] xsi:schemaLocation=&# &hellip;">
+  <meta name="description" content="问题： 受够了，不想写Java了，写个含有数据的map还要new出来一个一个put进去，想用groovy解决单元测试
+解决： gmaven+groovy eclipse插件可以解决这个需求
+在pom.xml中添加gmaven的依赖，注意，仅用来测试。老大不让生产代码里有不可靠的东西。
+[cc &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +68,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/05/19/maven-recipe-1-test-java-code-with-groovy/">Maven Recipe #1: Test Java Code With Groovy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>问题： 受够了，不想写Java了，写个含有数据的map还要new出来一个一个put进去，想用groovy解决单元测试<br />
+解决： gmaven+groovy eclipse插件可以解决这个需求<br />
+在pom.xml中添加gmaven的依赖，注意，仅用来测试。老大不让生产代码里有不可靠的东西。<br />
+[cc lang=&#8221;xml&#8221;]<br />
+&#8230;<br />
+        <dependency>
+            <groupid>org.codehaus.groovy.maven.runtime</groupid>
+            <artifactid>gmaven-runtime-default</artifactid>
+            <version>1.0-rc-3</version>
+            <scope>test</scope>
+        </dependency>
+&#8230;<br />
+            <plugin>
+                <groupid>org.codehaus.groovy.maven</groupid>
+                <artifactid>gmaven-plugin</artifactid>
+                <version>1.0-rc-3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+[/cc]</p>
+
+<p>在eclipse中新建source folder, <em>src/test/groovy</em>，在其中创建groovy test case即可</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -583,58 +648,6 @@ lein uberjar<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/18/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%A4%8D%E7%89%A9%E5%9B%AD/">今天在植物园</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-18T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/4531445458/" title="DSC_0033 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4008/4531445458_8b08c7df45.jpg" width="500" height="335" alt="DSC_0033" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530818599/" title="DSC_0038 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4010/4530818599_dfc527d063.jpg" width="500" height="335" alt="DSC_0038" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530825965/" title="DSC_0042 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4026/4530825965_dc3c25b47e.jpg" width="500" height="335" alt="DSC_0042" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530831935/" title="DSC_0043 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4054/4530831935_2c05fda26f.jpg" width="500" height="335" alt="DSC_0043" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530838699/" title="DSC_0060 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4006/4530838699_28b1558b4e.jpg" width="500" height="335" alt="DSC_0060" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530846071/" title="DSC_0062 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4039/4530846071_828351bc5d.jpg" width="500" height="335" alt="DSC_0062" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530854713/" title="DSC_0065 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4065/4530854713_71a97eec7b.jpg" width="500" height="335" alt="DSC_0065" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4530876879/" title="DSC_0048 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4059/4530876879_b105722b03.jpg" width="500" height="335" alt="DSC_0048" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4531496808/" title="DSC_0080 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4021/4531496808_c34b38910d.jpg" width="500" height="335" alt="DSC_0080" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/25/">&larr; Older</a>
@@ -648,8 +661,16 @@ lein uberjar<br />
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -665,10 +686,6 @@ lein uberjar<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>

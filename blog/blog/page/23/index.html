@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="最近创作激情很是强烈，又赶上大家在博客上踊跃留言，我继续无聊闲扯吧。 做现在这个项目以来，我总是被需要同时处理多件事情的状况困扰。多任务处理，今天终于发现自己是LIFO的方式，后进先出，总是在做最近发生的事情，之前的就压栈，栈满了没准栈底就自动丢失了（策略就是java.util. &hellip;">
+  <meta name="description" content="先汇报一下时间，我这个WP主题默认不显示具体时间，现在是2010年6月22日凌晨4点整，西班牙2：0领先洪都拉斯，比赛进行到75分钟。 我刚刚下班，晚上我们部署了t.sdo.com的新版本，性能有了一定的改善。后半夜发现一台memcached行为诡异，暂且先禁用了那台，踉踉跄跄回家准备睡觉。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/22/%E4%B8%8B%E7%8F%AD%E4%BA%86/">下班了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>先汇报一下时间，我这个WP主题默认不显示具体时间，现在是2010年6月22日凌晨4点整，西班牙2：0领先洪都拉斯，比赛进行到75分钟。</p>
+
+<p>我刚刚下班，晚上我们部署了t.sdo.com的新版本，性能有了一定的改善。后半夜发现一台memcached行为诡异，暂且先禁用了那台，踉踉跄跄回家准备睡觉。</p>
+
+<p>今天<a href="http://t.sdo.com">t.sdo.com</a>正式发布了，现在不需要鸡和马就可以注册登录。产品本身不谈了，如果你不感兴趣说明你不是目标人群，缺乏90后的气质。前两天twitter上有一篇新浪工程师的<a href="http://liruqi.cn/aboutleavesina">离职感言</a>，里面透露新浪要做的“游戏平台”，t.sdo.com就是典型的这种东西。至于里面说的新浪那种气氛，，恐怕在国内的互联网公司里，这种现象都比较普遍吧。</p>
+
+<p>邀请链接，大家点这个就可以了
+<a href="http://isdo.cn/10CM">http://isdo.cn/10CM</a></p>
+
+<p>这就睡觉去，今天不用上班了。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -562,71 +609,6 @@ def get_local_ip():<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/05/19/maven-recipe-1-test-java-code-with-groovy/">Maven Recipe #1: Test Java Code With Groovy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>问题： 受够了，不想写Java了，写个含有数据的map还要new出来一个一个put进去，想用groovy解决单元测试<br />
-解决： gmaven+groovy eclipse插件可以解决这个需求<br />
-在pom.xml中添加gmaven的依赖，注意，仅用来测试。老大不让生产代码里有不可靠的东西。<br />
-[cc lang=&#8221;xml&#8221;]<br />
-&#8230;<br />
-        <dependency>
-            <groupid>org.codehaus.groovy.maven.runtime</groupid>
-            <artifactid>gmaven-runtime-default</artifactid>
-            <version>1.0-rc-3</version>
-            <scope>test</scope>
-        </dependency>
-&#8230;<br />
-            <plugin>
-                <groupid>org.codehaus.groovy.maven</groupid>
-                <artifactid>gmaven-plugin</artifactid>
-                <version>1.0-rc-3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generateStubs</goal>
-                            <goal>compile</goal>
-                            <goal>generateTestStubs</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-[/cc]</p>
-
-<p>在eclipse中新建source folder, <em>src/test/groovy</em>，在其中创建groovy test case即可</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -640,8 +622,16 @@ def get_local_ip():<br />
 <aside class="sidebar">
   
     <section>
+  <h1>About Me</h1>
+  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+      </li>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
@@ -657,10 +647,6 @@ def get_local_ip():<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
       </li>
     
   </ul>
