@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-04-20T19:46:58+08:00</updated>
+  <updated>2014-05-27T22:33:17+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fork-Join in Papaline]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/05/27/fork-join-in-papaline/"/>
+    <updated>2014-05-27T21:47:45+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/05/27/fork-join-in-papaline</id>
+    <content type="html"><![CDATA[<p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new paradigm &ldquo;fork-join&rdquo;. It allows you to split a task into smaller units, and execute them in parallel.</p>
+
+<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
+
+<p><img src="http://i.imgur.com/w6RlNZo.png" alt="linear execution" /></p>
+
+<p>This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it&rsquo;s always better to run them in parallel. Here we have <code>(fork)</code> command for the situation.</p>
+
+<p>For example, you are using the <em>fanout-on-write</em> model to build an activity stream. Once a user posted a new status, you need to find all followers(stage 1) of that user and append the status to their timeline(stage 2).</p>
+
+<p>In previous version of papaline, these two stages are:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">find-followers</span> <span class="p">[</span><span class="nv">id</span> <span class="nv">msg</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">followers</span> <span class="p">(</span><span class="nf">query-db-for-followers</span> <span class="nv">id</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">[</span><span class="nv">followers</span> <span class="nv">msg</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">fanout-to-user-timeline</span> <span class="p">[</span><span class="nv">user-ids</span> <span class="nv">msg</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">user-id</span> <span class="nv">user-ids</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">write-redis-list</span> <span class="nv">user-id</span> <span class="nv">msg</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the second task, the msg is appended to user&rsquo;s timeline one by one.</p>
+
+<p>Using <code>(fork)</code>, the <code>fanout-to-user-timeline</code> can be executed in parallel.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">find-followers</span> <span class="p">[</span><span class="nv">id</span> <span class="nv">msg</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">followers</span> <span class="p">(</span><span class="nf">query-db-for-followers</span> <span class="nv">id</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">fork</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">vector </span><span class="nv">%</span> <span class="nv">msg</span><span class="p">)</span> <span class="nv">followers</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">fanout-to-user-timeline</span> <span class="p">[</span><span class="nv">user-ids</span> <span class="nv">msg</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">write-redis-list</span> <span class="nv">user-id</span> <span class="nv">msg</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After the <code>find-followers</code> function, the result will be splitted into <code>(count followers)</code> parts and sent into input channel of stage 2. So the tasks execution will be like:</p>
+
+<p><img src="http://i.imgur.com/MLhZ0Pm.png" alt="forked execution" /></p>
+
+<p>To collect the results of all forked sub-tasks, you can use <code>(join)</code>. If the return value is wrapped with join, it won&rsquo;t trigger next stage immediately but to wait all forked tasks to finish.</p>
+
+<p><img src="http://i.imgur.com/BVDEH9Q.png" alt="join" /></p>
+
+<p>So with <code>(fork)</code> and <code>(join)</code>, it&rsquo;s very flexible to change execution model in Papaline.  Internally, I use clojure&rsquo;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of Papaline.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Papaline: Concurrent Pipeline With core.async]]></title>
@@ -684,46 +749,6 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
 
 <p>同时，适用于GNOME 3.6的扩展也已经在审核中了，一旦成功，根据gnome-shell据说最新的自动更新功能，已经安装的用户可以直接更新的最新版本。
 </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Adding -var-missing to Clojure Namespace]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/10/27/adding-var-missing-to-clojure-namespace/"/>
-    <updated>2012-10-27T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/10/27/adding-var-missing-to-clojure-namespace</id>
-    <content type="html"><![CDATA[<p><h3>Motivation</h3></p>
-
-<p>I Just need some mechanism like &#8220;methondMissing&#8221; in Ruby. When a nonexistent var is called, the lookup system will try to call a &#8220;-var-missing&#8221; function in the namespace. This function should return a var and clojure compiler assumes this var as the one it was looking for.</p>
-
-<p>For example, in the shake library:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns shake.core)</p>
-
-<p>(defn -var-missing [sym]<br />
-  (create-executable-var sym))<br />
-[/cc]</p>
-
-<p>To support lazy loading, shake 0.3.0 won&#8217;t read your path. It will now create vars on demand. So on calling sh/uname, a var named `uname` will be created. And to create a var, just use intern or eval.</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(require &#8216;[shake.core :as sh])<br />
-(sh/uname -a)<br />
-[/cc]</p>
-
-<p><h3>How to</h3></p>
-
-<p>I&#8217;m sorry there is no way to implement this except hacking into Clojure&#8217;s compiler. Fortunately, it&#8217;s not too difficult to find out the injection point. </p>
-
-<p>As you may know, there are two phases in Clojure compiler: expanding macros and evaluating forms. Both phases will look up vars to find macros or values. So we should take care both of them.</p>
-
-<p>All code diff is here:
-<script src="https://gist.github.com/3962750.js?file=Compiler.java"></script></p>
-
-<p><h3>Conclusion</h3>
-Adding -var-missing is just an attempt to implement lazy loading of vars. And it provides another smooth syntax for writing DSLs. But actually, Clojure&#8217;s macro system provides a great metaprogramming mechanism. So in most case, you don&#8217;t have to hack into the Compiler like this. Just put your DSL into a top level macro, and you can get them done all in clojure scripts. </p>
-
-<p></p>
 ]]></content>
   </entry>
   

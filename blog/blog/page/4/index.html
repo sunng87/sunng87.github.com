@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="距离上次更新已经有大半个月的时间了，最近一直忙着搬家和适应新环境。现在我又跑到北京来工作，好在这次终于不是在上地。我记得在写工作第三年的愿望的时候，有一条就是能加入一个优秀的小团队。那么目前看来一切顺利，美味书签这样的团队就是我一直希望能找到的。 &hellip;">
+  <meta name="description" content="史无前例，上个月只写了一篇blog，再加上网站遭遇认证很多地方都访问不了，故而有必要keep alive一下，该reconnect的请自觉重连。 从家里出来，再次跑到北京来，就做好了艰苦卓绝的思想准备。现在的工作节奏，和2010年春天在盛大在线的时候差不多。那时一腔热血，也没什么经验， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/06/02/keep-alive/">Keep-Alive</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-06-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>史无前例，上个月只写了一篇blog，再加上网站遭遇认证很多地方都访问不了，故而有必要keep alive一下，该reconnect的请自觉重连。</p>
+
+<p>从家里出来，再次跑到北京来，就做好了艰苦卓绝的思想准备。现在的工作节奏，和2010年春天在盛大在线的时候差不多。那时一腔热血，也没什么经验，做什么事都心里没底。当然也是那段时间学到的东西最多，人生就是这样，熬过一个最困难的时候，总会有巨大的收获（如果没有收获说明还没熬过去，下同）。时过境迁，现在的情况有了巨大的不同，比如看<a href="http://tech.sina.com.cn/i/2012-05-26/03317171784.shtml" target="_blank">这里</a>。曾经没日没夜的奋斗的项目，最后烟消云散仿佛都不存在过。</p>
+
+<p>人最大的瓶颈是时间，时间不可逆，挥霍掉就没有了。为了能有口饭吃，大部分时间还得拿自己的时间去换别人的金钱。如果这个时间能有合理的回报或是各取所需最好，如果这个工作自己也认同倒也不错。如果是纯粹的时间换金钱（所谓工作毕竟是工作），那就难免悲伤了。所以看到<a href="http://www.gsb.stanford.edu/news/research/aaker_happiness_2011.html" target="_blank">这样</a>一篇文章，还是觉得你很有必要快速浏览一下：
+<ul>
+	<li>Spend time with the right people. </li>
+	<li>Spend time on the right activities. </li>
+	<li>Enjoy experiences without spending time actually doing them. </li>
+	<li>Expand your time. </li>
+	<li>Be aware that happiness changes over time.</li>
+</ul>
+时间自由是人生最高自由。为了合理的利用时间，请关掉你正在折腾配置文件的emacs。</p>
+
+<p>做了一个brogrammer的<a href="http://www.aqee.net/docs/Quiz-Are-You-a-Brogrammer/" target="_blank">测验</a>，和公司同事一起做的。结果得分-105，算是标准nerd了，在公司也是仅次于老板的-120。这个分数基本让人满意，对于那些戴墨镜编程的brogrammer，我想说的是，我的emacs一直是深色背景。</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -597,71 +649,6 @@ user=> (run* [q] (== q 1))<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/">What&#8217;s New in Slacker 0.7.0 ?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just released [slacker &#8220;0.7.0&#8221;] to clojars. This is the first release after my presentation on the Clojure China Meetup. <a href="https://github.com/lbt05" target="_blank">lbt05</a> contributed an ACL module to slacker, which is the most significant feature in this release. </p>
-
-<p>The ACL module provides a simple DSL to define access rules.</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(use &#8216;slacker.acl)<br />
-(use &#8216;slacker.server)</p>
-
-<p>(defrules myrule<br />
-  (allow [&#8220;10.60.15.*&#8221;]))</p>
-
-<p>(start-slacker-server &#8230;<br />
-                      :acl myrule)<br />
-[/cc]</p>
-
-<p>&#8220;myrule&#8221; defines a limited access control list. Only clients from IP segment 10.60.15.* could access the slacker service.</p>
-
-<p>And there are also minor enhancements in this release:</p>
-
-<p><ul>
-<li>Content compression, new content type :deflate-carb :deflate-json and :deflate-clj</li>
-<li>In debug mode, server side stacktraces are printed on client</li>
-<li>Zookeeper node path refined</li>
-<li>New options in use-remote, :only and :exclude</li>
-<li>Cheshire used as json library</li>
-</ul></p>
-
-<p>slacker 0.7.0 will be the last version on clojure 1.2 . As aleph 0.2.1 is coming near, we will migrate to clojure 1.3 as soon as possible. If you like to taste slacker on your 1.3 application now, there is a 0.7.1-SNAPSHOT available.</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/5/">&larr; Older</a>
@@ -683,6 +670,10 @@ user=> (run* [q] (== q 1))<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -696,10 +687,6 @@ user=> (run* [q] (== q 1))<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

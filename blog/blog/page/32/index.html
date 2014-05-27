@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今天又讨论了一种验证码服务的机制，这种机制相对前两天说的简化的验证码生成的部分，由两步生成变成了一步生成，当然由于生成图片的接口直接暴露给用户，存在被刷的可能。 用户浏览器向应用服务器请求包含验证码的页面； 应用服务器将包含验证码地址的网页发送给用户浏览器； &hellip;">
+  <meta name="description" content="今天心血来潮，在手握土豆和鸡肉的情况下，作为一个土人，毅然决定尝试做一次咖哩。 原本准备是做土豆炒鸡丁的，所以鸡肉买的是鸡胸肉，没有油和骨头的，大厨曾经说还是有骨头的肉比较好。但是考虑到本人比较懒，所以吃起来相对省事要比口味的提升显得更有吸引力。 土豆和鸡肉切丁，好吧，其实是切块。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/17/%E7%83%A7%E9%A5%AD%E5%8F%88/">烧饭又</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天心血来潮，在手握土豆和鸡肉的情况下，作为一个土人，毅然决定尝试做一次咖哩。</p>
+
+<p>原本准备是做土豆炒鸡丁的，所以鸡肉买的是鸡胸肉，没有油和骨头的，大厨曾经说还是有骨头的肉比较好。但是考虑到本人比较懒，所以吃起来相对省事要比口味的提升显得更有吸引力。</p>
+
+<p>土豆和鸡肉切丁，好吧，其实是切块。因为反正是要混在一起的，形状大小都自定吧。炒锅里倒油，把鸡块和土豆块都下锅，炒到鸡块大致变白就可以了，不用太长时间。心情好的话，中间可以倒一些料酒，不倒也没什么区别好像。</p>
+
+<p>如果你的炒锅足够深可以炖的话就直接加水好了，如果像我一样是平底锅的话，把土豆和鸡肉转移到一个汤锅里，加水。对200g鸡肉，说明上说加500ml水，总之是需要不少的。大火煮沸，用汤勺把白沫捞出去，然后用中火再煮大约7-10分钟。</p>
+
+<p>接下来把块状的咖哩掰开，扔进锅里。用量的话，跟据daf同学的远程协助，100g/6块大小的，大约3块就足够了。但是由于远程协助的滞后性，作为一个土人，我把6块通通扔进去了（吃完才看到说明上是3-5人的量）。开小火炖。然后到了关键的步骤，这个时候千万不能去上网，不能去调程序，一定要做到锅在人在，那勺子不断搅和。这也是远程协助才知道的，同样滞后了，结果没有融化的咖哩块沉到锅底粘住糊掉了。</p>
+
+<p>搅和的时间也不固定，主要看锅里还剩多少东西，总而言之，粘稠到一定程度就可以拿出来了。</p>
+
+<p>虽然糊了，但是味道还不错，不过考虑到本人的口味广受质疑，所以大家还是自己摸索吧。</p>
+
+<p>图为证</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2609/4017962909_e693c066ac.jpg" alt="" width="500" height="335" /><img class="alignnone" src="http://farm3.static.flickr.com/2751/4018722768_b094b87f8d.jpg" alt="" width="500" height="335" /></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -527,69 +579,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/06/mapping-geometry-in-grails-and-mysql/">Mapping Geometry in Grails and MySQL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>针对地理数据的ORM，有一个Hibernate的扩展<a href="http://www.hibernatespatial.org/" target="_blank">HibernateSpatial</a>项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
-<a href="http://www.grails.org/MySQL+GIS-Geometry+with+Grails" target="_blank">http://www.grails.org/MySQL+GIS-Geometry+with+Grails</a></p>
-
-<p>不过按照这个文章里介绍的方法用，很可能会遭遇这样的报错：
-<blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
-这个问题最终在这里得到了解答：
-<a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
-按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition，对应的Hibernate属性是sql-type。虽然作者承诺会在今后的版本里修改这个问题，不过眼下的M2版本还没有修正这个问题。为此，Grails的用户特地提出在Grails中加入sql-type的支持：
-<a href="http://jira.codehaus.org/browse/GRAILS-3201" target="_blank">http://jira.codehaus.org/browse/GRAILS-3201</a>
-现在按照下面文档的说明，可以在mapping里指定sqlType了：
-<a href="http://grails.org/doc/latest/ref/Database%20Mapping/column.html" target="_blank">http://grails.org/doc/latest/ref/Database%20Mapping/column.html</a></p>
-
-<p>实例代码里的domain定义应该改成：
-<pre class="brush:groovy">
-import com.vividsolutions.jts.geom.Polygon
-import org.hibernatespatial.GeometryUserType</pre></p>
-
-<p>public class MyPoly {<br />
-    String name<br />
-    Polygon poly</p>
-
-<p>    static mapping = {<br />
-        poly type: GeometryUserType， sqlType:&#8221;GEOMETRY&#8221;<br />
-    }</p>
-
-<p>}
-
-于是，再也没有莫名其妙的No Dialect报错了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
@@ -611,6 +600,10 @@ import org.hibernatespatial.GeometryUserType</pre></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -624,10 +617,6 @@ import org.hibernatespatial.GeometryUserType</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

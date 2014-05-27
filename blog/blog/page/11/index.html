@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="&#8220;Weekend is for weekend projects.&#8221; 介绍Weekend Project前，先说个事。早上HN上有人说：你们这些个人，自个偷偷摸摸搞了半年一年的东西，然后发到HN上说这是两天就搞定的weekend project，你们恶心不恶心。本人郑重声明 &hellip;">
+  <meta name="description" content="As mentioned in Rage Viewer, I have another clojure library to communicate with Reddit. Now it&#8217;s public available as &#8221;reddit.clj&#8221;. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/26/reddit-clj-clojure-wrapper-for-reddit-api/">Reddit.clj: Clojure Wrapper for Reddit API</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As mentioned in <a href="http://sunng.info/blog/2011/07/weekend-project-rageviewer/" target="_blank">Rage Viewer</a>, I have another clojure library to communicate with Reddit. Now it&#8217;s public available as &#8221;<a href="https://github.com/sunng87/reddit.clj" target="_blank">reddit.clj</a>&#8221;.</p>
+
+<p>Reddit.clj is managed with leiningen. The current reddit.clj release is <del datetime="2011-07-26T13:29:58+00:00">0.1.3</del> 0.2.0. You can include it in your project.clj:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defproject xxxx &#8220;1.0.0-SNAPSHOT&#8221;<br />
+  :dependencies [[reddit.clj &#8220;0.2.0&#8221;]])<br />
+[/cc]</p>
+
+<p>This is a simple tutorial for you to getting started :<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+;; include reddit.clj<br />
+(require &#8216;[reddit.clj.core :as reddit])<br />
+;; create a reddit client with reddit/login.<br />
+;; you can also ignore the arguments to use it<br />
+;; anonymously<br />
+(def rc (reddit/login &#8220;your-reddit-name&#8221; &#8220;your-reddit-passwd&#8221;))</p>
+
+<p>;; load reddits from subreddit &#8220;clojure&#8221;, and print titles<br />
+(doseq<br />
+ [title (map :title (reddit/reddits rc &#8220;clojure&#8221;))]<br />
+  (println title))</p>
+
+<p>;; enhance reddit client to enable writing, for login user only<br />
+;; this operation will retrieve reddit user modhash under the hood<br />
+(def rc (reddit/enhance rc))</p>
+
+<p>;; vote-up a thing on reddit<br />
+(reddit/vote-up rc &#8220;t3_iz61z&#8221;)</p>
+
+<p>;; you may also submit links to reddit.<br />
+;; permalink will be returned when success.<br />
+;; be careful to use this API because reddit may ask you for a<br />
+;; captcha. But as a library, reddit.clj will return nil on this case.<br />
+;; use it at your own risk.<br />
+(reddit/submit-link rc &#8220;title&#8221; &#8220;url&#8221; &#8220;subreddit-name&#8221;)</p>
+
+<p>[/cc]</p>
+
+<p>Detailed API documents are listed <a href="http://sunng87.github.com/reddit.clj/reddit.clj.core-api.html" target="_blank">here</a>.</p>
+
+<p>This library should be useful to crawl data from reddit which is rich of information. Reddit.clj is hosted on <a href="https://github.com/sunng87/reddit.clj" target="_blank">github</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -530,54 +606,6 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/06/24/ngeohash-node-module-for-geohash-algorithm/">Ngeohash: Node Module for Geohash Algorithm</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ngeohash是一个geohash的javascript实现，之所以叫做ngeohash是因为到了Publish的时候才发现已经有geohash这个module了。这么令人沮丧的事就不多说了。</p>
-
-<p>安装
-<font face="monospace">npm install ngeohash
-</font></p>
-
-<p>使用<br />
-var geohash = require(&#8216;ngeohash&#8217;);<br />
-sys.puts(geohash.encode(32.1717, 118.2342));</p>
-
-<p>详细<br />
-访问github的相关页面：<a href="https://github.com/sunng87/node-geohash">https://github.com/sunng87/node-geohash
-</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=62cf2f06-ce63-87a6-a76b-5899455660e7" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/12/">&larr; Older</a>
@@ -599,6 +627,10 @@ sys.puts(geohash.encode(32.1717, 118.2342));</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -612,10 +644,6 @@ sys.puts(geohash.encode(32.1717, 118.2342));</p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

@@ -9,9 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="废话不说了，直接上code吧： import com.drew.imaging.jpeg.*;
-import com.drew.metadata.*;
-import com.drew.metadata.exif.*; file = new File(&#8220;sample.jpg&#8221 &hellip;">
+  <meta name="description" content="针对地理数据的ORM，有一个Hibernate的扩展HibernateSpatial项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
+http://www.grails. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +66,69 @@ import com.drew.metadata.exif.*; file = new File(&#8220;sample.jpg&#8221 &hellip
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/06/mapping-geometry-in-grails-and-mysql/">Mapping Geometry in Grails and MySQL</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>针对地理数据的ORM，有一个Hibernate的扩展<a href="http://www.hibernatespatial.org/" target="_blank">HibernateSpatial</a>项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
+<a href="http://www.grails.org/MySQL+GIS-Geometry+with+Grails" target="_blank">http://www.grails.org/MySQL+GIS-Geometry+with+Grails</a></p>
+
+<p>不过按照这个文章里介绍的方法用，很可能会遭遇这样的报错：
+<blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
+这个问题最终在这里得到了解答：
+<a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
+按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition，对应的Hibernate属性是sql-type。虽然作者承诺会在今后的版本里修改这个问题，不过眼下的M2版本还没有修正这个问题。为此，Grails的用户特地提出在Grails中加入sql-type的支持：
+<a href="http://jira.codehaus.org/browse/GRAILS-3201" target="_blank">http://jira.codehaus.org/browse/GRAILS-3201</a>
+现在按照下面文档的说明，可以在mapping里指定sqlType了：
+<a href="http://grails.org/doc/latest/ref/Database%20Mapping/column.html" target="_blank">http://grails.org/doc/latest/ref/Database%20Mapping/column.html</a></p>
+
+<p>实例代码里的domain定义应该改成：
+<pre class="brush:groovy">
+import com.vividsolutions.jts.geom.Polygon
+import org.hibernatespatial.GeometryUserType</pre></p>
+
+<p>public class MyPoly {<br />
+    String name<br />
+    Polygon poly</p>
+
+<p>    static mapping = {<br />
+        poly type: GeometryUserType， sqlType:&#8221;GEOMETRY&#8221;<br />
+    }</p>
+
+<p>}
+
+于是，再也没有莫名其妙的No Dialect报错了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -556,91 +618,6 @@ gnuplot<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/22/some-python-segments/">Some Python Segments</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-22T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><pre class="brush:python">
-import MySQLdb
-import subprocess
-from smtplib import *
-from datetime import date, timedelta</pre></p>
-
-<p>class StatEntry(object):<br />
-    def __init__(self, name, count):<br />
-        self.name = name<br />
-        self.count = count<br />
-    def __str__(self):<br />
-        return &#8220;%s\t%d&#8221; % (self.name, self.count)</p>
-
-<p>def fetchdb(date):<br />
-    conn = MySQLdb.connect(host=&#8221;localhost&#8221;, user=&#8221;root&#8221;, passwd=&#8221;acd&#8221;, db=&#8221;cls&#8221;)<br />
-    cursor = conn.cursor()<br />
-    cursor.execute(&#8220;SELECT link, count(*) FROM sdocom WHERE DATE(logtime) = DATE(&#8216;%s&#8217;) GROUP BY link&#8221; % date)<br />
-    rows = cursor.fetchall()<br />
-    result = map(lambda x: StatEntry(*x), rows)<br />
-    return result</p>
-
-<p>def archive(datelist):<br />
-    for date in datelist:<br />
-        subprocess.call([&#8220;gzip&#8221;, &#8220;cls-&#8220;+date+&#8221;.log&#8221;])</p>
-
-<p>def sendmail(results):<br />
-    mailcontent = reduce(lambda x,y: x+str(y)+&#8221;\n&#8221;, results, &#8220;&#8221;)<br />
-    smtp = SMTP(&#8220;your.smtp.server&#8221;)<br />
-    smtp.login(&#8220;user&#8221;,&#8221;passwd&#8221;)<br />
-    smtp.sendmail(&#8220;cls-no-reply@smtp.server&#8221;, [&#8220;your@mail.server&#8221;], mailcontent)<br />
-    smtp.quit()</p>
-
-<p>def dumpall(data):<br />
-    content = reduce(lambda x,y: x+str(y)+&#8221;\n&#8221;, data, &#8220;&#8221;)<br />
-    print content</p>
-
-<p>def main():<br />
-    yesterday = str(date.today()-timedelta(1))<br />
-    results = fetchdb(yesterday)<br />
-    #dumpall(results)<br />
-    sendmail(results)<br />
-    archive([yesterday])</p>
-
-<p>if __name__ == &#8216;__main__&#8217;:<br />
-    main()
-</p>
-
-<p>As log file was imported to database automatically by other process, the script retrieves statistical data from mysql db and sends the result to your mail box via smtp. Also, log file would be compressed by gzip to minimize storage overhead. Add it to crontab, you will get daily statistical report.</p>
-
-<p>This example shows you basic usage of mysql-python lib, smtplib and how to calculate yesterday by datetime.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -662,6 +639,10 @@ from datetime import date, timedelta</pre></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -675,10 +656,6 @@ from datetime import date, timedelta</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

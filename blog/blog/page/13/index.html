@@ -9,9 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。 下载
-从github上下载相应的版本：
-$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/ &hellip;">
+  <meta name="description" content="下午有时间看了一下coffeescript，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,54 @@ $ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/13/%E7%94%A8coffeescript%E9%87%8D%E5%86%99%E4%BA%86%E9%A6%96%E9%A1%B5/">用coffeescript重写了首页</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午有时间看了一下<a href="http://jashkenas.github.com/coffee-script/">coffeescript</a>，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/apple几家坐下来慢慢聊了，民间的力量就可以实现。</p>
+
+<p>coffeescript的几个特点也属于博采众长：
+<ul>
+<li>类似python的，以缩进取代代码块</li>
+<li>类似ruby/perl，方法调用括号可选</li>
+<li>类似ruby，无须return</li>
+<li>正常的类声明语法</li>
+</ul></p>
+
+<p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
+
+<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -696,48 +742,6 @@ You should write a guide forcing users to use your jython application within <a 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/04/10/enhanced-jip-to-simplify-jython-module-distribution/">Enhanced Jip to Simplify Jython Module Distribution</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><p>As you might notice, the installation of gefr is too complex, requiring several manual actions. User have to remember the long maven coodinator to resolve dependencies. wtf!</p>
-<p>So I have been working whole day to simplify the process.  </p>
-<p>Currently, gefr&#8217;s approach is to upload pom.xml to a public maven repositoy (sonatype oss). And the source is uploaded to pypi. Pip will find the source and install it. Jip will find the plain pom and resolve it. Because once pip finished the installation, the source package will be erased and jip can never find the pom. So I have to distribute them seperately.</p>
-<p>It would be better to invoke jip right before pip exits. I did some investigation about post-install script. And lucky enough, distutils allows you to override default install command. We can use it to invoke jip, in the scope of setup scrript. It does make sense. </p>
-<p>Another problem is the original design of .jip configuration file. From jip 0.2, .jip is available as environmen-scoped: we define some custom repositories and the whole environment shares them. But if we have multiple projects in the same environment, jip may waste time to find public artifact in a private repository. Even worse, jip may load invalid artifact from private repos. In the new design, private repositories are defined in pom.xml, as project-scoped, just like most java build tools. </p>
-<p>With new jip, to distribute a jython package, you should write a pom in the same way of Java, specifying the dependencies and custom repositories if you have. Then modify your MANIFEST.in to include it to your source package. At last, in the setup.py, define a new install command to call jip and pass the command into the setup() . From the new approach, only &#8216;pip install&#8217; is required for end user. Super easy!</p>
-<p>Upon the new usage of jip(as a library), I am also considering to migrate from GPL to LGPL or MIT. I have little knowledge about conflicts between licenses. So if you have some ideas or concerns, feel free to let me know.</p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
@@ -759,6 +763,10 @@ You should write a guide forcing users to use your jython application within <a 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -772,10 +780,6 @@ You should write a guide forcing users to use your jython application within <a 
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

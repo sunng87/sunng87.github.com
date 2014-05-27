@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="真没想到，离开盛大快一年了，人事部门还记着给我寄东西。过年收到大礼包算是惊喜，这次收到月饼就是有点感动了。难得啊，居然还有人惦记着咱，而且因为离开上海当时登记的电话也失效了，负责的人事还辗转了一番才找到我。当然这个不是针对我，所有的离职员工貌似都收到了盛大寄来的中秋礼物。能做到这点的公司， &hellip;">
+  <meta name="description" content="这是1CM的ZIL157卡车模型，虽说是五十年代的苏联车，可是咱们看着也眼熟，因为它就是解放卡车(CA30)的原型。这是我的第二个模型。万事开头难，可是做到第二个了怎么还是很难，嗯，说明这头还没有开完。难就难在，打开包装发现少了两根车轴！这车的版件是散装的，也弄不清是丢了还是本来就缺。无奈， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/04/%E5%90%89%E5%B0%94157/">吉尔157</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是1CM的ZIL157卡车模型，虽说是五十年代的苏联车，可是咱们看着也眼熟，因为它就是解放卡车(CA30)的原型。这是我的第二个模型。万事开头难，可是做到第二个了怎么还是很难，嗯，说明这头还没有开完。难就难在，打开包装发现少了两根车轴！这车的版件是散装的，也弄不清是丢了还是本来就缺。无奈，最后用的是回形针的铁丝代替，所以后面后轮有粗糙了。但是总体来说，有了上一辆车的经验，加上配置的新的工具笔刀，这次还是挺顺利的。</p>
+
+<p>这是ZIL-157的实物图
+<img src="http://i.imgur.com/C06OG.jpg" title="Hosted by imgur.com" width="500" /></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6111338393/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6070/6111338393_1a552b378f.jpg" alt="DSC_0001" height="335" width="500" /></a></p>
+
+<p>157的备胎放在底盘和货架之间
+<a href="http://www.flickr.com/photos/40741608@N08/6111884676/" title="DSC_0002 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6085/6111884676_633ae87396.jpg" alt="DSC_0002" height="335" width="500" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6111341519/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6071/6111341519_d8a8f322a4.jpg" alt="DSC_0004" height="335" width="500" /></a></p>
+
+<p>和ATZ油罐车的对照
+<a href="http://www.flickr.com/photos/40741608@N08/6111889674/" title="DSC_0008 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6182/6111889674_0ed6812fba.jpg" alt="DSC_0008" height="335" width="500" /></a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=6fc1b35e-afcd-8591-9cbd-894bf8be2230" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -540,82 +589,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/07/26/reddit-clj-clojure-wrapper-for-reddit-api/">Reddit.clj: Clojure Wrapper for Reddit API</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As mentioned in <a href="http://sunng.info/blog/2011/07/weekend-project-rageviewer/" target="_blank">Rage Viewer</a>, I have another clojure library to communicate with Reddit. Now it&#8217;s public available as &#8221;<a href="https://github.com/sunng87/reddit.clj" target="_blank">reddit.clj</a>&#8221;.</p>
-
-<p>Reddit.clj is managed with leiningen. The current reddit.clj release is <del datetime="2011-07-26T13:29:58+00:00">0.1.3</del> 0.2.0. You can include it in your project.clj:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defproject xxxx &#8220;1.0.0-SNAPSHOT&#8221;<br />
-  :dependencies [[reddit.clj &#8220;0.2.0&#8221;]])<br />
-[/cc]</p>
-
-<p>This is a simple tutorial for you to getting started :<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-;; include reddit.clj<br />
-(require &#8216;[reddit.clj.core :as reddit])<br />
-;; create a reddit client with reddit/login.<br />
-;; you can also ignore the arguments to use it<br />
-;; anonymously<br />
-(def rc (reddit/login &#8220;your-reddit-name&#8221; &#8220;your-reddit-passwd&#8221;))</p>
-
-<p>;; load reddits from subreddit &#8220;clojure&#8221;, and print titles<br />
-(doseq<br />
- [title (map :title (reddit/reddits rc &#8220;clojure&#8221;))]<br />
-  (println title))</p>
-
-<p>;; enhance reddit client to enable writing, for login user only<br />
-;; this operation will retrieve reddit user modhash under the hood<br />
-(def rc (reddit/enhance rc))</p>
-
-<p>;; vote-up a thing on reddit<br />
-(reddit/vote-up rc &#8220;t3_iz61z&#8221;)</p>
-
-<p>;; you may also submit links to reddit.<br />
-;; permalink will be returned when success.<br />
-;; be careful to use this API because reddit may ask you for a<br />
-;; captcha. But as a library, reddit.clj will return nil on this case.<br />
-;; use it at your own risk.<br />
-(reddit/submit-link rc &#8220;title&#8221; &#8220;url&#8221; &#8220;subreddit-name&#8221;)</p>
-
-<p>[/cc]</p>
-
-<p>Detailed API documents are listed <a href="http://sunng87.github.com/reddit.clj/reddit.clj.core-api.html" target="_blank">here</a>.</p>
-
-<p>This library should be useful to crawl data from reddit which is rich of information. Reddit.clj is hosted on <a href="https://github.com/sunng87/reddit.clj" target="_blank">github</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -637,6 +610,10 @@ For functions contains in some module, you can refer it with the clojure way:<br
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -650,10 +627,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

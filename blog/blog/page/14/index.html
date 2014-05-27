@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I have been working on gefr this week to add apache MINA backend for it. The goal of gefr is to provide adapters between Python&#8217;s WSGI and Java &hellip;">
+  <meta name="description" content="As you might notice, the installation of gefr is too complex, requiring several manual actions. User have to remember the long maven coodinator to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/10/enhanced-jip-to-simplify-jython-module-distribution/">Enhanced Jip to Simplify Jython Module Distribution</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><p>As you might notice, the installation of gefr is too complex, requiring several manual actions. User have to remember the long maven coodinator to resolve dependencies. wtf!</p>
+<p>So I have been working whole day to simplify the process.  </p>
+<p>Currently, gefr&#8217;s approach is to upload pom.xml to a public maven repositoy (sonatype oss). And the source is uploaded to pypi. Pip will find the source and install it. Jip will find the plain pom and resolve it. Because once pip finished the installation, the source package will be erased and jip can never find the pom. So I have to distribute them seperately.</p>
+<p>It would be better to invoke jip right before pip exits. I did some investigation about post-install script. And lucky enough, distutils allows you to override default install command. We can use it to invoke jip, in the scope of setup scrript. It does make sense. </p>
+<p>Another problem is the original design of .jip configuration file. From jip 0.2, .jip is available as environmen-scoped: we define some custom repositories and the whole environment shares them. But if we have multiple projects in the same environment, jip may waste time to find public artifact in a private repository. Even worse, jip may load invalid artifact from private repos. In the new design, private repositories are defined in pom.xml, as project-scoped, just like most java build tools. </p>
+<p>With new jip, to distribute a jython package, you should write a pom in the same way of Java, specifying the dependencies and custom repositories if you have. Then modify your MANIFEST.in to include it to your source package. At last, in the setup.py, define a new install command to call jip and pass the command into the setup() . From the new approach, only &#8216;pip install&#8217; is required for end user. Super easy!</p>
+<p>Upon the new usage of jip(as a library), I am also considering to migrate from GPL to LGPL or MIT. I have little knowledge about conflicts between licenses. So if you have some ideas or concerns, feel free to let me know.</p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -770,57 +812,6 @@ Total:         13   25  22.3     21     239</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/03/08/correct-source-file-encoding-with-one-liner/">Correct Source File Encoding With One Liner</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-08T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://amoeba.meidusa.com/wordpress/">Amoeba</a>项目最早的代码可以追溯到2008年了，其中有多个作者贡献代码，因为一直在Windows下开发，所以没有使用UTF8编码，最近大家统一到UTF8，遇到了代码编码不正确的问题。</p>
-
-<p>于是我们需要统一解决一下这个问题：
-<code>iconv -f gbk -t utf8 -o ConnectionManager.java ConnectionManager.java</code></p>
-
-<p>这样可以把gbk编码的源文件转换为UTF8，原地转换。</p>
-
-<p>推广到整个代码目录，用find和xargs做，xargs通过-I来制定一个占位符。
-<code>find . -name "*.java" -type f -perm +600 -print | xargs -I _ iconv -f gbk -t utf8 -o _ -c _</code></p>
-
-<p>结果发现iconv运行中报了错，进一步检查发现一部分代码正常转换了，另一部分却乱码了。原来，两个作者的代码分别是gbk和gb2312，这iconv转换的时候两种编码并不兼容。这就麻烦了，必须对代码分别处理才可以，区别代码的编码，暂时就用Java源文件里的作者名字。又看了一下find似乎没有对文件内容过滤的条件，不过不要紧，我们可以用xargs做：
-<code>find . -name "*.java" -type f -perm +600 -print | xargs -I _ sh -c 'grep -q hexianmao _ && iconv -f gb2312 -t utf8 -o _ -c _ '</code></p>
-
-<p>对这位hexianmao作者的代码，我们利用grep进程的返回值来进行判断。grep的-q参数相当于>/dev/null。这里有一个tricky的地方，再xargs里我们不能直接用&&来组合命令，不过可以通过sh -c这样的方式，并且其中的占位符会被xargs合适地替换掉。</p>
-
-<p>这样执行之后，这位作者的gb2312代码就被成功转换了。而另一部分作者的gbk代码也可以用同样方式解决了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/15/">&larr; Older</a>
@@ -842,6 +833,10 @@ Total:         13   25  22.3     21     239</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -855,10 +850,6 @@ Total:         13   25  22.3     21     239</p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Clojure | Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-04-20T19:46:58+08:00</updated>
+  <updated>2014-05-27T22:33:17+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fork-Join in Papaline]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/05/27/fork-join-in-papaline/"/>
+    <updated>2014-05-27T21:47:45+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/05/27/fork-join-in-papaline</id>
+    <content type="html"><![CDATA[<p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new paradigm &ldquo;fork-join&rdquo;. It allows you to split a task into smaller units, and execute them in parallel.</p>
+
+<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
+
+<p><img src="http://i.imgur.com/w6RlNZo.png" alt="linear execution" /></p>
+
+<p>This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it&rsquo;s always better to run them in parallel. Here we have <code>(fork)</code> command for the situation.</p>
+
+<p>For example, you are using the <em>fanout-on-write</em> model to build an activity stream. Once a user posted a new status, you need to find all followers(stage 1) of that user and append the status to their timeline(stage 2).</p>
+
+<p>In previous version of papaline, these two stages are:</p>
+
+<p>```clojure
+(defn find-followers [id msg]
+  (let [followers (query-db-for-followers id)]</p>
+
+<pre><code>[followers msg]))
+</code></pre>
+
+<p>(defn fanout-to-user-timeline [user-ids msg]
+  (doseq [user-id user-ids]</p>
+
+<pre><code>(write-redis-list user-id msg)))
+</code></pre>
+
+<p>```</p>
+
+<p>In the second task, the msg is appended to user&rsquo;s timeline one by one.</p>
+
+<p>Using <code>(fork)</code>, the <code>fanout-to-user-timeline</code> can be executed in parallel.</p>
+
+<p>```clojure
+(defn find-followers [id msg]
+  (let [followers (query-db-for-followers id)]</p>
+
+<pre><code>(fork (map #(vector % msg) followers))))
+</code></pre>
+
+<p>(defn fanout-to-user-timeline [user-ids msg]
+  (write-redis-list user-id msg))</p>
+
+<p>```</p>
+
+<p>After the <code>find-followers</code> function, the result will be splitted into <code>(count followers)</code> parts and sent into input channel of stage 2. So the tasks execution will be like:</p>
+
+<p><img src="http://i.imgur.com/MLhZ0Pm.png" alt="forked execution" /></p>
+
+<p>To collect the results of all forked sub-tasks, you can use <code>(join)</code>. If the return value is wrapped with join, it won&rsquo;t trigger next stage immediately but to wait all forked tasks to finish.</p>
+
+<p><img src="http://i.imgur.com/BVDEH9Q.png" alt="join" /></p>
+
+<p>So with <code>(fork)</code> and <code>(join)</code>, it&rsquo;s very flexible to change execution model in Papaline.  Internally, I use clojure&rsquo;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of Papaline.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Papaline: Concurrent Pipeline With core.async]]></title>

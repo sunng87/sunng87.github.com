@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="其实哪是什么封闭啊，不过是在公司大厅中间辟出一块相对独立的区域，大家坐在一起开发。别提了，我们原来都是分布式开发，也就是最近才坐在一起。除了老大偶尔自掏腰包大伙一起吃饭以外，“有人给你洗衣服”就不要想了。晚上依然是各回各家，老大的老大昨天对老大说，要注意身体，不要天天干到12点，到11点就行了。 &hellip;">
+  <meta name="description" content="今天一个叫做WMS Inspector的Firefox扩展发布了。这个扩展用来查看页面上的WMS请求，还可以生成GetCapabilities的Report。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/03/12/firefox-addon-for-wms-development/">Firefox Addon for Wms Development</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天一个叫做<a href="http://wiki.github.com/amercader/WMS-Inspector/">WMS Inspector</a>的Firefox扩展发布了。这个扩展用来查看页面上的WMS请求，还可以生成GetCapabilities的Report。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4427008096/" title="Screenshot by 贝小塔, on Flickr"><img src="http://farm3.static.flickr.com/2678/4427008096_1e27a3caa8.jpg" width="500" height="116" alt="Screenshot" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/4427007996/" title="Screenshot-GetCapabilities request by 贝小塔, on Flickr"><img src="http://farm3.static.flickr.com/2715/4427007996_30f5b42791_o.png" width="394" height="314" alt="Screenshot-GetCapabilities request" /></a>
+<a href="http://www.flickr.com/photos/40741608@N08/4427007932/" title="Screenshot-Capabilities report - WMS Inspector - Mozilla Firefox by 贝小塔, on Flickr"><img src="http://farm3.static.flickr.com/2734/4427007932_8c3260710f.jpg" width="500" height="286" alt="Screenshot-Capabilities report - WMS Inspector - Mozilla Firefox" /></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -784,55 +824,6 @@ Feel free the report issues on bitbucket:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/02/12/list-your-installed-virtualbox-virtual-marchines-using-vbox-python-xpcom-api/">List Your Installed Virtualbox Virtual Marchines Using Vbox Python Xpcom Api</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;m sorry for the long title. Due to lack of documentation, it&#8217;s not easy to use python xpcom api from virtualbox sdk. The code below is just a sample that lists your installed virtual machines. It works on linux with VirtualBox OSE 2.0.8. Hope useful to you.<br />
-[cc lang=&#8221;python&#8221;]<br />
-import vboxapi<br />
-vmsg = vboxapi.VirtualBoxManager(None, None)<br />
-vbox = vmsg.vbox<br />
-vmsg.mgr.getSessionObject(vbox)<br />
-machs = vbox.getMachines()<br />
-names = map(lambda x: (x.name,x.id), machs)<br />
-print names<br />
-[/cc]<br />
-Output:<br />
-[cc lang=&#8221;python&#8221; nowrap=&#8221;false&#8221; line_numbers=&#8221;false&#8221;]<br />
-[(u&#8217;Ubuntu&#8217;, u&#8217;aac3fd46-4f1e-4f6e-8abe-b1a5516abf8c&#8217;), (u&#8217;Windows&#8217;, u&#8217;fa73952e-f0a6-4bf0-af20-259513d73bc1&#8217;), (u&#8217;OpenSolaris&#8217;, u&#8217;a951542c-3178-4a6b-8087-f1b0314e283a&#8217;), (u&#8217;LinuxMint&#8217;, u&#8217;8191f256-1b76-4ce7-a202-93730dae1b33&#8217;), (u&#8217;Fedora&#8217;, u&#8217;ca250f45-d752-4baf-9281-fb0847dc8287&#8217;), (u&#8217;Freebsd&#8217;, u&#8217;8322b62a-aed5-4f04-9815-9fadfeba9fe1&#8217;), (u&#8217;ArchLinux&#8217;, u&#8217;efc1167a-4e06-4c14-aeb0-bfb303c8f5f7&#8217;), (u&#8217;openSUSE&#8217;, u&#8217;02e18816-311d-420b-99b3-6b4b4cccf7b7&#8217;), (u&#8217;CentOS&#8217;, u&#8217;ccf0421c-85c4-4123-8722-57abc494c633&#8217;)]<br />
-[/cc]</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/27/">&larr; Older</a>
@@ -854,6 +845,10 @@ Output:<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -867,10 +862,6 @@ Output:<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

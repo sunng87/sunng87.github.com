@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content=" 这是2011年OpenStreetMap上，南京的编辑情况。高亮的部分是2011年创建或更新的要素。从这张图上可以看出最近的这一年，南京的数据从无到有到逐渐的完善，这里面倾注了本地几位贡献者结结实实的心血。 对这个可视化感兴趣，可以参考这里的代码和样式表。
-">
+  <meta name="description" content="利用春节的假期写了一个Android应用，可以在ClojureDocs.org上搜索clojure API，浏览文档、源代码和社区贡献的代码实例。ClojureDocs在我学习Clojure的过程中起了很大的作用，所以我想这个网站应该对很多人有用。 无暇去学习Android平台上繁琐的知识， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/01/24/clojuredocs-android-app/">ClojureDocs Android App</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>利用春节的假期写了一个Android应用，可以在<a href="http://clojuredocs.org" target="_blank">ClojureDocs.org</a>上搜索clojure API，浏览文档、源代码和社区贡献的代码实例。ClojureDocs在我学习Clojure的过程中起了很大的作用，所以我想这个网站应该对很多人有用。</p>
+
+<p>无暇去学习Android平台上繁琐的知识，不过好在有Phonegap这样的框架，可以把网页应用转化为本地应用，并且提供访问本地设备的API。通过Phonegap开发的程序还可以直接移植到iphone平台上。ClojureDocs Android就是运行在Phonegap中。</p>
+
+<p>首页：
+<img src="http://i.imgur.com/zdMCt.png" alt="" /></p>
+
+<p>搜索界面
+<img src="http://i.imgur.com/MVCz4.png" alt="" /></p>
+
+<p>API函数界面
+<img src="http://i.imgur.com/M0fEI.png" alt="" /></p>
+
+<p>你可以从github获得代码和签名过的apk：<a href="https://github.com/sunng87/clojuredocs-android" target="_blank">https://github.com/sunng87/clojuredocs-android</a></p>
+
+<p>Known Issue，phonegap程序在屏幕旋转时会崩溃，已经在2.3和3.2上重现，目前还不清楚具体的原因。(Edit 20120127: Fixed in 1.0.4)</p>
+
+<p>欢迎任何的pull request。
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -621,90 +674,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/12/18/extend-slacker-server-with-interceptors/">Extend Slacker Server With Interceptors</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-18T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>An interceptor framework was introduced in slacker 0.3.0. It&#8217;s designed to allow user to add custom functionality without hacking into the internal of slacker.</p>
-
-<p>Like many server frameworks, slacker abstracts the request processing as a pipeline. The request object is modified by adding or updating attributes through each node of the pipeline. So it&#8217;s easy to add your interceptor into the pipeline, with which you can get the data before and after function executed.</p>
-
-<p>To create such an interceptor, you should use the <em>slacker.interceptor/definterceptor</em> macro and <em>slacker.interceptor/definterceptor+</em> macro:</p>
-
-<p><blockquote>(definterceptor name<br />
-  :before interceptor-function<br />
-  :after interceptor-function)</blockquote></p>
-
-<p><blockquote>(definterceptor+ name [arguments]<br />
-  :before interceptor-function<br />
-  :after interceptor-function)</blockquote></p>
-
-<p>definterceptor+ can accept arguments so you can configure the interceptor when you use it.</p>
-
-<p>See a simple example:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(definterceptor log-function-call<br />
-  :before (fn [req] (println (str &#8220;calling &#8221; (:fname req))) req))</p>
-
-<p>(definterceptor+ log-function-call-prefixed [prefix]<br />
-  :before (fn [req] (println (str <br />
-                               (if (fn? prefix) (prefix) prefix) <br />
-                               &#8221; calling &#8221; <br />
-                               (:fname req))) <br />
-                    req))<br />
-[/cc]</p>
-
-<p>Then, add it to your slacker server by<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(use &#8216;[slacker.interceptor])<br />
-(import &#8216;[java.util Date])<br />
-(start-slacker (the-ns &#8216;slapi) 2104<br />
-  :interceptors (interceptors log-function-call<br />
-                              (log-function-call-prefixed <br />
-                                (fn [] (.toString (Date.)))))<br />
-[/cc]</p>
-
-<p>Now you can log every function call of your slacker server.</p>
-
-<p>For more detail about the interceptor framework, especially the request data, please check the <a href="https://github.com/sunng87/slacker/wiki/Interceptors" target="_blank">wiki page</a>.</p>
-
-<p>In slacker 0.3.0, there is a built-in interceptor to stats function calls. You can find it at <em>slacker.interceptors.stats</em>. The stats data is expose via JMX. You can also write monitoring application to retrieve the data. 
-<a href="http://imgur.com/vtOoL"><img src="http://i.imgur.com/vtOoL.png" alt="" title="Hosted by imgur.com" /></a></p>
-
-<p>And there will be more built-in interceptors in 0.4.0, includes function call time stats and logging.</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/7/">&larr; Older</a>
@@ -726,6 +695,10 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -739,10 +712,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

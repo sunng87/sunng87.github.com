@@ -9,11 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="现在几乎每一种语言都有一些依赖管理工具，或者是中央的包仓库。比如这些： Java: maven, ivy, gradle
-Ruby: gems
-Python: easy_install, pip
-Clojure: leinigen
-Groovy: maven, grape, gradle &hellip;">
+  <meta name="description" content="在compojure 0.6.0里，默认的middleware被移除了。因为还没有正式发布，所以网上几乎没有相关的文档说明，而0.5.x的例子已经没能正常工作了。 [cc lang=&#8221;clojure&#8221;]
+;&#8230;
+(defroutes root (GET &# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +67,67 @@ Groovy: maven, grape, gradle &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/02/02/breaking-changes-in-compojure-0-6-0/">Breaking Changes in Compojure 0.6.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在compojure 0.6.0里，默认的middleware被移除了。因为还没有正式发布，所以网上几乎没有相关的文档说明，而0.5.x的例子已经没能正常工作了。</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+;&#8230;<br />
+(defroutes root<br />
+    (GET &#8220;/&#8221; {params :params} (str params)))</p>
+
+<p>(run-jetty root {:port 8080}))<br />
+[/cc]</p>
+
+<p>这样在0.5.x中可以正确运行的代码，在0.6.0中params变成了空的map。</p>
+
+<p>在0.6.0中，compojure引入了一个新的ns叫做compojure.handler，其中包含两个function， api和site，它们包含了一些默认的middleware，适合相应的开发场景。为了让代码能够工作，在新版本中：<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+;&#8230;<br />
+(use &#8216;compojure.handler)<br />
+(defroutes root<br />
+    (GET &#8220;/&#8221; {params :params} (str params)))</p>
+
+<p>(def app (site root))</p>
+
+<p>(run-jetty root {:port 8080}))<br />
+[/cc]</p>
+
+<p>详细可以在这里找到
+<a href="https://groups.google.com/group/compojure/browse_thread/thread/4f8574d808ddf53e">https://groups.google.com/group/compojure/browse_thread/thread/4f8574d808ddf53e</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -711,50 +770,6 @@ Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#822
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/12/21/exaile-doubanfm-plugin-0-0-6b/">Exaile Doubanfm Plugin 0.0.6b</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-21T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上周豆瓣电台增加了电影原声频道，这次的插件更新支持了这个新频道（OST）。</p>
-
-<p>下载地址<br />
-https://github.com/sunng87/exaile-doubanfm-plugin/downloads</p>
-
-<p>安装指南<br />
-https://github.com/sunng87/exaile-doubanfm-plugin/wiki/Installation</p>
-
-<p>欢迎使用！</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/17/">&larr; Older</a>
@@ -776,6 +791,10 @@ https://github.com/sunng87/exaile-doubanfm-plugin/wiki/Installation</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -789,10 +808,6 @@ https://github.com/sunng87/exaile-doubanfm-plugin/wiki/Installation</p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="昨天很虔诚地在图书馆把POSA第四卷里所有的Pattern Languages都抄了一遍。恰好遇到Modeling部分的第9个Pattern， Blackboard，没有感性认识。今天简单地搜索了一下。 POSA上指出Blackboard模式用于解决尚没有绝对解决方案的问题， &hellip;">
+  <meta name="description" content="上周豆瓣电台增加了电影原声频道，这次的插件更新支持了这个新频道（OST）。 下载地址
+https://github.com/sunng87/exaile-doubanfm-plugin/downloads 安装指南
+https://github.com/sunng87/exaile- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/12/21/exaile-doubanfm-plugin-0-0-6b/">Exaile Doubanfm Plugin 0.0.6b</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上周豆瓣电台增加了电影原声频道，这次的插件更新支持了这个新频道（OST）。</p>
+
+<p>下载地址<br />
+https://github.com/sunng87/exaile-doubanfm-plugin/downloads</p>
+
+<p>安装指南<br />
+https://github.com/sunng87/exaile-doubanfm-plugin/wiki/Installation</p>
+
+<p>欢迎使用！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -528,49 +574,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/11/14/%E7%BB%88%E4%BA%8E%E8%83%BD%E7%94%A8unity%E5%92%8Cgnome-shell%E4%BA%86/">终于能用Unity和Gnome-shell了</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-11-14T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自从升级到Maverick之后，有两个问题就一直如鲠在喉，GNOME3会话和Ubuntu Netbook(Unity)会话能不能用。前者启动之后出现Panel后全部僵死，鼠标可以移动但是任何操作都没有响应；后者桌面背景图片一闪就黑屏，没有任何响应。</p>
-
-<p>查看unity的xsession-error日志，其中的报错比较含糊，搜索也没有找到相似的问题。查看GNOME-Shell的xsession-error之后发现很多JS报错，搜索了一下，终于找到了一个bug报告：
-<a href="https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907">https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907</a></p>
-
-<p>情况和我一样，都是之前曾经安装过PPA版本的GNOME-Shell尝鲜，升级之后出现了JS报错。按照说明打开synaptic，果然有两个包使用的是git版本，尽管PPA已经删除，但是已安装的软件包只会被标记为Local or Obsolete，恰好这个git版本是0.9.4比Maverick里的0.9.3还要高，这样更新的时候又不会提示。如果不细看还真的不容易发现。按下Ctrl+E， synaptic会提示Force Version对话框，选择仓库的旧版本，安装、重启。这下不仅GNOME-Shell正常工作了，同样依赖Mutter的Unity也正常了。</p>
-
-<p>这次悲剧，说明使用PPA还是要慎重，尤其是跨版本升级之后，要小心PPA被禁用但软件包没有被升级的情况。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/18/">&larr; Older</a>
@@ -592,6 +595,10 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -605,10 +612,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

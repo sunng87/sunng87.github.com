@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="2009年12月4日，苏联功勋演员吉洪诺夫去逝，享年81岁。 吉洪诺夫是《春天的十七个瞬间》里施季里茨的扮演者，春天的十七个瞬间是一部70年代的间谍片，或者说电视剧也行，它有12集。吉洪诺夫扮演的是一个非常牛逼的角色，具体有多牛逼，我也不用自己孱弱的表达能力去描述了，如果有一天大家有机会有耐心看完 &hellip;">
+  <meta name="description" content="Inspired by a &#8220;Call to action&#8221; tutorial of Photoshop, I&#8217;d like to do the same thing with free and open source software, GIMP. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,80 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/12/09/a-button-by-gimp/">A Button by GIMP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Inspired by a <a href="http://sixrevisions.com/tutorials/web-development-tutorials/create-an-animated-call-to-action-button/" target="_blank">&#8220;Call to action&#8221; tutorial of Photoshop</a>, I&#8217;d like to do the same thing with free and open source software, GIMP.</p>
+
+<p>Before we start the journey, it&#8217;s better to get well prepared. Take a look at the powerful plugin &#8221;<a href="http://registry.gimp.org/node/186" target="_blank">Layer Effects</a>&#8221;. It provides you complete functionality as &#8220;Layer Style&#8221; in Photoshop does which is of critical importance in such kind of image manipulation. Follow the installation guide and I won&#8217;t spend many words about this step.</p>
+
+<p>Open your gimp, create a new canvas with custom size (which makes you feel comfortable)</p>
+
+<p>New a layer, use selection tool to create a rounded rectangle selection area.</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2744/4171189572_a6c70c8b00.jpg" alt="" width="500" height="375" /></p>
+
+<p>Fill the selection with gradient color.</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2653/4170430801_ee9b8e973d.jpg" alt="" width="500" height="375" /></p>
+
+<p>Resize the canvas. Glow the selection with 3px by menu command &#8220;selection-&gt;glow&#8221;. The crop the canvas by selection using &#8220;image-&gt;crop by selection&#8221;.</p>
+
+<p>Then we apply some layer effects to beauty the button.
+<ul>
+	<li>layer effects: inner glow, white 75% opacity, size 5</li>
+	<li>layer effects: stroke 1px</li>
+</ul>
+<img src="http://farm3.static.flickr.com/2592/4171189712_2b48af7d78.jpg" alt="" width="500" height="375" /></p>
+
+<p>Place some text on the button such as &#8220;Sign Up&#8221;. Bold sans font(DejaVu sans or Helvetica bold) is recommended here.</p>
+
+<p>Use gradient overlay effect on the text. As the layer effects plugin doesn&#8217;t support gradient overlay on text, we have to do it in a different way. First, create a new layer. Then convert text to selection with context menu command. Gradient fill the selection and hide the original text layer at last. Now we got:</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2692/4170430973_8f65b08603.jpg" alt="" width="500" height="375" /></p>
+
+<p>Don&#8217;t stop here. Add layer effects on the new layer:
+<ul>
+	<li>inner shadow, black, size 2px, distance 2px, angle 90</li>
+	<li>drop shadow, light, size 2px, distance 2px, angle 90</li>
+</ul>
+<img class="alignnone" src="http://farm3.static.flickr.com/2579/4170431039_4eff9b67ff.jpg" alt="" width="500" height="375" /></p>
+
+<p>You can tune the color schema by yourself along the process :)</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2765/4171189918_f1ea2c2eff_o.png" alt="" width="170" height="71" /></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -633,50 +707,6 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/11/10/doubancovers-has-been-merged-into-exaile-cn/">DoubanCovers Has Been Merged Into Exaile-cn</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>既然是exaile-cn，就不扯蹩脚的英语了。</p>
-
-<p>前天和Exaile-cn的作者进行了一些沟通，现在DoubanCovers插件已经合并到Exaile-CN项目里了。<a href="http://code.google.com/p/exaile-cn/">Exaile-CN</a>为Exaile提供符合中文用户习惯的一系列插件，包括歌词插件、迷你模式等。</p>
-
-<p>As exaile-cn has not been adapted to exaile 0.3, the plugin will not be packaged into public release at once. if you use svn, you can checkout the plugin from branch:
-<em>svn checkout http://exaile-cn.googlecode.com/svn/branches/0.3/</em></p>
-
-<p>For a ready to use package, download from here as mentioned before:
-<a href="http://bitbucket.org/sunng/exailedoubancovers/downloads/">http://bitbucket.org/sunng/exailedoubancovers/downloads/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -698,6 +728,10 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -711,10 +745,6 @@ pipe3 = subprocess.Popen(cmd3.split(), stdin=pipe2, stdout=subprocess.PIPE)</p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

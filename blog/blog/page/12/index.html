@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="每天上下班要花掉两个多小时，这一路只好浏览一些新闻、reddit以及HN。reddit的app相对来说不算多，找了一圈倒是在market里没找到的reddit-is-fun最好用，功能最全。HN的app最近添加的一个小功能非常实用，通过viewtext.org打开链接。使用这个服务， &hellip;">
+  <meta name="description" content="ngeohash是一个geohash的javascript实现，之所以叫做ngeohash是因为到了Publish的时候才发现已经有geohash这个module了。这么令人沮丧的事就不多说了。 安装
+npm install ngeohash 使用
+var geohash = require(&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/24/ngeohash-node-module-for-geohash-algorithm/">Ngeohash: Node Module for Geohash Algorithm</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ngeohash是一个geohash的javascript实现，之所以叫做ngeohash是因为到了Publish的时候才发现已经有geohash这个module了。这么令人沮丧的事就不多说了。</p>
+
+<p>安装
+<font face="monospace">npm install ngeohash
+</font></p>
+
+<p>使用<br />
+var geohash = require(&#8216;ngeohash&#8217;);<br />
+sys.puts(geohash.encode(32.1717, 118.2342));</p>
+
+<p>详细<br />
+访问github的相关页面：<a href="https://github.com/sunng87/node-geohash">https://github.com/sunng87/node-geohash
+</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=62cf2f06-ce63-87a6-a76b-5899455660e7" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -629,54 +679,6 @@ heatmap.render();<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/05/13/%E7%94%A8coffeescript%E9%87%8D%E5%86%99%E4%BA%86%E9%A6%96%E9%A1%B5/">用coffeescript重写了首页</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>下午有时间看了一下<a href="http://jashkenas.github.com/coffee-script/">coffeescript</a>，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/apple几家坐下来慢慢聊了，民间的力量就可以实现。</p>
-
-<p>coffeescript的几个特点也属于博采众长：
-<ul>
-<li>类似python的，以缩进取代代码块</li>
-<li>类似ruby/perl，方法调用括号可选</li>
-<li>类似ruby，无须return</li>
-<li>正常的类声明语法</li>
-</ul></p>
-
-<p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
-
-<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -698,6 +700,10 @@ heatmap.render();<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -711,10 +717,6 @@ heatmap.render();<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

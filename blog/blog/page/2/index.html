@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="The ONLY real-world modern clojure templating system. I just can&#8217;t believe that the clojure world doesn&#8217;t build web application with &hellip;">
+  <meta name="description" content="The Clojure world has been using Jetty 7 for quite a long time because it&#8217;s supported by the Ring development team. However, Jetty 9 brings us &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,122 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Clojure world has been using Jetty 7 for quite a long time because it&#8217;s supported by the Ring development team. However, Jetty 9 brings us exciting features like WebSocket and SPDY. In order to use websocket in my Clojure web application, I built this adapter last weekend.</p>
+
+<p>[info.sunng/ring-jetty9-adapter &#8220;0.1.0&#8221;]</p>
+
+<p>The API for Clojure is still consistent with the one for jetty 7.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;ring.adapter.jetty9)<br />
+(run-jetty app {})<br />
+[/cc]</p>
+
+<p>Options supported in jetty 9 are almost same as jetty 7 except the configurator is dropped. And a new &#8220;WebSockets&#8221; option is added. Accepting a map of context path and websocket class, it enables websocket protocol in your web application.</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;ring.adapter.jetty9)<br />
+(run-jetty app {:websockets {&#8220;/loc&#8221; LocationTracker}})<br />
+[/cc]</p>
+
+<p>Due to the lack of WebSocket API standards, I don&#8217;t spend time on the WebSocket abstraction. Just use Jetty&#8217;s internal API for websocket. Here is a typical implementation of websocket listener.<br />
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="c1">;; sample code</span>
+</span><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">xxx.ws.location</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:gen-class</span>
+</span><span class='line'>   <span class="ss">:name</span> <span class="nv">xxx.LocationTracker</span>
+</span><span class='line'>   <span class="ss">:init</span> <span class="nv">init</span>
+</span><span class='line'>   <span class="ss">:state</span> <span class="nv">state</span>
+</span><span class='line'>   <span class="ss">:extends</span> <span class="nv">org.eclipse.jetty.websocket.api.WebSocketAdapter</span>
+</span><span class='line'>   <span class="ss">:prefix</span> <span class="nv">ws-</span>
+</span><span class='line'>   <span class="ss">:exposes-methods</span> <span class="p">{</span><span class="nv">onWebSocketConnect</span> <span class="nv">superOnWebSocketConnect</span><span class="p">})</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.data.json</span> <span class="ss">:as</span> <span class="nv">json</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">[</span><span class="nv">clojure.tools.logging</span> <span class="ss">:as</span> <span class="nv">logging</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">[</span><span class="nv">monger.collection</span> <span class="ss">:as</span> <span class="nv">mc</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:import</span> <span class="p">(</span><span class="nf">org.eclipse.jetty.websocket.api</span> <span class="nv">WebSocketAdapter</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">(</span><span class="nf">java.util</span> <span class="nv">UUID</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">ws-init</span> <span class="p">[]</span>
+</span><span class='line'>  <span class="p">[[]</span> <span class="p">{</span><span class="ss">:client-id</span> <span class="p">(</span><span class="nb">str </span><span class="p">(</span><span class="nf">UUID/randomUUID</span><span class="p">))}])</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">ws-onWebSocketConnect</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">session</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">.superOnWebSocketConnect</span> <span class="nv">this</span> <span class="nv">session</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">logging/warn</span> <span class="s">&quot;new connection: &quot;</span> <span class="p">(</span><span class="nf">get-client-id</span> <span class="nv">this</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">ws-onWebSocketText</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">message</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">msg</span> <span class="p">(</span><span class="nf">json/read-json</span> <span class="nv">message</span><span class="p">)]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">case</span> <span class="p">(</span><span class="ss">:type</span> <span class="nv">msg</span><span class="p">)</span>
+</span><span class='line'>      <span class="nv">...</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">ws-onWebSocketClose</span> <span class="p">[</span><span class="nv">this</span> <span class="nv">status</span> <span class="nv">reason</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">logging/debug</span> <span class="s">&quot;close socket&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+<p>Since Jetty will create new instance of adapter for each connection, it requires heavy usage of &#8220;gen-class&#8221; . Remember to add the namespace to AOT compilation. Detailed Jetty API spec can be found <a href="http://download.eclipse.org/jetty/stable-9/apidocs/org/eclipse/jetty/websocket/api/WebSocketAdapter.html" target="_blank">here</a>.<br />
+ 
+And also find the project is <a href="https://github.com/sunng87/ring-jetty9-adapter" target="_blank">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -488,73 +604,6 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/10/27/adding-var-missing-to-clojure-namespace/">Adding -var-missing to Clojure Namespace</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-27T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>Motivation</h3></p>
-
-<p>I Just need some mechanism like &#8220;methondMissing&#8221; in Ruby. When a nonexistent var is called, the lookup system will try to call a &#8220;-var-missing&#8221; function in the namespace. This function should return a var and clojure compiler assumes this var as the one it was looking for.</p>
-
-<p>For example, in the shake library:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns shake.core)</p>
-
-<p>(defn -var-missing [sym]<br />
-  (create-executable-var sym))<br />
-[/cc]</p>
-
-<p>To support lazy loading, shake 0.3.0 won&#8217;t read your path. It will now create vars on demand. So on calling sh/uname, a var named `uname` will be created. And to create a var, just use intern or eval.</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(require &#8216;[shake.core :as sh])<br />
-(sh/uname -a)<br />
-[/cc]</p>
-
-<p><h3>How to</h3></p>
-
-<p>I&#8217;m sorry there is no way to implement this except hacking into Clojure&#8217;s compiler. Fortunately, it&#8217;s not too difficult to find out the injection point. </p>
-
-<p>As you may know, there are two phases in Clojure compiler: expanding macros and evaluating forms. Both phases will look up vars to find macros or values. So we should take care both of them.</p>
-
-<p>All code diff is here:
-<script src="https://gist.github.com/3962750.js?file=Compiler.java"></script></p>
-
-<p><h3>Conclusion</h3>
-Adding -var-missing is just an attempt to implement lazy loading of vars. And it provides another smooth syntax for writing DSLs. But actually, Clojure&#8217;s macro system provides a great metaprogramming mechanism. So in most case, you don&#8217;t have to hack into the Compiler like this. Just put your DSL into a top level macro, and you can get them done all in clojure scripts. </p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/3/">&larr; Older</a>
@@ -576,6 +625,10 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -589,10 +642,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

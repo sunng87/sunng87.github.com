@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="最近有一个小工具非常流行（如果我没有火星的话），gource，可以将你的代码历史可视化出来。这里有reddit的代码历史，fogus也把写the joy of clojure做成了这样的视频。 凑个热闹，来看看我的clojalk项目可视化 And the video link on vimeo. &hellip;">
+  <meta name="description" content="I have updated the leiningen plugin for clojure-control 0.2.1. There is no new feature for it as a plugin. But some new features from upstream are &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,88 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/11/01/lein-control-0-2-1-is-out/">Lein-control 0.2.1 Is Out</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have updated the leiningen plugin for <a href="https://github.com/killme2008/clojure-control" target="_blank">clojure-control</a> 0.2.1. There is no new feature for it as a plugin. But some new features from upstream are supported and should be highlighted:</p>
+
+<p><h3>SSH command DSL</h3>
+This feature is committed by me and first announced in clojure-control 0.2.1. With this DSL, you can write your SSH command with some predefined macros which is more readable and enjoyable.</p>
+
+<p>For example, an ssh task can be defined as:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+   (deftask :restart-server &#8220;restart your jetty server&#8221;<br />
+          []<br />
+          (ssh (cd &#8220;/opt/jetty/bin&#8221;<br />
+                 (run &#8220;./jetty.sh restart&#8221;))))<br />
+[/cc]</p>
+
+<p>which equals to :<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+   (deftask :restart-server &#8220;restart your jetty server&#8221;<br />
+          []<br />
+          (ssh &#8220;cd /opt/jetty/bin; ./jetty/sh restart&#8221;))<br />
+[/cc]</p>
+
+<p>For full document of this DSL, please check the <a href="https://github.com/killme2008/clojure-control/blob/master/README.md" target="_blank">README</a>.</p>
+
+<p><h3>Improved syntax for defcluster</h3>
+ssh/scp/rsync options in defcluster could be written as a vector:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defcluster :mycluster<br />
+  :ssh-options &#8220;-p 44&#8221;<br />
+  :scp-options &#8220;-v&#8221;<br />
+  :rsync-options [&#8220;-arz&#8221; &#8220;&#8211;delete&#8221;]<br />
+  :clients [<br />
+    { :host &#8220;c.domain.com&#8221; :user &#8220;clogin&#8221; :ssh-options &#8220;-v -p 43&#8221;}<br />
+  ]<br />
+  :user &#8220;login&#8221;<br />
+  :addresses [&#8220;a.domain.com&#8221; &#8220;b.domain.com&#8221;])[/cc]<br />
+(code quote from official announcement)</p>
+
+<p><h3>Parallel support</h3>
+Tasks could be executed in parallel if you add option <code>:parallel true</code> on defcluster.</p>
+
+<p>Finally, to use this plugin, add dev-dependency to your project.clj:<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+        :dev-dependencies [[lein-control &#8220;0.2.1&#8221;]]<br />
+[/cc]<br />
+More detailed instructions could be found <a href="https://github.com/sunng87/lein-control/blob/master/README" target="_blank">here</a>.</p>
+
+<p>BTW, this is the last release of lein-control as a standalone artifact. I will be working on merging lein-control into clojure-control. Soon you will have a few flexible ways to use clojure-control.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -559,68 +641,6 @@ You say goodbye and I say <strong>hello world</strong></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/06/%E5%B1%B1%E6%B0%B4%E5%9F%8E%E6%9E%97/">山水城林夕阳晚景</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/6214194078/" title="resized-DSC_0004.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6032/6214194078_164b4fd0d6.jpg" width="335" height="500" alt="resized-DSC_0004.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214193770/" title="resized-DSC_0003.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6115/6214193770_2f83cac6dc.jpg" width="500" height="335" alt="resized-DSC_0003.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6213680807/" title="resized-DSC_0005.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6235/6213680807_6290a29d96.jpg" width="335" height="500" alt="resized-DSC_0005.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214194920/" title="resized-DSC_0007.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6165/6214194920_d84ba70a3d.jpg" width="335" height="500" alt="resized-DSC_0007.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214195222/" title="resized-DSC_0010.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6112/6214195222_cf60cbdd63.jpg" width="335" height="500" alt="resized-DSC_0010.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214195508/" title="resized-DSC_0021.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6112/6214195508_f073ea481a.jpg" width="335" height="500" alt="resized-DSC_0021.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214195812/" title="resized-DSC_0030.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6154/6214195812_82cabd03ae.jpg" width="500" height="335" alt="resized-DSC_0030.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6213682553/" title="resized-DSC_0032.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6169/6213682553_9f5999f6a1.jpg" width="500" height="335" alt="resized-DSC_0032.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6213682811/" title="resized-DSC_0034.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6108/6213682811_4b7ac16f72.jpg" width="500" height="335" alt="resized-DSC_0034.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214196954/" title="resized-DSC_0035.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6095/6214196954_45e5bb7384.jpg" width="500" height="335" alt="resized-DSC_0035.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6214197296/" title="resized-DSC_0038.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6151/6214197296_376fe786ca.jpg" width="335" height="500" alt="resized-DSC_0038.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6213684031/" title="resized-DSC_0044.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6151/6213684031_397a26197f.jpg" width="335" height="500" alt="resized-DSC_0044.JPG" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6213684287/" title="resized-DSC_0049.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6101/6213684287_fab9ed2a1a.jpg" width="500" height="335" alt="resized-DSC_0049.JPG" /></a></p>
-
-<p>南京玄武湖台城。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/9/">&larr; Older</a>
@@ -642,6 +662,10 @@ You say goodbye and I say <strong>hello world</strong></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -655,10 +679,6 @@ You say goodbye and I say <strong>hello world</strong></p>
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

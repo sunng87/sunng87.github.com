@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="recaptcha的验证码新增了alpha composite的新机制取代干扰线，今天用了一些时间在YAN上也实现了这种绘图机制。 使用Java2D的AlphaComposite实现，选用的Rule为alpha 1.0的SrcOut，即通过公式 Ar = As * (1 – Ad )
-Cr = &hellip;">
+  <meta name="description" content="今早短路，在godaddy上注册了我的新域名sunng.info。更换域名主要出于几方面的考虑： 新域名1年的注册费用相当于原先的一半； 众所周知的原因，域名放在国内存在一定的风险； 原先域名过长不方便记忆和交流； .com后缀和我一穷二白地状况不符 classicning. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,52 @@ Cr = &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/28/all-new-sunng-info/">All New SUNNG.INFO</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今早短路，在godaddy上注册了我的新域名sunng.info。更换域名主要出于几方面的考虑：
+<ol>
+	<li>新域名1年的注册费用相当于原先的一半；</li>
+	<li>众所周知的原因，域名放在国内存在一定的风险；</li>
+	<li>原先域名过长不方便记忆和交流；</li>
+	<li>.com后缀和我一穷二白地状况不符</li>
+	<li>classicning.com曾被加入stopbadware.org，至今没有从twitter的malcious数据库里移除</li>
+</ol>
+原先的classicning.com会在今年6月到期，如果没有意外情况我不准备续费了，届时这个使用了四年的域名就要废弃了（当时客服大嫂还在电话里娇嗔地问我为啥不续十年呢，你说为啥呢）。</p>
+
+<p>麻烦大家利用这半年的时间逐步改变习惯，逐步用sunng.info了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -602,52 +647,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/28/setting-environment-variables-for-netbeans/">Setting Environment Variables for NetBeans</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you use NetBeans IDE to build an application which reads environment variable, you will have to do these settings in your IDE. There is no GUI to set such variables in NetBeans while Eclipse provides you a &#8220;Run Configuration Dialog&#8221;. So just add the declaration in your netbeans.conf.</p>
-
-<p>It is highly recommended to copy the configuration file to your home directory before you edit it.</p>
-
-<p><em>cp -r /usr/local/netbeans-6.8/etc ~/.netbeans/6.8/</em></p>
-
-<p>And append this line:</p>
-
-<p><em>export YAN_RESOURCE=/home/sun/work/yan-resource</em></p>
-
-<p>Then restart your IDE, it works. You can test/build/run your application with the environment variable <em>$YAN_RESOURCE</em> inside NetBeans IDE,</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -669,6 +668,10 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -682,10 +685,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

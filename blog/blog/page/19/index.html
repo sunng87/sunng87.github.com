@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="契机。
-早就想买个类似技术的电子书，年初的时候就有过这样的打算，几乎到了只欠东风的节骨眼上，还是畏惧了2000多的高价。事实证明等待是正确的，半年之后，盛大的Bambook发布了，Kindle3的价格也出来了，从此6寸的电子书都降到了1000人民币以下。情绪逐渐接近临界， &hellip;">
+  <meta name="description" content="Bottle是一个非常精致的WSGI框架，它提供了Python Web开发中需要的基本支持：URL路由，Request/Response对象封装，模板支持，与WSGI服务器集成支持。整个框架的全部代码约有2000行，它的核心部分没有其他任何依赖，只要有Python环境就可以运行。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,183 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/17/python-web-%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-bottle/">Python Web 开发框架 Bottle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://bottle.paws.de/">Bottle</a>是一个非常精致的WSGI框架，它提供了Python Web开发中需要的基本支持：URL路由，Request/Response对象封装，模板支持，与WSGI服务器集成支持。整个框架的全部代码约有2000行，它的核心部分没有其他任何依赖，只要有Python环境就可以运行。</p>
+
+<p>Bottle适用于小型的Web开发，在应用程序规模比较小的情况下可以实现快速开发。但是由于自身功能所限，对于大型的Web程序，Bottle的功能略显不足，程序员需要手动管理模块、数据库、配置等等，与Pylons等框架相比Bottle的优势就难以体现出来了。</p>
+
+<p><h3>快速入门</h3>
+通过一个简单的、典型的例子描述Bottle的使用：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from bottle import Bottle, run, mako_view, request</p>
+
+<p>myapp = Bottle()</p>
+
+<p>@myapp.get(&#8216;/hello/:name/:count#&#92;d+#&#8217;)<br />
+@mako_view(&#8216;hello&#8217;)<br />
+def hello(name, count):<br />
+    ip = request.environ.get(&#8216;REMOTE_ADDR&#8217;)<br />
+    return dict(n=name, c=int(count), ip=ip)</p>
+
+<p>run(app=myapp)<br />
+[/cc]</p>
+
+<p>我们创建一个Bottle对象，通过decorator配置一条路由记录。Bottle的url映射支持具名参数，<i>“/hello/:name/:count#&#92;d+#”</i> 格式的参数，可以匹配<i>/hello/(.+?)/(\d+?)</i>的URL。在方法体中，通过environ字典获得客户端IP，这个操作和其他WSGI框架是一致的。接着通过一个字典类型将Model数据传递给View。View模板通过decorator定义，采用mako模板引擎实现，模板名为hello，他表示在当前目录下一个名叫hello.tpl的文件。</p>
+
+<p><h3>剖析</h3>
+Bottle主要可以分成4个模块：
+<ul>
+<li>Router和WSGI Application</li>
+<li>Request和Response, Web helpers</li>
+<li>Template Adapters</li>
+<li>WSGI Server Adapters</li>
+</ul></p>
+
+<p><h4>Router和WSGI Application</h4>
+一个Bottle对象是一个标准的WSGI App，这使他可以与很多WSGI Server集成。每个app下管理一个Router用于针对URL映射到handler方法。根据Python decorator的特性，路由规则是在程序启动时自动执行的。</p>
+
+<p>Bottle的route方法用于注册handler到router中。除此以外，还有很多function currying帮助您简单地路由GET / POST 等特定HTTP方法。</p>
+
+<p>Bottle最近以来支持了hook，可以注册一些方法在每个请求之前、或之后执行。</p>
+
+<p>当接受一个HTTP请求时，WSGI Server会调用WSGI App的wsgi方法。它的流程是：</p>
+
+<p><ol>
+<li>根据标准的WSGI接口规范，从WSGI environ中生成一个Request对象，初始化一个response对象。</li>
+<li>在寻找方法之前，实际上Bottle会自动执行您注册的before_hook。（Bottle._add_hook_wrapper）</li>
+<li>根据request.path的URL在router中寻找对应的handler方法（Bottle.match_url, Router.match）。这一步中除了找到合适的handler方法，还要负责提取url中的具名参数，将结果以tuple的形式返回。</li>
+<li>以返回的方法和参数，执行handler，获得返回值。</li>
+<li>执行所有的after_hooks。</li>
+<li> 根据返回的不同类型，写入Response的头部。在这一步，Bottle还会应用一些filter，在Bottle中，filter是用于处理handler返回类型的。例如，一个典型的filter即内置的dict2json，他将handler返回的dict类型自动换成json。（Bottle._cast）</li>
+<li>根据返回的HTTP状态码，对handler返回对象进行处理。调用WSGI Server的start_response方法将返回对象写给客户端。</li>
+</ol></p>
+
+<p><h4>Request和Response, Web helpers</h4>
+Bottle对HTTP的请求和响应封装了Request和Response对象。它采用threadlocal的方式，由Bottle app管理生命周期。您可以在声明handler方法时不必像Java Servlet那样将他们以参数传入，这样增加了方法设计的灵活性，也使得单元测试变得相对轻松。</p>
+
+<p>Request对象是对WSGI environ属性的封装，可以从中取得的属性取决于WSGI Server对<a href="http://www.python.org/dev/peps/pep-0333/#environ-variables">PEP333</a>的实现。</p>
+
+<p>关于Request API，可以参考<a href="http://bottle.paws.de/docs/dev/api.html#bottle.Request">文档</a></p>
+
+<p>类似的，可以参考<a href="http://bottle.paws.de/docs/dev/api.html#bottle.Response">Response API</a>了解如何对HTTP响应进行操作</p>
+
+<p>和很多Web框架一样，你不必手动去设置HTTP重定向，helper方法会简化这些操作：<i>abort</i>, <i>redirect</i>, <i>static_file</i>。当然，你也可以自己创建一些helper。</p>
+
+<p><h4>Template Adapters</h4>
+template方法用于渲染视图，您可以使用不同的模板实现：mako, jinja2, cheetah, simpletal以及Bottle自己的简单实现。</p>
+
+<p>view作为一个decorator可以简化模板的选择。与route类似，作者也提供了一些function currying来支持mako_view这样简便的写法。</p>
+
+<p><h4>Server Adapters</h4>
+Bottle的Server Adapters简直可以说是WSGI Server的博览会，从这里您可以了解目前比较流行的WSGI实现：
+<ul>
+<li>flup</li>
+<li>wsgiref</li>
+<li>cherrypy</li>
+<li>paste</li>
+<li>fapws3</li>
+<li>tornado</li>
+<li>Google Appengine</li>
+<li>twisted</li>
+<li>diesel</li>
+<li>meinheld</li>
+<li>gunicorn</li>
+<li>eventlet</li>
+<li>gevent</li>
+<li>rocket</li>
+</ul></p>
+
+<p>当然，这些不是全部，如果要使用不在其中的WSGI Server，您只需实现一个ServerAdapter的run方法即可，需要做的就是将Bottle app传给server并启动它。</p>
+
+<p>内置的run方法用于启动服务，您还可以指定一个reloader参数使Bottle在后台检查源文件的修改情况，实现热加载。<br />
+除了run方式的启动，由于Bottle app本身就是一个符合标准的WSGI app，所以也可以通过一些服务器特有的方式启动服务，例如gunicorn：
+<i>gunicorn -w 2 -D -b 127.0.0.1:18080 module:app</i></p>
+
+<p><h3>实战</h3></p>
+
+<p><h4>Middlewares</h4>
+Middleware是WSGI的重要概念http://www.python.org/dev/peps/pep-0333/#middleware-components-that-play-both-sides 借助一些成熟的middleware可以添加一些Bottle目前不具备的功能：没错，Session。</p>
+
+<p>Session Middleware最著名的选择叫做Beaker，要其用Beaker，只需要一个装饰器模式的App声明即可，您可以参考Beaker的<a href="http://beaker.groovie.org/configuration.html">文档</a>.</p>
+
+<p>Pylons以使用Middleware著称，而除了Routing这样核心的Middleware，包括Beaker和Authkit都可以应用在Bottle程序上。</p>
+
+<p><h4>App Mounting</h4>
+Bottle的App提供一个很有用的mount方法帮助你将Web应用模块化。您可以将一个Bottle App挂载到一个父App上的某个路径，以父App启动后，父App可以为子App在一个路径下提供路由。</p>
+
+<p>不过你会遇到这样的问题：<br />
+[cc lang=&#8221;python&#8221;]<br />
+child = Bottle()</p>
+
+<p>@child.get(&#8220;/&#8221;)<br />
+def hello():<br />
+	return &#8220;hello world&#8221;</p>
+
+<p>parent = Bottle()<br />
+parent.mount(child, &#8220;/child&#8221;)<br />
+[/cc]</p>
+
+<p>很自然的，您希望打开浏览器访问http://localhost:8000/child可能看到hello world，然后却得到404.这个问题不难察觉，于是访问http://localhost:8000/child/，工作正常。</p>
+
+<p>我曾给作者提过这个问题http://github.com/defnull/bottle/issues#issue/88，（补一句，Bottle的作者少有的Nice，对你提出的问题他通常都会认真解答），作者提了一个重定向的方式，不过还是没有决定把它直接加进mount方法里。</p>
+
+<p>那么，我们需要一个新的mount来支持http://localhost:8000/child</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+def mount(parent, child, path):<br />
+    parent.mount(child, path)<br />
+    @parent.get(path)<br />
+    def redir():<br />
+        redirect(path+&#8221;/&#8221;)<br />
+[/cc]</p>
+
+<p><h4>Google AppEngine</h4>
+因为有WSGI标准，你可以用Bottle开发Google AppEngine程序。您只需要在handler文件中加入这样的代码即可：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from google.appengine.ext.webapp.util import run_wsgi_app<br />
+def main():<br />
+	run_wsgi_app(my_bottle_app)</p>
+
+<p>if __name__ == &#8216;__main__&#8217;:<br />
+	main()<br />
+[/cc]<br />
+依赖？Bottle本身是self-contained，不过你可能还需要一个强大一些的模板引擎来完成你的应用，比如Mako。这样，你需要把依赖和自己的程序一起上传到GAE。对于Mako来说，除了它自己，还依赖marksave，别忘了它。</p>
+
+<p>以上就是我对Bottle的理解和使用心得，希望您在合适的场景下使用Bottle，只有这样，才能感受到这个框架所带来的乐趣。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -581,62 +757,6 @@ Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->Show
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/18/gui-debugging-tools/">GUI Debugging Tools</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-18T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。<a href="http://www.geany.org">geany</a>是一个简单的C/C++ IDE，它有一个geanygdb插件可以帮助你在geany的图形界面里调试。</p>
-
-<p>但是最近安装在仓库里的geanygdb插件有一些问题，会导致很高的CPU占用。不过这个问题被报告在<a href="http://sourceforge.net/tracker/?func=detail&amp;aid=3019827&amp;group_id=222729&amp;atid=1056532">这里</a>，现在已经修复了。因为新版本还没有release，所以如果急着用的话，可以从svn签出代码：
-<i>svn co https://geany-plugins.svn.sourceforge.net/svnroot/geany-plugins/trunk/geany-plugins</i>
-然后执行：<br />
-[cc lang=&#8221;bash&#8221;]<br />
-cd geany-plugins<br />
-./autogen.sh<br />
-./configure<br />
-cd geanygdb<br />
-make<br />
-sudo make install<br />
-[/cc]</p>
-
-<p>重启geany，打开plugin manager，看到geanygdb的版本已经变成0.20就可以使用了。</p>
-
-<p>geany现在还不支持ctags，是因为它内部有一套自己的tags实现。代码导航可以用过上下文菜单 Go to tag Definition 或者 Go to tag Declaration 实现，最好是到Preference中给这两个命令设置一个快捷键，比如Ctrl+]，再对Navigate back 设置一个Ctrl+t，就如同vim+ctags一样了。</p>
-
-<p>实际上在GNOME桌面还有一个专门的GDB图形界面，叫做<a href="http://projects.gnome.org/nemiver/">Nemiver</a>。Nemiver对gdb的常用命令都有快捷键操作，把鼠标移动到代码上还可以查看变量的值，效果和eclipse调试java程序一样，非常强大。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -658,6 +778,10 @@ sudo make install<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -671,10 +795,6 @@ sudo make install<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

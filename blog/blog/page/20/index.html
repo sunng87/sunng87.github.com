@@ -9,9 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content=" Get artificial301 at:
-http://github.com/sunng87/Artificial301/downloads The post is brought to you by lekhonee v0.7
-">
+  <meta name="description" content="想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。geany是一个简单的C/C++ IDE， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,62 @@ http://github.com/sunng87/Artificial301/downloads The post is brought to you by 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/09/18/gui-debugging-tools/">GUI Debugging Tools</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。<a href="http://www.geany.org">geany</a>是一个简单的C/C++ IDE，它有一个geanygdb插件可以帮助你在geany的图形界面里调试。</p>
+
+<p>但是最近安装在仓库里的geanygdb插件有一些问题，会导致很高的CPU占用。不过这个问题被报告在<a href="http://sourceforge.net/tracker/?func=detail&amp;aid=3019827&amp;group_id=222729&amp;atid=1056532">这里</a>，现在已经修复了。因为新版本还没有release，所以如果急着用的话，可以从svn签出代码：
+<i>svn co https://geany-plugins.svn.sourceforge.net/svnroot/geany-plugins/trunk/geany-plugins</i>
+然后执行：<br />
+[cc lang=&#8221;bash&#8221;]<br />
+cd geany-plugins<br />
+./autogen.sh<br />
+./configure<br />
+cd geanygdb<br />
+make<br />
+sudo make install<br />
+[/cc]</p>
+
+<p>重启geany，打开plugin manager，看到geanygdb的版本已经变成0.20就可以使用了。</p>
+
+<p>geany现在还不支持ctags，是因为它内部有一套自己的tags实现。代码导航可以用过上下文菜单 Go to tag Definition 或者 Go to tag Declaration 实现，最好是到Preference中给这两个命令设置一个快捷键，比如Ctrl+]，再对Navigate back 设置一个Ctrl+t，就如同vim+ctags一样了。</p>
+
+<p>实际上在GNOME桌面还有一个专门的GDB图形界面，叫做<a href="http://projects.gnome.org/nemiver/">Nemiver</a>。Nemiver对gdb的常用命令都有快捷键操作，把鼠标移动到代码上还可以查看变量的值，效果和eclipse调试java程序一样，非常强大。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -724,56 +778,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/08/28/%E5%91%A8%E8%AE%B0/">周记</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>先讲个<a href="http://www.douban.com/group/topic/13651452/">笑话</a>，然后回顾一下这个星期。</p>
-
-<p>这个星期从周四晚上开始，和一位外国朋友一位台湾女士聊天。第一次经历这样的场面，忐忑得很，起初还尝试和大家说英文的，奈何我的口语和听力实在是难以支撑，最后不知不觉间大家都平滑过渡到中文了。后来我想着听力还可以通过看InfoQ上的会议录像什么的练习一下，口语就鲜有机会和场合提升了。进而又想到长期在一个小环境里做重复的事情，有些能力的退化你甚至都感觉不到，更不要说原先不具备的能力了，你甚至都不能觉察到自己缺乏某一方面的训练。</p>
-
-<p>今天下午又和原先在IBM实习的同事聚会，正好在五角场附近转转。比起张江这种近乎边缘的生活环境，五角场实在是强太多了，更难能可贵的是如果你在附近转一转，询问一下房租，那里的生活成本实际上并不比张江高，生活质量实在是没法比。这是为什么呢？不理解。另外今天看到了<a href="http://blog.samsonis.me/2010/08/update-41-%E6%9C%89%E4%BA%9B%E4%BA%8B%E6%83%85%E6%88%91%E8%BF%98%E7%9C%9F%E4%B8%8D%E7%90%86%E8%A7%A3/">samson理解不了的沃尔玛</a>，还有传说中那一片Oracle / EMC / eBao / 百度。上海真是大，地铁走几站就是一个完全不同的世界。</p>
-
-<p>从同事那里了解到了团购网站的一些事情，这年头，好像不做个团购网站都不好意思跟人打招呼似的。于是有了<a href="http://www.zuitu.com/">这种东西</a>，又是一窝蜂，这就是我们的互联网，你有什么意见呢。</p>
-
-<p>昨天本想写一个对 Continuous Deployment 的理解来着，结果不料电脑过热死机了。什么原因呢，原来是浏览器里开着一个崔永元的网站，一个基于flash的网站，你懂的，CPU一直占满。这么明显的、严重的、高能耗的问题，这么多年了，Adobe一点动作都没有。另外我发现今天禁用了Adobe的Flashplayer居然Firefox的Ctrl+C/Ctrl+T等等几个快捷键突然恢复了，对于这种情况还是不说什么吧。最近听说开源的实现<a href="http://digitizor.com/2010/08/23/gnash-0-88-released-100-youtube-compatible-now/">gnash已经可以播放Youtube的视频</a>了（当然严格地说这事跟咱们没什么关系），一会写完blog我决定配置一下试试。</p>
-
-<p>这周另一个重要的事情是Kindle 3上市了，第一次对一个手持设备产生这么强烈的兴趣。而且尤其是发现你没有那么容易的渠道能够买到它的时候，这种兴趣膨胀得更厉害了。半年前电子墨水的电子书都还在2000人民币以上，这次6寸不带3G的Kindle 3只要139美元，折合人民币连950都不到，这个领域很快又要炸开锅了。</p>
-
-<p>最后，我把Bason放到Sonatype的<a href="https://oss.sonatype.org/content/repositories/snapshots/info/sunng/bason/"></a>OSS Repository上了。Sonatype提供了一个免费的Maven仓库，你可以把自己的开源项目deploy到这个仓库中方便分发。详情您可以去看<a href="https://docs.sonatype.org/display/repository/sonatype+oss+maven+repository+usage+guide">sonatype提供的文档</a>。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -795,6 +799,10 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -808,10 +816,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

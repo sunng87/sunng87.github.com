@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今天在工作用的ArchLinux上安装了用Openbox取代了GNOME桌面，感觉良好，回来尝试一下在Ubuntu上也做同样的事情。不料遇到问题，在完成基本的配置之后，Openbox Session无法启动，总是自动跳回gdm。查看.xsession-errors，是gnome-setting- &hellip;">
+  <meta name="description" content="I&#8217;m sorry for the long title. Due to lack of documentation, it&#8217;s not easy to use python xpcom api from virtualbox sdk. The code below is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/12/list-your-installed-virtualbox-virtual-marchines-using-vbox-python-xpcom-api/">List Your Installed Virtualbox Virtual Marchines Using Vbox Python Xpcom Api</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;m sorry for the long title. Due to lack of documentation, it&#8217;s not easy to use python xpcom api from virtualbox sdk. The code below is just a sample that lists your installed virtual machines. It works on linux with VirtualBox OSE 2.0.8. Hope useful to you.<br />
+[cc lang=&#8221;python&#8221;]<br />
+import vboxapi<br />
+vmsg = vboxapi.VirtualBoxManager(None, None)<br />
+vbox = vmsg.vbox<br />
+vmsg.mgr.getSessionObject(vbox)<br />
+machs = vbox.getMachines()<br />
+names = map(lambda x: (x.name,x.id), machs)<br />
+print names<br />
+[/cc]<br />
+Output:<br />
+[cc lang=&#8221;python&#8221; nowrap=&#8221;false&#8221; line_numbers=&#8221;false&#8221;]<br />
+[(u&#8217;Ubuntu&#8217;, u&#8217;aac3fd46-4f1e-4f6e-8abe-b1a5516abf8c&#8217;), (u&#8217;Windows&#8217;, u&#8217;fa73952e-f0a6-4bf0-af20-259513d73bc1&#8217;), (u&#8217;OpenSolaris&#8217;, u&#8217;a951542c-3178-4a6b-8087-f1b0314e283a&#8217;), (u&#8217;LinuxMint&#8217;, u&#8217;8191f256-1b76-4ce7-a202-93730dae1b33&#8217;), (u&#8217;Fedora&#8217;, u&#8217;ca250f45-d752-4baf-9281-fb0847dc8287&#8217;), (u&#8217;Freebsd&#8217;, u&#8217;8322b62a-aed5-4f04-9815-9fadfeba9fe1&#8217;), (u&#8217;ArchLinux&#8217;, u&#8217;efc1167a-4e06-4c14-aeb0-bfb303c8f5f7&#8217;), (u&#8217;openSUSE&#8217;, u&#8217;02e18816-311d-420b-99b3-6b4b4cccf7b7&#8217;), (u&#8217;CentOS&#8217;, u&#8217;ccf0421c-85c4-4123-8722-57abc494c633&#8217;)]<br />
+[/cc]</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -679,52 +728,6 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/01/28/all-new-sunng-info/">All New SUNNG.INFO</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今早短路，在godaddy上注册了我的新域名sunng.info。更换域名主要出于几方面的考虑：
-<ol>
-	<li>新域名1年的注册费用相当于原先的一半；</li>
-	<li>众所周知的原因，域名放在国内存在一定的风险；</li>
-	<li>原先域名过长不方便记忆和交流；</li>
-	<li>.com后缀和我一穷二白地状况不符</li>
-	<li>classicning.com曾被加入stopbadware.org，至今没有从twitter的malcious数据库里移除</li>
-</ol>
-原先的classicning.com会在今年6月到期，如果没有意外情况我不准备续费了，届时这个使用了四年的域名就要废弃了（当时客服大嫂还在电话里娇嗔地问我为啥不续十年呢，你说为啥呢）。</p>
-
-<p>麻烦大家利用这半年的时间逐步改变习惯，逐步用sunng.info了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/28/">&larr; Older</a>
@@ -746,6 +749,10 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -759,10 +766,6 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

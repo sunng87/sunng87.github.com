@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="运行一个CometD Demo非常简单，只要创建一个Maven项目即可（CometD Howtos）：
-$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org maven会提示用户选择archetype，包括cometd的版本1、 &hellip;">
+  <meta name="description" content="Bottle是一个Python web框架，兼容wsgi标准，lightweight，self-contained。 提到web框架，自然要和相类似的python框架相比。 Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,101 @@ $ mvn archetype:generate -DarchetypeCatalog=http://cometd.org maven会提示用�
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/21/bottle-fapws3/">Bottle & Fapws3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://github.com/defnull/bottle">Bottle</a>是一个Python web框架，兼容<a href="http://www.python.org/dev/peps/pep-0333">wsgi</a>标准，lightweight，self-contained。</p>
+
+<p>提到web框架，自然要和相类似的python框架相比。</p>
+
+<p>Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点，使用Django意味着必须使用关系型数据库进行存储（尽管有一些Model层的其他实现，但绝大多数都是Hack的方式实现），必须使用Django并不非常出色的Template系统。Pylons针对Django的这些问题，采用了松散的方式，数据层可选择由SQLAlchemy实现，模板系统可以选择mako / jinja等。Pylons用paster来管理项目、创建代码模板。借鉴了rails的哲学，目录结构也相类似。可是pylons仍然显得重量级，把注意力放到web.py。只要定义一个router，定义相应的handler就可以处理web请求，handler对象的GET POST等方法分别对应相应的HTTP请求。看起来不错了，不过与bottle相比，webpy仍然显得繁琐、功能有限，而且它本身的db模块就更加鸡肋了。</p>
+
+<p>看一个实例便知：<br />
+定义一个简单的HTTP页面：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from bottle import Bottle, run, mako_view, request<br />
+from bottle import FapwsServer</p>
+
+<p>myapp = Bottle()</p>
+
+<p>@myapp.route(&#8216;/nihao/:name/:count#&#92;d+#&#8217;)<br />
+@mako_view(&#8216;nihao&#8217;)<br />
+def nihao(name, count):<br />
+    return dict(n=name, c=int(count), ip=request.environ.get(&#8216;REMOTE_ADDR&#8217;))</p>
+
+<p>run(app=myapp, server=FapwsServer)</p>
+
+<p>[/cc]<br />
+对应的nihao.tpl模板，用mako引擎实现：<br />
+[cc lang=&#8221;html&#8221;]
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" /></head></html></p>
+
+<p>    <title>Nihao</title></p>
+
+<p>
+<body>
+    <div id="ip">
+        <h1 id="heading">Request From ${ip}</h1>
+    </div>
+    <%def name="greeting(n)">
+        <div id="name">
+            Nihao ${n}<br />
+        </div>
+    </%def>
+    % for i in range(c):<br />
+        ${greeting(n)}<br />
+    % endfor
+</body>
+
+[/cc]<br />
+仅仅是一些简单的内容，接着只需要：
+<i>python bottle-test.py</i>
+即可运行服务器。</p>
+
+<p>bottle通过decorator定义route规则，还支持url提取参数。通过decorator指定模板、模板引擎。可以说近乎简化到了极致。</p>
+
+<p>bottle遵循单一职责原则，不提供数据层的实现，由用户自己指定，bottle没有任何限制。模板引擎，bottle支持mako / jinja / cheetah，本身还内建一个默认SimpleTemplate引擎。bottle还支持多种wsgi服务器，包括flup / wsgiref / cherrypy / paste / twisted / tornado / fapws3 等等。</p>
+
+<p>最后提一个wsgi的实现<a href="http://github.com/william-os4y/fapws3">fapws3</a>，号称是目前最快的wsgi服务器。fapws3用libev实现，在不同的操作系统上采用不同的多路IO模型以达到高性能。</p>
+
+<p>bottle的作者做过一个关于不同实现的性能比较：
+<a href="http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance">http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -794,91 +888,6 @@ mv doubanfm ~/.local/share/exaile/plugins/</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/24/redis/">Redis</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://code.google.com/p/redis">Redis</a>是一个高性能Key-Value store</p>
-
-<p><h2>Installation</h2>
-下载解压，make之后就可以直接启动./redis-server 默认读取当前目录下的redis.conf作为配置，亦可参数指定。默认监听6379端口。</p>
-
-<p><h2>Features</h2>
-<h3>支持多种数据结构</h3>
-相较memcached，redis支持多种数据结构，包括
-<ul>
-<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_string_values">string</a></li>
-<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_lists">list</a></li>
-<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sets">set</a></li>
-<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sorted_sets_(zsets,_Redis_version_%3E=_1.">sorted set</a></li>
-<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_hashes">hash</a></li>
-</ul></p>
-
-<p>针对每种数据结构，redis都提供比较完整的操作支持。</p>
-
-<p><h3>高性能</h3>
-据Wiki上说可以达到110,000 SETs/second, 81,000 GETs/second，数据根据一定的策略存在内存和磁盘上（支持持久化）。从1.1开始支持<a href="http://code.google.com/p/redis/wiki/AppendOnlyFileHowto">append-only持久化方式</a>，数据被加到文件中，并进行异步的维护，保证文件的大小。从2.0（即1.3）开始支持virtual memory<a href="http://code.google.com/p/redis/wiki/VirtualMemoryUserGuide"></a>，当内存占用超过配置文件中vm-max-memory时，数据被写入virtual memory。</p>
-
-<p><h2>Replication</h2>
-redis支持主从复制，从而提供多台实例进行读操作，可以在slave的配置文件里配置master的地址。</p>
-
-<p><h2>Protocol</h2>
-redis目前只有基于TCP的文本协议，与memcache类似，有一些改进。<br />
-客户端通常发送
-<i>命令 参数&#8230; 值字节数\r\n</i>
-<i>值\r\n</i></p>
-
-<p>服务端的返回，根据第一个字节，可以判断：
-<ul>
-<li><strong>-</strong> 错误信息</li>
-<li><strong>+</strong> 普通文本信息</li>
-<li><strong>$</strong> 变长字节数，$6表示CRLF之后有6个字节的字符</li>
-<li><strong>:</strong> 返回一个整数</li>
-<li><strong>*</strong> 返回组数，即*6表示CRLF之后将返回6组变长字符</li>
-</ul></p>
-
-<p><h2>其他</h2>
-项目地址
-<a href="http://code.google.com/p/redis/">http://code.google.com/p/redis/</a>
-<a href="http://github.com/antirez/redis/">http://github.com/antirez/redis/</a>
-开发者twitter
-<a href="http://twitter.com/antirez">http://twitter.com/antirez</a>
-<a href="http://twitter.com/pnoordhuis">http://twitter.com/pnoordhuis</a></p>
-
-<p>Redis功能简单精悍，很符合Unix哲学，核心redis.c只有一万多行，实在是个让人爱不释手的东西。如果可能，争取把他用到生产环境来取代现在的memcached。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/23/">&larr; Older</a>
@@ -900,6 +909,10 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -913,10 +926,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>

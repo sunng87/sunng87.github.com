@@ -9,7 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="看了烧饭1，就想看烧饭2.可是我思前想后，烧饭2这个标题总有那么一点不太对劲（大家自己体会），于是还是叫烧饭再吧。 今天介绍酱爆鸡丁，娘的，在北京的夏天吃这个吃得都快吐了，时隔一年本人亲自操刀上阵，不为别的，只为再吐一次。 用料：鸡胸肉一块，黄瓜一根，甜面酱，葱，料酒，酱油，盐，味精，淀粉，糖， &hellip;">
+  <meta name="description" content="import MySQLdb
+import subprocess
+from smtplib import *
+from datetime import date, timedelta class StatEntry(object): def __init__(self, name, count &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/22/some-python-segments/">Some Python Segments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><pre class="brush:python">
+import MySQLdb
+import subprocess
+from smtplib import *
+from datetime import date, timedelta</pre></p>
+
+<p>class StatEntry(object):<br />
+    def __init__(self, name, count):<br />
+        self.name = name<br />
+        self.count = count<br />
+    def __str__(self):<br />
+        return &#8220;%s\t%d&#8221; % (self.name, self.count)</p>
+
+<p>def fetchdb(date):<br />
+    conn = MySQLdb.connect(host=&#8221;localhost&#8221;, user=&#8221;root&#8221;, passwd=&#8221;acd&#8221;, db=&#8221;cls&#8221;)<br />
+    cursor = conn.cursor()<br />
+    cursor.execute(&#8220;SELECT link, count(*) FROM sdocom WHERE DATE(logtime) = DATE(&#8216;%s&#8217;) GROUP BY link&#8221; % date)<br />
+    rows = cursor.fetchall()<br />
+    result = map(lambda x: StatEntry(*x), rows)<br />
+    return result</p>
+
+<p>def archive(datelist):<br />
+    for date in datelist:<br />
+        subprocess.call([&#8220;gzip&#8221;, &#8220;cls-&#8220;+date+&#8221;.log&#8221;])</p>
+
+<p>def sendmail(results):<br />
+    mailcontent = reduce(lambda x,y: x+str(y)+&#8221;\n&#8221;, results, &#8220;&#8221;)<br />
+    smtp = SMTP(&#8220;your.smtp.server&#8221;)<br />
+    smtp.login(&#8220;user&#8221;,&#8221;passwd&#8221;)<br />
+    smtp.sendmail(&#8220;cls-no-reply@smtp.server&#8221;, [&#8220;your@mail.server&#8221;], mailcontent)<br />
+    smtp.quit()</p>
+
+<p>def dumpall(data):<br />
+    content = reduce(lambda x,y: x+str(y)+&#8221;\n&#8221;, data, &#8220;&#8221;)<br />
+    print content</p>
+
+<p>def main():<br />
+    yesterday = str(date.today()-timedelta(1))<br />
+    results = fetchdb(yesterday)<br />
+    #dumpall(results)<br />
+    sendmail(results)<br />
+    archive([yesterday])</p>
+
+<p>if __name__ == &#8216;__main__&#8217;:<br />
+    main()
+</p>
+
+<p>As log file was imported to database automatically by other process, the script retrieves statistical data from mysql db and sends the result to your mail box via smtp. Also, log file would be compressed by gzip to minimize storage overhead. Add it to crontab, you will get daily statistical report.</p>
+
+<p>This example shows you basic usage of mysql-python lib, smtplib and how to calculate yesterday by datetime.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -646,42 +734,6 @@ fs.next();<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/08/06/%E5%8F%B2%E6%9C%89%E5%85%88%E4%BE%8B%E7%9A%84%E4%B8%80%E8%B7%A4/">史有先例的一跤</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>听说要来台风，今天特地想着把自行车推进楼道里。楼道到平地有一个坡道，就是大家都见过的那种坡道。于是我骑着自行车冲了上去，试图把动能转化成势能。不料时间停止在了坡道的三分之二处。现在不仅大脑的并行处理能力下降，小脑更是时常挂起。你说我当时怎么就没有想到使把劲蹬上去呢，我确实没有这么想，连条件反射都没有。事后觉着大概是沉醉于那一刻的静止了。两个轮子终归是不暇流连的，接下来势能没有舍得转化给摩擦，它一定程度上在我的授意之下换了个方向通通变成动能了。躺在地面上的时候我就在想上次如此贴近大地是什么时候了，大约应该在最近三十年之内。整个过程发生在下班回家热火最朝天的时候，我的视界里倒是没有发现其他眼睛，但是可以确定的是此时此刻一定有不少痴痴的目光对着我的后脑勺。希望这一切没有颠覆牛顿们这么多年来给他们建立的世界观，不过其实整个过程更象是风力作用的自然现象，只可惜台风还远，另外，我不知道风是在哪一个方向吹。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
@@ -703,6 +755,10 @@ fs.next();<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
@@ -716,10 +772,6 @@ fs.next();<br />
     
       <li class="post">
         <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
       </li>
     
   </ul>
