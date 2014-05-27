@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Papaline 0.3 introduced a new paradigm &ldquo;fork-join&rdquo;. It allows you to split a task into smaller units, and execute them in parallel. &hellip;">
+  <meta name="description" content="Papaline 0.3 introduced a new model &ldquo;fork-join&rdquo; for task execution. It allows you to split a task into smaller units, and execute them in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -91,7 +91,7 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new paradigm &ldquo;fork-join&rdquo;. It allows you to split a task into smaller units, and execute them in parallel.</p>
+<div class="entry-content"><p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model &ldquo;fork-join&rdquo; for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
 
 <p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
 
@@ -147,7 +147,7 @@
 
 <p><img src="http://i.imgur.com/BVDEH9Q.png" alt="join" /></p>
 
-<p>So with <code>(fork)</code> and <code>(join)</code>, it&rsquo;s very flexible to change execution model in Papaline.  Internally, I use clojure&rsquo;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of Papaline.</p>
+<p>So with <code>(fork)</code> and <code>(join)</code>, it&rsquo;s very flexible to change execution model in Papaline.  Internally, I use clojure&rsquo;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of <a href="http://github.com/sunng87/papaline">Papaline</a>.</p>
 </div>
 
 
@@ -212,7 +212,7 @@
   
     <section>
   <h1>About Me</h1>
-  <p>Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
 </section>
 <section>
   <h1>Recent Posts</h1>
