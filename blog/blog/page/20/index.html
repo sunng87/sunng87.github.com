@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。geany是一个简单的C/C++ IDE， &hellip;">
+  <meta name="description" content="Requirement
+When editing when Geany, you need some document of system library functions at hand. So you want to browse manpage at any time. Solution &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/09/22/lua-script-for-geany-to-view-manpage-of-functions/">Lua Script for Geany to View Manpage of Functions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><h3>Requirement</h3>
+When editing when Geany, you need some document of system library functions at hand. So you want to browse manpage at any time.</p>
+
+<p><h3>Solution</h3>
+Just two lines:<br />
+[cc lang=&#8221;lua&#8221;]<br />
+sel=geany.selection()<br />
+geany.launch(&#8216;rxvt-unicode&#8217;, &#8216;-e&#8217;, &#8216;man&#8217;, sel)<br />
+[/cc]
+<a href="http://gist.github.com/591279">http://gist.github.com/591279</a></p>
+
+<p><h3>Install</h3>
+Make sure you have geany-plugin-lua installed:
+<i>sudo apt-get install geany-plugin-lua</i></p>
+
+<p>Create a lua source file named &#8216;ShowMan.lua&#8217; in <i>~/.config/geany/plugins/geanylua/</i>  . If the direcotry does not exist, you should create it first.</p>
+
+<p>Copy two lines of lua code into this file, save and close.</p>
+
+<p>Create a file named hotkeys.cfg in <i>~/.config/geany/plugins/geanylua/</i>, add following content:
+<i>ShowMan.lua</i></p>
+
+<p>Restart geany, then open Preferences->Keybindings, Lua Script-> ShowMan, bind a key, for example, Alt+m</p>
+
+<p><h3>Usage</h3>
+Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->ShowMan), then you see the terminal and the manpage.</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5017060556/" title="geany-lua-manpage by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4127/5017060556_ca89e90517.jpg" width="500" height="313" alt="geany-lua-manpage" /></a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -734,50 +800,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/08/31/open-for-a-new-job/">Open for a New Job</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-31T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am about to leave current company and looking for a new challenge for future. If you are interested, and also looking for a Java or Python developer, please check the hot baked resume:
-<ul>
-<li><a href="http://sunng.info/resume_en.html">en</a></li>
-<li><a href="http://sunng.info/resume_cn.html">zh</a></li>
-</ul></p>
-
-<p>Actually, I am not good at documenting myself. So if you need more details, feel free to get connected with email: classicning[at]gmail.com</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -799,6 +821,10 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -812,10 +838,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

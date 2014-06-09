@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今早短路，在godaddy上注册了我的新域名sunng.info。更换域名主要出于几方面的考虑： 新域名1年的注册费用相当于原先的一半； 众所周知的原因，域名放在国内存在一定的风险； 原先域名过长不方便记忆和交流； .com后缀和我一穷二白地状况不符 classicning. &hellip;">
+  <meta name="description" content="自从libchamplain / geoclue等库发布之后，gnome桌面的地理信息工具和支持发展很迅速：例如之前提到过的eye-of-gnome的地理信息插件，根据EXIF信息在地图上显示。现在gnome桌面上终于有一个专门的地图查看器了，仍然是基于libchamplain， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/30/emerillon-map-viewer-for-gnome-desktop/">Emerillon: Map Viewer for Gnome Desktop</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>自从libchamplain / geoclue等库发布之后，gnome桌面的地理信息工具和支持发展很迅速：例如之前提到过的eye-of-gnome的地理信息插件，根据EXIF信息在地图上显示。现在gnome桌面上终于有一个专门的地图查看器了，仍然是基于libchamplain，名字叫做<a href="http://www.novopia.com/emerillon/" target="_blank">emerillon</a></p>
+
+<p><a title="Emerillon Map Viewer by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4315412541/"><img src="http://farm5.static.flickr.com/4021/4315412541_d34e08d02b.jpg" alt="Emerillon Map Viewer" width="500" height="286" /></a></p>
+
+<p>仍然是使用open street maps，这两年上海的地图发展的非常不错，连最新的二号线东延都已经被标注出来了。相比之下，南京的地图就还是一片空白。</p>
+
+<p>在Ubuntu上安装emerillon，可以从其网站上下载源码编译安装：
+<a href="http://www.novopia.com/emerillon/download.html">http://www.novopia.com/emerillon/download.html</a></p>
+
+<p>emerillon的几个主要依赖：
+<ul>
+	<li>libchamplain</li>
+	<li>librest</li>
+	<li>ethos</li>
+</ul>
+libchamplain在ubuntu 9.10的仓库已经包含</p>
+
+<p>librest也在软件仓库中，不过需要注意的是ubuntu将librest安装在pkg-config里时的名字叫做rest.pc，而emerillon查找的是rest-0.6.pc，所以需要手动建立一个软连接：
+<em>sudo ln -s /usr/lib/pkgconfig/rest.pc /usr/lib/pkgconfig/rest-0.6.pc</em></p>
+
+<p>ethos是一个Gtk的插件框架，目前还不在软件仓库中，需要从网站下载代码编译：
+<a href="http://git.dronelabs.com/ethos/" target="_blank">http://git.dronelabs.com/ethos/</a>
+ethos网站上提到的PPA源中的版本偏旧，不建议使用。</p>
+
+<p><em>实际上也可以直接添加emerillon的PPA源：<br />
+deb http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main<br />
+deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p>
+
+<p>另外，也可以通过Ubuntu Tweak安装。</p>
+
+<p>作者Blog：
+<a href="http://blog.pierlux.com/en/">http://blog.pierlux.com/en/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -607,46 +674,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/29/setting-environment-variables-for-glassfish-v3/">Setting Environment Variables for Glassfish V3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After you test and build your application in NetBeans, you deploy it to Glassfish, but the environment variables are invalid again. In such situation, you should set these variable in glassfish configuration file which is supposed to located at:</p>
-
-<p><em>$GLASSFISH_HOME/glassfish/config/asenv.conf</em></p>
-
-<p>Append your variables to the file, and restart the server. It works.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -668,6 +695,10 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -681,10 +712,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

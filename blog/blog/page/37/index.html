@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="标题是随便起的，是背景音乐。最近比较忙，这会偷闲update一下。话说用ol写blog已经非常普及了。 首当其冲，上上周六晚十点，本人亲手把右手边一杯茶水碰倒在桌子上导致电脑进水。最为发指的是当时第一反应还不是抢救电脑，是擦桌子。省略掉一些不愿再回忆的过程，上周日修电脑的人说找不出问题，要换主板。 &hellip;">
+  <meta name="description" content="今天中午在synaptic里闲搜，发现了一个叫做desktop-switcher的小工具，它的功能是在ubuntu的netbook小桌面模式和经典模式之间切换。好奇心起，就装上试试。一试不得了，两个不太明确的报错之后，面板没有了，桌面也只剩下背景图片，左右键通通废掉，登出也只能按电源开关。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/05/29/desktop-switcher%E4%BB%A5%E4%B8%8B/">Desktop-switcher以下</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天中午在synaptic里闲搜，发现了一个叫做desktop-switcher的小工具，它的功能是在ubuntu的netbook小桌面模式和经典模式之间切换。好奇心起，就装上试试。一试不得了，两个不太明确的报错之后，面板没有了，桌面也只剩下背景图片，左右键通通废掉，登出也只能按电源开关。尤其是xorg1.6之后，ctrl+alt+backspace也不好使了，甚是无奈。<br />
+这下岂不是又要重装系统了？还好这次冷静（现在越来越冷静了，我是说经历了水泼电脑之后），先新建了一个用户重新进桌面上网搜一下。还真搜到了问题，果然是这个切换工具有bug。<br />
+首先看一下gnome配置中有关的配置<br />
+gconftool-2 &#8211;get /desktop/gnome/session/required_components<br />
+这个值居然被清空了，参考launchpad上的讨论，要加上这几项<br />
+gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=list &#8211;list-type=string [&#8220;panel&#8221;,&#8221;filemanager&#8221;,&#8221;windowmanager&#8221;]<br />
+重登录之后panel总算是出来了，原有panel上所有的配置都被清空了，连主菜单都没有了。不过这个没有问题，手动重新添加问题不大。panel的样式需要重新设置，因为这个样式已经被desktop-switcher切换到netbook版本的样式（名字忘了）。<br />
+还有一些小问题，可以在Gnome设置工具里修改：<br />
+1. 桌面右键无效、图标消失了<br />
+查找这个键值：/apps/nautilus/preferences/show_desktop 将其设置为true，让nautilus管理桌面<br />
+2. User Switcher Applet无法添加<br />
+查找这个键值：/desktop/gnome/lockdown/disable_user_switching 将其设置为false，允许用户切换</p>
+
+<p>ok，这样就只剩下虚惊了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -547,58 +596,6 @@ public class Main {</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/03/03/gwibber-and-webkit/">Gwibber and WebKit</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-03-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。</p>
-
-<p>Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的，拷拷改改很容易就可以给Gwibber增加饭否的支持。如此一来就可以同时看饭否看twitter发饭否发twitter了。</p>
-
-<p>你以为这是一张截图，其实它是分隔线。</p>
-
-<p><img class="alignnone" title="Gwibber with fanfou support" src="http://pic.yupoo.com/classicning/15491710661a/xaq77l24.jpg" alt="" width="338" height="528" /></p>
-
-<p>注意上图，gwibber是一个简单的pyGtk程序加上Webkit，它的核心部分就是html网页。这个网页除了头像以外可是没有图片的，那几个效果是怎么实现的呢。一个一个说。
-<ul>
-	<li>圆角 -webkit-border-radius: 7px;</li>
-	<li>文字阴影 text-shadow: 1px 1px black;</li>
-	<li>渐变 background:  -webkit-gradient(linear, left top, left 220%, from(rgba(254, 240, 152, 0.9)), to(black));</li>
-</ul>
-比较神奇的就是这三个属性。所以也难怪现在用WebKit核心的程序（不完全是浏览器）越来越多。没有记错的话，这三个丰富特性除了text-shadow在Firefox3.1开始支持其他的Gecko都还不支持。</p>
-
-<p>总而言之，用CSS就可以绘制出精致的图形，而且完全可以生长在桌面。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/38/">&larr; Older</a>
@@ -620,6 +617,10 @@ public class Main {</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -633,10 +634,6 @@ public class Main {</p>
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

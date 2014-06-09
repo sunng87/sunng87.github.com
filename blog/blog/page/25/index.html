@@ -9,9 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="XAuth.org 提供一个新的轻量级认证机制，他的机制可以参考：
-http://xauth.org/spec/ OpenAddresses.org是上个月O&#8217;Reilly Where 2.0上发布的开放的Geocoding服务，类似OpenStreetMaps
-http:// &hellip;">
+  <meta name="description" content="Compojure是一个用Clojure写成的类似Sinatra的Web框架。Leiningen是一个新的Clojure构建工具，它用Maven来处理依赖管理，而通过封装Lancet（基于Ant）来实现build-in的task。 以上是背景介绍。以下是HelloWorld。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,98 @@ http:// &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/04/24/my-first-hello-world-web-app-using-compojure/">My First Hello World Web App Using Compojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://github.com/weavejester/compojure">Compojure</a>是一个用<a href="http://clojure.org/">Clojure</a>写成的类似<a href="http://www.sinatrarb.com/">Sinatra</a>的Web框架。<a href="http://github.com/technomancy/leiningen">Leiningen</a>是一个新的Clojure构建工具，它用Maven来处理依赖管理，而通过封装<a href="http://github.com/stuarthalloway/lancet">Lancet</a>（基于Ant）来实现build-in的task。</p>
+
+<p>以上是背景介绍。以下是HelloWorld。</p>
+
+<p>创建一个目录作为工程目录<br />
+[cc lang=&#8221;bash&#8221;]<br />
+mkdir compojure-app<br />
+cd compojure-app<br />
+[/cc]</p>
+
+<p>像创建build.xml和pom.xml一样创建project.clj<br />
+[cc lang=&#8221;lisp&#8221;]<br />
+(defproject info.sunng/compojure-app &#8220;0.0.1&#8221;<br />
+		:description &#8220;A demo app running on compojure framework&#8221;<br />
+		:dependencies [[org.clojure/clojure &#8220;1.1.0&#8221;]<br />
+						[org.clojure/clojure-contrib &#8220;1.1.0&#8221;]<br />
+						[compojure &#8220;0.3.2&#8221;]]<br />
+		:dev-dependencies [[leiningen/lein-swank &#8220;1.1.0&#8221;]]<br />
+		:main info.sunng.compojureapp.helloworld)<br />
+[/cc]<br />
+首行定义了项目的groupId, artifactId和version，其后的是maven风格的依赖定义，最后我们还定义了程序的主类。</p>
+
+<p>这个helloworld只有一个文件，被放在src/info/sunng/compojureapp/目录下<br />
+[cc lang=&#8221;lisp&#8221;]<br />
+(ns info.sunng.compojureapp.helloworld (:gen-class) (:use compojure))</p>
+
+<p>(defroutes example-routes<br />
+	(GET &#8220;/&#8221; &#8220;Hello W0rld&#8221;)<br />
+	(ANY &#8220;*&#8221; [404 &#8220;Page Not Found&#8221;]))</p>
+
+<p>(defn -main []<br />
+	(run-server {:port 8080} &#8220;/*&#8221; (servlet example-routes)))<br />
+[/cc]<br />
+中间就是Sinatra风格的URL映射定义，最后在主类中通过一个run-server方法以嵌入式的方式运行一个jetty</p>
+
+<p>回到工程目录，执行构建<br />
+[cc lang=&#8221;bash&#8221;]<br />
+lein deps<br />
+lein compile<br />
+lein uberjar<br />
+[/cc]</p>
+
+<p>通过uberjar可以将依赖通通打入一个jar包中，接着就可以通过
+<em>java -jar compojure-app-standalone.jar </em>
+启动你的Web程序了，很酷吧</p>
+
+<p>除了这种方式，还可以通过
+<em>lein swank</em>
+启动一个<a href="http://github.com/technomancy/leiningen/tree/master/lein-swank">swank</a> server（project.clj中定义了dev-dependency），再用Emacs的<a href="http://common-lisp.net/project/slime/">SLIME</a>交互式地运行程序。</p>
+
+<p>参考
+<ul>
+	<li><a href="http://kzar.co.uk/blog/view/simple-compojure-project">http://kzar.co.uk/blog/view/simple-compojure-project</a></li>
+        <li><a href="http://schipplock.de/2010/01/31/clojure-web-framework-compojure/">http://schipplock.de/2010/01/31/clojure-web-framework-compojure/</a></li>
+        <li><a href="http://zef.me/2470/building-clojure-projects-with-leiningen">http://zef.me/2470/building-clojure-projects-with-leiningen</a></li></ul></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -478,50 +568,6 @@ https://bugs.launchpad.net/bugs/543860</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/03/20/%E5%B0%86%EF%BC%81%E5%B0%86%EF%BC%81%E5%B0%86%EF%BC%81/">将！将！将！</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><ol>
-	<li>汇报一下近况，最近仍然是6*12小时的工作，这是第二个礼拜了。我们的进度还算是顺利，不过架不住产品那里经常会有另他们自己拍案的新点子，这可苦了开发。可怜我们开发在产品面前基本没有什么话语权，连老大都只能说我们尽量支持。因为我负责的部分跟业务关系不是特别紧密，之前也算是有先见之明，坚决解耦，所以策划的变化对我影响不大，只是听见两旁的同事不断地重复“我悲剧了”。</li>
-	<li>10.04来了，迫不及待了又。结果升级的过程中遇到了无数依赖问题和冲突，apt几乎都无能为力，前天搞到1点多才睡，早晨7点起床又继续折腾。到了昨天中午终于可以进入桌面了，累得够呛，晚上又发烧了。</li>
-	<li>早晨起床忽然想起winter，现在的4square这么火，昨天又看到了比较mood的微博产品。哎，我们做的时候可是07年啊，也许是太超前了吧。</li>
-	<li>加班路上哼张楚的《将将将》，我真想再见张楚一回。</li>
-	<li>看见@dearaprilfool同学抄的《致橡树》，很有共鸣，女生们应该读一下。小时候读不算，这个年纪读才好。</li>
-	<li>新的一天开始了。</li></ol></p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/26/">&larr; Older</a>
@@ -543,6 +589,10 @@ https://bugs.launchpad.net/bugs/543860</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -556,10 +606,6 @@ https://bugs.launchpad.net/bugs/543860</p>
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

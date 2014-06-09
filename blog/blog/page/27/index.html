@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I&#8217;m sorry for the long title. Due to lack of documentation, it&#8217;s not easy to use python xpcom api from virtualbox sdk. The code below is &hellip;">
+  <meta name="description" content="Very glad to announce another daily-coding work: an extension for gnome deskbar applet to search and launch virtual machine. There is a plugin for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/12/virtual-machine-searcher-for-gnome-deskbar-applet/">Virtual Machine Searcher for Gnome Deskbar Applet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Very glad to announce another daily-coding work: an extension for gnome deskbar applet to search and launch virtual machine. There is a plugin for gnome-do that does the same job. That&#8217;s what I create the the plugin for. I switched to deskbar because gnome-do&#8217;s Do.exe reminds me nightmares when I was a M$ Windows user. The deskbar applet has been a great replacement, however, the virtualbox plugin in Do is really impressive while deskbar doesn&#8217;t provide me the same functionality.</p>
+
+<p>You can ignore words above and just take a look at the screenshot:
+<a title="deskbar-virtualbox by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4350951202/"><img src="http://farm5.static.flickr.com/4062/4350951202_9ede9c4318_o.png" alt="deskbar-virtualbox" width="560" height="400" /></a>
+<h3>Download</h3>
+Download the extension from (the highlighted one):
+<a href="http://bitbucket.org/sunng/daily-coding/downloads/?highlight=8792">http://bitbucket.org/sunng/daily-coding/downloads/?highlight=5137</a></p>
+
+<p>You can also trace the development at bitbucket project. However, the repository is mixed with other small code snippets. Currently, mercurial doesn&#8217;t support subdirectory pull. So there is no way to grab the deskbar-applet individually.
+<h3>Installation</h3>
+copy this file to <em>/usr/lib/deskbar-applet/deskbar-applet/modules-2.20-compatible/</em> (Ubuntu installation for example) with super user privilege. Right click desktbar applet, select Preference, Searchers tab, hit &#8220;Reload&#8221; button, then check the Virtualbox Deskbar Module.
+<a title="deskbar-preference by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4350219097/"><img src="http://farm5.static.flickr.com/4006/4350219097_126cdb3c8d.jpg" alt="deskbar-preference" width="500" height="346" /></a>
+<h3>Issue</h3>
+Feel free the report issues on bitbucket:
+<a href="http://bitbucket.org/sunng/daily-coding/issues/">http://bitbucket.org/sunng/daily-coding/issues/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -661,73 +711,6 @@ sudo patch google_translate.rb /home/sun/google_translate.rb.diff</em></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/01/30/emerillon-map-viewer-for-gnome-desktop/">Emerillon: Map Viewer for Gnome Desktop</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自从libchamplain / geoclue等库发布之后，gnome桌面的地理信息工具和支持发展很迅速：例如之前提到过的eye-of-gnome的地理信息插件，根据EXIF信息在地图上显示。现在gnome桌面上终于有一个专门的地图查看器了，仍然是基于libchamplain，名字叫做<a href="http://www.novopia.com/emerillon/" target="_blank">emerillon</a></p>
-
-<p><a title="Emerillon Map Viewer by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4315412541/"><img src="http://farm5.static.flickr.com/4021/4315412541_d34e08d02b.jpg" alt="Emerillon Map Viewer" width="500" height="286" /></a></p>
-
-<p>仍然是使用open street maps，这两年上海的地图发展的非常不错，连最新的二号线东延都已经被标注出来了。相比之下，南京的地图就还是一片空白。</p>
-
-<p>在Ubuntu上安装emerillon，可以从其网站上下载源码编译安装：
-<a href="http://www.novopia.com/emerillon/download.html">http://www.novopia.com/emerillon/download.html</a></p>
-
-<p>emerillon的几个主要依赖：
-<ul>
-	<li>libchamplain</li>
-	<li>librest</li>
-	<li>ethos</li>
-</ul>
-libchamplain在ubuntu 9.10的仓库已经包含</p>
-
-<p>librest也在软件仓库中，不过需要注意的是ubuntu将librest安装在pkg-config里时的名字叫做rest.pc，而emerillon查找的是rest-0.6.pc，所以需要手动建立一个软连接：
-<em>sudo ln -s /usr/lib/pkgconfig/rest.pc /usr/lib/pkgconfig/rest-0.6.pc</em></p>
-
-<p>ethos是一个Gtk的插件框架，目前还不在软件仓库中，需要从网站下载代码编译：
-<a href="http://git.dronelabs.com/ethos/" target="_blank">http://git.dronelabs.com/ethos/</a>
-ethos网站上提到的PPA源中的版本偏旧，不建议使用。</p>
-
-<p><em>实际上也可以直接添加emerillon的PPA源：<br />
-deb http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main<br />
-deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p>
-
-<p>另外，也可以通过Ubuntu Tweak安装。</p>
-
-<p>作者Blog：
-<a href="http://blog.pierlux.com/en/">http://blog.pierlux.com/en/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/28/">&larr; Older</a>
@@ -749,6 +732,10 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -762,10 +749,6 @@ deb-src http://ppa.launchpad.net/mathieu-tl/emerillon/ubuntu karmic main</em></p
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

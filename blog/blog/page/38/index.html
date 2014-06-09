@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="因为下周就要到新的公司实习了，算算时间今天是最后一次在学校上课，没准就是最后一次坐在课堂上绝望了。 应该说起来上了这么多年课，真正到了这最后一次，还是挺容易感慨的。为了防止感慨，这最后一节课就在看小说中度过了。仔细回忆一下，我上了这么多年课，虽然也有上课看小说的经历，不过肯定是比多数人要少的。 &hellip;">
+  <meta name="description" content="Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。 Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/03/03/gwibber-and-webkit/">Gwibber and WebKit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。</p>
+
+<p>Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的，拷拷改改很容易就可以给Gwibber增加饭否的支持。如此一来就可以同时看饭否看twitter发饭否发twitter了。</p>
+
+<p>你以为这是一张截图，其实它是分隔线。</p>
+
+<p><img class="alignnone" title="Gwibber with fanfou support" src="http://pic.yupoo.com/classicning/15491710661a/xaq77l24.jpg" alt="" width="338" height="528" /></p>
+
+<p>注意上图，gwibber是一个简单的pyGtk程序加上Webkit，它的核心部分就是html网页。这个网页除了头像以外可是没有图片的，那几个效果是怎么实现的呢。一个一个说。
+<ul>
+	<li>圆角 -webkit-border-radius: 7px;</li>
+	<li>文字阴影 text-shadow: 1px 1px black;</li>
+	<li>渐变 background:  -webkit-gradient(linear, left top, left 220%, from(rgba(254, 240, 152, 0.9)), to(black));</li>
+</ul>
+比较神奇的就是这三个属性。所以也难怪现在用WebKit核心的程序（不完全是浏览器）越来越多。没有记错的话，这三个丰富特性除了text-shadow在Firefox3.1开始支持其他的Gecko都还不支持。</p>
+
+<p>总而言之，用CSS就可以绘制出精致的图形，而且完全可以生长在桌面。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -324,6 +376,10 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -337,10 +393,6 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

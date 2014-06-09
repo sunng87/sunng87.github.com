@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="偌大的互联网，却找不到一个带提交按钮的文本框。 昨天为了能看一眼facebook上的留言（汗，其实我对翻墙的要求也够低的）可谓无所不用其极。首先是用tor+privoxy，结果tor的速度实在是太慢，除了tor的测试页面其它根本就打不开。然后看到了ssh -D的方法，这个速度也是很慢， &hellip;">
+  <meta name="description" content="每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。 首先用apt-get下载安装pgsql和postgis的需要的包 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/">[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step by Step</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。</p>
+
+<p>首先用apt-get下载安装pgsql和postgis的需要的包</p>
+
+<p><em>sudo apt-get install postgresql-8.3 postgresql-8.3-postgis postgresql-client-8.3 postgresql-contrib-8.3 pgadmin3</em></p>
+
+<p>安装过程中会提示创建一个默认名为<em>postgres</em>的用户。</p>
+
+<p>安装结束后，启动pgsql服务器</p>
+
+<p><em>sudo /etc/init.d/postgresql-8.3 start</em></p>
+
+<p>在默认情况下pgsql ident的设置为postgres用户用ident sameuser的方式登录，这种方式类似于sqlserver使用windows的用户管理。因此要用postgres用户登录系统。</p>
+
+<p>修改postgres用户的密码</p>
+
+<p><em>sudo passwd postgres</em></p>
+
+<p>用新密码登录为postgres</p>
+
+<p><em>su - postgres</em></p>
+
+<p>运行psql，可以检查pgsql的运行情况</p>
+
+<p><em>psql</em></p>
+
+<p>可以在psql中给postgres用户设置数据库密码</p>
+
+<p><em>ALTER USER postgres ENCRYPTED PASSWORD &#8216;yournewpassword&#8217;;</em></p>
+
+<p>继续在psql中创建plsql语言。如果安装时遗漏了contrib包这一步是不能完成的。</p>
+
+<p><em>CREATE LANGUAGE plsql;</em></p>
+
+<p>退出psql，创建Postgis数据库。</p>
+
+<p><em>createdb postgis</em></p>
+
+<p>导入postgis的两个sql文件，其中定义了EPSG数据库和Geometry类型。</p>
+
+<p><em>psql -d postgis -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql<br />
+psql -d postgis -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql</em></p>
+
+<p>进入psql对当前用户GRAND ALL</p>
+
+<p><em>GRANT ALL ON TABLE geometry_columns TO postgres;<br />
+GRANT ALL ON TABLE spatial_ref_sys TO postgres;</em></p>
+
+<p>这样做的结果是这两张表被导入到默认的postgres数据库中。这样今后创建postgis数据库就可以以postgres为template_db，不过这么做的后果是这两张表的owner都是postgres。在GeoServer里创建FeatureType时必须用postgres用户登录，否则权限不足。</p>
+
+<p>这时PostGIS应该可以正常工作了，可以尝试导入shp</p>
+
+<p><em>shp2pgsql /your/shp/file tablename | psql newgisdb</em></p>
+
+<p>创建一个新的数据库用户</p>
+
+<p><em>createuser -p username</em></p>
+
+<p>修改<em>/etc/postgresql/8.3/main/pg_hda.conf</em>，设置数据库访问的认证方式</p>
+
+<p>将local all all一行的验证方式(method)由ident sameuser改为password就可以用密码登录psql了，在python－psycopg中用新建的用户连接pgsql也不会报ident失败了。</p>
+
+<p>将host all 127.0.0.1/32一行的验证方式也改为password就可以在本地用jdbc以用户名密码连接数据库了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -467,55 +565,6 @@ to<em> yourapp/libs/helper.py</em> .</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/05/29/desktop-switcher%E4%BB%A5%E4%B8%8B/">Desktop-switcher以下</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天中午在synaptic里闲搜，发现了一个叫做desktop-switcher的小工具，它的功能是在ubuntu的netbook小桌面模式和经典模式之间切换。好奇心起，就装上试试。一试不得了，两个不太明确的报错之后，面板没有了，桌面也只剩下背景图片，左右键通通废掉，登出也只能按电源开关。尤其是xorg1.6之后，ctrl+alt+backspace也不好使了，甚是无奈。<br />
-这下岂不是又要重装系统了？还好这次冷静（现在越来越冷静了，我是说经历了水泼电脑之后），先新建了一个用户重新进桌面上网搜一下。还真搜到了问题，果然是这个切换工具有bug。<br />
-首先看一下gnome配置中有关的配置<br />
-gconftool-2 &#8211;get /desktop/gnome/session/required_components<br />
-这个值居然被清空了，参考launchpad上的讨论，要加上这几项<br />
-gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=list &#8211;list-type=string [&#8220;panel&#8221;,&#8221;filemanager&#8221;,&#8221;windowmanager&#8221;]<br />
-重登录之后panel总算是出来了，原有panel上所有的配置都被清空了，连主菜单都没有了。不过这个没有问题，手动重新添加问题不大。panel的样式需要重新设置，因为这个样式已经被desktop-switcher切换到netbook版本的样式（名字忘了）。<br />
-还有一些小问题，可以在Gnome设置工具里修改：<br />
-1. 桌面右键无效、图标消失了<br />
-查找这个键值：/apps/nautilus/preferences/show_desktop 将其设置为true，让nautilus管理桌面<br />
-2. User Switcher Applet无法添加<br />
-查找这个键值：/desktop/gnome/lockdown/disable_user_switching 将其设置为false，允许用户切换</p>
-
-<p>ok，这样就只剩下虚惊了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/37/">&larr; Older</a>
@@ -537,6 +586,10 @@ gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=li
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -550,10 +603,6 @@ gconftool-2 &#8211;set /desktop/gnome/session/required_components &#8211;type=li
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

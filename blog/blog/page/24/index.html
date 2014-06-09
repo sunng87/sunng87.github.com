@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="口水了一年多的入门桌游，在山寨高仿版本泛滥的时候，我终于拥有了属于自己的。 卡卡颂规则简单，号称是最佳入门桌游。除了基本版以外，后来又陆陆续续除了很多扩展，更有传闻说还有一款投石机扩展，提供一个木制的简易投石机让卡卡松变成了动作类游戏。我最喜欢卡卡颂的地方除了本身的趣味性之外， &hellip;">
+  <meta name="description" content="迟到的新闻了，5月8号，GNOME桌面的书籍管理程序Alexandria发布了0.6.6 Beta2。上个月底我提交的豆瓣支持已经被加入了标准发布的打包里，这里可以看到Release note
+http://alexandria.rubyforge.org/news/2010-05-08&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/05/25/alexandria-with-douban-support/">Alexandria With Douban Support</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>迟到的新闻了，5月8号，GNOME桌面的书籍管理程序Alexandria发布了0.6.6 Beta2。上个月底我提交的豆瓣支持已经被加入了标准发布的打包里，这里可以看到Release note
+<a href="http://alexandria.rubyforge.org/news/2010-05-08--0.6.6beta2-released.html">http://alexandria.rubyforge.org/news/2010-05-08&#8211;0.6.6beta2-released.html</a></p>
+
+<p>最近半年忙里偷闲给开源软件做一点贡献，上次<a href="http://live.gnome.org/DeskbarApplet/Extending">gnome deskbar wiki</a>名字是自己加上去的，这次在alexandria里终于算是得到了一些认可，再接再厉，嗯！</p>
+
+<p>各位用开源桌面的读者是不是看在这个份上也装一下这个软件啊。。。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -558,98 +600,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/24/my-first-hello-world-web-app-using-compojure/">My First Hello World Web App Using Compojure</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://github.com/weavejester/compojure">Compojure</a>是一个用<a href="http://clojure.org/">Clojure</a>写成的类似<a href="http://www.sinatrarb.com/">Sinatra</a>的Web框架。<a href="http://github.com/technomancy/leiningen">Leiningen</a>是一个新的Clojure构建工具，它用Maven来处理依赖管理，而通过封装<a href="http://github.com/stuarthalloway/lancet">Lancet</a>（基于Ant）来实现build-in的task。</p>
-
-<p>以上是背景介绍。以下是HelloWorld。</p>
-
-<p>创建一个目录作为工程目录<br />
-[cc lang=&#8221;bash&#8221;]<br />
-mkdir compojure-app<br />
-cd compojure-app<br />
-[/cc]</p>
-
-<p>像创建build.xml和pom.xml一样创建project.clj<br />
-[cc lang=&#8221;lisp&#8221;]<br />
-(defproject info.sunng/compojure-app &#8220;0.0.1&#8221;<br />
-		:description &#8220;A demo app running on compojure framework&#8221;<br />
-		:dependencies [[org.clojure/clojure &#8220;1.1.0&#8221;]<br />
-						[org.clojure/clojure-contrib &#8220;1.1.0&#8221;]<br />
-						[compojure &#8220;0.3.2&#8221;]]<br />
-		:dev-dependencies [[leiningen/lein-swank &#8220;1.1.0&#8221;]]<br />
-		:main info.sunng.compojureapp.helloworld)<br />
-[/cc]<br />
-首行定义了项目的groupId, artifactId和version，其后的是maven风格的依赖定义，最后我们还定义了程序的主类。</p>
-
-<p>这个helloworld只有一个文件，被放在src/info/sunng/compojureapp/目录下<br />
-[cc lang=&#8221;lisp&#8221;]<br />
-(ns info.sunng.compojureapp.helloworld (:gen-class) (:use compojure))</p>
-
-<p>(defroutes example-routes<br />
-	(GET &#8220;/&#8221; &#8220;Hello W0rld&#8221;)<br />
-	(ANY &#8220;*&#8221; [404 &#8220;Page Not Found&#8221;]))</p>
-
-<p>(defn -main []<br />
-	(run-server {:port 8080} &#8220;/*&#8221; (servlet example-routes)))<br />
-[/cc]<br />
-中间就是Sinatra风格的URL映射定义，最后在主类中通过一个run-server方法以嵌入式的方式运行一个jetty</p>
-
-<p>回到工程目录，执行构建<br />
-[cc lang=&#8221;bash&#8221;]<br />
-lein deps<br />
-lein compile<br />
-lein uberjar<br />
-[/cc]</p>
-
-<p>通过uberjar可以将依赖通通打入一个jar包中，接着就可以通过
-<em>java -jar compojure-app-standalone.jar </em>
-启动你的Web程序了，很酷吧</p>
-
-<p>除了这种方式，还可以通过
-<em>lein swank</em>
-启动一个<a href="http://github.com/technomancy/leiningen/tree/master/lein-swank">swank</a> server（project.clj中定义了dev-dependency），再用Emacs的<a href="http://common-lisp.net/project/slime/">SLIME</a>交互式地运行程序。</p>
-
-<p>参考
-<ul>
-	<li><a href="http://kzar.co.uk/blog/view/simple-compojure-project">http://kzar.co.uk/blog/view/simple-compojure-project</a></li>
-        <li><a href="http://schipplock.de/2010/01/31/clojure-web-framework-compojure/">http://schipplock.de/2010/01/31/clojure-web-framework-compojure/</a></li>
-        <li><a href="http://zef.me/2470/building-clojure-projects-with-leiningen">http://zef.me/2470/building-clojure-projects-with-leiningen</a></li></ul></p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/25/">&larr; Older</a>
@@ -671,6 +621,10 @@ lein uberjar<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -684,10 +638,6 @@ lein uberjar<br />
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

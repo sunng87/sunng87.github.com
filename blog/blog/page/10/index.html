@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这是1CM的ZIL157卡车模型，虽说是五十年代的苏联车，可是咱们看着也眼熟，因为它就是解放卡车(CA30)的原型。这是我的第二个模型。万事开头难，可是做到第二个了怎么还是很难，嗯，说明这头还没有开完。难就难在，打开包装发现少了两根车轴！这车的版件是散装的，也弄不清是丢了还是本来就缺。无奈， &hellip;">
+  <meta name="description" content="Squealer is a framework written in Jython to test your Apache Pig scripts, by Mark Roddy. It&#8217;s now using jip to resolve Java dependencies. On &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/06/squealer-a-test-framework-for-pig-script-is-using-jip/">Squealer (a Test Framework for Pig Script) Is Using Jip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://bitbucket.org/markroddy/squealer/overview">Squealer</a> is a framework written in Jython to test your Apache Pig scripts, by <a href="http://dibon.homelinux.org/">Mark Roddy</a>. It&#8217;s now using <a href="http://pypi.python.org/pypi/jip">jip</a> to resolve Java dependencies. On huge dependencies of Hadoop, jip could be great helpful to setup Squealer.</p>
+
+<p>To get started, it is recommended to create a standalone Jython environment for Squealer:
+<em>virtualenv -p /usr/local/bin/jython &#8211;no-site-packages squealer-env</em></p>
+
+<p>Activate the environment
+<em>cd squealer-env</em>
+<em>. bin/activate</em></p>
+
+<p>Install jip with pip
+<em>pip install jip</em></p>
+
+<p>Download squealer from bitbucket project page, extract it to somewhere. Install it with jip:
+<em>jython setup.py install</em></p>
+
+<p>Dependencies will be downloaded from Maven Central. You just wait for it to finish.</p>
+
+<p>Start a Jython interpreter with &#8217;<em>jython-all</em>&#8217; and now you can import squealer.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -537,58 +591,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/07/28/clojure-control-plugin-for-leiningen/">Clojure-Control Plugin for Leiningen</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/killme2008/clojure-control/" target="_blank">Clojure-Control</a> is the clojure port of node-control, developed by <a href="http://www.blogjava.net/killme2008/" target="_blank">killme2008</a>. Clojure-Control allows you to define clusters and tasks in a DSL and execute them with simple command.</p>
-
-<p><a href="https://github.com/sunng87/lein-control" target="_blank">Lein-control</a> is a leiningen(clojure build tool) plugin, with which you can integrate Clojure-Control into your build tasks. It could be helpful to execute deployment tasks on several machines.</p>
-
-<p>To use lein-control, simply add this to your project.clj . And download dependencies with <em>lein deps</em>.<br />
-:dev-dependencies [[lein-control &#8220;0.1.0&#8221;]]</p>
-
-<p>Create a sample control file in your project home:
-<em>lein control init</em></p>
-
-<p>Check your cluster configuration:
-<em>lein control show cluster-name</em></p>
-
-<p>Execute tasks against particular cluster:
-<em>lein control run cluster-name task-name</em></p>
-
-<p>Enjoy your deployment !</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -610,6 +612,10 @@ For functions contains in some module, you can refer it with the clojure way:<br
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -623,10 +629,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

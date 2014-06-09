@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="下午有时间看了一下coffeescript，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/ &hellip;">
+  <meta name="description" content="I just rolled out jip 0.5.1 as a bugfix version of 0.5. It has been published to pypi and you can install it with pip install jip in your virtualenv &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/05/15/jip-0-5-1-released/">Jip 0.5.1 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just rolled out <a href="https://github.com/sunng87/jip/tree/v0.5.1">jip 0.5.1</a> as a bugfix version of 0.5. It has been published to <a href="http://pypi.python.org/pypi/jip">pypi</a> and you can install it with <font face="monospace">pip install jip</font> in your virtualenv.</p>
+
+<p>From 0.5, you have new features available:
+<ul>
+<li>User-Agent &#8217;<font face="monospace">jip/0.5</font>&#8217; is added to http request.</li>
+<li>New command `<font face="monospace">freeze</font>` just like pip.</li>
+<li>Improved jar downloading. By default, at most 3 jars are downloaded in parall.</li>
+</ul></p>
+
+<p>In 0.5.1, bugs were fixed:
+<ul>
+<li>Repositories defined in pom are now included for <font face="monospace">install</font> command.</li>
+<li>Placeholder resolving of <font face="monospace">#{pom.groupId}</font> is corrected. (<a href="http://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2.pom">instance</a>)</li>
+<li><font face="monospace">urllib2.URLError</font> is caught to prevent dump.</li>
+</ul></p>
+
+<p>For any problem and feature request, please refer to <a href="https://github.com/sunng87/jip/issues">github issue tracker</a>.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=cd9406ce-d82b-81e1-b547-7c00f498be8b" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -593,155 +645,6 @@ core获得start消息后，调用DefaultActor覆盖的handleStart方法（Defaul
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/">Don&#8217;t Repeat Yourself: Distribute Jython Package With jip.dist</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-14T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As a new feature in <b>jip</b> 0.4, we can use some helpers from <font face="monospace">jip.dist</font> to simplify package distribution. With jip.dist, you can define Java dependencies for your jython package. In an environment with jip, dependencies will be automatically installed when user uses pip to get you package.</p>
-
-<p>We have two different approaches allow you to choose.</p>
-
-<p><h3>Approach 1, Define dependencies in POM</h3>
-This is the standard maven way. To describe your jython package and its dependencies, create a pom.xml in your project. The directory hierarchy looks like:
-<pre>
-├── app
-│&nbsp;&nbsp; ├── module1
-│&nbsp;&nbsp; │&nbsp;&nbsp; ├── __init__.py
-│&nbsp;&nbsp; ├── core.py
-│&nbsp;&nbsp; ├── __init__.py
-├── LICENSE
-├── MANIFEST.in
-├── pom.xml
-├── README
-└── setup.py
-</pre></p>
-
-<p>In pom.xml, just add dependencies as you do with Maven.<br />
-[cc lang=&#8221;xml&#8221;]
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" <br="" />  xsi:schemaLocation=&#8221;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&#8221;&gt;</p>
-
-<p>    &#8230;</p>
-
-<p>    <dependencies>
-        <dependency>
-            <groupid>org.slf4j</groupid>
-            <artifactid>slf4j-api</artifactid>
-            <version>1.6.1</version>
-        </dependency></dependencies></p>
-
-<p>        <dependency>
-            <groupid>org.slf4j</groupid>
-            <artifactid>slf4j-log4j12</artifactid>
-            <version>1.6.1</version>
-        </dependency></p>
-
-<p>        &#8230;</p>
-
-<p>    </p>
-
-<p>    <repositories>
-        <repository>
-            <id>sonatype-oss-sonatype</id>
-            <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
-
-[/cc]<br />
-You can also define repositories in pom.xml if you use custom repository. (for example, jboss, java.net)</p>
-
-<p>Remember to add pom.xml in your <font face="monospace">MANIFEST.in</font>, to ensure the file will be packaged into source package:<br />
-[cc lang=&#8221;text&#8221;]<br />
-include pom.xml<br />
-[/cc]</p>
-
-<p><h3>Approach 2, Define dependencies with Python</h3>
-You may be tired with endless XML configuration. jip allows you to define dependencies with python, just like gradle with groovy.</p>
-
-<p>In your setup.py, add something like:<br />
-[cc lang=&#8221;python&#8221;]<br />
-requires_java = {<br />
-    &#8216;dependencies&#8217;:[<br />
-        ## (groupdId, artifactId, version)<br />
-        (&#8216;org.slf4j&#8217;, &#8216;slf4j-api&#8217;, &#8216;1.6.1&#8217;),<br />
-        (&#8216;org.slf4j&#8217;, &#8216;slf4j-log4j12&#8217;, &#8216;1.6.1&#8217;),<br />
-        (&#8216;info.sunng.soldat&#8217;, &#8216;soldat&#8217;, &#8216;1.0-SNAPSHOT&#8217;),<br />
-        (&#8216;org.apache.mina&#8217;, &#8216;mina-core&#8217;, &#8216;2.0.2&#8217;)<br />
-    ],<br />
-    &#8216;repositories&#8217;:[<br />
-        (&#8216;sonatype-oss-snapshot&#8217;, &#8216;http://oss.sonatype.org/content/repositories/snapshots/&#8217;)<br />
-    ]<br />
-}
-[/cc]</p>
-
-<p>Then pass it to <font face="monospace">setup()</font>. The keyword argument <font face="monospace">require_java</font> is jip specific.<br />
-[cc lang=&#8221;python&#8221;]<br />
-setup(<br />
-    &#8230;<br />
-    requires_java=requires_java,<br />
-    &#8230;)<br />
-[/cc]</p>
-
-<p><h3>Use jip&#8217;s setup wrapper</h3>
-To use jip&#8217;s power, the only difference is to use <font face="monospace">setup()</font> from <font face="monospace">jip.dist</font> instead of setuptools or distutils.<br />
-[cc lang=&#8221;python&#8221;]<br />
-from jip.dist import setup<br />
-[/cc]</p>
-
-<p>Then publish your jython package to Python Cheese Shop:
-<font face="monospace">$ jython setup.py sdist upload</font></p>
-
-<p>Internally, jip uses setuptools. So you can still do <font face="monospace">jython setup.py develop</font> .</p>
-
-<p>And jip 0.4 is available under MIT License. You are free to use jip.dist in your code.</p>
-
-<p><h3>For your user</h3>
-You should write a guide forcing users to use your jython application within <a href="http://www.virtualenv.org">virtualenv</a>. And install jip as a prerequisite:
-<font face="monospace">$ pip install jip</font></p>
-
-<p>Then simply install your package with pip:
-<font face="monospace">$ pip install &lt;your-package-name&gt;</font></p>
-
-<p>No additional step required!</p>
-
-<p>So please just release your jython package with <b>jip</b> !</p>
-
-<p>For more information:
-<ul>
-<li><a href="http://pypi.python.org/pypi/jip/">http://pypi.python.org/pypi/jip/</a></li>
-<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li>
-</ul>
-<div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=5c436f7f-49fe-8f60-9a90-1331f01105a9" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
@@ -763,6 +666,10 @@ You should write a guide forcing users to use your jython application within <a 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -776,10 +683,6 @@ You should write a guide forcing users to use your jython application within <a 
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

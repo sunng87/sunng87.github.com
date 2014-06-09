@@ -9,9 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="在compojure 0.6.0里，默认的middleware被移除了。因为还没有正式发布，所以网上几乎没有相关的文档说明，而0.5.x的例子已经没能正常工作了。 [cc lang=&#8221;clojure&#8221;]
-;&#8230;
-(defroutes root (GET &# &hellip;">
+  <meta name="description" content="北方农村的冬天外屋凋敝满眼看不到一点绿色，空气里弥漫烧煤和烧秸秆的烟气。这个时候的夕阳还是很到位的。 来张逆光 树上的鸟巢 浓雾里的村中一角 村道 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E5%86%9C%E6%9D%91/">春节留影，农村</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>北方农村的冬天外屋凋敝满眼看不到一点绿色，空气里弥漫烧煤和烧秸秆的烟气。这个时候的夕阳还是很到位的。</p>
+
+<p>来张逆光
+<a href="http://www.flickr.com/photos/40741608@N08/5428019644/" title="DSC_0001 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5292/5428019644_5d56dc1a49.jpg" width="336" height="500" alt="DSC_0001" /></a></p>
+
+<p>树上的鸟巢
+<a href="http://www.flickr.com/photos/40741608@N08/5428020106/" title="DSC_0004 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5134/5428020106_e41b799d73.jpg" width="500" height="336" alt="DSC_0004" /></a></p>
+
+<p>浓雾里的村中一角
+<a href="http://www.flickr.com/photos/40741608@N08/5427420123/" title="DSC_0043 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5218/5427420123_80bd528a85.jpg" width="500" height="336" alt="DSC_0043" /></a></p>
+
+<p>村道
+<a href="http://www.flickr.com/photos/40741608@N08/5428024168/" title="DSC_0045 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5053/5428024168_8d02d4d63c.jpg" width="336" height="500" alt="DSC_0045" /></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -712,64 +758,6 @@ Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#822
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/12/24/lm-tooling-2010/">LM Tooling, 2010</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>阿哈，大家都开始总结2010年了，我也想找个角度来总结一下今年。三句不理老本行，还是聊软件开发周边的事情。Lifecycle Management Tooling，软件生命周期管理的工具和我一年的感受。</p>
-
-<p>一月份的时候我还有大把的业余时间，在做一个叫做<a href="https://bitbucket.org/sunng/yan">Yan</a>的验证码服务。这个项目从我刚一到盛大工作就开始了，不过因为没有特别的需求，最后变成了自己的开源项目。这个项目用Maven做dependency management，用hg做版本控制，代码放在bitbucket上。它对Maven的使用还很基本，是一个Single Module的小项目，因为服务本身已经实现了插件机制，本来我准备把它拆成Multimodule的Maven工程来着，不过后来因为比较忙，这件事就放掉了。那时我已经开始尝试用hg进行分支管理、每个release打tag，甚至还有一段时间会有一些两个分支的并行开发。这些基本上是实验性质的尝试，不过和后来相比也算是做的比较规范的了。</p>
-
-<p>三月份我注册了github，顺带就开始用git了。到目前为止，我对hg和git的区别还没有特别的感受，选择的主要依据其实bitbucket和github。相对social一些的项目，github是当仁不让的选择。bitbucket上人少比较清净，一些incubator项目放在上面，烂尾了也不至于太丢脸。扯远了，哈哈。</p>
-
-<p>之后我们开始做一个规模比较大的项目，我们使用Maven，使用Nexus，使用SVN。项目规模比较大，我们有数个Multimodule的Maven项目，遇到的第一个问题就是集成的成本非常大。最初几周，我都是在自己的机器上做集成，Windows，你懂的，又不太方便做自动化，结果整个过程非常痛苦。到了四月份项目还没有全部完成，已经不能忍了，于是我引入了Hudson。我们为每一个项目创建单独的build task，unstable的构建会有邮件通知开发人员。一方面把我从每天反复的手动集成打包中解脱出来，另一方面也促进了大家写高质量的UnitTest，因为一旦有测试不通过就会有一个虚构的200000000@snda.com的邮箱给大家发邮件，以至于最后几乎所有人都把这个地址拉黑了。</p>
-
-<p>写真正能够Automation的单元测试其实很不简单，尤其是DAL层。理想的solution是用内存数据库来做单元测试的数据源，不过在实际开发里，因为一些SQL会依赖特定的数据库，所以这个方案并不太理想。如果有事务的话，Spring的TestCase可以设置自动回滚，可是互联网项目，你也懂的，连一致性都搞成最终一致了，事务这么重的东西我们是不用的。</p>
-
-<p>我们遇到的另一个问题是，多个独立的Maven项目，在做集成时，会存在依赖的冲突。这类问题一旦出现，找原因的代价还是比较大的。这方面，老大有一个Best Practice，定义一个统一的、专门管理版本的pom，通过dependency management的import来使用，你可以<a href="http://sunng.info/blog/2010/05/maven-recipe-0/">看这里</a>来了解。</p>
-
-<p>我们suffer的另一个问题是SVN的分支管理，到了项目的后期，功能越来越多，也出现了两个分支的并行开发，回滚的情况也出现了。我们基本上可以保证每次发布都有tag，但是分支的管理实在是非常痛苦。我现在的认识是，两方面原因。第一，SVN的分支成本还是比较高的，远程整个目录拷贝一下，本地需要指向新的地址。第二，项目的计划不明确，根本没有办法去估计新的分支、新的版本。两个原因结合起来说，其实分支管理不完全是一个版本控制系统层面的问题，和整个项目规划都有一定的联系。</p>
-
-<p>到了后期，我们对Hudson的使用也有了一些最佳实践，结合ssh/scp的插件，task的trigger机制，我们有了自动化的部署，你可以在<a href="http://sunng.info/blog/2010/09/hudson-tips/">这里</a>了解。不过我们的自动化最后倒在公司强制的动态密码验证机制上，每次登录需要使用动态密码，这样一切最后又都回归了手动。</p>
-
-<p>除了在公司的项目，在9月份我又做了一个实验性的项目，叫做<a href="https://github.com/sunng87/bason">Bason</a>，他可以在编译时生成JavaBean到Mongodb BSON代码。也是用Maven管理，不过值得一提的是，我申请了Sonatype提供的<a href="https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide">OSS Repository</a>，这样可以把项目都deploy到公共的服务器上，使用会非常方便。还值得一提的是，OSS Repository的管理者是校友<a href="http://www.juvenxu.com/">@Juvenxu</a></p>
-
-<p>不过今年Maven并不是Java生命周期管理的唯一工具，还有一些工具也开始进入视线，当然我说的不是ant+ivy。前段时间发布0.9的<a href="http://gradle.org/">Gradle</a>是比较受关注的，它又回归了ant的task oriented ，结合Groovy的DSL和插件机制提供更高的灵活性。另外，断断续续学了一年的clojure，clojure的生态系统里已经有了一个叫做<a href="https://github.com/technomancy/leiningen">leinigen</a>的生命周期管理工具，在clojure的世界里，它非常好用。</p>
-
-<p>另外Python的世界，我逐渐开始强制自己用virtualenv来创建一个更可控，更具有移植性的python环境。随着年底开始的一个小项目，我应该对python项目的生命周期管理有更深的认识。</p>
-
-<p>年底到了SAP，开始在NetWeaver平台上做Abap开发。NetWeaver是一个复杂的平台，它的Scope也涵盖了生命周期管理。在NetWeaver中，开发一个非local的程序，需要首先创建一个Change Request，之后所有的变更，最后都会保存到这个ChangeRequest上，有些类似传统的分支。当开发完成后，开发人员把change request release掉，这部分代码会自动被transport到Test系统或者其他下游系统上。实际开发里，一个Change Request可能对应一个Ticket，一个特性。这样的平台上，开发人员需要额外操心的事情，非常少。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/17/">&larr; Older</a>
@@ -791,6 +779,10 @@ Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#822
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -804,10 +796,6 @@ Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#822
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

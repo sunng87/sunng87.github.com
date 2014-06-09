@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Papaline 0.3 introduced a new model &ldquo;fork-join&rdquo; for task execution. It allows you to split a task into smaller units, and execute them in &hellip;">
+  <meta name="description" content="What are Slacker and Slacker Cluster Slacker is my side project started in late 2011. The goal of Slacker project is to provide a high performance &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,110 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-09T21:06:39+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>What are Slacker and Slacker Cluster</h2>
+
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&rsquo;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
+
+<h2>Grouping in Slacker Cluster</h2>
+
+<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
+
+<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
+
+<h3>:random</h3>
+
+<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
+
+<h3>:leader</h3>
+
+<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
+
+<h3>:all</h3>
+
+<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it&rsquo;s broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there&rsquo;s only one server called, just like local invocation. In <code>:all</code>, there&rsquo;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
+
+<h3>Custom</h3>
+
+<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
+
+<h2>Grouping results</h2>
+
+<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
+
+<p>In short words:</p>
+
+<ul>
+<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
+<li><code>:vector</code> returns  a vector of all results.</li>
+<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
+<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
+</ul>
+
+
+<h2>Grouping exceptions</h2>
+
+<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
+
+<h2>Granularity</h2>
+
+<p>The grouping options can be set to client level:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="s">&quot;cluster-name&quot;</span> <span class="s">&quot;127.0.0.1:2181&quot;</span> <span class="ss">:grouping</span> <span class="ss">:leader</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or function level:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">slacker.example.api/timestamp</span>
+</span><span class='line'>  <span class="ss">:grouping</span> <span class="ss">:all</span>
+</span><span class='line'>  <span class="ss">:grouping-results</span> <span class="ss">:single</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -767,46 +871,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-07T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>之前看过无数的书无数的文章，讲可扩展性讲大型架构，不过真到了自己上场，毕竟还是没有从头到尾实践过，心里还有些没底。每做一个决定，每选定一个方案，心里都要反复打鼓，这是不是在给自己挖坑，是不是导致今后要浪费很多可乐咖啡的一个决定。第一份工作在盛大的时候，参与过这种规模比较大的项目，但是核心的部分，容量规划，性能评估，优化，都是那时的老大操心，我在一旁旁观。操心和旁观的区别大了去了，晚上睡不着的那几个小时，旁观的人享受不到，等来临的时候，就要如履薄冰地担着。</p>
-
-<p>公司的团队构成跟硅谷类似，不存在专门的“产品经理”，负责人要从后端到前端，从开发到部署，从运维到监控，从代码到UI设计，产品甚至到运营，都需要有所操心。好在团队经过一年多的锻炼，技术成熟配合也默契，各司其职又都是三头六臂，能在这样的过程里成长，书里读不到。</p>
-
-<p>一直是做互联网信息类的产品，现在自己制造的信息却越来越少，有些于心不忍，于是寥寥记录一下。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -826,6 +890,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -839,10 +907,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

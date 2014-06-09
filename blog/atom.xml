@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-05-27T22:40:47+08:00</updated>
+  <updated>2014-06-09T22:40:36+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Slacker Cluster 0.12: Grouping]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
+    <updated>2014-06-09T21:06:39+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/06/09/grouping-in-slacker-0-dot-12</id>
+    <content type="html"><![CDATA[<h2>What are Slacker and Slacker Cluster</h2>
+
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&rsquo;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
+
+<h2>Grouping in Slacker Cluster</h2>
+
+<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
+
+<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
+
+<h3>:random</h3>
+
+<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
+
+<h3>:leader</h3>
+
+<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
+
+<h3>:all</h3>
+
+<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it&rsquo;s broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there&rsquo;s only one server called, just like local invocation. In <code>:all</code>, there&rsquo;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
+
+<h3>Custom</h3>
+
+<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
+
+<h2>Grouping results</h2>
+
+<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
+
+<p>In short words:</p>
+
+<ul>
+<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
+<li><code>:vector</code> returns  a vector of all results.</li>
+<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
+<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
+</ul>
+
+
+<h2>Grouping exceptions</h2>
+
+<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
+
+<h2>Granularity</h2>
+
+<p>The grouping options can be set to client level:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="s">&quot;cluster-name&quot;</span> <span class="s">&quot;127.0.0.1:2181&quot;</span> <span class="ss">:grouping</span> <span class="ss">:leader</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or function level:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">slacker.example.api/timestamp</span>
+</span><span class='line'>  <span class="ss">:grouping</span> <span class="ss">:all</span>
+</span><span class='line'>  <span class="ss">:grouping-results</span> <span class="ss">:single</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Conclusion</h2>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fork-Join in Papaline]]></title>
@@ -731,24 +808,6 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
 <p>bower install heatcanvas</p>
 
 <p>Enjoy this library.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Exaile 豆瓣电台插件 0.0.13]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/11/12/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-13/"/>
-    <updated>2012-11-12T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/11/12/exaile-豆瓣电台插件-0-0-13</id>
-    <content type="html"><![CDATA[<p>近来工作甚忙，一直没有精力来更新这个插件。加之exaile被archlinux清到了aur仓库，项目的前景亦是堪忧。恰好有两位热心网友@JoveYu和@watermelonlh在github上提出愿意帮助维护这个项目。两位都是很好的贡献者，用了一周左右的时间，居然看遍了我乱糟糟的代码，更看遍了Exaile更乱糟糟的代码。说干就干，还真让这个插件在Exaile 0.3.3健健康康地运行起来。而这段时间我没能给两位什么具体的帮助，着实惭愧。</p>
-
-<p>不管怎样，现在我们又拥有了和原先一模一样的功能：
-<img src="http://i.imgur.com/L3oqp.png" alt="" /></p>
-
-<p>你可以在github找到这个项目并下载最新的版本：<br />
-https://github.com/sunng87/exaile-doubanfm-plugin</p>
-
-<p>同时，适用于GNOME 3.6的扩展也已经在审核中了，一旦成功，根据gnome-shell据说最新的自动更新功能，已经安装的用户可以直接更新的最新版本。
-</p>
 ]]></content>
   </entry>
   

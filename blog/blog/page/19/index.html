@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Bottle是一个非常精致的WSGI框架，它提供了Python Web开发中需要的基本支持：URL路由，Request/Response对象封装，模板支持，与WSGI服务器集成支持。整个框架的全部代码约有2000行，它的核心部分没有其他任何依赖，只要有Python环境就可以运行。 &hellip;">
+  <meta name="description" content="半年来，围绕豆瓣做了几个应用，今天上班路上突然心血来潮，决定汇总一下，推广一下。如果你是豆瓣用户，也是Ubuntu用户，你可以尝试一下。 http://sunng.info/doubantu/ ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,45 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/20/%E8%B1%86%E7%93%A3-on-ubuntu/">豆瓣 on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>半年来，围绕豆瓣做了几个应用，今天上班路上突然心血来潮，决定汇总一下，推广一下。如果你是豆瓣用户，也是Ubuntu用户，你可以尝试一下。</p>
+
+<p><a href="http://sunng.info/doubantu/">http://sunng.info/doubantu/</a>
+<a href="http://www.flickr.com/photos/40741608@N08/5099029491/" title="douban on ubuntu by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1208/5099029491_24b01f5a0a.jpg" width="500" height="361" alt="douban on ubuntu" /></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -692,71 +731,6 @@ cflow &#8211;format=posix &#8211;omit-arguments &#8211;level-indent=&#8217;0=\t&
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/22/lua-script-for-geany-to-view-manpage-of-functions/">Lua Script for Geany to View Manpage of Functions</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-22T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>Requirement</h3>
-When editing when Geany, you need some document of system library functions at hand. So you want to browse manpage at any time.</p>
-
-<p><h3>Solution</h3>
-Just two lines:<br />
-[cc lang=&#8221;lua&#8221;]<br />
-sel=geany.selection()<br />
-geany.launch(&#8216;rxvt-unicode&#8217;, &#8216;-e&#8217;, &#8216;man&#8217;, sel)<br />
-[/cc]
-<a href="http://gist.github.com/591279">http://gist.github.com/591279</a></p>
-
-<p><h3>Install</h3>
-Make sure you have geany-plugin-lua installed:
-<i>sudo apt-get install geany-plugin-lua</i></p>
-
-<p>Create a lua source file named &#8216;ShowMan.lua&#8217; in <i>~/.config/geany/plugins/geanylua/</i>  . If the direcotry does not exist, you should create it first.</p>
-
-<p>Copy two lines of lua code into this file, save and close.</p>
-
-<p>Create a file named hotkeys.cfg in <i>~/.config/geany/plugins/geanylua/</i>, add following content:
-<i>ShowMan.lua</i></p>
-
-<p>Restart geany, then open Preferences->Keybindings, Lua Script-> ShowMan, bind a key, for example, Alt+m</p>
-
-<p><h3>Usage</h3>
-Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->ShowMan), then you see the terminal and the manpage.</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/5017060556/" title="geany-lua-manpage by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4127/5017060556_ca89e90517.jpg" width="500" height="313" alt="geany-lua-manpage" /></a></p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -778,6 +752,10 @@ Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->Show
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -791,10 +769,6 @@ Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->Show
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

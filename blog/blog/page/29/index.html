@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="If you use NetBeans IDE to build an application which reads environment variable, you will have to do these settings in your IDE. There is no GUI to &hellip;">
+  <meta name="description" content="After you test and build your application in NetBeans, you deploy it to Glassfish, but the environment variables are invalid again. In such situation &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/12/29/setting-environment-variables-for-glassfish-v3/">Setting Environment Variables for Glassfish V3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After you test and build your application in NetBeans, you deploy it to Glassfish, but the environment variables are invalid again. In such situation, you should set these variable in glassfish configuration file which is supposed to located at:</p>
+
+<p><em>$GLASSFISH_HOME/glassfish/config/asenv.conf</em></p>
+
+<p>Append your variables to the file, and restart the server. It works.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -625,80 +665,6 @@ There are two parts of this application: ruby code and haml. I just use in-file-
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/20/yan-0-3/">Yan 0.3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>经过一周的重构和开发，我的开源项目，验证码服务，打上了0.3的tag，算是一个release吧。</p>
-
-<p>This release has been focusing on support for different types captcha generators. Now Yan is not only able to provide image/jpeg captcha, but also text/plain and any others.
-<h3>Changeset:</h3>
-<ul>
-	<li>Internal API Changes:
-<ul>
-	<li>Cache API improved: new CacheItemIdentity and CacheIdStrategy were introduced in to provide convertion between cache item name and captcha info model;</li>
-	<li>Captcha Generator API improved: Add CaptchaGeneratorInfo to define some meta information on captcha providers (such as mode code, captcha type);</li>
-	<li>Captcha Data Model(CaptchaInfo) and Ticket Data Model improved: configuration parameters are separated from required parameters and has been more generic for different types of generator algorisms;</li>
-</ul>
-</li>
-	<li>External API Changes:
-<ul>
-	<li>Rename /image url to /captcha for better literal accuracy;</li>
-	<li>/ticket now supports multiple types of applicable format (plain text / json / xml / yaml);</li>
-	<li>/ticket now returns the mime type of the captcha generator;</li>
-	<li>Add a Simple-Plain-Text generator as a sample for those whose mime type is other than image/jpeg;</li>
-</ul>
-</li>
-	<li>Other changes:
-<ul>
-	<li>I created a new branch for next version of Yan. So the code in repository now has multiply branches, you can use &#8216;hg update branch-name&#8217; to switch between difference branches;</li>
-	<li>The sample test page for the service (index.jsp) has been adopt to the new protocol and totally restyled.</li>
-</ul>
-</li>
-</ul>
-<img class="alignnone" src="http://farm3.static.flickr.com/2503/4200328968_b3dd1fee5f.jpg" alt="" width="500" height="391" /></p>
-
-<p>Again, grab code from the development repository:
-<em>hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
-
-<p>If you don&#8217;t use mercurial/hg, you can also download the tagged version from the page:
-<a href="http://bitbucket.org/sunng/yan/downloads/" target="_blank"><em>http://bitbucket.org/sunng/yan/downloads/</em></a></p>
-
-<p>Just use maven to resolve dependency, build and run the project:
-<em>mvn jetty:run</em></p>
-
-<p>Feel free to report issue :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/30/">&larr; Older</a>
@@ -720,6 +686,10 @@ There are two parts of this application: ruby code and haml. I just use in-file-
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -733,10 +703,6 @@ There are two parts of this application: ruby code and haml. I just use in-file-
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="As mentioned in Rage Viewer, I have another clojure library to communicate with Reddit. Now it&#8217;s public available as &#8221;reddit.clj&#8221;. &hellip;">
+  <meta name="description" content="Clojure-Control is the clojure port of node-control, developed by killme2008. Clojure-Control allows you to define clusters and tasks in a DSL and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/28/clojure-control-plugin-for-leiningen/">Clojure-Control Plugin for Leiningen</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/killme2008/clojure-control/" target="_blank">Clojure-Control</a> is the clojure port of node-control, developed by <a href="http://www.blogjava.net/killme2008/" target="_blank">killme2008</a>. Clojure-Control allows you to define clusters and tasks in a DSL and execute them with simple command.</p>
+
+<p><a href="https://github.com/sunng87/lein-control" target="_blank">Lein-control</a> is a leiningen(clojure build tool) plugin, with which you can integrate Clojure-Control into your build tasks. It could be helpful to execute deployment tasks on several machines.</p>
+
+<p>To use lein-control, simply add this to your project.clj . And download dependencies with <em>lein deps</em>.<br />
+:dev-dependencies [[lein-control &#8220;0.1.0&#8221;]]</p>
+
+<p>Create a sample control file in your project home:
+<em>lein control init</em></p>
+
+<p>Check your cluster configuration:
+<em>lein control show cluster-name</em></p>
+
+<p>Execute tasks against particular cluster:
+<em>lein control run cluster-name task-name</em></p>
+
+<p>Enjoy your deployment !</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -566,46 +618,6 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">最近的一些想法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><p>最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。</p>
-<p>这是root cause，其实进了代码里面的问题更多。于是产生了对这种feature driven development的怀疑。我曾经觉得列出 feature，做好代价估计，然后大家各自去实现的方式很理性很可控。如果宏观地看，黑盒地看，这种方式对项目管理很友好。但是最近看这种方式下开发出来的产品，问题还是很多的。当开发人员面对一个feature却缺少对产品整体架构的足够了解，他很容易倾向于用quick and dirty的方式\打补丁的方式解决问题，而忽略新feature对架构整体的挑战。长期下来，软件的功能不断演进，架构却停留在早期，维护成本越来越高，神秘的陷阱越来越多。这时，每次发布都要通过测试部门的蛮力测试，这个过程中除了修bug还要克服无数的invalid的bug。What the hell!!!</p>
-<p>另一方面，从开发人员的角度，我认为Don&#8217;t repeat yourself是每个程序员必须牢记在心的编程行为准则。无论技术好坏，经验是否丰富，只要坚持这个原则，程序员总会趋向于做一些抽象做一些设计，我想是不会写出太让人发指的代码的。最近查看遗留代码，里面实在是太多copy/paste了。对新增的功能，甚至通过重载加copy/paste来实现。如果不能怀疑同事能力的话，只好认为这是工作态度问题了。管理者往往是不会看到这么细节的问题（其实是严重的问题）。</p>
-<p>面对这样的系统，我最初的想法是通通推倒然后模块化。虽然考虑了工作量，可是尝试了一周还是发现老的基础根本无法剥离开，多年前的设计者根本就没有考虑模块化/解耦合的问题。有句话说得好: if you cannot split it, you cannot scale it. （对数据显而易见，对程序其实也一样）然而放弃这么大规模的久经考验的代码又不现实。这周开始又只好改变策略小步快跑，虽然不治本，但是就这个阶段来说，看到改造的效果对我们这个小组意义更大。这是在内心的洁癖和现实的局面间做的不难的取舍。</p>
-<p>尽管困难重重，还是争取抓住这个机会能对自己有个提升。需要驱动弟兄们接受和实现自己的想法，和自个一个人闷头干是完全不同的。</p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/12/">&larr; Older</a>
@@ -627,6 +639,10 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -640,10 +656,6 @@ Mobile browser is also supported. (Tested on Firefox Android and default Android
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

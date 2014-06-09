@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="针对地理数据的ORM，有一个Hibernate的扩展HibernateSpatial项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
-http://www.grails. &hellip;">
+  <meta name="description" content="不管这是不是30号下午我伸直了脖子期待的国庆假期，总之伴随明天早晨8点45分打卡机一声鸣音它是要见鬼去了。8号？8号用来中和后一天的周一综合症吧，不指望了。今年国庆真是无聊到一定程度了，我印象中似乎从来都还没有这么无聊过。本来还想着靠自己一些勉强存在的兴趣爱好来抵抗无聊的，后来发现是不堪一击。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,52 @@ http://www.grails. &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/06/%E5%88%B0%E5%A4%B4%E4%BA%86/">到头了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不管这是不是30号下午我伸直了脖子期待的国庆假期，总之伴随明天早晨8点45分打卡机一声鸣音它是要见鬼去了。8号？8号用来中和后一天的周一综合症吧，不指望了。今年国庆真是无聊到一定程度了，我印象中似乎从来都还没有这么无聊过。本来还想着靠自己一些勉强存在的兴趣爱好来抵抗无聊的，后来发现是不堪一击。概括地说这六天看了整整六天的喜羊羊。上帝啊。好像也不完全是，还听了很多革命歌曲看了一些老电影。总之正经事是没有什么明显的进度，哎呦不说了，我现在连什么是正经事都说不清楚。</p>
+
+<p>在上海一点出门的欲望了都没有，六天以来取得最远的地方就是旁边的超市，其中还有包括今天在内的三天连楼都没下去。豆瓣上本来还有个老电影的活动来着，结果正好是明天加班，想去也去不成。形势危急，主办方发了三封豆邮说大家快去，不然这个活动办不下去了。我想着在北京的时候还有点兴趣爱好什么的，那么严酷的斗争环境，周末还去听个讲座参加个沙龙什么的，在上海就一点胃口都没有了。要不以后还是找机会去北京吧，但是去干什么呢，真无聊。</p>
+
+<p>今天突然冒出个想法，要是能重活一次的话，我马上毫不犹豫爬到楼顶跳下来reset。</p>
+
+<p>好在好在，明天就回公司了，要试着配一下ehcache的集群，有时间的话比较一下RMI方式和JGroup方式的性能，再做下一步打算。对了，还有一个系统的维护指南要写。</p>
+
+<p>我还是想想明天上班Syu时的情景吧。</p>
+
+<p>PS:此文是用Firefox的插件ScribeFire发的</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -496,128 +541,6 @@ println(lons);
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/23/performance-visualization-with-gnuplot/">Performance Visualization With Gnuplot</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Gnuplot is considered to be one of the most famous plotting tools on both linux and windows. With Gnuplot, generation of charts becomes agile and easy. Gnuplot supports sorts of terminals range from gui, image to printer. To enable png terminal support, we will build gnuplot with following steps. (However, on most linux distributions you don&#8217;t have to do these manually, install gnuplot with package manager is doubtlessly the best choice for most cases.)</p>
-
-<p>Well, for a naked machine, it won&#8217;t be too long to type commands in gnuplot.
-<h3>Installing libpng</h3>
-linpng provides functionality to write png images.<br />
-Grab source form libpng&#8217;s website:
-<em>wget http://downloads.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz?use_mirror=ncu</em></p>
-
-<p>Uncompress the package:
-<em>tar xfz libpng-1.2.39.tar.gz</em></p>
-
-<p>cd to result directory and build it:
-<em>cd libpng-1.2.39<br />
-./configure<br />
-make<br />
-make install</em>
-<h3>Installing libgd</h3>
-gd provides api for programmer to draw images like Graphics2d in java. Gnuplot uses gd to draw charts on images.<br />
-Grab source from gd&#8217;s website:
-<em>wget http://www.libgd.org/releases/gd-2.0.35.tar.gz</em></p>
-
-<p>Uncompress it:
-<em>tar xfz gd-2.0.35.tar.gz</em></p>
-
-<p>build it:
-<em>cd gd-2.0.35<br />
-./configure<br />
-make<br />
-make install</em>
-<h3>Compiling and building Gnuplot</h3>
-Grab source from sourceforge:
-<em>wget http://downloads.sourceforge.net/project/gnuplot/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz?use_mirror=ncu</em></p>
-
-<p>Uncompress and compile:
-<em>tar xfz gnuplot-4.2.6.tar.gz<br />
-cd gnuplot<br />
-./configure<br />
-make<br />
-make install</em></p>
-
-<p>if &#8221;<em>&#8216;@LIBICONV@&#8217; not found</em>&#8221; encountered during make, just edit <em>src/Makefile</em> to replace <em>-l@LIBICONV@</em> to <em>-liconv</em>, and make again.<br />
-Try to start gnuplot simply with:
-<em>gnuplot</em></p>
-
-<p>Now you may be stopped by error message like<em> libiconv.so.2</em> not found, then you have to copy it from somewhere(such as<em> /usr/local/lib</em>) to<em> /usr/lib</em>, the it will work.
-<h3>Using Gnuplot</h3>
-As the installation completed, we start to use it.</p>
-
-<p>vmstat is a great utility shows you the status of your process queue, memory, swap, io rates, interrupts and cpu usage. With command-line arguments, we can dump these data in a fixed interval and fixed count:
-<em>vmstat 5 10</em></p>
-
-<p>awk is a well-known editor to analyze and extract text from input, we can filter specified fields with awk like this:
-<em>vmstat 5 10 | awk &#8216;NR &gt; 2 {print NR-2, $13}&#8217;</em>
-The header was ignored by the conditional expression NR&gt;2 which NR stands for Number-of-Row</p>
-
-<p>The output is just enough for gnuplot, now use pipe to connect them together:
-<em>vmstat 5 10 | awk &#8216;NR &gt; 2 {print NR, $13}&#8217; | gnuplot -e &#8220;set terminal png; set output &#8216;v.png&#8217;; plot &#8216;-&#8217; u 1:2 t &#8216;cpu&#8217; w linespoints;&#8221;</em></p>
-
-<p>To gather more information at one time, a more complex command is needed:
-<em>vmstat 10 360 | awk &#8216;NR &gt; 2 {print NR, $4, $9, $10, $13}&#8217; &gt; vmstat.dat ; gnuplot -e &#8220;set terminal png;set output &#8216;vmstat.png&#8217;;set grid; set multiplot;set size 0.5, 0.5;set origin 0, 0;plot &#8216;vmstat.dat&#8217; u 1:2 t &#8216;freemem&#8217; w linespoints;set size 0.5, 0.5;set origin 0.5, 0;plot &#8216;vmstat.dat&#8217; u 1:3 t &#8216;bi&#8217; w linespoints;set size 0.5, 0.5;set origin 0, 0.5;plot &#8216;vmstat.dat&#8217; u 1:4 t &#8216;bo&#8217; w linespoints;set size 0.5, 0.5;set origin 0.5, 0.5;plot &#8216;vmstat.dat&#8217; u 1:5 t &#8216;cpu&#8217; w linespoints;unset multiplot;&#8221;</em></p>
-
-<p>Unfortunately, gnuplot in Ubuntu jaunty is at version of 4.2.4, which doesn&#8217;t support -e option. So you cannot send gnuplot commands directly in command-line. The solution is split it to several steps:
-<em>vmstat 10 360 | awk &#8216;NR &gt; 2 {print NR, $4, $9, $10, $13}&#8217; &gt; vmstat.dat<br />
-gnuplot<br />
-&gt;set terminal png;<br />
-&gt;set output &#8216;vmstat.png&#8217;;<br />
-&gt;set grid;<br />
-&gt;set multiplot;<br />
-&gt;set size 0.5, 0.5;<br />
-&gt;set origin 0, 0;<br />
-&gt;plot &#8216;vmstat.dat&#8217; u 1:2 t &#8216;freemem&#8217; w linespoints;<br />
-&gt;set size 0.5, 0.5;<br />
-&gt;set origin 0.5, 0;<br />
-&gt;plot &#8216;vmstat.dat&#8217; u 1:3 t &#8216;bi&#8217; w linespoints;<br />
-&gt;set size 0.5, 0.5;<br />
-&gt;set origin 0, 0.5;plot &#8216;vmstat.dat&#8217; u 1:4 t &#8216;bo&#8217; w linespoints;<br />
-&gt;set size 0.5, 0.5;<br />
-&gt;set origin 0.5, 0.5;<br />
-&gt;plot &#8216;vmstat.dat&#8217; u 1:5 t &#8216;cpu&#8217; w linespoints;<br />
-&gt;unset multiplot;</em></p>
-
-<p>This picture is a stat result of performance test this afternoon</p>
-
-<p><img class="alignnone" src="http://pic.yupoo.com/classicning/3794181d957c/medium.jpg" alt="" width="500" height="375" /></p>
-
-<p>For more detailed tutorials, check the article on ibm dw:
-<a href="http://www.ibm.com/developerworks/library/l-gnuplot/" target="_blank">http://www.ibm.com/developerworks/library/l-gnuplot/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -639,6 +562,10 @@ gnuplot<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -652,10 +579,6 @@ gnuplot<br />
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

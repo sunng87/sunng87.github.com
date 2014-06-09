@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Clojure | Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-05-27T22:40:47+08:00</updated>
+  <updated>2014-06-09T22:43:55+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Slacker Cluster 0.12: Grouping]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
+    <updated>2014-06-09T21:06:39+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/06/09/grouping-in-slacker-0-dot-12</id>
+    <content type="html"><![CDATA[<h2>What are Slacker and Slacker Cluster</h2>
+
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&rsquo;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
+
+<h2>Grouping in Slacker Cluster</h2>
+
+<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
+
+<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
+
+<h3>:random</h3>
+
+<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
+
+<h3>:leader</h3>
+
+<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
+
+<h3>:all</h3>
+
+<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it&rsquo;s broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there&rsquo;s only one server called, just like local invocation. In <code>:all</code>, there&rsquo;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
+
+<h3>Custom</h3>
+
+<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
+
+<h2>Grouping results</h2>
+
+<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
+
+<p>In short words:</p>
+
+<ul>
+<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
+<li><code>:vector</code> returns  a vector of all results.</li>
+<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
+<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
+</ul>
+
+
+<h2>Grouping exceptions</h2>
+
+<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
+
+<h2>Granularity</h2>
+
+<p>The grouping options can be set to client level:</p>
+
+<p><code>clojure
+(clustered-slackerc "cluster-name" "127.0.0.1:2181" :grouping :leader)
+</code></p>
+
+<p>or function level:</p>
+
+<p><code>clojure
+(defn-remote sc slacker.example.api/timestamp
+  :grouping :all
+  :grouping-results :single)
+</code></p>
+
+<h2>Conclusion</h2>
+
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fork-Join in Papaline]]></title>

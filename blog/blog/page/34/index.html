@@ -9,10 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="import MySQLdb
-import subprocess
-from smtplib import *
-from datetime import date, timedelta class StatEntry(object): def __init__(self, name, count &hellip;">
+  <meta name="description" content="Gnuplot is considered to be one of the most famous plotting tools on both linux and windows. With Gnuplot, generation of charts becomes agile and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,128 @@ from datetime import date, timedelta class StatEntry(object): def __init__(self,
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/23/performance-visualization-with-gnuplot/">Performance Visualization With Gnuplot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Gnuplot is considered to be one of the most famous plotting tools on both linux and windows. With Gnuplot, generation of charts becomes agile and easy. Gnuplot supports sorts of terminals range from gui, image to printer. To enable png terminal support, we will build gnuplot with following steps. (However, on most linux distributions you don&#8217;t have to do these manually, install gnuplot with package manager is doubtlessly the best choice for most cases.)</p>
+
+<p>Well, for a naked machine, it won&#8217;t be too long to type commands in gnuplot.
+<h3>Installing libpng</h3>
+linpng provides functionality to write png images.<br />
+Grab source form libpng&#8217;s website:
+<em>wget http://downloads.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz?use_mirror=ncu</em></p>
+
+<p>Uncompress the package:
+<em>tar xfz libpng-1.2.39.tar.gz</em></p>
+
+<p>cd to result directory and build it:
+<em>cd libpng-1.2.39<br />
+./configure<br />
+make<br />
+make install</em>
+<h3>Installing libgd</h3>
+gd provides api for programmer to draw images like Graphics2d in java. Gnuplot uses gd to draw charts on images.<br />
+Grab source from gd&#8217;s website:
+<em>wget http://www.libgd.org/releases/gd-2.0.35.tar.gz</em></p>
+
+<p>Uncompress it:
+<em>tar xfz gd-2.0.35.tar.gz</em></p>
+
+<p>build it:
+<em>cd gd-2.0.35<br />
+./configure<br />
+make<br />
+make install</em>
+<h3>Compiling and building Gnuplot</h3>
+Grab source from sourceforge:
+<em>wget http://downloads.sourceforge.net/project/gnuplot/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz?use_mirror=ncu</em></p>
+
+<p>Uncompress and compile:
+<em>tar xfz gnuplot-4.2.6.tar.gz<br />
+cd gnuplot<br />
+./configure<br />
+make<br />
+make install</em></p>
+
+<p>if &#8221;<em>&#8216;@LIBICONV@&#8217; not found</em>&#8221; encountered during make, just edit <em>src/Makefile</em> to replace <em>-l@LIBICONV@</em> to <em>-liconv</em>, and make again.<br />
+Try to start gnuplot simply with:
+<em>gnuplot</em></p>
+
+<p>Now you may be stopped by error message like<em> libiconv.so.2</em> not found, then you have to copy it from somewhere(such as<em> /usr/local/lib</em>) to<em> /usr/lib</em>, the it will work.
+<h3>Using Gnuplot</h3>
+As the installation completed, we start to use it.</p>
+
+<p>vmstat is a great utility shows you the status of your process queue, memory, swap, io rates, interrupts and cpu usage. With command-line arguments, we can dump these data in a fixed interval and fixed count:
+<em>vmstat 5 10</em></p>
+
+<p>awk is a well-known editor to analyze and extract text from input, we can filter specified fields with awk like this:
+<em>vmstat 5 10 | awk &#8216;NR &gt; 2 {print NR-2, $13}&#8217;</em>
+The header was ignored by the conditional expression NR&gt;2 which NR stands for Number-of-Row</p>
+
+<p>The output is just enough for gnuplot, now use pipe to connect them together:
+<em>vmstat 5 10 | awk &#8216;NR &gt; 2 {print NR, $13}&#8217; | gnuplot -e &#8220;set terminal png; set output &#8216;v.png&#8217;; plot &#8216;-&#8217; u 1:2 t &#8216;cpu&#8217; w linespoints;&#8221;</em></p>
+
+<p>To gather more information at one time, a more complex command is needed:
+<em>vmstat 10 360 | awk &#8216;NR &gt; 2 {print NR, $4, $9, $10, $13}&#8217; &gt; vmstat.dat ; gnuplot -e &#8220;set terminal png;set output &#8216;vmstat.png&#8217;;set grid; set multiplot;set size 0.5, 0.5;set origin 0, 0;plot &#8216;vmstat.dat&#8217; u 1:2 t &#8216;freemem&#8217; w linespoints;set size 0.5, 0.5;set origin 0.5, 0;plot &#8216;vmstat.dat&#8217; u 1:3 t &#8216;bi&#8217; w linespoints;set size 0.5, 0.5;set origin 0, 0.5;plot &#8216;vmstat.dat&#8217; u 1:4 t &#8216;bo&#8217; w linespoints;set size 0.5, 0.5;set origin 0.5, 0.5;plot &#8216;vmstat.dat&#8217; u 1:5 t &#8216;cpu&#8217; w linespoints;unset multiplot;&#8221;</em></p>
+
+<p>Unfortunately, gnuplot in Ubuntu jaunty is at version of 4.2.4, which doesn&#8217;t support -e option. So you cannot send gnuplot commands directly in command-line. The solution is split it to several steps:
+<em>vmstat 10 360 | awk &#8216;NR &gt; 2 {print NR, $4, $9, $10, $13}&#8217; &gt; vmstat.dat<br />
+gnuplot<br />
+&gt;set terminal png;<br />
+&gt;set output &#8216;vmstat.png&#8217;;<br />
+&gt;set grid;<br />
+&gt;set multiplot;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0, 0;<br />
+&gt;plot &#8216;vmstat.dat&#8217; u 1:2 t &#8216;freemem&#8217; w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0.5, 0;<br />
+&gt;plot &#8216;vmstat.dat&#8217; u 1:3 t &#8216;bi&#8217; w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0, 0.5;plot &#8216;vmstat.dat&#8217; u 1:4 t &#8216;bo&#8217; w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0.5, 0.5;<br />
+&gt;plot &#8216;vmstat.dat&#8217; u 1:5 t &#8216;cpu&#8217; w linespoints;<br />
+&gt;unset multiplot;</em></p>
+
+<p>This picture is a stat result of performance test this afternoon</p>
+
+<p><img class="alignnone" src="http://pic.yupoo.com/classicning/3794181d957c/medium.jpg" alt="" width="500" height="375" /></p>
+
+<p>For more detailed tutorials, check the article on ibm dw:
+<a href="http://www.ibm.com/developerworks/library/l-gnuplot/" target="_blank">http://www.ibm.com/developerworks/library/l-gnuplot/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -637,103 +756,6 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/08/07/inside-grails-flash-scope/">Inside Grails Flash Scope</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.grails.org" target="_blank">Grails</a>的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。</p>
-
-<p>Grails的FlashScope接口定义在org.codehaus.groovy.grails.web.servlet包中，这个接口继承了Map接口，并定义了一个方法next()。</p>
-
-<p>Grails的默认实现在org.codehaus.groovy.grails.web.servlet包中，GrailsFlashScope。这个实现内部定义了两个Map（生命周期为两个请求），current和next，这两个Map不断滚动，保持在一个请求中可以且仅可以访问到当前和前一次请求的上下文。<br />
-[codesyntax lang=&#8221;java&#8221;]<br />
-public void next() {<br />
-current.clear();<br />
-current = (HashMap)next.clone();<br />
-next.clear();<br />
-reassociateObjectsWithErrors(current);<br />
-}
-[/codesyntax]</p>
-
-<p>put的时候，Grails只把新制放到next表中，因为next将在下一次请求时继续保存<br />
-[codesyntax lang=&#8221;java&#8221;]<br />
-public Object put(Object key, Object value) {<br />
-// create the session if it doesn&#8217;t exist<br />
-registerWithSessionIfNecessary();<br />
-if(current.containsKey(key)) {<br />
-current.remove(key);<br />
-}
-storeErrorsIfPossible(next,value);</p>
-
-<p>return next.put(key,value);<br />
-}
-[/codesyntax]</p>
-
-<p>get的时候，Grails在两个Map中查找<br />
-[codesyntax lang=&#8221;java&#8221;]<br />
-public Object get(Object key) {<br />
-if(next.containsKey(key))<br />
-return next.get(key);<br />
-return current.get(key);<br />
-}
-[/codesyntax]</p>
-
-<p>此外，FlashScope本身还是被放在session中<br />
-[codesyntax lang=&#8221;java&#8221;]<br />
-private void registerWithSessionIfNecessary() {<br />
-GrailsWebRequest webRequest = (GrailsWebRequest) RequestContextHolder.currentRequestAttributes();<br />
-HttpSession session = webRequest.getCurrentRequest().getSession(true);<br />
-if(session.getAttribute(GrailsApplicationAttributes.FLASH_SCOPE) == null)<br />
-session.setAttribute(GrailsApplicationAttributes.FLASH_SCOPE, this);<br />
-}
-[/codesyntax]</p>
-
-<p>然后，滚动FlashScope的行为在GrailsWebRequestFilter中被调用，GrailsWebRequestFilter继承自spring-web的OncePerRequestFilter<br />
-[codesyntax lang=&#8221;java&#8221;]<br />
-protected void doFilterInternal(<br />
-HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)<br />
-throws ServletException, IOException {<br />
-&#8230;</p>
-
-<p>// Set the flash scope instance to its next state. We do<br />
-// this here so that the flash is available from Grails<br />
-// filters in a valid state.<br />
-FlashScope fs = webRequest.getAttributes().getFlashScope(request);<br />
-fs.next();<br />
-&#8230;<br />
-}
-[/codesyntax]</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
@@ -755,6 +777,10 @@ fs.next();<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -768,10 +794,6 @@ fs.next();<br />
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="先讲个笑话，然后回顾一下这个星期。 这个星期从周四晚上开始，和一位外国朋友一位台湾女士聊天。第一次经历这样的场面，忐忑得很，起初还尝试和大家说英文的，奈何我的口语和听力实在是难以支撑，最后不知不觉间大家都平滑过渡到中文了。后来我想着听力还可以通过看InfoQ上的会议录像什么的练习一下， &hellip;">
+  <meta name="description" content="I am about to leave current company and looking for a new challenge for future. If you are interested, and also looking for a Java or Python &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/08/31/open-for-a-new-job/">Open for a New Job</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am about to leave current company and looking for a new challenge for future. If you are interested, and also looking for a Java or Python developer, please check the hot baked resume:
+<ul>
+<li><a href="http://sunng.info/resume_en.html">en</a></li>
+<li><a href="http://sunng.info/resume_cn.html">zh</a></li>
+</ul></p>
+
+<p>Actually, I am not good at documenting myself. So if you need more details, feel free to get connected with email: classicning[at]gmail.com</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -771,97 +815,6 @@ doubanfm-0.0.3-exaile031.tar.gz</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/07/26/%E7%94%A8markdown%E4%B9%A6%E5%86%99%E6%96%87%E6%A1%A3/">用markdown书写文档</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>写文档是头疼事，没人愿意写文档。在word里写文档，时间长了都怀疑自己是不是搞技术的。我阅历有限，在我的印象里就没有用word格式看过什么有价值的东西。只要一打开word想到的就是连篇累牍的废话、码字。word最重要的功能是什么？保存。其次呢？字数统计。我所写过的word文档绝大多数都是“只写”的，通常作为流程里的一个附件，没有人真正去看。</p>
-
-<p>以上是人身攻击，接下来比较实际的问题，word文档不是符合unix哲学的东西。格式不开放，你就没有办法进行diff操作，把word文档放到svn里，只能使用最基本的版本控制，没法查看changeset，只知道改了，不知道改了什么。</p>
-
-<p>为了改变这种情况，我试过用<a href="http://www.docbook.org/">docbook</a>格式。docbook用xml书写，定义了一套复杂的Schema，详细到作者的email都有定义。docbook还有丰富的工具集，可以通过xsl把docbook转换成所有你知道的文档格式。<a href="http://www.sonatype.com/products/maven/documentation/book-defguide">Maven: the Definitive Guide</a>就是用docbook写成的。不过用docbook也存在一些问题，docbook太复杂了，用纯文本编辑器很难处理，作者的学习曲线也比较高，需要所见即所得的编辑器支持。与docbook相类似的DITA，也存在这样的问题，它们是重量级的格式。</p>
-
-<p>轻量级的Wiki格式不错，但是Wiki格式很让人头疼就是没有统一的规范。举例，dokuwiki里顶级标题是6个=，而moinmoin里顶级标题恰恰相反是一个=，不portable，文档维护起来就非常麻烦。</p>
-
-<p>铺垫了这么多，委屈以上格式了，该<a href="http://daringfireball.net/projects/markdown/">markdown</a>出场了。markdown是简单的html原型，用来生成html，它的设计目标就是为了KISS，兼容html。看看一些必要的格式吧：（或者直接看<a href="http://en.wikipedia.org/wiki/Markdown">Wikipedia</a>）<br />
-标题<br />
-# 标题<br />
-## 二级标题<br />
-&#8230;<br />
-###### 六级标题</p>
-
-<p>对于一级标题还可以这么写<br />
-headline<br />
-========<br />
-二级标题可以<br />
-headline<br />
-&#8212;&#8212;&#8211;<br />
-这个怎么输入呢，我想起来前几天看vim hacks里的一组快捷键<br />
-yypoVr=<br />
-yypoVr-<br />
-谁用谁知道</p>
-
-<p>段落：<br />
-一段文本以两个换行结束。<br />
-换行：<br />
-一行文本行末两个空格。</p>
-
-<p>图片<br />
-![alternative text](image-url &#8220;image-title&#8221;)<br />
-用markdown，图片的alt你不写都不行。</p>
-
-<p>链接<br />
-[Linktext](link &#8220;linktitle&#8221;)</p>
-
-<p>列表<br />
-ul 无序列表<br />
-*
-*<br />
-ol 有序列表<br />
-1.<br />
-2.</p>
-
-<p>以上就是主要的格式支持。用标题来划分文档层次，没有多余的格式，没有机会让你五颜六色。</p>
-
-<p>在linux上可以安装markdown的处理脚本：<br />
-apt-get install markdown<br />
-安装vim的语法文件：<br />
-http://www.vim.org/scripts/script.php?script_id=1242<br />
-这里是一个简单的例子：<br />
-http://github.com/sunng87/exaile-doubanfm-plugin/blob/master/README.mkd</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/22/">&larr; Older</a>
@@ -883,6 +836,10 @@ http://github.com/sunng87/exaile-doubanfm-plugin/blob/master/README.mkd</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -896,10 +853,6 @@ http://github.com/sunng87/exaile-doubanfm-plugin/blob/master/README.mkd</p>
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

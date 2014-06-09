@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="听说要来台风，今天特地想着把自行车推进楼道里。楼道到平地有一个坡道，就是大家都见过的那种坡道。于是我骑着自行车冲了上去，试图把动能转化成势能。不料时间停止在了坡道的三分之二处。现在不仅大脑的并行处理能力下降，小脑更是时常挂起。你说我当时怎么就没有想到使把劲蹬上去呢，我确实没有这么想， &hellip;">
+  <meta name="description" content="Grails的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。 Grails的FlashScope接口定义在org. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/08/07/inside-grails-flash-scope/">Inside Grails Flash Scope</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.grails.org" target="_blank">Grails</a>的在Servlet API的基础上增加了一个非常实用的FlashScope，FlashScope的生命周期为两次请求（也就是在一次重定向）。它的典型应用是POST方式提交后显示服务器端发给用户的提示信息，在平时的应用中会经常使用。</p>
+
+<p>Grails的FlashScope接口定义在org.codehaus.groovy.grails.web.servlet包中，这个接口继承了Map接口，并定义了一个方法next()。</p>
+
+<p>Grails的默认实现在org.codehaus.groovy.grails.web.servlet包中，GrailsFlashScope。这个实现内部定义了两个Map（生命周期为两个请求），current和next，这两个Map不断滚动，保持在一个请求中可以且仅可以访问到当前和前一次请求的上下文。<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public void next() {<br />
+current.clear();<br />
+current = (HashMap)next.clone();<br />
+next.clear();<br />
+reassociateObjectsWithErrors(current);<br />
+}
+[/codesyntax]</p>
+
+<p>put的时候，Grails只把新制放到next表中，因为next将在下一次请求时继续保存<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object put(Object key, Object value) {<br />
+// create the session if it doesn&#8217;t exist<br />
+registerWithSessionIfNecessary();<br />
+if(current.containsKey(key)) {<br />
+current.remove(key);<br />
+}
+storeErrorsIfPossible(next,value);</p>
+
+<p>return next.put(key,value);<br />
+}
+[/codesyntax]</p>
+
+<p>get的时候，Grails在两个Map中查找<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+public Object get(Object key) {<br />
+if(next.containsKey(key))<br />
+return next.get(key);<br />
+return current.get(key);<br />
+}
+[/codesyntax]</p>
+
+<p>此外，FlashScope本身还是被放在session中<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+private void registerWithSessionIfNecessary() {<br />
+GrailsWebRequest webRequest = (GrailsWebRequest) RequestContextHolder.currentRequestAttributes();<br />
+HttpSession session = webRequest.getCurrentRequest().getSession(true);<br />
+if(session.getAttribute(GrailsApplicationAttributes.FLASH_SCOPE) == null)<br />
+session.setAttribute(GrailsApplicationAttributes.FLASH_SCOPE, this);<br />
+}
+[/codesyntax]</p>
+
+<p>然后，滚动FlashScope的行为在GrailsWebRequestFilter中被调用，GrailsWebRequestFilter继承自spring-web的OncePerRequestFilter<br />
+[codesyntax lang=&#8221;java&#8221;]<br />
+protected void doFilterInternal(<br />
+HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)<br />
+throws ServletException, IOException {<br />
+&#8230;</p>
+
+<p>// Set the flash scope instance to its next state. We do<br />
+// this here so that the flash is available from Grails<br />
+// filters in a valid state.<br />
+FlashScope fs = webRequest.getAttributes().getFlashScope(request);<br />
+fs.next();<br />
+&#8230;<br />
+}
+[/codesyntax]</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -490,104 +587,6 @@ I just tested it with a simple javafx applet. For there is no crossdomain.xml on
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/">[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step by Step</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。</p>
-
-<p>首先用apt-get下载安装pgsql和postgis的需要的包</p>
-
-<p><em>sudo apt-get install postgresql-8.3 postgresql-8.3-postgis postgresql-client-8.3 postgresql-contrib-8.3 pgadmin3</em></p>
-
-<p>安装过程中会提示创建一个默认名为<em>postgres</em>的用户。</p>
-
-<p>安装结束后，启动pgsql服务器</p>
-
-<p><em>sudo /etc/init.d/postgresql-8.3 start</em></p>
-
-<p>在默认情况下pgsql ident的设置为postgres用户用ident sameuser的方式登录，这种方式类似于sqlserver使用windows的用户管理。因此要用postgres用户登录系统。</p>
-
-<p>修改postgres用户的密码</p>
-
-<p><em>sudo passwd postgres</em></p>
-
-<p>用新密码登录为postgres</p>
-
-<p><em>su - postgres</em></p>
-
-<p>运行psql，可以检查pgsql的运行情况</p>
-
-<p><em>psql</em></p>
-
-<p>可以在psql中给postgres用户设置数据库密码</p>
-
-<p><em>ALTER USER postgres ENCRYPTED PASSWORD &#8216;yournewpassword&#8217;;</em></p>
-
-<p>继续在psql中创建plsql语言。如果安装时遗漏了contrib包这一步是不能完成的。</p>
-
-<p><em>CREATE LANGUAGE plsql;</em></p>
-
-<p>退出psql，创建Postgis数据库。</p>
-
-<p><em>createdb postgis</em></p>
-
-<p>导入postgis的两个sql文件，其中定义了EPSG数据库和Geometry类型。</p>
-
-<p><em>psql -d postgis -f /usr/share/postgresql-8.3-postgis/lwpostgis.sql<br />
-psql -d postgis -f /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql</em></p>
-
-<p>进入psql对当前用户GRAND ALL</p>
-
-<p><em>GRANT ALL ON TABLE geometry_columns TO postgres;<br />
-GRANT ALL ON TABLE spatial_ref_sys TO postgres;</em></p>
-
-<p>这样做的结果是这两张表被导入到默认的postgres数据库中。这样今后创建postgis数据库就可以以postgres为template_db，不过这么做的后果是这两张表的owner都是postgres。在GeoServer里创建FeatureType时必须用postgres用户登录，否则权限不足。</p>
-
-<p>这时PostGIS应该可以正常工作了，可以尝试导入shp</p>
-
-<p><em>shp2pgsql /your/shp/file tablename | psql newgisdb</em></p>
-
-<p>创建一个新的数据库用户</p>
-
-<p><em>createuser -p username</em></p>
-
-<p>修改<em>/etc/postgresql/8.3/main/pg_hda.conf</em>，设置数据库访问的认证方式</p>
-
-<p>将local all all一行的验证方式(method)由ident sameuser改为password就可以用密码登录psql了，在python－psycopg中用新建的用户连接pgsql也不会报ident失败了。</p>
-
-<p>将host all 127.0.0.1/32一行的验证方式也改为password就可以在本地用jdbc以用户名密码连接数据库了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/36/">&larr; Older</a>
@@ -609,6 +608,10 @@ GRANT ALL ON TABLE spatial_ref_sys TO postgres;</em></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -622,10 +625,6 @@ GRANT ALL ON TABLE spatial_ref_sys TO postgres;</em></p>
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>

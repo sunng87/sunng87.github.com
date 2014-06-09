@@ -9,9 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="ngeohash是一个geohash的javascript实现，之所以叫做ngeohash是因为到了Publish的时候才发现已经有geohash这个module了。这么令人沮丧的事就不多说了。 安装
-npm install ngeohash 使用
-var geohash = require(&# &hellip;">
+  <meta name="description" content="最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。
+这是root cause， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +66,46 @@ var geohash = require(&# &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">最近的一些想法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><p>最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。</p>
+<p>这是root cause，其实进了代码里面的问题更多。于是产生了对这种feature driven development的怀疑。我曾经觉得列出 feature，做好代价估计，然后大家各自去实现的方式很理性很可控。如果宏观地看，黑盒地看，这种方式对项目管理很友好。但是最近看这种方式下开发出来的产品，问题还是很多的。当开发人员面对一个feature却缺少对产品整体架构的足够了解，他很容易倾向于用quick and dirty的方式\打补丁的方式解决问题，而忽略新feature对架构整体的挑战。长期下来，软件的功能不断演进，架构却停留在早期，维护成本越来越高，神秘的陷阱越来越多。这时，每次发布都要通过测试部门的蛮力测试，这个过程中除了修bug还要克服无数的invalid的bug。What the hell!!!</p>
+<p>另一方面，从开发人员的角度，我认为Don&#8217;t repeat yourself是每个程序员必须牢记在心的编程行为准则。无论技术好坏，经验是否丰富，只要坚持这个原则，程序员总会趋向于做一些抽象做一些设计，我想是不会写出太让人发指的代码的。最近查看遗留代码，里面实在是太多copy/paste了。对新增的功能，甚至通过重载加copy/paste来实现。如果不能怀疑同事能力的话，只好认为这是工作态度问题了。管理者往往是不会看到这么细节的问题（其实是严重的问题）。</p>
+<p>面对这样的系统，我最初的想法是通通推倒然后模块化。虽然考虑了工作量，可是尝试了一周还是发现老的基础根本无法剥离开，多年前的设计者根本就没有考虑模块化/解耦合的问题。有句话说得好: if you cannot split it, you cannot scale it. （对数据显而易见，对程序其实也一样）然而放弃这么大规模的久经考验的代码又不现实。这周开始又只好改变策略小步快跑，虽然不治本，但是就这个阶段来说，看到改造的效果对我们这个小组意义更大。这是在内心的洁癖和现实的局面间做的不难的取舍。</p>
+<p>尽管困难重重，还是争取抓住这个机会能对自己有个提升。需要驱动弟兄们接受和实现自己的想法，和自个一个人闷头干是完全不同的。</p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -627,58 +666,6 @@ heatmap.render();<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/05/15/jip-0-5-1-released/">Jip 0.5.1 Released</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just rolled out <a href="https://github.com/sunng87/jip/tree/v0.5.1">jip 0.5.1</a> as a bugfix version of 0.5. It has been published to <a href="http://pypi.python.org/pypi/jip">pypi</a> and you can install it with <font face="monospace">pip install jip</font> in your virtualenv.</p>
-
-<p>From 0.5, you have new features available:
-<ul>
-<li>User-Agent &#8217;<font face="monospace">jip/0.5</font>&#8217; is added to http request.</li>
-<li>New command `<font face="monospace">freeze</font>` just like pip.</li>
-<li>Improved jar downloading. By default, at most 3 jars are downloaded in parall.</li>
-</ul></p>
-
-<p>In 0.5.1, bugs were fixed:
-<ul>
-<li>Repositories defined in pom are now included for <font face="monospace">install</font> command.</li>
-<li>Placeholder resolving of <font face="monospace">#{pom.groupId}</font> is corrected. (<a href="http://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer-ant/2.2/paranamer-ant-2.2.pom">instance</a>)</li>
-<li><font face="monospace">urllib2.URLError</font> is caught to prevent dump.</li>
-</ul></p>
-
-<p>For any problem and feature request, please refer to <a href="https://github.com/sunng87/jip/issues">github issue tracker</a>.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=cd9406ce-d82b-81e1-b547-7c00f498be8b" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -700,6 +687,10 @@ heatmap.render();<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
@@ -713,10 +704,6 @@ heatmap.render();<br />
     
       <li class="post">
         <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
       </li>
     
   </ul>
