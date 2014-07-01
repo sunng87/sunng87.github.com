@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="自从libchamplain / geoclue等库发布之后，gnome桌面的地理信息工具和支持发展很迅速：例如之前提到过的eye-of-gnome的地理信息插件，根据EXIF信息在地图上显示。现在gnome桌面上终于有一个专门的地图查看器了，仍然是基于libchamplain， &hellip;">
+  <meta name="description" content="翻译一个po文件。确认安装了gettext工具包。 cd到po目录，创建pot
+intltool-update &#8211;pot 创建相应的语言文件，例如zh_CN
+msginit -l zh_CN.utf8 程序会提示选择或输入邮箱，之后就会生成zh_CN.po文件，打开文件， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/31/%E7%BF%BB%E8%AF%91po/">翻译po</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>翻译一个po文件。确认安装了gettext工具包。</p>
+
+<p>cd到po目录，创建pot
+<em>intltool-update &#8211;pot</em></p>
+
+<p>创建相应的语言文件，例如zh_CN
+<em>msginit -l zh_CN.utf8</em></p>
+
+<p>程序会提示选择或输入邮箱，之后就会生成zh_CN.po文件，打开文件，逐条编辑msgstr即可。</p>
+
+<p>手动编辑LINGUAS文件，按顺序将zh_CN添加到其中。</p>
+
+<p>可以通过这个命令查看翻译的进度
+<em>msgfmt -cv zh_CN.po</em></p>
+
+<p>对于更新pot更新的情况，可以使用命令更新po文件
+<em>intltool-update zh_CN</em></p>
+
+<p>参考：
+<ul>
+	<li><a href="http://live.gnome.org/TranslationProject/LocalisationGuidezh">http://live.gnome.org/TranslationProject/LocalisationGuidezh</a></li>
+	<li><a href="http://blog.chinaunix.net/u1/37261/showart_476642.html">http://blog.chinaunix.net/u1/37261/showart_476642.html</a></li>
+</ul></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -632,48 +692,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/30/setting-environment-variables-for-netbeans-continued/">Setting Environment Variables for NetBeans, Continued</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This is a feature introduced in NetBeans 6.7.</p>
-
-<p><img class="alignnone" src="http://farm5.static.flickr.com/4072/4227520447_bccc557571.jpg" alt="" width="500" height="287" /></p>
-
-<p>Set environment variables for specified life-cycle phases: Open project properties dialog, select action category. Select actions which depend on the variable, click add button to add such an environment variable.</p>
-
-<p>However, this method doesn&#8217;t work with Glassfish spawned the IDE. If you want use environment variables in the server spawned by NetBeans IDE, you still have to export the variables in netbeans.conf</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -695,6 +713,10 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -708,10 +730,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

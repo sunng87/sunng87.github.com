@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="虽然还有两个月才能结束这个2011年，但是舜天队的赛季已经结束了。经过大半年的鏖战，大起大落之后，最终球队取得了史无前例的第四名，这让我们看了十多年次级联赛的球迷一时间几乎无法接受。今年赶在联赛开始前我换工作回到南京，去主场的机会也比以前上学或是在外地时多了很多，最终今年一共看了6个主场， &hellip;">
+  <meta name="description" content="标题长了些。还是用母语吧。 昨天HackerNews上一个小脚本轰动了，所谓山不在高程序不在小。为了响应这个小脚本，我写了一个更加简单的Mercurial(hg)扩展，帮助你输出hg仓库的提交历史。这个feature和github的直方图有点像， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/11/16/my-response-to-spark-visualize-your-mercurial-commit-history-from-commandline/">My Response to Spark: Visualize Your Mercurial Commit History From Commandline</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>标题长了些。还是用母语吧。</p>
+
+<p>昨天HackerNews上一个<a href="http://news.ycombinator.com/item?id=3237478" target="_blank">小脚本</a>轰动了，所谓山不在高程序不在小。为了响应这个小脚本，我写了一个更加简单的Mercurial(hg)扩展，帮助你输出hg仓库的提交历史。这个feature和github的直方图有点像，在我看来github的直方图是他们最重要的feature之一，它鞭策着你不断地commit。</p>
+
+<p><img src="http://i.imgur.com/ZcEfH.png" alt="hg summary" /></p>
+
+<p><script src="https://gist.github.com/1366606.js"> </script></p>
+
+<p>安装:将这个脚本放在任意一处，在你的hgrc中添加：<br />
+[cc lang=&#8221;text&#8221;]<br />
+[extensions]<br />
+summary = /path/to/your/script<br />
+[/cc]</p>
+
+<p>由于很简单，就不按照mercurial的规范发布了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -625,55 +675,6 @@ You say goodbye and I say <strong>hello world</strong></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/12/voting-with-your-reddit-account-on-rageviewer/">Voting With Your Reddit Account on RageViewer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-12T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just implemented a new feature on <a href="http://rageviewer.cloudfoundry.com/index.html" title="rage viewer" target="_blank">RageViewer</a> which has been requested for a long time. Now you can login with your Reddit account and up-vote/down-vote rages without turning to Reddit website.</p>
-
-<p>Again, I made a rage comic for this feature.
-<img src="http://i.imgur.com/Zg9TU.jpg" alt="voting rage" /></p>
-
-<p>To be able to vote items with your Reddit account, a Reddit session is maintained in the memory of RageViewer. Rage Viewer is a pure open source software so it will never store or log your password in any form. You can verify the source code on <a href="https://github.com/sunng87/rageviewer">github</a> if you have concern about the privacy. (Currently, Reddit doesn&#8217;t offer any authorization like OAuth so we can only access your reddit account with your password. Sorry for that.)</p>
-
-<p>For those still have no idea about RageViewer. RageViewer is for browsing rage comics smoothly. It loads most recent comics from <a href="http://www.reddit.com/r/fffffffuuuuuuuuuuuu/" target="_blank">fffffffuuuuuuuuuuuu</a> and some other subreddits into the database. It gives you a modern and clean UI for your best experience.</p>
-
-<p>Also important, RageViewer is a full-stack clojure web application that written in the JVM functional language: Clojure(server-side) and ClojureScript(broser-side).</p>
-
-<p>BTW, a new version of Reddit.clj (0.3.0) is available in clojars repository. (the new RageViewer is also based on it). In 0.3.0, reddit.clj is compatible with Clojure 1.3.0. And a &#8220;enhance&#8221; function is removed that you are no long required to &#8220;enhance&#8221; a reddit client before you write data to Reddit. Now you have read-write permission once you create the client with reddit.clj.core/login .</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/9/">&larr; Older</a>
@@ -695,6 +696,10 @@ You say goodbye and I say <strong>hello world</strong></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -708,10 +713,6 @@ You say goodbye and I say <strong>hello world</strong></p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

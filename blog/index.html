@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="What are Slacker and Slacker Cluster Slacker is my side project started in late 2011. The goal of Slacker project is to provide a high performance &hellip;">
+  <meta name="description" content="默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。 增加文件打开数 第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-01T17:11:58+08:00" pubdate data-updated="true">Jul 1<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
+
+<h3>增加文件打开数</h3>
+
+<p>第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ulimit -n 999999</span></code></pre></td></tr></table></div></figure>
+
+
+<p>持久化这个配置，可以在<code>/etc/security/</code>（或<code>/etc/security.d/</code>，取决于你的发行版）下建立文件，增加</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>*        hard    nofile      999999
+</span><span class='line'>*     soft    nofile      999999</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这将对所有用户起效。</p>
+
+<h3>增加客户端端口数</h3>
+
+<p>当Linux发起客户端连接时，如果没有显式指定，会给客户端socket绑定一个 ephemeral 端口。这个端口的范围是从这个区间选取的：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> $ cat /proc/sys/net/ipv4/ip_local_port_range
+</span><span class='line'>32768 61000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果这个区间的端口耗尽，socket就会产生<code>cannot assign requested address</code>的错误。要增加端口范围，我们需要把他设置得更大：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo echo "1025 65535" &gt; /proc/sys/net/ipv4/ip_local_port_range</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样，单台机器就可以发出六万多个连接。</p>
+
+<h3>增加虚拟网卡</h3>
+
+<p>对于内存大一点的客户端机器，六万多个连接远不是其性能极限。由于IP消息中，一条消息是由 <code>src_addr</code>, <code>src_port</code>, <code>dst_addr</code>, <code>dst_port</code> 四元组标识，所以要增加连接，我们需要更多IP。在Linux上，我们可以启动虚拟网卡绑定额外的IP。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ifconfig eth0:0 192.168.1.100
+</span><span class='line'>$ sudo ifconfig eth0:1 192.168.1.101
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要关闭这些虚拟网卡</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ifconfig eth0:0 down</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>使用虚拟网卡连接</h3>
+
+<p>拥有多个IP之后，客户端socket需要显示绑定这些IP才行，以python为例，在connect前调用：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">local_addr</span><span class="p">,</span> <span class="n">local_port</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>可以指定连接的源地址和端口。在普通的Linux编程里，当你指定<code>local_port</code>为<code>0</code>时，Linux会分配一个之前提到的 ephemeral 端口。但是当使用虚拟IP时，如果仍然指定0，系统并不会因为IP不同而重用端口号，达到六万多的限制后，仍然会抛出不能获得地址的异常。</p>
+
+<p>实际上是可以获得的，这里需要用户显式地指定端口好。如果需要大规模的连接，那就一个一个绑定好了。</p>
+
+<h3>启用time_wait reuse和recycle</h3>
+
+<p>Linux的socket进入<code>time_wait</code>后需要有一定的时间回收，之后端口才能重新使用。这在大规模测试的时候就比较麻烦，为了免去等待，可以打开<code>tw_reuse</code>和<code>tw_recycle</code>这两个选项。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">$</span> <span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp_tw_recycle</span>
+</span><span class='line'><span class="err">$</span> <span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp_tw_reuse</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意这两个选项都比较激进，最好仅在测试机上使用。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -821,56 +938,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我的 Raspberry Pi 在家里一直是通过 DHCP 联网的，每次要登录上去都要先进路由管理界面看看他的 IP 到底是什么，很不方便。于是就买了这块液晶屏幕，准备显示一下 IP，另外以后也可以作为一个输出设备。毕竟用这个比外接一个显示器方便多了（现在显示器最小都是21寸）。</p>
-
-<p>液晶屏就是最普通的1602屏幕，淘宝上有很多，基本上都一样。要注意的是需要自备引脚，要自己焊到板上，否则无法连接。我也是第一回焊，感觉还比较简单。(<a href="http://instagram.com/p/bIPSEcBM6R/" target="_blank">如图。</a>)另外为了控制液晶屏的对比度需要有一个电位器，为此我中途还专门跑了一趟中关村。</p>
-
-<p>之后就可以按照 <a href="http://learn.adafruit.com/drive-a-16x2-lcd-directly-with-a-raspberry-pi/overview" target="_blank">Adafruit 上的教程</a>一步一步做了。</p>
-
-<p>最后我简化了一下显示 IP 的脚本，时间就不去刷新了。
-<script src="https://gist.github.com/sunng87/5890563.js"></script></p>
-
-<p>把这个脚本作为 systemd 的服务，可以参考<a href="http://blog.sdbarker.com/adding-custom-units-services-to-systemd-on-arch-linux/" target="_blank">这里</a>有关如何创建自定义服务的说明。然后通过systemctl enable ip-display.service设置自启动。</p>
-
-<p>最终效果如下：
-<img src="http://i.imgur.com/ZqAc2dh.jpg" alt="my ip display setup" /></p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -890,6 +957,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -903,10 +974,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

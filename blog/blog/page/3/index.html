@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="近来工作甚忙，一直没有精力来更新这个插件。加之exaile被archlinux清到了aur仓库，项目的前景亦是堪忧。恰好有两位热心网友@JoveYu和@watermelonlh在github上提出愿意帮助维护这个项目。两位都是很好的贡献者，用了一周左右的时间，居然看遍了我乱糟糟的代码， &hellip;">
+  <meta name="description" content="The heat map toolkit, heatcanvas, is now available via twitter&#8217;s package management tool, bower. You can now install heatcanvas with a single &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/11/19/heatcanvas-is-available-via-bower/">Heatcanvas Is Available via Bower</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The heat map toolkit, heatcanvas, is now available via twitter&#8217;s package management tool, bower.</p>
+
+<p>You can now install heatcanvas with a single command:</p>
+
+<p>bower install heatcanvas</p>
+
+<p>Enjoy this library.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -573,57 +615,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/">Timing Brings Perf4j to Clojure</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/sunng87/timing" target="_blank">Timing</a> is a dead simple clojure library wraps perf4j, while perf4j is an advanced library to log call time. It&#8217;s like log4j to System.out.println, that to System.currentTimeMillies. </p>
-
-<p>The core part of Timing library is a `timed` macro. You can put any forms in it and it will log the call time.</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(timed &#8220;demo&#8221;<br />
-  (look-for-something-from-the-moon)<br />
-  &#8230;)<br />
-[/cc]</p>
-
-<p>And it logs:<br />
-start[1341215254682] time[1000] tag[demo]</p>
-
-<p>Timing looks up your classpath at startup for a logging backend: slf4j or log4j. If neither of them found, it fails back to log to stderr. By the way, log4j is the recommended logging backend. There are some predefined appender in perf4j to generate semi-realtime summary and charts. Anyway, Timing, as a library, doesn&#8217;t depend on any library other than perf4j.</p>
-
-<p>The project is hosted at <a href="https://github.com/sunng87/timing" target="_blank">github</a> and available on clojars of version &#8220;0.1.0&#8221;.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/4/">&larr; Older</a>
@@ -645,6 +636,10 @@ start[1341215254682] time[1000] tag[demo]</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -658,10 +653,6 @@ start[1341215254682] time[1000] tag[demo]</p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

@@ -9,8 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="迟到的新闻了，5月8号，GNOME桌面的书籍管理程序Alexandria发布了0.6.6 Beta2。上个月底我提交的豆瓣支持已经被加入了标准发布的打包里，这里可以看到Release note
-http://alexandria.rubyforge.org/news/2010-05-08&# &hellip;">
+  <meta name="description" content="除了用inetface库和分析ifconfig输出以外，一个比较简单的获取本机IP的方法：
+[cc lang=&#8221;python&#8221;]
+import socket
+def get_local_ip(): s = socket.socket(socket.AF_INET, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +68,51 @@ http://alexandria.rubyforge.org/news/2010-05-08&# &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/05/python%E8%8E%B7%E5%8F%96%E6%9C%AC%E6%9C%BAip/">Python获取本机IP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>除了用<a href="http://alastairs-place.net/netifaces/">inetface</a>库和分析ifconfig输出以外，一个比较简单的获取本机IP的方法：<br />
+[cc lang=&#8221;python&#8221;]<br />
+import socket<br />
+def get_local_ip():<br />
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br />
+    s.connect((&#8220;sdo.com&#8221;,80))<br />
+    return s.getsockname()[0]<br />
+[/cc]</p>
+
+<p>参考 http://stackoverflow.com/questions/166506/finding-local-ip-addresses-in-python</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -557,49 +604,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/24/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%9C%B1%E5%AE%B6%E8%A7%92%E4%BA%86/">今天在朱家角了</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/4548344670/" title="DSC_0026 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4046/4548344670_336a34ea42.jpg" width="335" height="500" alt="DSC_0026" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4548345184/" title="DSC_0032 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4051/4548345184_427f8faf9c.jpg" width="335" height="500" alt="DSC_0032" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4547709891/" title="DSC_0038 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4057/4547709891_9679476751.jpg" width="335" height="500" alt="DSC_0038" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4548345712/" title="DSC_0088 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4034/4548345712_8ebd36013f.jpg" width="332" height="500" alt="DSC_0088" /></a>
-这张手持着暴了两秒，拿到电脑上一看还是抖了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/25/">&larr; Older</a>
@@ -621,6 +625,10 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -634,10 +642,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="After you test and build your application in NetBeans, you deploy it to Glassfish, but the environment variables are invalid again. In such situation &hellip;">
+  <meta name="description" content="This is a feature introduced in NetBeans 6.7. Set environment variables for specified life-cycle phases: Open project properties dialog, select &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/12/30/setting-environment-variables-for-netbeans-continued/">Setting Environment Variables for NetBeans, Continued</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This is a feature introduced in NetBeans 6.7.</p>
+
+<p><img class="alignnone" src="http://farm5.static.flickr.com/4072/4227520447_bccc557571.jpg" alt="" width="500" height="287" /></p>
+
+<p>Set environment variables for specified life-cycle phases: Open project properties dialog, select action category. Select actions which depend on the variable, click add button to add such an environment variable.</p>
+
+<p>However, this method doesn&#8217;t work with Glassfish spawned the IDE. If you want use environment variables in the server spawned by NetBeans IDE, you still have to export the variables in netbeans.conf</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -556,115 +598,6 @@ http://www.h2database.com/html/features.html#comparison</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/21/use-yan-in-ruby-web-application/">Using Yan in Ruby Web Application</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-21T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I will show you the usage of Yan captcha service. In this tutorial, it&#8217;s based on a simple ruby web application of the Sinatra web framework.</p>
-
-<p>Before we start to use the service, it is necesary to get Yan running. Download the code from <a href="http://bitbucket.org/sunng/yan/" target="_blank">the project page</a>, then build and run it with maven:
-<em>mvn jetty:run</em></p>
-
-<p>To enable the application to use Yan, we have to register our application to get an API Key. If you use Yan 0.3, there is a secret registration page at <em>http://localhost:8080/yan/reg.jsp</em> The page is protected by HTTP Basic Authentication, the username and password are store in &#8216;realm.properties&#8217; which is considered to locate in the root directory. Open the file you can see the plain text username and password. If you are running the latest development version, there is no long any UI for API Key creation, but restful interface. This won&#8217;t be hard to you, pickup your tools such as curl or poster (a firefox extension) to send a HTTP request. Take curl as example, do it like this:
-<em>curl -X PUT &#8220;http://localhost:8080/yan/apikey/&#8221; -d &#8220;SinatraTestApp&#8221; -u &#8220;username:password&#8221;</em></p>
-
-<p>If it works, you will get a line of json:
-<em>{&#8220;apikey&#8221;:&#8221;b251b0dc2eed31cac38555b61d4fa6a453923bfd&#8221;,&#8221;appName&#8221;:&#8221;SinatraTestApp&#8221;}</em>
-Save this apikey.</p>
-
-<p>Sinatra is generally considered to be the world&#8217;s lightest and smallest web framework. And our application is rather simple. Just check the code:
-<pre class="brush:ruby">require "rubygems"
-require "sinatra"
-require "net/http"
-require "yaml"</pre></p>
-
-<p>apikey=&#8217;b251b0dc2eed31cac38555b61d4fa6a453923bfd&#8217;</p>
-
-<p>get &#8216;/&#8217; do<br />
-	conn = Net::HTTP.new(&#8216;localhost&#8217;, 8080)<br />
-	q = &#8220;ip=#{@env[&#8216;REMOTE_ADDR&#8217;]}&amp;apikey=#{apikey}&amp;alt=yaml&amp;mode=0&#8221;<br />
-	resp, data = conn.get(&#8220;/yan/ticket?#{q}&#8221;)<br />
-	@ticket = YAML::load(data)<br />
-	haml :sinatra_captcha<br />
-end</p>
-
-<p>post &#8216;/&#8217; do<br />
-	conn = Net::HTTP.new(&#8216;localhost&#8217;, 8080)<br />
-	q = &#8220;ip=#{@env[&#8216;REMOTE_ADDR&#8217;]}&amp;apikey=#{apikey}&amp;key=#{params[&#8216;key&#8217;]}&amp;code=#{params[&#8216;captcha&#8217;]}&#8221;<br />
-	resp, data = conn.get(&#8220;/yan/validate?#{q}&#8221;)<br />
-	data<br />
-end</p>
-
-<p>use_in_file_templates!<br />
-__END__</p>
-
-<p>@@ sinatra_captcha<br />
-%html<br />
-	%head<br />
-		%title Yan Captcha on Sinatra<br />
-	%body<br />
-		%form{:action=&gt;&#8221;/&#8221;, :method=&gt;&#8221;post&#8221;}<br />
-			%p<br />
-				Username:<br />
-				%input{:name=&gt;&#8221;username&#8221;, :type=&gt;&#8221;text&#8221;}<br />
-			%p<br />
-				Password:<br />
-				%input{:name=&gt;&#8221;password&#8221;, :type=&gt;&#8221;password&#8221;}<br />
-			%p<br />
-				Captcha:<br />
-				%img{:src=&gt;@ticket[&#8216;url&#8217;]}<br />
-				%br<br />
-				%input{:name=&gt;&#8221;captcha&#8221;, :type=&gt;&#8221;text&#8221;}<br />
-				%input{:name=&gt;&#8221;key&#8221;, :type=&gt;&#8221;hidden&#8221;, :value=&gt;@ticket[&#8216;key&#8217;]}<br />
-				%input{:type=&gt;&#8217;submit&#8217;}
-
-There are two parts of this application: ruby code and haml. I just use in-file-template for convenience. We define a get handler and a post handler on the path &#8216;/&#8217;. The get handler will request a ticket from Yan which contains captcha image url and ticket key. The post handler will extract user input and submit the Yan&#8217;s validator and return user the result. And the HAML code is template for page rendering after GET request.</p>
-
-<p>Maybe you need to install sinatra and some dependency:
-<em>sudo gem install sinatra haml</em></p>
-
-<p>Run the code with a build-in WEBrick
-<em>ruby sinatra-yan.rb</em></p>
-
-<p>Browse to the default url, test it:</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2766/4203612734_3237ed066c_o.png" alt="" width="459" height="268" /></p>
-
-<p>For another similar tutorial using python, check Yan&#8217;s wiki page:
-<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">http://bitbucket.org/sunng/yan/wiki/SampleCode</a></p>
-
-<p>Thank you for your support. btw, today is my dear girl friend&#8217;s birthday, I just wish her happy everyday.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/30/">&larr; Older</a>
@@ -686,6 +619,10 @@ There are two parts of this application: ruby code and haml. I just use in-file-
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -699,10 +636,6 @@ There are two parts of this application: ruby code and haml. I just use in-file-
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

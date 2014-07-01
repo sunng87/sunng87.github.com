@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今天是2月1号，本人决定从今天开始到月底的每个工作日中午去爬山锻炼身体，以摆脱目前体重极速增长的困局。口说无凭，立此为据。 [mapsmarker marker=&#8221;2&#8221;] ">
+  <meta name="description" content="After 98 commits in about one month, I&#8217;m glad to announce [slacker &#8220;0.6.1&#8221;]. One thing in slacker 0.6.x is you can expose multiple &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/">Slacker 0.6: Exposing Multiple Namespaces</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I&#8217;m glad to announce [slacker &#8220;0.6.1&#8221;].</p>
+
+<p>One thing in slacker 0.6.x is you can expose multiple namespaces from a single server.</p>
+
+<p>Suppose you have two namespaces `redday.stats` and `redday.api`, both contains functions you want to expose.</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+  (start-slacker-server [(the-ns &#8216;redday.stats)<br />
+                         (the-ns &#8216;redday.api)]<br />
+                        6565)<br />
+[/cc]</p>
+
+<p>This will expose `redday.stats` and `redday.api` on port 6565.</p>
+
+<p>On the client side, we have a new `use-remote` behaviors like clojure&#8217;s use. Instead of local one, it imports functions from a remote namespace to your current namespace. </p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(use &#8216;slacker.client)<br />
+;; create a slacker client<br />
+(def scp (slackerc &#8220;127.0.0.1:6565&#8221;)) </p>
+
+<p>(use-remote &#8216;scp &#8216;redday.api) ;; caution, use the symbol of &#8216;scp here <br />
+(use-remote &#8216;scp &#8216;redday.stats)</p>
+
+<p>;;top-titles is a function in redday.api<br />
+;;now you can use the remote function transparently<br />
+(top-titles &#8220;programming&#8221;) </p>
+
+<p>;;check function metadata you can find more slacker properties<br />
+(meta top-titles)<br />
+[/cc]</p>
+
+<p>If you need to configure callback to a particular function, you can still use `defn-remote` to specify the callback function. In slacker 0.6.0, a `:remote-ns` is required when you define such a remote function.<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defn-remote top-titles :remote-ns &#8220;redday.api&#8221; :callback #(println %))<br />
+[/cc]</p>
+
+<p>The complete code example (both server and client) can be found <a href="https://bitbucket.org/sunng/slacker-demo/overview">here</a>. </p>
+
+<p>In next post, I will explain another big new feature of 0.6.x, cluster support.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -608,57 +685,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/12/22/tf101-101/">TF101 101</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上周末决定不再忍耐，又入了一个大件：华硕的平板，变形金刚。TF101上市已经半年了，而且现在TF102号称四核的版本已经开始接受预订了，所以差不多也到了应该出手的时候了。因为我知道如果去等102的话，我还会像现在这样地去和103做比较。</p>
-
-<p>选择这款的主要原因即他的键盘配置，平板加键盘的组合彻底把上网本推进深渊。对于我这种还算是制造内容比率比较高的人来说，有个强有力的输入设备是必要的。目前市面上有这种搭配的只有transformer和think的，而且think似乎又只有配图和说明，没见真正卖那款键盘的。更严重的是，当然，think太贵了。</p>
-
-<p>接下来开始说问题：<br />
-第一关叫做充电。TF101在充电方面有严重的缺陷。当电池电量极低时，会出现无法充电的情况。明明接着电源，可是电量提示一直是0%。如此情况下我整整充了一天拔下电源依然无法开机。最后看了网上的说法，在充电自动开机后关机了半个小时终于起死回生。</p>
-
-<p>第二个小问题，键盘底座的平板本身电源是分离的，二者各自充电。所以在前面〝整整充了一天〞之前还有整整充了一晚上键盘。早晨起来键盘电满了，平板没充进去。</p>
-
-<p>系统出厂是Android 3.0，这个系统的伟大之处在于从他一启动开始，就开始不断有程序报出错退出，不断有应用停止响应。他简直都对不起这个版本号。直到后来充上电升级到3.2之后才可以用。但是，还是有浏览器突然僵死然后突然从眼前消失的场面。再有就是机捆绑的什么人人网，电子书，开心网什么的，让你想不root都不行。</p>
-
-<p>再有andrid 3.x上应用可能本来就不多，随机捆的又是一个流氓市场，除了满眼的流氓软件和山寨以外，就是版已经过时的软件。可怜这挺好一机器都不知道该装点什么。要说TF101硬件已经很可以了，只是配上这么个系统，用范伟的话说，白瞎你这个人了。手放键盘上，真恨不得能打开个终端来挡住这个浅薄的外观。等有时间我一定要尝试在这台机器上装个正经系统。也算是对得起这硬件了。</p>
-
-<p>一句话概括一下的话，硬件还好，软件拉倒。</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/7/">&larr; Older</a>
@@ -680,6 +706,10 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -693,10 +723,6 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

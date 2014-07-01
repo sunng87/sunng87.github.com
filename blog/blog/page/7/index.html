@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="经过三个月的时间，终于看完了ml-class的所有视频课程，完成了所有review questions，提交了所有programming exercises.感觉不错，之前一直对数据挖掘相关的方面感兴趣，回想一下大学时候一些地统计分析甚至遥感图像数据处理的课都跟机器学习相关， &hellip;">
+  <meta name="description" content="上周末决定不再忍耐，又入了一个大件：华硕的平板，变形金刚。TF101上市已经半年了，而且现在TF102号称四核的版本已经开始接受预订了，所以差不多也到了应该出手的时候了。因为我知道如果去等102的话，我还会像现在这样地去和103做比较。 选择这款的主要原因即他的键盘配置， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/12/22/tf101-101/">TF101 101</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上周末决定不再忍耐，又入了一个大件：华硕的平板，变形金刚。TF101上市已经半年了，而且现在TF102号称四核的版本已经开始接受预订了，所以差不多也到了应该出手的时候了。因为我知道如果去等102的话，我还会像现在这样地去和103做比较。</p>
+
+<p>选择这款的主要原因即他的键盘配置，平板加键盘的组合彻底把上网本推进深渊。对于我这种还算是制造内容比率比较高的人来说，有个强有力的输入设备是必要的。目前市面上有这种搭配的只有transformer和think的，而且think似乎又只有配图和说明，没见真正卖那款键盘的。更严重的是，当然，think太贵了。</p>
+
+<p>接下来开始说问题：<br />
+第一关叫做充电。TF101在充电方面有严重的缺陷。当电池电量极低时，会出现无法充电的情况。明明接着电源，可是电量提示一直是0%。如此情况下我整整充了一天拔下电源依然无法开机。最后看了网上的说法，在充电自动开机后关机了半个小时终于起死回生。</p>
+
+<p>第二个小问题，键盘底座的平板本身电源是分离的，二者各自充电。所以在前面〝整整充了一天〞之前还有整整充了一晚上键盘。早晨起来键盘电满了，平板没充进去。</p>
+
+<p>系统出厂是Android 3.0，这个系统的伟大之处在于从他一启动开始，就开始不断有程序报出错退出，不断有应用停止响应。他简直都对不起这个版本号。直到后来充上电升级到3.2之后才可以用。但是，还是有浏览器突然僵死然后突然从眼前消失的场面。再有就是机捆绑的什么人人网，电子书，开心网什么的，让你想不root都不行。</p>
+
+<p>再有andrid 3.x上应用可能本来就不多，随机捆的又是一个流氓市场，除了满眼的流氓软件和山寨以外，就是版已经过时的软件。可怜这挺好一机器都不知道该装点什么。要说TF101硬件已经很可以了，只是配上这么个系统，用范伟的话说，白瞎你这个人了。手放键盘上，真恨不得能打开个终端来挡住这个浅薄的外观。等有时间我一定要尝试在这台机器上装个正经系统。也算是对得起这硬件了。</p>
+
+<p>一句话概括一下的话，硬件还好，软件拉倒。</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -682,56 +733,6 @@ RPC is the first step to distributed clojure world. I will keep you updated with
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/11/16/my-response-to-spark-visualize-your-mercurial-commit-history-from-commandline/">My Response to Spark: Visualize Your Mercurial Commit History From Commandline</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-16T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>标题长了些。还是用母语吧。</p>
-
-<p>昨天HackerNews上一个<a href="http://news.ycombinator.com/item?id=3237478" target="_blank">小脚本</a>轰动了，所谓山不在高程序不在小。为了响应这个小脚本，我写了一个更加简单的Mercurial(hg)扩展，帮助你输出hg仓库的提交历史。这个feature和github的直方图有点像，在我看来github的直方图是他们最重要的feature之一，它鞭策着你不断地commit。</p>
-
-<p><img src="http://i.imgur.com/ZcEfH.png" alt="hg summary" /></p>
-
-<p><script src="https://gist.github.com/1366606.js"> </script></p>
-
-<p>安装:将这个脚本放在任意一处，在你的hgrc中添加：<br />
-[cc lang=&#8221;text&#8221;]<br />
-[extensions]<br />
-summary = /path/to/your/script<br />
-[/cc]</p>
-
-<p>由于很简单，就不按照mercurial的规范发布了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/8/">&larr; Older</a>
@@ -753,6 +754,10 @@ summary = /path/to/your/script<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -766,10 +771,6 @@ summary = /path/to/your/script<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Gnuplot is considered to be one of the most famous plotting tools on both linux and windows. With Gnuplot, generation of charts becomes agile and &hellip;">
+  <meta name="description" content="After I post my command to commandlinefu.com, there is an alternative command followed:
+(echo &#8220;set terminal png;plot &#8216;-&#8217; u 1:2 t &# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/24/performance-visualization-with-gnuplot-continued/">Performance Visualization With Gnuplot, Continued</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After I post my command to <a href="http://www.commandlinefu.com/" target="_blank">commandlinefu.com</a>, there is an alternative command followed:
+<em>(echo &#8220;set terminal png;plot &#8216;-&#8217; u 1:2 t &#8216;cpu&#8217; w linespoints;&#8221;; sudo vmstat 2 10 | awk &#8216;NR &gt; 2 {print NR, $13}&#8217;) | gnuplot &gt; plot.png</em></p>
+
+<p>This one is appreciated for using pipes and redirection. It works on Ubuntu Jaunty, on which, gnuplot doesn&#8217;t provide a -e option. The author also showed an link to an open source project &#8216;vmplot&#8217; on <a href="http://freshmeat.net/projects/vmplot/" target="_blank">freshmeat</a>. Vmplot is written in python, which combines parameters with scripts and end up with an os.system call. Grab the source from <a href="http://elvis.elte.hu/~fuji/stuff/vmplot.py" target="_blank">here</a>. (Why use python instead on a simple bash command? because it&#8217;s difficult to draw a multiplot without temp file or variables, you cannot read &#8216;-&#8217; twice.)</p>
+
+<p>There are several people vote me down for my command! It must be primers whose use ubuntu and knows the world via Synaptic only, because they failed to run the command on their dated machine (*_*)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -714,48 +756,6 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/08/24/yamb-is-now-hosted-on-kenai-com/">YAMB Is Now Hosted on kenai.com</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-08-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>YAMB(Yet Another Microblogging Tool) which is mentioned several days ago is now hosted on Sun&#8217;s project-kenai licensed with GPL2.
-<a href="http://kenai.com/projects/yamb">http://kenai.com/projects/yamb</a></p>
-
-<p>You can grab the source code from following link via mercurial(hg).
-<a href="https://kenai.com/hg/yamb~hg-repos ">https://kenai.com/hg/yamb~hg-repos</a></p>
-
-<p>Actually, there is nothing new.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/35/">&larr; Older</a>
@@ -777,6 +777,10 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -790,10 +794,6 @@ VirtualBox 3.0.6 今天发布了，fix了从3.0.2开始与archLinux 2.6.30内核
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

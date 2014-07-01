@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这是3月份OReilly Where 2.0会议上Twitter介绍自己LBS功能和实现的幻灯片
-http://www.slideshare.net/raffikrikorian/handling-realtime-geostreams-3597425 Handling Real-time &hellip;">
+  <meta name="description" content="一眨眼有大半年没有维护这个插件了，Exaile从0.3.0升级到了0.3.2。严重的是这三个版本的插件接口各不相同，0.3.1新增了cover providers管理， 修改了track获得相应字段的api，简化了CoverSearchMethod的职责（去掉了缓存管理， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,51 @@ http://www.slideshare.net/raffikrikorian/handling-realtime-geostreams-3597425 Ha
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/30/exaile-douban-covers-0-0-3-released/">Exaile-Douban-Covers 0.0.3 Released</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一眨眼有大半年没有维护这个插件了，Exaile从0.3.0升级到了0.3.2。严重的是这三个版本的插件接口各不相同，0.3.1新增了cover providers管理， 修改了track获得相应字段的api，简化了CoverSearchMethod的职责（去掉了缓存管理，只负责find_convers和get_conver_data两个功能）。而0.3.2至少也修改了配置管理界面的API，所以可以在0.3.1上工作的版本也不能在0.3.2上工作。</p>
+
+<p>这次升级维护把插件升级到0.0.3，兼容目前Ubuntu仓库里的Exaile 0.3.1.1。0.3.1.1新提供了一个cover provider的配置界面，可以调整cover provider的优先级，如果你听中文歌比较多，建议可以把douban cover放在第一位。</p>
+
+<p>下载页面（doubancovers-0.0.3.exz ）：
+<a href="http://bitbucket.org/sunng/exailedoubancovers/downloads">http://bitbucket.org/sunng/exailedoubancovers/downloads</a></p>
+
+<p>新版本和0.3.0已经无法兼容，0.3.0的用户可以继续使用0.0.2 。而兼容0.3.2的版本预计要等到10月份之后推出了，用Archlinux和其他自己安装的用户要稍等一阵了。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -607,51 +651,6 @@ moreResults恒为真，程序出现死循环。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/05/python%E8%8E%B7%E5%8F%96%E6%9C%AC%E6%9C%BAip/">Python获取本机IP</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>除了用<a href="http://alastairs-place.net/netifaces/">inetface</a>库和分析ifconfig输出以外，一个比较简单的获取本机IP的方法：<br />
-[cc lang=&#8221;python&#8221;]<br />
-import socket<br />
-def get_local_ip():<br />
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br />
-    s.connect((&#8220;sdo.com&#8221;,80))<br />
-    return s.getsockname()[0]<br />
-[/cc]</p>
-
-<p>参考 http://stackoverflow.com/questions/166506/finding-local-ip-addresses-in-python</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -673,6 +672,10 @@ def get_local_ip():<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -686,10 +689,6 @@ def get_local_ip():<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

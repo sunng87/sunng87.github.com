@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="我的个天总算是有可写的东西了。 这次来北京有个重要的主题叫做锻炼身体，为此不惜代价抓住有效的机会来参加这些活动。昨天跑去爬了昌平十三陵水库旁边的蟒山。这个蟒山的，我就叫他python山。据说是本地爬山的入门路线之一。这次活动正好副领队又是三年多没见过的老同学，于是就毫不犹豫地参加了。 &hellip;">
+  <meta name="description" content="Timing is a dead simple clojure library wraps perf4j, while perf4j is an advanced library to log call time. It&#8217;s like log4j to System.out. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/">Timing Brings Perf4j to Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sunng87/timing" target="_blank">Timing</a> is a dead simple clojure library wraps perf4j, while perf4j is an advanced library to log call time. It&#8217;s like log4j to System.out.println, that to System.currentTimeMillies. </p>
+
+<p>The core part of Timing library is a `timed` macro. You can put any forms in it and it will log the call time.</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(timed &#8220;demo&#8221;<br />
+  (look-for-something-from-the-moon)<br />
+  &#8230;)<br />
+[/cc]</p>
+
+<p>And it logs:<br />
+start[1341215254682] time[1000] tag[demo]</p>
+
+<p>Timing looks up your classpath at startup for a logging backend: slf4j or log4j. If neither of them found, it fails back to log to stderr. By the way, log4j is the recommended logging backend. There are some predefined appender in perf4j to generate semi-realtime summary and charts. Anyway, Timing, as a library, doesn&#8217;t depend on any library other than perf4j.</p>
+
+<p>The project is hosted at <a href="https://github.com/sunng87/timing" target="_blank">github</a> and available on clojars of version &#8220;0.1.0&#8221;.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -613,53 +664,6 @@ user=> (run* [q] (== q 1))<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/03/19/%E5%88%B7htc-evo-3d-gsm/">刷HTC EVO 3D GSM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行，系统连google账户，官方market都没有。</p>
-
-<p>那么只能刷一下了。所有的步骤开始之前都是解锁，按照官方的解锁方式(http://www.htcdev.com)基本上没有什么难度。在我的archlinux上，不需要安装HTC Sync（也没得装），只需要从aur安装android-sdk和android-sdk-platform-tools就有adb和fastboot在PATH里。唯一值得一提的是，在我的系统上fastboot oem get_identifier_token需要sudo，否则会一直wait device。除了这个小插曲以外，按照官方的步骤就可以解锁HBOOT。</p>
-
-<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru，可以在网上搜索 cwm-4.0.1.4-shooteru.img 这个文件，比较好找。继续通过 sudo fastboot flash recovery cwm-4.0.1.4-shooteru.img把recovery刷进手机。</p>
-
-<p>接下来就是ROM的选择了。最好的选择是cyanogenmod，EVO 3D分为GSM和CDMA版，cmod 7只支持CDMA版，似乎还没有稳定的正式版。对GSM似乎有正在开发7.2，不过按照他们的说法，自从4.0发布之后，所有人的注意力都转移到基于4.0的cmod9上，所以7.2这个版本希望也比较渺茫。9.0已经有开发版本，但是都有一些还未解决的严重bug。说了这么多就是说我暂时放弃cmod了。</p>
-
-<p>除了cmod，EVO 3D GSM上一个比较被认可的ROM叫做<a href="http://leedroid.com/evo-3d/?c=roms">LeeDrOiD</a>.从网站上下载5.3.0的发布版，拷贝到sd卡上，通过recovery就可以安装。安装之前先要清除旧的数据。剩下这一步也没有什么悬念。但是安装之后5.3.0上，WIFI无法启动。必须继续更新kernel，从<a href="http://leedroid.com/evo-3d/?c=kernels">网站上下</a>载。安装kernel的方法和之前不太一样，不能通过recovery安装。需要用一个叫做FlashImageGUI的工具，可以在网上直接搜索这个名字找到下载。剩下就很简单了。</p>
-
-<p>折腾这么一圈，手机基本上能用了。不过我还是非常期待早日能用上cmod 9.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/5/">&larr; Older</a>
@@ -681,6 +685,10 @@ user=> (run* [q] (== q 1))<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -694,10 +702,6 @@ user=> (run* [q] (== q 1))<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

@@ -9,7 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="半年来，围绕豆瓣做了几个应用，今天上班路上突然心血来潮，决定汇总一下，推广一下。如果你是豆瓣用户，也是Ubuntu用户，你可以尝试一下。 http://sunng.info/doubantu/ ">
+  <meta name="description" content="趁热打铁， Exaile豆瓣电台插件今天又有了一些更新： 支持今天豆瓣新发布的摇滚、民谣、NewAge频道
+支持Exaile 0.3.2开始的界面透明
+与官方保持一致，在非个人频道时禁用trash按钮 下载
+http://github.com/sunng87/exaile-doubanfm- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/21/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-4/">Exaile 豆瓣电台插件 0.0.4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>趁热打铁， Exaile豆瓣电台插件今天又有了一些更新：</p>
+
+<p><ol>
+<li>支持今天豆瓣新发布的摇滚、民谣、NewAge频道</li>
+<li>支持Exaile 0.3.2开始的界面透明</li>
+<li>与官方保持一致，在非个人频道时禁用trash按钮</li>
+</ol></p>
+
+<p>下载
+<a href="http://github.com/sunng87/exaile-doubanfm-plugin/downloads">http://github.com/sunng87/exaile-doubanfm-plugin/downloads</a></p>
+
+<p>很多朋友纠结于安装，安装确实稍显麻烦，大家注意：
+<ol>
+<li>确认你的Exaile版本0.3.2。</li>
+<li>下载，<strong>重命名下载的文件为doubanfm.tar.gz</strong>（Exaile要求压缩包内的文件名要以压缩包的名字开头，否则报错；而github上使用相同的文件名用作下载会有潜在的问题）</li>
+<li>如果已经安装过这个插件，请删除 rm -r ~/.local/share/exaile/plugins/doubanfm</li>
+<li>打开Exaile，打开Preferences，到Plugins页，安装</li>
+<li>勾选doubanfm</li>
+<li>如果plugins树下没有出现Douban Radio，关闭Preferences重开，找到Douban Radio，设置用户名密码</li>
+<li>重启Exaile</li>
+<li>打开文件菜单，Open Douban.fm，选择你需要的频道</li>
+<li><strong>双击音轨或点击播放开始播放</strong></li>
+<li>切换到豆瓣视图，菜单View->Doubanfm Mode，或快捷键 Ctrl+alt+d</li>
+</ol></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5101939181/" title="exaile douban radio by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1434/5101939181_949841f861.jpg" width="402" height="142" alt="exaile douban radio" /></a>
+Enjoy！</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -674,63 +739,6 @@ typedef struct dictEntry {<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/24/visualize-call-tree-of-a-c-function/">Visualize Call Tree of a C Function</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>Requirement</h3>
-You want to visualize a call hierarchy of a C function.</p>
-
-<p><h3>Solution</h3>
-Utilities you need are listed below:
-<ul>
-<li><a href="http://www.gnu.org/software/cflow/">GNU cflow</a></li>
-<li><a href="http://cflow2vcg.sourceforge.net/">cflow2vcg</a></li>
-<li>graphviz</li>
-</ul></p>
-
-<p>Take &#8216;rdbSaveBackground&#8217; (<a href="http://github.com/antirez/redis/blob/master/src/rdb.c">redis/rdb.c</a>) for example:<br />
-[cc lang=&#8221;bash&#8221;]<br />
-cflow &#8211;format=posix &#8211;omit-arguments &#8211;level-indent=&#8217;0=\t&#8217; &#8211;level-indent=&#8217;1=\t&#8217; &#8211;level-indent=start=&#8217;\t&#8217; -m &#8216;rdbSaveBackground&#8217; ~/osprojects/redis/src/rdb.c | cflow2dot | dot -Tjpg -o rdb.jpg<br />
-[/cc]</p>
-
-<p>Output:
-<a href="http://www.flickr.com/photos/40741608@N08/5020142591/" title="visualization of a call tree by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4111/5020142591_7b34a52e3c.jpg" width="500" height="98" alt="visualization of a call tree" /></a></p>
-
-<p>Source: <a href="http://unixdiary.blogspot.com/2006/05/using-cflow.html">unix diary</a></p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -752,6 +760,10 @@ cflow &#8211;format=posix &#8211;omit-arguments &#8211;level-indent=&#8217;0=\t&
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -765,10 +777,6 @@ cflow &#8211;format=posix &#8211;omit-arguments &#8211;level-indent=&#8217;0=\t&
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

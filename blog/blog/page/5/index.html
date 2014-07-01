@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="业余时间，我除了写括号以外，也会做点模型，不过是入门水平。用淘宝店家的话说，你随便涂涂就行了。这个KV-2坦克是去年秋天买的，后来周末学车加上天冷坐不住就搁置下来。现在稍微暖和一点，就赶紧把开工。 KV-2坦克，是二战时期苏联的重型坦克。最早参加了苏芬战争，后来投入到早期的苏德战争。 &hellip;">
+  <meta name="description" content="去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/19/%E5%88%B7htc-evo-3d-gsm/">刷HTC EVO 3D GSM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行，系统连google账户，官方market都没有。</p>
+
+<p>那么只能刷一下了。所有的步骤开始之前都是解锁，按照官方的解锁方式(http://www.htcdev.com)基本上没有什么难度。在我的archlinux上，不需要安装HTC Sync（也没得装），只需要从aur安装android-sdk和android-sdk-platform-tools就有adb和fastboot在PATH里。唯一值得一提的是，在我的系统上fastboot oem get_identifier_token需要sudo，否则会一直wait device。除了这个小插曲以外，按照官方的步骤就可以解锁HBOOT。</p>
+
+<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru，可以在网上搜索 cwm-4.0.1.4-shooteru.img 这个文件，比较好找。继续通过 sudo fastboot flash recovery cwm-4.0.1.4-shooteru.img把recovery刷进手机。</p>
+
+<p>接下来就是ROM的选择了。最好的选择是cyanogenmod，EVO 3D分为GSM和CDMA版，cmod 7只支持CDMA版，似乎还没有稳定的正式版。对GSM似乎有正在开发7.2，不过按照他们的说法，自从4.0发布之后，所有人的注意力都转移到基于4.0的cmod9上，所以7.2这个版本希望也比较渺茫。9.0已经有开发版本，但是都有一些还未解决的严重bug。说了这么多就是说我暂时放弃cmod了。</p>
+
+<p>除了cmod，EVO 3D GSM上一个比较被认可的ROM叫做<a href="http://leedroid.com/evo-3d/?c=roms">LeeDrOiD</a>.从网站上下载5.3.0的发布版，拷贝到sd卡上，通过recovery就可以安装。安装之前先要清除旧的数据。剩下这一步也没有什么悬念。但是安装之后5.3.0上，WIFI无法启动。必须继续更新kernel，从<a href="http://leedroid.com/evo-3d/?c=kernels">网站上下</a>载。安装kernel的方法和之前不太一样，不能通过recovery安装。需要用一个叫做FlashImageGUI的工具，可以在网上直接搜索这个名字找到下载。剩下就很简单了。</p>
+
+<p>折腾这么一圈，手机基本上能用了。不过我还是非常期待早日能用上cmod 9.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -636,83 +683,6 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/">Slacker 0.6: Exposing Multiple Namespaces</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I&#8217;m glad to announce [slacker &#8220;0.6.1&#8221;].</p>
-
-<p>One thing in slacker 0.6.x is you can expose multiple namespaces from a single server.</p>
-
-<p>Suppose you have two namespaces `redday.stats` and `redday.api`, both contains functions you want to expose.</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-  (start-slacker-server [(the-ns &#8216;redday.stats)<br />
-                         (the-ns &#8216;redday.api)]<br />
-                        6565)<br />
-[/cc]</p>
-
-<p>This will expose `redday.stats` and `redday.api` on port 6565.</p>
-
-<p>On the client side, we have a new `use-remote` behaviors like clojure&#8217;s use. Instead of local one, it imports functions from a remote namespace to your current namespace. </p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(use &#8216;slacker.client)<br />
-;; create a slacker client<br />
-(def scp (slackerc &#8220;127.0.0.1:6565&#8221;)) </p>
-
-<p>(use-remote &#8216;scp &#8216;redday.api) ;; caution, use the symbol of &#8216;scp here <br />
-(use-remote &#8216;scp &#8216;redday.stats)</p>
-
-<p>;;top-titles is a function in redday.api<br />
-;;now you can use the remote function transparently<br />
-(top-titles &#8220;programming&#8221;) </p>
-
-<p>;;check function metadata you can find more slacker properties<br />
-(meta top-titles)<br />
-[/cc]</p>
-
-<p>If you need to configure callback to a particular function, you can still use `defn-remote` to specify the callback function. In slacker 0.6.0, a `:remote-ns` is required when you define such a remote function.<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defn-remote top-titles :remote-ns &#8220;redday.api&#8221; :callback #(println %))<br />
-[/cc]</p>
-
-<p>The complete code example (both server and client) can be found <a href="https://bitbucket.org/sunng/slacker-demo/overview">here</a>. </p>
-
-<p>In next post, I will explain another big new feature of 0.6.x, cluster support.</p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/6/">&larr; Older</a>
@@ -734,6 +704,10 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -747,10 +721,6 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

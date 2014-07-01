@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Squealer is a framework written in Jython to test your Apache Pig scripts, by Mark Roddy. It&#8217;s now using jip to resolve Java dependencies. On &hellip;">
+  <meta name="description" content="I just added some new features to RageViewer, a rage comic viewer written in Clojure and ClojureScript. Issue on a recent update of CloudFoundry has &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/07/rageviewer-updates/">RageViewer Updated</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just added some new features to <a href="http://rageviewer.cloudfoundry.com/index.html" target="_blank">RageViewer</a>, a rage comic viewer written in Clojure and ClojureScript. Issue on a recent update of CloudFoundry has been fixed. So I can update this application as normal.</p>
+
+<p>Since there are a lot of over-18 content on rage comics, RageViewer now prompts you to confirm if it is suitable to display NSFW (Not Suit For Work, marked by author) content. If rejected, a placeholder comic (made by me) will be displayed to you.
+<img alt="" src="http://rageviewer.cloudfoundry.com/nsfw-placeholder.jpg" title="nsfw placeholder" class="alignnone" width="500" height="375" /></p>
+
+<p>Also, a lot of rage comic related subreddits are now supported by RageViewer. You can find an indicator on the top bar for current channel. Click it and you can switch to a different channel. </p>
+
+<p>Bugs are fixed when there is a ? on the end of image url. &#8220;Show most recent hot comics&#8221; button also works now.</p>
+
+<p>Let me know if you have any ideas or questions about this site.</p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -551,46 +598,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/07/29/geohash-rewritten-with-clojure/">Geohash Rewritten With Clojure</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sorry but this is another release announcement.</p>
-
-<p>I just rewrite my <a href="https://github.com/sunng87/node-geohash" target="_blank">node-geohash</a> module with clojure. You can include it with leiningen according to the instructions shows <a href="http://clojars.org/org.clojars.sunng/geohash" target="_blank">here</a>. The project is hosted on <a href="https://bitbucket.org/sunng/clojure-geohash" target="_blank">bitbucket</a> this time. The API is rather simple, please just follow the README doc.</p>
-
-<p>It&#8217;s totally different experience to write such kind of algorithm in a functional language. You have to translate loops to recursions, also make sure they are available for tail recursion optimization. I really enjoy coding in clojure.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -612,6 +619,10 @@ For functions contains in some module, you can refer it with the clojure way:<br
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -625,10 +636,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>

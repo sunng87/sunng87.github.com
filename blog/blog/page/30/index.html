@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="经过一周的重构和开发，我的开源项目，验证码服务，打上了0.3的tag，算是一个release吧。 This release has been focusing on support for different types captcha generators. Now Yan is not &hellip;">
+  <meta name="description" content="I will show you the usage of Yan captcha service. In this tutorial, it&#8217;s based on a simple ruby web application of the Sinatra web framework. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/12/21/use-yan-in-ruby-web-application/">Using Yan in Ruby Web Application</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I will show you the usage of Yan captcha service. In this tutorial, it&#8217;s based on a simple ruby web application of the Sinatra web framework.</p>
+
+<p>Before we start to use the service, it is necesary to get Yan running. Download the code from <a href="http://bitbucket.org/sunng/yan/" target="_blank">the project page</a>, then build and run it with maven:
+<em>mvn jetty:run</em></p>
+
+<p>To enable the application to use Yan, we have to register our application to get an API Key. If you use Yan 0.3, there is a secret registration page at <em>http://localhost:8080/yan/reg.jsp</em> The page is protected by HTTP Basic Authentication, the username and password are store in &#8216;realm.properties&#8217; which is considered to locate in the root directory. Open the file you can see the plain text username and password. If you are running the latest development version, there is no long any UI for API Key creation, but restful interface. This won&#8217;t be hard to you, pickup your tools such as curl or poster (a firefox extension) to send a HTTP request. Take curl as example, do it like this:
+<em>curl -X PUT &#8220;http://localhost:8080/yan/apikey/&#8221; -d &#8220;SinatraTestApp&#8221; -u &#8220;username:password&#8221;</em></p>
+
+<p>If it works, you will get a line of json:
+<em>{&#8220;apikey&#8221;:&#8221;b251b0dc2eed31cac38555b61d4fa6a453923bfd&#8221;,&#8221;appName&#8221;:&#8221;SinatraTestApp&#8221;}</em>
+Save this apikey.</p>
+
+<p>Sinatra is generally considered to be the world&#8217;s lightest and smallest web framework. And our application is rather simple. Just check the code:
+<pre class="brush:ruby">require "rubygems"
+require "sinatra"
+require "net/http"
+require "yaml"</pre></p>
+
+<p>apikey=&#8217;b251b0dc2eed31cac38555b61d4fa6a453923bfd&#8217;</p>
+
+<p>get &#8216;/&#8217; do<br />
+	conn = Net::HTTP.new(&#8216;localhost&#8217;, 8080)<br />
+	q = &#8220;ip=#{@env[&#8216;REMOTE_ADDR&#8217;]}&amp;apikey=#{apikey}&amp;alt=yaml&amp;mode=0&#8221;<br />
+	resp, data = conn.get(&#8220;/yan/ticket?#{q}&#8221;)<br />
+	@ticket = YAML::load(data)<br />
+	haml :sinatra_captcha<br />
+end</p>
+
+<p>post &#8216;/&#8217; do<br />
+	conn = Net::HTTP.new(&#8216;localhost&#8217;, 8080)<br />
+	q = &#8220;ip=#{@env[&#8216;REMOTE_ADDR&#8217;]}&amp;apikey=#{apikey}&amp;key=#{params[&#8216;key&#8217;]}&amp;code=#{params[&#8216;captcha&#8217;]}&#8221;<br />
+	resp, data = conn.get(&#8220;/yan/validate?#{q}&#8221;)<br />
+	data<br />
+end</p>
+
+<p>use_in_file_templates!<br />
+__END__</p>
+
+<p>@@ sinatra_captcha<br />
+%html<br />
+	%head<br />
+		%title Yan Captcha on Sinatra<br />
+	%body<br />
+		%form{:action=&gt;&#8221;/&#8221;, :method=&gt;&#8221;post&#8221;}<br />
+			%p<br />
+				Username:<br />
+				%input{:name=&gt;&#8221;username&#8221;, :type=&gt;&#8221;text&#8221;}<br />
+			%p<br />
+				Password:<br />
+				%input{:name=&gt;&#8221;password&#8221;, :type=&gt;&#8221;password&#8221;}<br />
+			%p<br />
+				Captcha:<br />
+				%img{:src=&gt;@ticket[&#8216;url&#8217;]}<br />
+				%br<br />
+				%input{:name=&gt;&#8221;captcha&#8221;, :type=&gt;&#8221;text&#8221;}<br />
+				%input{:name=&gt;&#8221;key&#8221;, :type=&gt;&#8221;hidden&#8221;, :value=&gt;@ticket[&#8216;key&#8217;]}<br />
+				%input{:type=&gt;&#8217;submit&#8217;}
+
+There are two parts of this application: ruby code and haml. I just use in-file-template for convenience. We define a get handler and a post handler on the path &#8216;/&#8217;. The get handler will request a ticket from Yan which contains captcha image url and ticket key. The post handler will extract user input and submit the Yan&#8217;s validator and return user the result. And the HAML code is template for page rendering after GET request.</p>
+
+<p>Maybe you need to install sinatra and some dependency:
+<em>sudo gem install sinatra haml</em></p>
+
+<p>Run the code with a build-in WEBrick
+<em>ruby sinatra-yan.rb</em></p>
+
+<p>Browse to the default url, test it:</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2766/4203612734_3237ed066c_o.png" alt="" width="459" height="268" /></p>
+
+<p>For another similar tutorial using python, check Yan&#8217;s wiki page:
+<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">http://bitbucket.org/sunng/yan/wiki/SampleCode</a></p>
+
+<p>Thank you for your support. btw, today is my dear girl friend&#8217;s birthday, I just wish her happy everyday.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -673,61 +782,6 @@ RFC中对Vary头是这样解释的：</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/11/15/%E5%90%AC%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%A7%BF%E5%8A%BF/">听豆瓣电台的最佳姿势</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>豆瓣电台，如果你是豆瓣用户我不多说了；如果不是豆瓣用户，嗯，算了，您换台吧。</p>
-
-<p>总算找到Prism的用处了。如果你在用豆瓣电台，并且你使用Firefox，那么只要安装Prism，就可以把豆瓣电台变成一个任意大小的窗口，和你的多tab的浏览器分离。如果非常巧合你是一位少数派的Windows用户，嗯，Prism在Windows上还可以最小化到系统栏。</p>
-
-<p>安装Prism扩展，嗯，最好确定你的Firefox是最新的（这个下雨的晚上最新的是3.5.5），当然也别新到3.6去。OK没有问题的话，就猛击下面这个链接：
-<a href="https://addons.mozilla.org/en-US/firefox/addon/6665">https://addons.mozilla.org/en-US/firefox/addon/6665</a></p>
-
-<p>注册都不需要了，直接点安装，然后等着重开Firefox就行了。安装完成，可以看到Tools菜单下面多了一个&#8221;Convert Website to application&#8230;&#8221; 这就是Prism，点开设置如下参数：</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2489/4105923552_6c51a64048.jpg" alt="" width="415" height="500" /></p>
-
-<p>Windows用户的选项会多一些，记得勾上那个show in the notification area（如果是这个名字的话），确定即可。</p>
-
-<p>Windows用户（注意升级到3.5.5的Firefox）这时直接点桌面上的图标就可以了。由于cookie不能共享，你需要重登录一下，有必要的话最好选上“记住我”。等豆瓣电台的flash播放器出现的时候，把窗口拖到合适的大小，Prism会记住每次正常关闭时的窗口大小，下次打开就那么大。然后你把它最小化，于是就在右下角了（不好意思，至今我都不知道那个区域到底中文名叫什么，直译是提示区，但是从来没听人用普通话这么说过）。</p>
-
-<p>Linux的用户稍微麻烦一些，第一次执行桌面生成的文件时会需要confirm，mark as trusted即可。因为和你的Firefox不共享数据，所以首次执行Prism程序会创建一套新的Firefox profile，然后检查插件更新，显示欢迎等等。没关系，关掉它，重新再执行一次，就会看到正常的登录框了，其他和Windows差不多。</p>
-
-<p>但是Linux上的Prism还没有提供最小化到右上角(GNOME)或者右下角(KDE)或者其他什么角里的功能，怎么办？咱们有Window Manager，我是菜鸟，我刚会用Compiz，开启Scale Window吧，然后可以把窗口按比例缩小，所到不影响桌面工作，设不设置Always on top就看自己的想法了。</p>
-
-<p>好的，就罗嗦到这里。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -749,6 +803,10 @@ RFC中对Vary头是这样解释的：</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
@@ -762,10 +820,6 @@ RFC中对Vary头是这样解释的：</p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
       </li>
     
   </ul>
