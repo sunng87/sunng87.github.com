@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="The heat map toolkit, heatcanvas, is now available via twitter&#8217;s package management tool, bower. You can now install heatcanvas with a single &hellip;">
+  <meta name="description" content="诚惶诚恐地，但是还是得把这盘菜捧出来给大家尝尝。 我们的新产品，美味爱读(ReadWise)现在正式开放帐号申请了。 从哪里说起呢，美味书签，包括整个AVOS都在做信息提取相关的互联网产品，美味爱读依然延续的这个路线。美味爱读是一个阅读产品，不过与市面上其他的类似产品相比，我们有点不同。 首先， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/">ANN 美味爱读 readwise.net</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>诚惶诚恐地，但是还是得把这盘菜捧出来给大家尝尝。</p>
+
+<p>我们的新产品，<a href="http://readwise.net/" target="_blank">美味爱读(ReadWise)</a>现在正式开放帐号申请了。</p>
+
+<p>从哪里说起呢，美味书签，包括整个AVOS都在做信息提取相关的互联网产品，美味爱读依然延续的这个路线。美味爱读是一个阅读产品，不过与市面上其他的类似产品相比，我们有点不同。</p>
+
+<p>首先，我们通过技术手段，给每天抓取到的RSS文章打上粒度极细的标签（就像Delicious那样的tag），初到网站时，您可以选择自己感兴趣的几个标签，从而获得相关的新文章。
+<img src="http://i.imgur.com/UsPfE.png" alt="" /></p>
+
+<p>其二，我们会跟踪文章在互联网上的传播情况，在微博和twitter上的引用次数，借此来判断它的价值，影响它在阅读器里的位置。我们还会从这些网站抓取用户的评论，看看别人如何说。
+<img src="http://i.imgur.com/Qxncb.png" alt="" /></p>
+
+<p>由于时间和资源有限，初期我们还只有技术和科技相关的内容。其中有很多英文，有的用户可能会对此存在疑问。考虑这个领域有的特殊性，为了保证信息的质量，我们最后还是决定不回避这些英文内容。这恐怕也是开了先河，既然要不同，那就要不同地彻底。当然很快随着领域的扩大，内容的增加，高质量的中文文章肯定会越来越多。
+<img src="http://i.imgur.com/A3t71.png" alt="" /></p>
+
+<p>我们采用的responsive UI可以在各种分辨率的屏幕上工作，所以Android的Chrome和iPhone的浏览器也可以直接访问，不用担心。
+<img src="http://i.imgur.com/WexJU.png" alt="" /></p>
+
+<p>最后，在阅读的UI上，可以用键盘J/K查看文章，O打开链接，M标记收藏。之所以强调一下，是因为这是一个工程师驱动的产品，这样的小功能是必备的。</p>
+
+<p>这是我来北京后的第一个完整的项目，参与了从原型到初期开发，到现在的开放邀请，经历了宝贵的从无到有的过程。现在终于推开门，迈出第一步。</p>
+
+<p>产品的详细介绍，请移步我们的<a href="http://readwise.net/blog/12-17-2012/this-is-our-ann.html" target="_blank">产品博客</a>。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -567,54 +625,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/07/13/%E6%9B%B4%E6%96%B0%E4%BA%86stages/">更新了stages</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://github.com/sunng87/stages">Stages</a>原先是业余时间开发的一个简单的框架，用来实现SEDA。不过现在这个库经过同事们的加强，已经用在了美味和zeen的生产环境。最近我也对开源的这个分支做了一些修改。</p>
-
-<p>首先是使用更安全的线程池，现在必须指定任务积压后的策略，即RejectionHandler。用户也可以设置自己的Queue，并且指定允许的大小。这是之前应该要做但是一直没做的事情。</p>
-
-<p>其次在Task上增加了一个priority属性，如果你使用的是PriorityBlockingQueue，那么任务会根据这个优先级排序。但是由于PriorityBlockingQueue是unbounded，所以请慎用这个功能。</p>
-
-<p>另外，现在所有的Task都通过perf4j计时，你可以用过配置log4j打印出性能报表日志。也可以通过JMX将耗时情况发布出去，我们在生产环境里通过ganglia监控了这些数据，还是比较有参考价值的。</p>
-
-<p>最后，现在jmx监控stage积压队列的功能终于实现了。我会把每个队列的pending tasks数量通过mbean暴露出来，同样可以配置监控这个数据。有了这个数据后，我们可以很明确地了解各个stage的压力情况，调整线程池的策略。</p>
-
-<p><img src="http://i.imgur.com/ashLh.png" alt="" /></p>
-
-<p></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/4/">&larr; Older</a>
@@ -636,6 +646,10 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -649,10 +663,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-07-01T17:47:12+08:00</updated>
+  <updated>2014-07-07T21:59:43+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mapzei 和 观察者]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/07/07/new-android-apps/"/>
+    <updated>2014-07-07T21:17:47+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/07/07/new-android-apps</id>
+    <content type="html"><![CDATA[<p>写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。</p>
+
+<p>其一是3月份写的 <a href="https://play.google.com/store/apps/details?id=info.sunng.muzei.maps">Mapzei</a>，是<a href="https://plus.google.com/+RomanNurik/posts">Roman Nurik</a>的live wallpaper <a href="https://play.google.com/store/apps/details?id=net.nurik.roman.muzei">Muzei</a>的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。</p>
+
+<p>另一个是<a href="http://guancha.cn">观察者网</a>的<a href="https://play.google.com/store/apps/details?id=info.sunng.guanchazhe">客户端</a>，看新闻用。应用本身倒没有什么，用了一些典型的开源库：</p>
+
+<ul>
+<li>UniversalImageLoader</li>
+<li>SuperListView</li>
+<li>ButterKnife</li>
+<li>Eventbus</li>
+</ul>
+
+
+<p>另外这个应用还发布在了<a href="http://app.mi.com/detail/65794">小米商店</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[扩展 Linux Ephemeral 端口限制]]></title>
@@ -852,37 +875,6 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
 <p>当然，其实还是发展了，原先写在html里的东西，现在用css就可以解决。和前面的例子一样，看似一样，但是都是绕了回来。不好说是从弯路绕回直路，还是相反。在一个时期是正确的，待一些客观条件成熟了，也许换回原来的方式也是正确的。</p>
 
 <p></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ANN 美味爱读 readwise.net]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/"/>
-    <updated>2012-12-05T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/12/05/ann美味爱读-readwise-net</id>
-    <content type="html"><![CDATA[<p>诚惶诚恐地，但是还是得把这盘菜捧出来给大家尝尝。</p>
-
-<p>我们的新产品，<a href="http://readwise.net/" target="_blank">美味爱读(ReadWise)</a>现在正式开放帐号申请了。</p>
-
-<p>从哪里说起呢，美味书签，包括整个AVOS都在做信息提取相关的互联网产品，美味爱读依然延续的这个路线。美味爱读是一个阅读产品，不过与市面上其他的类似产品相比，我们有点不同。</p>
-
-<p>首先，我们通过技术手段，给每天抓取到的RSS文章打上粒度极细的标签（就像Delicious那样的tag），初到网站时，您可以选择自己感兴趣的几个标签，从而获得相关的新文章。
-<img src="http://i.imgur.com/UsPfE.png" alt="" /></p>
-
-<p>其二，我们会跟踪文章在互联网上的传播情况，在微博和twitter上的引用次数，借此来判断它的价值，影响它在阅读器里的位置。我们还会从这些网站抓取用户的评论，看看别人如何说。
-<img src="http://i.imgur.com/Qxncb.png" alt="" /></p>
-
-<p>由于时间和资源有限，初期我们还只有技术和科技相关的内容。其中有很多英文，有的用户可能会对此存在疑问。考虑这个领域有的特殊性，为了保证信息的质量，我们最后还是决定不回避这些英文内容。这恐怕也是开了先河，既然要不同，那就要不同地彻底。当然很快随着领域的扩大，内容的增加，高质量的中文文章肯定会越来越多。
-<img src="http://i.imgur.com/A3t71.png" alt="" /></p>
-
-<p>我们采用的responsive UI可以在各种分辨率的屏幕上工作，所以Android的Chrome和iPhone的浏览器也可以直接访问，不用担心。
-<img src="http://i.imgur.com/WexJU.png" alt="" /></p>
-
-<p>最后，在阅读的UI上，可以用键盘J/K查看文章，O打开链接，M标记收藏。之所以强调一下，是因为这是一个工程师驱动的产品，这样的小功能是必备的。</p>
-
-<p>这是我来北京后的第一个完整的项目，参与了从原型到初期开发，到现在的开放邀请，经历了宝贵的从无到有的过程。现在终于推开门，迈出第一步。</p>
-
-<p>产品的详细介绍，请移步我们的<a href="http://readwise.net/blog/12-17-2012/this-is-our-ann.html" target="_blank">产品博客</a>。</p>
 ]]></content>
   </entry>
   

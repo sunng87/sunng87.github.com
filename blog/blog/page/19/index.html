@@ -9,10 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="趁热打铁， Exaile豆瓣电台插件今天又有了一些更新： 支持今天豆瓣新发布的摇滚、民谣、NewAge频道
-支持Exaile 0.3.2开始的界面透明
-与官方保持一致，在非个人频道时禁用trash按钮 下载
-http://github.com/sunng87/exaile-doubanfm- &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +66,42 @@ http://github.com/sunng87/exaile-doubanfm- &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/23/when-i-am-64/">When I Am 64</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5106315535/" title="DSC_0007 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1237/5106315535_07df2a88bc.jpg" width="500" height="335" alt="DSC_0007" /></a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -652,93 +686,6 @@ Unpack and run install script with super user privilege:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/01/redis-data-struct/">Redis Data Struct</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-01T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://redis.io">Redis</a>的几个核心数据结构定义在redis.h和dict.h中。Redis服务器总的数据结构里的根节点是redisServer，下面包含一个redisDb结构数组。数组的大小定义在redis.conf中的databases项，客户端可以通过select命令选择相应的DB。</p>
-
-<p>一个redisDb定义了redis数据库的基本数据结构，redisDb结构定义如下<br />
-[cc lang=&#8221;c&#8221;]<br />
-typedef struct redisDb {<br />
-    dict *dict;                 /* The keyspace for this DB */<br />
-    dict *expires;              /* Timeout of keys with a timeout set */<br />
-    dict *blocking_keys;        /* Keys with clients waiting for data (BLPOP) */<br />
-    dict *io_keys;              /* Keys with clients waiting for VM I/O */<br />
-    dict *watched_keys;         /* WATCHED keys for MULTI/EXEC CAS */<br />
-    int id;<br />
-} redisDb;<br />
-[/cc]</p>
-
-<p>其中
-<ul>
-<li>dict 用于存储键值的哈希表结构</li>
-<li>expires 用于存储键、过期时间的哈希表结构</li>
-<li>blocking_keys 用于存储键、阻塞数据的哈希表结构。目前仅仅在阻塞式的blpop brpop中使用。</li>
-<li>io_keys 存储等待将数据从swap读出的key （vmThreadedIOCompletedJob, dontWaitForSwappedKey, waitForSwappedKey）</li>
-<li>watched_keys 用于支持<a href="http://code.google.com/p/redis/wiki/MultiExecCommand#Check_and_Set_%28CAS%29_transactions_using_WATCH">WATCH</a>命令，实现乐观锁功能</li>
-<li>id 数据库编号</li>
-</ul></p>
-
-<p>dict结构定义在dict.h中，主要的定义有：<br />
-[cc lang=&#8221;c&#8221;]<br />
-typedef struct dictEntry {<br />
-    void *key;<br />
-    void *val;<br />
-    struct dictEntry *next;<br />
-} dictEntry;</p>
-
-<p>typedef struct dictht {<br />
-    dictEntry **table;<br />
-    unsigned long size;<br />
-    unsigned long sizemask;<br />
-    unsigned long used;<br />
-} dictht;</p>
-
-<p>typedef struct dict {<br />
-    dictType *type;<br />
-    void *privdata;<br />
-    dictht ht[2];<br />
-    int rehashidx; /* rehashing not in progress if rehashidx == -1 */<br />
-    int iterators; /* number of iterators currently running */<br />
-} dict;</p>
-
-<p>[/cc]</p>
-
-<p>每个dict中包含两个dictht结构，用来在rehash的时候进行数据交换。rehashidx用于记录rehash的进程，值是当前rehash的table索引。dictht中table二维数组，以hash值为索引。size是哈希表的大小，初始值是4，随着rehash的进行，变成大于size的最小2<sup>n</sup>。sizemask是size-1，用来与哈希值做&运算。</p>
-
-<p>redis在引如virtual memory之前，就是以这样的数据结构运行在内存中的。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -760,6 +707,10 @@ typedef struct dictEntry {<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -773,10 +724,6 @@ typedef struct dictEntry {<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

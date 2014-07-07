@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="上周末决定不再忍耐，又入了一个大件：华硕的平板，变形金刚。TF101上市已经半年了，而且现在TF102号称四核的版本已经开始接受预订了，所以差不多也到了应该出手的时候了。因为我知道如果去等102的话，我还会像现在这样地去和103做比较。 选择这款的主要原因即他的键盘配置， &hellip;">
+  <meta name="description" content="早在天下大势还处在分久必合的时候，那时候mootools还有不少简单实用的小库，比如我今天搜索&#8221;mootools notification&#8221;就找到这个08年的库叫做Roar。不过遗憾的是从那以后，这个库就再也没有更新过了。 Mootools本身也沉寂了很久， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/12/24/roar-for-mootools-1-4/">Roar for Mootools 1.4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>早在天下大势还处在分久必合的时候，那时候mootools还有不少简单实用的小库，比如我今天搜索&#8221;mootools notification&#8221;就找到这个08年的库叫做<a href="http://digitarald.de/project/roar/" target="_blank">Roar</a>。不过遗憾的是从那以后，这个库就再也没有更新过了。</p>
+
+<p>Mootools本身也沉寂了很久，这个项目恐怕也要思考自己未来的发展方向了。今年9月Mootools迈进了1.4，API上有一些变化。现在的下载页也能看到with/without backward compatibility的版本分开下载。为了用上Roar，我尝试了这两个版本发现都不能使用。最后downgrade到1.2可以确定Roar本身在当时是没有什么问题。</p>
+
+<p>这么多年对mootools痴心不改，所以顺手维护了一下Roar，现在可以在1.4 without compatibility的发布下运行了。主要是几个小修改，大多是一些多年deprecated函数被正式删除：
+<ul>
+	<li>Type常量，原先的String.type，Object.type现在统一到一个Type对象下，变成Type.isString和Type.isObject</li>
+	<li>$empty 常量被删除了，现在直接用function()或Function.from()代替</li>
+	<li>$pick 方法被Array.pick取代，参数现在也必须接受数组类型了</li></ul></p>
+
+<p>	<li>$merge 方法被Object.merge取代</li>
+	<li>$type 被typeOf取代</li>
+	<li>函数对象的create方法被删除了，现在可以用函数对象的bind方法替代</li>
+	<li>Browser.Engine 被删除了，需要用其他Browser的API替代</li></p>
+
+<p></p>
+
+<p>修改后的Roar，放在<a href="https://gist.github.com/1516568" target="_blank">这个gist</a>里，测试过可以在firefox和chromium上健康使用。IE没有做测试。这个08年的库，眼看四年过去了，用起来依然不错。</p>
+
+<p>作为mootools的铁杆，我还是会一直专一地坚守下去的。（于是，我也已经变成了多年前那些我眼中为旧事物顽抗到底的老家伙了）</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -687,52 +742,6 @@ RPC is the first step to distributed clojure world. I will keep you updated with
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/11/19/spark-in-common-lisp/">Spark in Common Lisp</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>还是关于spark的，一石激起千层浪，每个人心中都有一个spark。其实spark脚本刚出来的时候问题很多，但是就是因为产生了共鸣，众人拾柴pull request多。像redis的作者antirez也忍不住自己用c写了一个<a href="https://github.com/antirez/aspark" target="_blank">aspark</a>。</p>
-
-<p>说完了别人的，那么来看看我的：clspark，common-lisp的spark。原本是打算用clojure写，但是想到jvm的启动速度，把这个机会留给我的第一个common lisp程序吧。</p>
-
-<p><img src="http://i.imgur.com/oD7m4.png" alt="" /></p>
-
-<p>其实很简单。
-<script src="https://gist.github.com/1375401.js"> </script></p>
-
-<p>common lisp的核心库里没有split，所以这里从cl-cookbook拷贝了一个split的实现，坦白说我还看不太懂这个loop的写法。loop是common lisp中最尴尬的form，因为他的形式太多。这点在clojure中是不存在的。比较一下就能发现，在语言层面，clojure是相对现代得多的lisp方言。
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/8/">&larr; Older</a>
@@ -754,6 +763,10 @@ RPC is the first step to distributed clojure world. I will keep you updated with
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -767,10 +780,6 @@ RPC is the first step to distributed clojure world. I will keep you updated with
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

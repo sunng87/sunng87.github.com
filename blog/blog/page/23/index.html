@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="一眨眼有大半年没有维护这个插件了，Exaile从0.3.0升级到了0.3.2。严重的是这三个版本的插件接口各不相同，0.3.1新增了cover providers管理， 修改了track获得相应字段的api，简化了CoverSearchMethod的职责（去掉了缓存管理， &hellip;">
+  <meta name="description" content="豆瓣电台一直是flash客户端，嵌入浏览器，出于对flash的厌恶，本人开发了这个exaile插件，让广大linux同学在exaile里享受豆瓣电台一目了然桌面集成和全部豆瓣电台功能。 exaile-doubanfm-plugin features: 登录豆瓣，获取豆瓣电台播放列表 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/02/exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6exaile-doubanfm-plugin/">Exaile豆瓣电台插件(exaile-doubanfm-plugin)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>豆瓣电台一直是flash客户端，嵌入浏览器，出于对flash的厌恶，本人开发了这个exaile插件，让广大linux同学在exaile里享受豆瓣电台一目了然桌面集成和全部豆瓣电台功能。</p>
+
+<p>exaile-doubanfm-plugin features:
+<ul>
+	<li>登录豆瓣，获取豆瓣电台播放列表</li>
+	<li>持续下载电台播放列表，实现不重复的持续播放</li>
+	<li>标记/取消“喜爱”、标记“回收站”、跳过</li>
+	<li>显示歌曲信息</li>
+</ul></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4754619030/" title="screenshot_001 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4094/4754619030_933e00fcfa.jpg" width="500" height="359" alt="screenshot_001" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4754615592/" title="screenshot_002 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4079/4754615592_0c1486c2df.jpg" width="500" height="359" alt="screenshot_002" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4754666940/" title="screenshot_002 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4141/4754666940_b998d99c4b.jpg" width="500" height="412" alt="screenshot_002" /></a></p>
+
+<p>项目地址：
+<a href="http://github.com/sunng87/exaile-doubanfm-plugin">http://github.com/sunng87/exaile-doubanfm-plugin</a></p>
+
+<p>下载页：
+<a href="http://github.com/sunng87/exaile-doubanfm-plugin/downloads">http://github.com/sunng87/exaile-doubanfm-plugin/downloads</a></p>
+
+<p>使用：
+<ol>
+<li>激活插件，填写用户名密码</li>
+<li>重启exaile</li>
+<li>文件菜单，open douban.fm，选择频道</li>
+<li>点击播放开始</li>
+<li>将rating设置为5 标记喜欢</li>
+<li>rating设置2 豆瓣标准跳过</li>
+<li>rating设置1 豆瓣删除</li>
+</ol></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -541,116 +610,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/08/ibatis-infinite-loop/">Ibatis Infinite Loop When getFirstResultSet</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-08T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：<br />
-https://issues.apache.org/jira/browse/IBATIS-384<br />
-https://issues.apache.org/jira/browse/IBATIS-587</p>
-
-<p>在mysql数据库上，没有结果集时，<em>stmt.getUpdateCount()</em>会返回0，而非-1.<br />
-ibatis 2.4.3<br />
-[cc lang=&#8221;java&#8221;]<br />
-  private ResultSet getFirstResultSet(StatementScope scope, Statement stmt) throws SQLException {<br />
-    ResultSet rs = null;<br />
-    boolean hasMoreResults = true;<br />
-    while (hasMoreResults) {<br />
-      rs = stmt.getResultSet();<br />
-      if (rs != null) {<br />
-        break;<br />
-      }<br />
-      hasMoreResults = moveToNextResultsIfPresent(scope, stmt);<br />
-    }<br />
-    return rs;<br />
-  }</p>
-
-<p>  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
-    boolean moreResults;<br />
-    // This is the messed up JDBC approach for determining if there are more results<br />
-    moreResults = !(((moveToNextResultsSafely(scope, stmt) == false) && (stmt.getUpdateCount() == -1)));<br />
-    return moreResults;<br />
-  }</p>
-
-<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
-    if (forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets()) {<br />
-      return stmt.getMoreResults();<br />
-    }<br />
-    return false;<br />
-  }</p>
-
-<p>[/cc]<br />
-moreResults恒为真，程序出现死循环。</p>
-
-<p>在mybatis 2.5的代码里，这部分已经修改为：<br />
-[cc lang=&#8221;java&#8221;]<br />
-  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
-    boolean moreResults;<br />
-    // This is the messed up JDBC approach for determining if there are more results<br />
-    boolean movedToNextResultsSafely = moveToNextResultsSafely(scope, stmt);<br />
-    int updateCount = stmt.getUpdateCount();</p>
-
-<p>    moreResults = !(!movedToNextResultsSafely && (updateCount == -1));</p>
-
-<p>    //ibatis-384: workaround for mysql not returning -1 for stmt.getUpdateCount()<br />
-    if (moreResults == true){<br />
-        moreResults = !(!movedToNextResultsSafely && !isMultipleResultSetSupportPresent(scope, stmt));<br />
-    }</p>
-
-<p>    return moreResults;<br />
-  }</p>
-
-<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
-    if (isMultipleResultSetSupportPresent(scope, stmt)) {<br />
-      return stmt.getMoreResults();<br />
-    }<br />
-    return false;<br />
-  }</p>
-
-<p>  /**<br />
-   * checks whether multiple result set support is present - either by direct support of the database driver or by forcing it<br />
-   */<br />
-  private boolean isMultipleResultSetSupportPresent(StatementScope scope,<br />
-          Statement stmt) throws SQLException {<br />
-      return forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets();<br />
-  }<br />
-[/cc]<br />
-这部分条件判断实在很极致了。</p>
-
-<p>新的实现当getUpdateResult是0时，moreResults恒为真，这时再进行一个判断，如果是由于isMultipleResultSetSupportPresent为false导致了moveToNextResultsSafely为false，那么实际moreResults应是false</p>
-
-<p>MyBatis 2.5还有一个issue没有解决，离发布还有一些时间，这个问题只好签出新版本代码自己build了</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -672,6 +631,10 @@ moreResults恒为真，程序出现死循环。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -685,10 +648,6 @@ moreResults恒为真，程序出现死循环。</p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

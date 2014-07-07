@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="标题长了些。还是用母语吧。 昨天HackerNews上一个小脚本轰动了，所谓山不在高程序不在小。为了响应这个小脚本，我写了一个更加简单的Mercurial(hg)扩展，帮助你输出hg仓库的提交历史。这个feature和github的直方图有点像， &hellip;">
+  <meta name="description" content="还是关于spark的，一石激起千层浪，每个人心中都有一个spark。其实spark脚本刚出来的时候问题很多，但是就是因为产生了共鸣，众人拾柴pull request多。像redis的作者antirez也忍不住自己用c写了一个aspark。 说完了别人的，那么来看看我的：clspark，common &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/11/19/spark-in-common-lisp/">Spark in Common Lisp</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>还是关于spark的，一石激起千层浪，每个人心中都有一个spark。其实spark脚本刚出来的时候问题很多，但是就是因为产生了共鸣，众人拾柴pull request多。像redis的作者antirez也忍不住自己用c写了一个<a href="https://github.com/antirez/aspark" target="_blank">aspark</a>。</p>
+
+<p>说完了别人的，那么来看看我的：clspark，common-lisp的spark。原本是打算用clojure写，但是想到jvm的启动速度，把这个机会留给我的第一个common lisp程序吧。</p>
+
+<p><img src="http://i.imgur.com/oD7m4.png" alt="" /></p>
+
+<p>其实很简单。
+<script src="https://gist.github.com/1375401.js"> </script></p>
+
+<p>common lisp的核心库里没有split，所以这里从cl-cookbook拷贝了一个split的实现，坦白说我还看不太懂这个loop的写法。loop是common lisp中最尴尬的form，因为他的形式太多。这点在clojure中是不存在的。比较一下就能发现，在语言层面，clojure是相对现代得多的lisp方言。
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -618,63 +664,6 @@ bsxfun(@minus, A, B)<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/13/you-say-goodbye-and-i-say-hello/">You Say Goodbye and I Say Hello.</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><iframe width="560" height="315" src="http://www.youtube.com/embed/HBZ8ulc5NTg" frameborder="0" allowfullscreen></iframe></p>
-
-<p>You say yes, I say no<br />
-You say stop and I say go, go, go<br />
-Oh, no<br />
-You say goodbye and I say <strong>hello world</strong></p>
-
-<p><img src="http://www.lysator.liu.se/c/dmr/dmr.gif" alt="Dennis Ritchie" /></p>
-
-<p><img src="http://www.globalnerdy.com/wordpress/wp-content/uploads/2008/09/the_c_programming_language.jpg" alt="the C programming language" /></p>
-
-<p>[cc lang=&#8221;C&#8221;]<br />
-#include<stdio.h /></p>
-
-<p>int main(){<br />
-    printf(&#8220;Dennis Ritchie, %d-%d\n&#8221;, 1941, 2011);<br />
-    return 0;<br />
-}
-[/cc]</p>
-
-<p>RIP.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/9/">&larr; Older</a>
@@ -696,6 +685,10 @@ You say goodbye and I say <strong>hello world</strong></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -709,10 +702,6 @@ You say goodbye and I say <strong>hello world</strong></p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

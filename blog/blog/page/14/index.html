@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Finally it was fixed. I just updated the plugin according to the new SoundMenu registration process. Now you can download the head version from &hellip;">
+  <meta name="description" content="昨晚终于下了决心告别Ubuntu的紫色，迎接新的GNOME3桌面。这个想法有一段时间了，Ubuntu从09年生日的时候安装在这台电脑上，已经将近两年的时间，经历了9.04, 9.10, 10.04, 10.10, 11.04五个版本，安装了GNOME, awesome, KDE, LXDE, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/04/22/%E5%91%8A%E5%88%ABubuntu%EF%BC%8C%E8%BF%81%E7%A7%BB%E5%88%B0fedora-15%EF%BC%8Cgnome-3/">告别Ubuntu，迁移到Fedora 15，GNOME 3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5643299802/" title="Fedora15/Gnome3 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5068/5643299802_787791dd52.jpg" alt="Fedora15/Gnome3" height="313" width="500" /></a></p>
+
+<p>昨晚终于下了决心告别Ubuntu的紫色，迎接新的GNOME3桌面。这个想法有一段时间了，Ubuntu从09年生日的时候安装在这台电脑上，已经将近两年的时间，经历了9.04, 9.10, 10.04, 10.10, 11.04五个版本，安装了GNOME, awesome, KDE, LXDE, Openbox, wmii, GNOME3, Ubuntu Netbook等等桌面环境，可以想想那种混乱。而且通过升级获得的新版本，并不能体会到快速开机这样的特性。这次unity发布以后，用了半个月，没有什么眼前一亮的感觉，操作也不太方便，于是换发行版的想法就更加强烈了。</p>
+
+<p>我的系统之前有三个分区，分别挂载/，/home以及/opt。这次更新理想的方式就是格式化/，保留/home和/opt。之前比较讲究规范，所以/下面基本上没有什么需要备份的东西，配置文件都放在/home下面。这样用fedora的livecd安装程序手动配置磁盘分区，只格式化/就可以了。安装的过程非常顺利，重启以后就进入用户配置的界面了。</p>
+
+<p>要把原先的/home/sun分配给新的sun用户，这里我走了一点弯路。系统可以把/home/sun目录配置给新的sun用户作为$HOME，但是目录的owner并不会根据用户名称来匹配。Ubuntu默认第一个用户的UID是1000，而Fedora创建的新用户默认是500. 我现在不确定如果把第一个用户的ID手动指定为1000会不会就直接成功。不过这个问题不大，只要启动之后用root用户把/home/sun目录chown给新的sun用户就可以了，当然文件很多是需要消耗一些时间的。</p>
+
+<p>进入GNOME3桌面之后发现无线网络连不上，而且不弹出密码输入框。因为我最近改了无线的密码，而NetworkManager还是从gnome-keyring里去读旧的密码，所以总是连接失败。这时<font face="monospace">rm -r ~/.gnome-keyring/</font> 删除旧密码即可。</p>
+
+<p>桌面的第二个问题是桌面背景仍然是旧的配置（只有颜色没有图片，因为GNOME3默认桌面不由Nautilus管理），这时要毫不留情地删掉所有GNOME2的配置： <font face="monospace">rm -rf ~/.gnome2 ~/.gconf ~/.gconfd </font></p>
+
+<p>第三个问题，gnome的applition菜单非常混乱，还存着Ubuntu系统时候的内容。根据freedesktop的标准，用户的菜单配置保存在<font face="monospace">~/.config/menus</font>里，而用户菜单会从<font face="monospace">~/.local/share/applications</font>下读取所有的.desktop文件，甚至包括wine也会在这里创建自己的菜单。对付这些内容，一删了之： <font face="monospace">rm -rf ~/.local/share/applications/*</font>。这样菜单就只会从/usr/share/applications/下读取.desktop文件，这些都是最新安装的。</p>
+
+<p>然后，然后就没有了！就可以开始享受fresh install了，甚至你打开thunderbird，所有的邮件都在那里，什么都不用再做。
+<a href="http://www.flickr.com/photos/40741608@N08/5643386496/" title="Window Selector by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5041/5643386496_153d59d4b1.jpg" alt="Window Selector" height="313" width="500" /></a>
+如果要比较gnome-shell和unity的话：
+<ol>
+<li>gs的启动器比unity要好用，unity的启动器搜索程序之后必须点击图标才能启动，gs可以直接回车启动第一个</li>
+<li>gs的dock比unity要好用，其实都与windows7的任务栏类似，但是 unity里打开了一个终端之后，再点这个图标就转到终端，如果想新开一个就无奈了，右键点击也没有新开的选项。（难道是shift+click，来不及试了。。。）</li>
+<li>unity的indicator比gs的tray强大多了，这是ubuntu的强项，从10.04开始就用自己的indicator，到了11.04已经有成熟的API，除了官方的，还有很多程序支持，还有天气、系统监控的indicator。gs抛弃了原来的panel applets，现在看天气、看系统状况都无从谈起。尤其是看不到cpu使用情况，心里总是不踏实，天知道firefox+flash又把你的系统烧了多久。</li>
+</ol></p>
+
+<p>总体来说这次重装效果非常好，基本上没有留下任何瑕疵。断断续续用了四年多的Ubuntu，再见了～<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=98d4edfa-b22d-81bd-b0cc-4b2b6afdacb9" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -836,53 +895,6 @@ Total:         13   25  22.3     21     239</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/03/19/exaile-doubanfm-plugin-0-0-9/">Exaile DoubanFM Plugin 0.0.9</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>新版本的Exaile豆瓣电台插件。这个版本的变更：
-<ul>
-<li>新增分享菜单，分享当前音轨到豆瓣、新浪、开心001、人人</li>
-<li>改进了推荐方式，采用豆瓣电台的永久链接</li>
-<li>修改了0.0.8以来存在的登录bug</li>
-<li>修改了0.0.8以来存在的加载播放列表bug</li>
-</ul></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/5539013314/" title="Doubanfm Exaile new by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5092/5539013314_be4d6ff6ee.jpg" width="500" height="243" alt="Doubanfm Exaile new" /></a></p>
-
-<p>从github获得新版本：
-<a href="https://github.com/sunng87/exaile-doubanfm-plugin/downloads">https://github.com/sunng87/exaile-doubanfm-plugin/downloads</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/15/">&larr; Older</a>
@@ -904,6 +916,10 @@ Total:         13   25  22.3     21     239</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -917,10 +933,6 @@ Total:         13   25  22.3     21     239</p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

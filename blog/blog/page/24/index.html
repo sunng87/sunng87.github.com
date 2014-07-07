@@ -9,10 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="除了用inetface库和分析ifconfig输出以外，一个比较简单的获取本机IP的方法：
-[cc lang=&#8221;python&#8221;]
-import socket
-def get_local_ip(): s = socket.socket(socket.AF_INET, &hellip;">
+  <meta name="description" content="前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：
+https://issues.apache.org/jira/browse/IBATIS-384
+https://issues.apache.org/jira/browse/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +67,116 @@ def get_local_ip(): s = socket.socket(socket.AF_INET, &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/06/08/ibatis-infinite-loop/">Ibatis Infinite Loop When getFirstResultSet</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：<br />
+https://issues.apache.org/jira/browse/IBATIS-384<br />
+https://issues.apache.org/jira/browse/IBATIS-587</p>
+
+<p>在mysql数据库上，没有结果集时，<em>stmt.getUpdateCount()</em>会返回0，而非-1.<br />
+ibatis 2.4.3<br />
+[cc lang=&#8221;java&#8221;]<br />
+  private ResultSet getFirstResultSet(StatementScope scope, Statement stmt) throws SQLException {<br />
+    ResultSet rs = null;<br />
+    boolean hasMoreResults = true;<br />
+    while (hasMoreResults) {<br />
+      rs = stmt.getResultSet();<br />
+      if (rs != null) {<br />
+        break;<br />
+      }<br />
+      hasMoreResults = moveToNextResultsIfPresent(scope, stmt);<br />
+    }<br />
+    return rs;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
+    boolean moreResults;<br />
+    // This is the messed up JDBC approach for determining if there are more results<br />
+    moreResults = !(((moveToNextResultsSafely(scope, stmt) == false) && (stmt.getUpdateCount() == -1)));<br />
+    return moreResults;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
+    if (forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets()) {<br />
+      return stmt.getMoreResults();<br />
+    }<br />
+    return false;<br />
+  }</p>
+
+<p>[/cc]<br />
+moreResults恒为真，程序出现死循环。</p>
+
+<p>在mybatis 2.5的代码里，这部分已经修改为：<br />
+[cc lang=&#8221;java&#8221;]<br />
+  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
+    boolean moreResults;<br />
+    // This is the messed up JDBC approach for determining if there are more results<br />
+    boolean movedToNextResultsSafely = moveToNextResultsSafely(scope, stmt);<br />
+    int updateCount = stmt.getUpdateCount();</p>
+
+<p>    moreResults = !(!movedToNextResultsSafely && (updateCount == -1));</p>
+
+<p>    //ibatis-384: workaround for mysql not returning -1 for stmt.getUpdateCount()<br />
+    if (moreResults == true){<br />
+        moreResults = !(!movedToNextResultsSafely && !isMultipleResultSetSupportPresent(scope, stmt));<br />
+    }</p>
+
+<p>    return moreResults;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
+    if (isMultipleResultSetSupportPresent(scope, stmt)) {<br />
+      return stmt.getMoreResults();<br />
+    }<br />
+    return false;<br />
+  }</p>
+
+<p>  /**<br />
+   * checks whether multiple result set support is present - either by direct support of the database driver or by forcing it<br />
+   */<br />
+  private boolean isMultipleResultSetSupportPresent(StatementScope scope,<br />
+          Statement stmt) throws SQLException {<br />
+      return forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets();<br />
+  }<br />
+[/cc]<br />
+这部分条件判断实在很极致了。</p>
+
+<p>新的实现当getUpdateResult是0时，moreResults恒为真，这时再进行一个判断，如果是由于isMultipleResultSetSupportPresent为false导致了moveToNextResultsSafely为false，那么实际moreResults应是false</p>
+
+<p>MyBatis 2.5还有一个issue没有解决，离发布还有一些时间，这个问题只好签出新版本代码自己build了</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -552,58 +661,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/25/%E5%9C%A8%E8%8B%8F%E5%B7%9E%E6%B2%B3/">在苏州河</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-25T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天又到苏州河附近拍，发现在四川路桥对面的邮政博物馆楼顶拍浦东效果甚佳，闹中取静。另外在河南中路和宁波路路口有一家小杨生煎店，人相对其他地方比较少。</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4550135617/" title="DSC_0015 by 贝小塔, on Flickr"><img src="http://farm1.static.flickr.com/130/4550135617_8a002f5d83.jpg" width="500" height="335" alt="DSC_0015" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550774618/" title="DSC_0021 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4057/4550774618_72de9e945c.jpg" width="500" height="335" alt="DSC_0021" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550775202/" title="DSC_0022 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4033/4550775202_41d92fc9d4.jpg" width="500" height="335" alt="DSC_0022" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550775526/" title="DSC_0023 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4019/4550775526_020cba3039.jpg" width="500" height="335" alt="DSC_0023" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550137615/" title="DSC_0055 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4069/4550137615_dfddeef846.jpg" width="335" height="500" alt="DSC_0055" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550776288/" title="DSC_0067 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4049/4550776288_89fa9919db.jpg" width="335" height="500" alt="DSC_0067" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550781092/" title="DSC_0078 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4022/4550781092_1c48fe79d2.jpg" width="335" height="500" alt="DSC_0078" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550781268/" title="DSC_0079 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4016/4550781268_cb2dc15328.jpg" width="335" height="500" alt="DSC_0079" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550781990/" title="DSC_0082 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4058/4550781990_97aa9e4ebe.jpg" width="335" height="500" alt="DSC_0082" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550782612/" title="DSC_0084 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4044/4550782612_f18eac8bda.jpg" width="335" height="500" alt="DSC_0084" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550783120/" title="DSC_0085 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4047/4550783120_f10395f159.jpg" width="335" height="500" alt="DSC_0085" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/4550145171/" title="DSC_0091 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4031/4550145171_64c65a42a0.jpg" width="500" height="335" alt="DSC_0091" /></a></p>
-
-<p>最后一张景不错，不过拍得曝光过度了，处理了一下
-<a href="http://www.flickr.com/photos/40741608@N08/4550776010/" title="DSC_0054 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4056/4550776010_4073d1a16f.jpg" width="500" height="335" alt="DSC_0054" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/25/">&larr; Older</a>
@@ -625,6 +682,10 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -638,10 +699,6 @@ Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

@@ -9,7 +9,11 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I just implemented a new feature on RageViewer which has been requested for a long time. Now you can login with your Reddit account and up-vote/down- &hellip;">
+  <meta name="description" content="You say yes, I say no
+You say stop and I say go, go, go
+Oh, no
+You say goodbye and I say hello world [cc lang=&#8221;C&#8221;]
+#include int main(){ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +69,63 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/10/13/you-say-goodbye-and-i-say-hello/">You Say Goodbye and I Say Hello.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><iframe width="560" height="315" src="http://www.youtube.com/embed/HBZ8ulc5NTg" frameborder="0" allowfullscreen></iframe></p>
+
+<p>You say yes, I say no<br />
+You say stop and I say go, go, go<br />
+Oh, no<br />
+You say goodbye and I say <strong>hello world</strong></p>
+
+<p><img src="http://www.lysator.liu.se/c/dmr/dmr.gif" alt="Dennis Ritchie" /></p>
+
+<p><img src="http://www.globalnerdy.com/wordpress/wp-content/uploads/2008/09/the_c_programming_language.jpg" alt="the C programming language" /></p>
+
+<p>[cc lang=&#8221;C&#8221;]<br />
+#include<stdio.h /></p>
+
+<p>int main(){<br />
+    printf(&#8220;Dennis Ritchie, %d-%d\n&#8221;, 1941, 2011);<br />
+    return 0;<br />
+}
+[/cc]</p>
+
+<p>RIP.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -631,82 +692,6 @@ ParEdit是编辑括号的利器，Emacs-Starter-Kit已经把这个包配置好�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/09/17/%E6%B5%81%E6%B0%B4%E5%B8%90/">流水帐</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近没有什么特别值得一提的事情，或者说都还在进行中还没有到值得一提的时候。</p>
-
-<p>中秋节休息之后的第一天清早去驾校考交规理论，这个事没什么可说的，除了在4sq上又拓展了一点疆土，后来我又后悔没把GPS带着错过了一些还没有数据的道路。倒是那天去和回分别坐错了车，想十年前本人对城市交通网络了然于胸，除了视力不好把48路看成46路就没有坐错过车走错过路。结果现在公交线路的数量翻了一番，城市的交通网络也更复杂了。人脑则不具备scalability，活地图的时代一去不复返了。</p>
-
-<p>第二件值得一说的是我在VirtualBox里成功安装了ArchLinux和GNOME Shell桌面。我工作的机器是有点古老的Dell OptiPlex 760，显卡还是ATI的Radeon HD 3420。为了开发的方便，我们装的都是CentOS 5，没错是5！！这周上班后升到了8G内存我就开始琢磨开个虚拟机体会一下现代生活。多余的不说了，几个注意事项：
-<ul>
-<li>Host要装ATI的fglrx驱动，xorg-x11-drv-ati直接也能用，但是性能非常差</li>
-<li>VirtualBox要在4.0.4以上，我看网上说的，具体能个版本也不知道，但是用最新的就可以</li>
-<li>3D加速要开，在虚拟机的设置里</li>
-<li>最最重要的一点！不要从虚拟机的菜单里安装Guest Addon，那个对Arch不管用。要用pacman安装仓库里，包名我忘了，请自行-Ss</li>
-<li>别忘了把rc.vboxadd加入rc.conf的Deamons里</li>
-</ul></p>
-
-<p>这周最诡异的问题是在配Netty的Pipeline时，我用了：<br />
-[cc lang=&#8221;java&#8221;]<br />
-Channels.pipeline(new HttpMessageDecoder(), new HttpMessageEncoder(), myhandler);<br />
-[/cc]</p>
-
-<p>结果稍微上一点压力居然出现了很多decoder异常，什么包不全、头不全、空指针什么的。不明真相最后改用例子里的：<br />
-[cc lang=&#8221;java&#8221;]<br />
-ChannelPipeline cp = Channels.pipeline();<br />
-cp.addLast(&#8220;decoder&#8221;, new HttpMessageDecoder());<br />
-cp.addLast(&#8220;encoder&#8221;, new HttpMessageEncoder());<br />
-cp.addLast(&#8220;handler&#8221;, myhandler);<br />
-[/cc]</p>
-
-<p>就成功了。也许是顺序的原因也许是名字的原因，可如果这个名字真的具有意义的话为什么没有常量可用呢？不去追究具体原因了，记住就好。</p>
-
-<p>此外遇到的bug还包括clojure中transient数据结构的问题，我有一个transient的map，但是persistent之后发现只有前9（依稀好像是）次assoc!的内容保存了，后面却都丢失了。1.2里的transient都被标记了alpha，不过印象1.3的changes里好像也没提transient。</p>
-
-<p>另一件与clojure有关的诡异事件是一个test case的failure report：
-<blockquote>FAIL in (test-read-job) (wal.clj:61) <br />
-expected: (= (job k) (rjob k)) <br />
-actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
-不过最后好在是冤有头债有主，睁着眼有时也要说下滑。在从stream中读字节流多读了一个byte，后来用这一组byte去new String的时候，就变成了一个不可见字符。结果在命令行里的输出就是这么骇人听闻，还是在IDEA里跑这个测试才发现错误的那个字符串后面跟了一个方块。至于为什么多读了一个byte，copy/paste害死人啊。</p>
-
-<p>以上这些牢骚是关于clojure的，但是这篇就不加clojure的tag了，否则被planet clojure收录去我又给中文世界丢脸了。</p>
-
-<p>周五晚上我又更新了sunng.info的首页，以后也许我会定期的放一些得意的照片（或者照片上有得意的东西）上去做背景，以免被人看到后发现太单调乏味。</p>
-
-<p>最后还要感谢一下twitter网友Kymair这周将Rage Viewer<a href="http://rageviewer.herokuapp.com/index.html">部署到了Heroku</a>上。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/10/">&larr; Older</a>
@@ -728,6 +713,10 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -741,10 +730,6 @@ actual: (not (= &#8220;tomcat&#8221; &#8220;tomcat&#8221;))</blockquote>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

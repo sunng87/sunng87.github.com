@@ -9,9 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="翻译一个po文件。确认安装了gettext工具包。 cd到po目录，创建pot
-intltool-update &#8211;pot 创建相应的语言文件，例如zh_CN
-msginit -l zh_CN.utf8 程序会提示选择或输入邮箱，之后就会生成zh_CN.po文件，打开文件， &hellip;">
+  <meta name="description" content="I found fantasdic a great powerful dictionary tool with friendly UI and supports multiply sources. Unfortunately, this project seems to be no longer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,60 @@ msginit -l zh_CN.utf8 程序会提示选择或输入邮箱，之后就会生成z
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/02/patch-for-fantadic-google-source/">Patch for Fantasdic Google Source</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I found fantasdic a great powerful dictionary tool with friendly UI and supports multiply sources. Unfortunately, this project seems to be no longer maintained. The latest version is 1.0-beta7.
+<a title="fantasdic-google by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4324570353/"><img src="http://farm5.static.flickr.com/4049/4324570353_c1f79ac6dc.jpg" alt="fantasdic-google" width="500" height="362" /></a></p>
+
+<p>The google translate source was created in 2007. As the google translate service page changed, this module doesn&#8217;t work any more, so I just picked up my vim then created this patch for those still want to use it.</p>
+
+<p>This patch has dependency with ruby&#8217;s json module, so before you apply it, run:
+<em>sudo gem install json</em>
+or
+<em>sudo apt-get install libjson-ruby1.8</em></p>
+
+<p>Download the patch at:
+<a href="https://bugzilla.gnome.org/attachment.cgi?id=152835">https://bugzilla.gnome.org/attachment.cgi?id=152835</a></p>
+
+<p>Patch it (Ubuntu installation as example):
+<em>cd /usr/lib/ruby/1.8/fantasdic/sources/<br />
+sudo patch google_translate.rb /home/sun/google_translate.rb.diff</em></p>
+
+<p>Restart fantasdic, then your get it works! And this bug is tracked at:
+<a href="https://bugzilla.gnome.org/show_bug.cgi?id=605641">https://bugzilla.gnome.org/show_bug.cgi?id=605641</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -654,44 +706,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/30/%E6%88%91%E6%98%AF%E4%B8%80%E7%9B%8F%E5%B0%8F%E7%81%AF/">我是一盏小灯</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="alignnone" src="http://farm5.static.flickr.com/4053/4228168348_1ff34e05e0.jpg" alt="" width="500" height="335" /></p>
-
-<p>长期苦于桌上没有照明设备，上周末买了一盏灯。之所以选择Esc版的，因为咱是VI用户。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -713,6 +727,10 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -726,10 +744,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

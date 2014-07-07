@@ -9,11 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Requirement
-You want to visualize a call hierarchy of a C function. Solution
-Utilities you need are listed below: GNU cflow
-cflow2vcg
-graphviz Take &hellip;">
+  <meta name="description" content="Redis的几个核心数据结构定义在redis.h和dict.h中。Redis服务器总的数据结构里的根节点是redisServer，下面包含一个redisDb结构数组。数组的大小定义在redis.conf中的databases项，客户端可以通过select命令选择相应的DB。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,93 @@ graphviz Take &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/01/redis-data-struct/">Redis Data Struct</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://redis.io">Redis</a>的几个核心数据结构定义在redis.h和dict.h中。Redis服务器总的数据结构里的根节点是redisServer，下面包含一个redisDb结构数组。数组的大小定义在redis.conf中的databases项，客户端可以通过select命令选择相应的DB。</p>
+
+<p>一个redisDb定义了redis数据库的基本数据结构，redisDb结构定义如下<br />
+[cc lang=&#8221;c&#8221;]<br />
+typedef struct redisDb {<br />
+    dict *dict;                 /* The keyspace for this DB */<br />
+    dict *expires;              /* Timeout of keys with a timeout set */<br />
+    dict *blocking_keys;        /* Keys with clients waiting for data (BLPOP) */<br />
+    dict *io_keys;              /* Keys with clients waiting for VM I/O */<br />
+    dict *watched_keys;         /* WATCHED keys for MULTI/EXEC CAS */<br />
+    int id;<br />
+} redisDb;<br />
+[/cc]</p>
+
+<p>其中
+<ul>
+<li>dict 用于存储键值的哈希表结构</li>
+<li>expires 用于存储键、过期时间的哈希表结构</li>
+<li>blocking_keys 用于存储键、阻塞数据的哈希表结构。目前仅仅在阻塞式的blpop brpop中使用。</li>
+<li>io_keys 存储等待将数据从swap读出的key （vmThreadedIOCompletedJob, dontWaitForSwappedKey, waitForSwappedKey）</li>
+<li>watched_keys 用于支持<a href="http://code.google.com/p/redis/wiki/MultiExecCommand#Check_and_Set_%28CAS%29_transactions_using_WATCH">WATCH</a>命令，实现乐观锁功能</li>
+<li>id 数据库编号</li>
+</ul></p>
+
+<p>dict结构定义在dict.h中，主要的定义有：<br />
+[cc lang=&#8221;c&#8221;]<br />
+typedef struct dictEntry {<br />
+    void *key;<br />
+    void *val;<br />
+    struct dictEntry *next;<br />
+} dictEntry;</p>
+
+<p>typedef struct dictht {<br />
+    dictEntry **table;<br />
+    unsigned long size;<br />
+    unsigned long sizemask;<br />
+    unsigned long used;<br />
+} dictht;</p>
+
+<p>typedef struct dict {<br />
+    dictType *type;<br />
+    void *privdata;<br />
+    dictht ht[2];<br />
+    int rehashidx; /* rehashing not in progress if rehashidx == -1 */<br />
+    int iterators; /* number of iterators currently running */<br />
+} dict;</p>
+
+<p>[/cc]</p>
+
+<p>每个dict中包含两个dictht结构，用来在rehash的时候进行数据交换。rehashidx用于记录rehash的进程，值是当前rehash的table索引。dictht中table二维数组，以hash值为索引。size是哈希表的大小，初始值是4，随着rehash的进行，变成大于size的最小2<sup>n</sup>。sizemask是size-1，用来与哈希值做&运算。</p>
+
+<p>redis在引如virtual memory之前，就是以这样的数据结构运行在内存中的。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -639,72 +722,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/05/a-day-in-expo/">A Day in Expo</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A day in Expo, Shanghai.</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4957383122/" title="DSC_0015 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4133/4957383122_818b9af46c.jpg" width="500" height="335" alt="DSC_0015" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4957392860/" title="DSC_0017 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4076/4957392860_4249a043bc.jpg" width="500" height="335" alt="DSC_0017" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4956812599/" title="DSC_0023 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4110/4956812599_fdd0e0b035.jpg" width="335" height="500" alt="DSC_0023" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4957416828/" title="DSC_0025 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4096/4957416828_7d74399e72.jpg" width="500" height="335" alt="DSC_0025" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4957437892/" title="DSC_0026 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4108/4957437892_5b92d804fd.jpg" width="500" height="335" alt="DSC_0026" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4957449690/" title="DSC_0028 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4091/4957449690_22357b0ffc.jpg" width="500" height="335" alt="DSC_0028" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958948524/" title="DSC_0032 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4090/4958948524_08095c93cc.jpg" width="335" height="500" alt="DSC_0032" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958953244/" title="DSC_0035 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4086/4958953244_9d9dfa3fc3.jpg" width="335" height="500" alt="DSC_0035" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958964376/" title="DSC_0053 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4083/4958964376_b9054d2a3c.jpg" width="500" height="335" alt="DSC_0053" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958390957/" title="DSC_0057 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4086/4958390957_d62179b219.jpg" width="335" height="500" alt="DSC_0057" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958405807/" title="DSC_0060 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4094/4958405807_8a0dda2557.jpg" width="500" height="335" alt="DSC_0060" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4959010738/" title="DSC_0063 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4151/4959010738_c5b6da5fe1.jpg" width="500" height="335" alt="DSC_0063" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958468151/" title="DSC_0067 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4142/4958468151_cf0f270d04.jpg" width="500" height="335" alt="DSC_0067" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/4958477457/" title="DSC_0069 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4126/4958477457_3437cbe143.jpg" width="500" height="335" alt="DSC_0069" /></a></p>
-
-<p>早晨6点开始阳光就非常剧烈，不适合拍照，而且大部分时间都用来排队了，只留下这么一点点能看的而已。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -726,6 +743,10 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -739,10 +760,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

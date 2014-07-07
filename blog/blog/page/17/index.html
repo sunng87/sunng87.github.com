@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="2008年的冬天，有一天和一个不认识的网友聊天，他说，以前也对这些框架啦什么的感兴趣，后来就变了，他说他当时的目标是写一个HTTP服务器。我当时能够认同他的观点，不过没什么特别的共鸣。到了今天春天，项目开始了，周末老大休假回杭州，留下大伙大眼瞪小眼要联调。出现了问题发现自己一窍不通， &hellip;">
+  <meta name="description" content="This article will show you some basic steps to setup a standalone environment for Jython, with the power of some popular and standard tools. 0. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,161 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/12/30/setup-a-jython-development-environment/">Setup a Jython Development Environment</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This article will show you some basic steps to setup a standalone environment for Jython, with the power of some popular and standard tools.</p>
+
+<p><h3>0. Install essential tools</h3>
+Take Ubuntu Maverick as an example, before starting, you have to make sure these packages installed on your system.</p>
+
+<p><strong>Essential Python tools</strong> (Python is shipped with most Linux distribution by default)
+<i>sudo apt-get install python-pip python-virtualenv</i></p>
+
+<p><strong>Java</strong>
+<i>sudo apt-get install openjdk-6-jdk openjdk-6-jre</i></p>
+
+<p><strong>Jython</strong>
+The Jython package in Ubuntu repository is obsolete. Download Jython installer from official website. A full installation is recommended here.
+<a href="http://jython.org/downloads.html">http://jython.org/downloads.html</a></p>
+
+<p>As an optional step, I often move Jython direcotry to /usr/local/share/ , and use a symbol link to add Jython to PATH:
+<i>sudo ln -s /usr/local/share/jython/bin/jython /usr/local/bin/</i></p>
+
+<p><strong>Install additional Java tools</strong>
+<i>sudo apt-get install ant ivy</i></p>
+
+<p><h3>1. Create a standalone environment</h3>
+Jython 2.5 is fully compatible with virtualenv, so you can create a standalone environment just like what you do with python:
+<i>virtualenv -p /usr/local/bin/jython jython-env</i>
+<i>cd jython-env</i></p>
+
+<p>List the directory, you will see these files and directories:
+<ul>
+<li>bin/</li>
+<li>cachedir/</li>
+<li>Lib/</li>
+<li>jython.jar</li>
+<li>registry</li>
+</ul>
+Source the activate script:
+<i>source bin/activate</i></p>
+
+<p><h3>2. Download and install python packages</h3>
+Now the python environment is just ready, you can install python packages as you want. Install bottle, for example:
+<i>pip install bottle</i></p>
+
+<p><h3>3. Download and install Java dependencies</h3>
+This is the different step. As you know, the most important feature of Jython is availability of Java libraries to Python code. So we need some additional tools to manage Java dependencies. Popular Java lifecycle management tool <strong>Maven</strong> is not suitable here, because Maven is tightly depends on its archetype. <strong>Gradle</strong> is also known as a powerful build tool with DSL support. However, Gradle uses Groovy as the scripting language to create build file. Bringing Groovy to a Jython project seems terribly strange.</p>
+
+<p>So I prefer the traditional Ant way to manage dependencies. First of all, create a build file with following content:
+<strong>build.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="jython-env" default="resolve">
+    <target name="resolve" description="retrieve dependencies">
+        <ivy:retrieve pattern="javalib/[artifact]-[revision].[ext]" type="jar" />
+    </target>
+</project>
+[/cc]</p>
+
+<p>Then create an ivy xml to configure dependencies:
+<strong>ivy.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<ivy-module version="2.0">
+    <info organisation="info.sunng" module="jython-env" />
+    <dependencies>
+        <dependency org="commons-lang" name="commons-lang" rev="2.5" />
+    </dependencies>
+</ivy-module>
+[/cc]</p>
+
+<p>Also, as an optional step, you can overwrite default settings to configure ivy to use maven local repository.
+<strong>ivysettings.xml</strong>
+[cc lang=&#8221;xml&#8221;]
+<ivy-settings>
+    <settings defaultresolver="maven-or-not" />
+    <resolvers>
+        <chain name="maven-or-not" returnfirst="true">
+            <filesystem name="maven-local" m2compatible="true" />
+            <ibiblio name="ibiblio" m2compatible="true" />
+        </chain>
+    </resolvers>
+</ivy-settings>
+[/cc]</p>
+
+<p>All done, now you can download everything. In Ubuntu, default ivy installation, you have to specify ivy path in ant command line:
+<i>ant -lib /usr/share/java/ivy.jar</i></p>
+
+<p>You will see jars in <i>javalib</i>.</p>
+
+<p><h3>4. Reconfigure start up script</h3>
+The default Jython start up script is not friendly to external Java dependencies. To include jars, you have to use such dirty command line parameters:
+<i>jython -Dpython.path=javalib/commons-lang-2.5.jar:javalib/&#8230;</i></p>
+
+<p>To get rid of this, first rename bin/jython to bin/startJython. (Follow the Groovy naming convention)</p>
+
+<p>Then create a new bin/jython script wraps the old one:<br />
+[cc lang=&#8221;bash&#8221;]<br />
+#! /bin/bash</p>
+
+<p>JYTHON_CMD=&#8221;startJython&#8221;<br />
+JAVA_LIBS=&#8221;javalib/*.jar&#8221;<br />
+PYTHON_PATH=&#8221;&#8221;</p>
+
+<p>for lib in $JAVA_LIBS<br />
+do<br />
+    PYTHON_PATH=&#8221;$PYTHON_PATH:$lib&#8221;<br />
+done</p>
+
+<p>#echo $PYTHON_PATH<br />
+$JYTHON_CMD -Dpython.path=$PYTHON_PATH</p>
+
+<p>[/cc]</p>
+
+<p><h3>5. Run</h3>
+Finally, it comes to an end. Type jython to execute the interactive shell:
+<i>jython</i>
+<blockquort>
+Jython 2.5.1 (Release_2_5_1:6813, Sep 26 2009, 13:47:54)<br />
+[OpenJDK Server VM (Sun Microsystems Inc.)] on java1.6.0_20<br />
+Type &#8220;help&#8221;, &#8220;copyright&#8221;, &#8220;credits&#8221; or &#8220;license&#8221; for more information.<br />
+>>> from org.apache.commons.lang import BitField<br />
+>>> import bottle
+</blockquort></p>
+
+<p>Both Python and Java dependency is accessible. Now it&#8217;s time to get your new start.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -540,51 +695,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/11/28/exaile-sound-menu-integration/">Exaile Sound Menu Integration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-11-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://wiki.kubuntu.org/SoundMenu">Sound menu indicator</a> was introduced in Ubuntu Maverick(10.10).  User can control playback from this menu, and view current track information.</p>
-
-<p>The control is based on mpris spec 2.0, which is a common specification of controlling media player with dbus. To enable sound menu support, media player should implement mpris 2.0, and register itself with libindicate.</p>
-
-<p>So this week,  I have been working on an exaile plugin to support sound menu and finally got a workable version.</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/5213528341/" title="Screenshot of exaile sound menu by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5004/5213528341_3587622fb5.jpg" width="500" height="313" alt="Screenshot of exaile sound menu" /></a></p>
-
-<p>The code repo can be found at github:
-<a href="https://github.com/sunng87/Exaile-Soundmenu-Indicator">https://github.com/sunng87/Exaile-Soundmenu-Indicator</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/18/">&larr; Older</a>
@@ -606,6 +716,10 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -619,10 +733,6 @@ http://wiki.openstreetmap.org/wiki/Map_Features<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

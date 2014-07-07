@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I will show you the usage of Yan captcha service. In this tutorial, it&#8217;s based on a simple ruby web application of the Sinatra web framework. &hellip;">
+  <meta name="description" content="发现南图的资源很不错之后就想着到了上海以后要办一张借书证，眼看住这半年了，险些忘了这件事。上上周六去办证不料比截止时间晚了三分钟，白白跑了一趟。上周六正好约samson去，终于一切顺利。 办证的系统很强大，我第一次见识了二代身份证的高级功能。读卡器可以直接读取身份证里的相应信息，简化填申请表的过程 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/12/22/%E4%B8%8A%E6%B5%B7%E5%9B%BE%E4%B9%A6%E9%A6%86/">上海图书馆</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>发现南图的资源很不错之后就想着到了上海以后要办一张借书证，眼看住这半年了，险些忘了这件事。上上周六去办证不料比截止时间晚了三分钟，白白跑了一趟。上周六正好约samson去，终于一切顺利。</p>
+
+<p>办证的系统很强大，我第一次见识了二代身份证的高级功能。读卡器可以直接读取身份证里的相应信息，简化填申请表的过程。普通外借功能只需要一年100元押金即可，没有额外的收费。一次可以借5本书，还书的期限是4周。</p>
+
+<p>比较遗憾的是发现在衡山路附近的上图的外借馆非常小，可选的书相对也少。计算机类的书架大约有两个，这个数量和南图是差不多的，但是长度远远没有南图的长，就是说比起南图的外借馆这个规模实在是很可怜。除去一些初级的、质量较低的书，想要刨出理想的计算机图书还是很难的，考虑到这图书馆serve着如此大的一个城市，这也是很正常的，恐怕真要看准时机才能找到目标。</p>
+
+<p>幸运的是这次借到了一直没舍得买的《Unix编程艺术》，当时看到它躺在书架上时几乎是直接抢过来抓在手里的，生怕被别人捷足先登。另外找到一本Jolt获奖的《Code Quality》的译本，也是没翻先拿在手上再说。还有一本《空间数据库》是早先想买但是各大网站纷纷缺货的书，现在拿到有点物是人非的感觉。而另外一本CSS的书是拿回来用来放松的。</p>
+
+<p>临走的时候还拿了一本IBM郭士纳的自传，想来咱也曾经蓝过｜｜｜</p>
+
+<p>有意思的是借书的时候还被搭讪要名片。我就想起年初在南图借书的时候也有意无意地看周围的人手上拿的书，借此推断一个人的技术和背景。</p>
+
+<p>从上图坐1号线一站到常熟路换新开的7号线回张江还是非常方便的，可以避开人多的人民广场站。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -732,56 +780,6 @@ RFC中对Vary头是这样解释的：</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/11/20/groovy-http-builder-tips/">Groovy Http-builder Tips</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近用Groovy的HttpBuilder模块开发RESTful服务的客户端，遇到不少问题，浪费不少时间</p>
-
-<p>网上的例子都是从Grape开始的，但是按照例子上运行，无论是通过grape install还是在代码里@Grab都没有办法把http builder加到classpath里，甚至依赖关系已经下载到~/.groovy/grapes里了，但是还是在import的时候报错。用Grails的时候也是一样，如果通过ivy定义依赖，通过ant下载到lib目录中，在grails shell里还是没有办法引用。不理解了，难道还需要手动再指定path吗。最后用grails的rest插件（grails install-plugin rest）总算是下载到了path中了。</p>
-
-<p>第二是http builder的报错太智能了，它会把服务器端50x的报错输出在客户端。在查看错误的时候一定要分清楚。</p>
-
-<p>第三是net.sf.json-lib这个库在转json的时候有一点问题，比如这样的js对象
-<em>{&#8220;result&#8221;:&#8221;success&#8221;}</em></p>
-
-<p>会因为key上有引号而无法解析，必须是这样的格式：
-<em>{result: &#8220;success&#8221;}</em></p>
-
-<p>至于那种是正确的json我也没有兴趣了解了，只是非常遗憾的是couchdb返回的都是前一种形式。</p>
-
-<p>当然了，瑕不掩瑜，http builder还是提供了非常方便的封装，比直接用HttpURLConnection或是HttpClient更加Groovy</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/31/">&larr; Older</a>
@@ -803,6 +801,10 @@ RFC中对Vary头是这样解释的：</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -816,10 +818,6 @@ RFC中对Vary头是这样解释的：</p>
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

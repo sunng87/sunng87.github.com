@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。 增加文件打开数 第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。 &hellip;">
+  <meta name="description" content="写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。 其一是3月份写的 Mapzei，是Roman Nurik的live wallpaper Muzei的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T21:17:47+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。</p>
+
+<p>其一是3月份写的 <a href="https://play.google.com/store/apps/details?id=info.sunng.muzei.maps">Mapzei</a>，是<a href="https://plus.google.com/+RomanNurik/posts">Roman Nurik</a>的live wallpaper <a href="https://play.google.com/store/apps/details?id=net.nurik.roman.muzei">Muzei</a>的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。</p>
+
+<p>另一个是<a href="http://guancha.cn">观察者网</a>的<a href="https://play.google.com/store/apps/details?id=info.sunng.guanchazhe">客户端</a>，看新闻用。应用本身倒没有什么，用了一些典型的开源库：</p>
+
+<ul>
+<li>UniversalImageLoader</li>
+<li>SuperListView</li>
+<li>ButterKnife</li>
+<li>Eventbus</li>
+</ul>
+
+
+<p>另外这个应用还发布在了<a href="http://app.mi.com/detail/65794">小米商店</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -844,100 +894,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>the Problem</h3></p>
-
-<p>You have modularize your JavaScript project with requirejs. And you need a build tool for both development and deployment phases, helping you to organize, optimize the source code.</p>
-
-<p><h3>the Solution</h3></p>
-
-<p>Grunt has been the standard tool chain for web development. I used to think the grunt configuration file could be verbose and complicated, because the JavaScript world has never come up with a standard, even common, archetype (until yeoman, but it&#8217;s after Grunt). The projects are organized manually, or by some custom shell scripts. So grunt cannot take the advantage of &#8216;convention over configuration&#8217;, which Maven does well in the Java world.</p>
-
-<p>This idea was changed until I use Grunt seriously. Grunt configuration parser has excellent support for expressions of &#8216;path&#8217;. You can use wildcards like &#8216;src/*.js&#8217;, &#8216;src/**/*.js&#8217;, [&#8216;src/**/*.js&#8217;, &#8216;vendor/lib/*.js&#8217;] and even more &#8216;path&#8217; to find and match your files. You don&#8217;t have to write your script name one-by-one. I&#8217;m sure Grunt developers have lots of experience on JavaScript development so they know the problem.</p>
-
-<p>So I strongly recommend you to use Grunt to manage your JavaScript project, especially when it&#8217;s a large project.</p>
-
-<p>Assume you have your JavaScript sources in &#8216;src&#8217;, and the &#8216;src/main.js&#8217; is the entry point of your requirejs modules.</p>
-
-<p>The first step is to create a work directory for publishing your sources, say &#8216;public&#8217;, and also put your vendor scripts in &#8216;src/libs&#8217; Setup your first Grunt task, copy:dev. The <a href="https://github.com/gruntjs/grunt-contrib-copy">copy plugin</a> is one of the most used plugin for copying files. This will copy your source code from src/ to public/, as well as your vendor scripts.<br />
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">copy: </span><span class="p">{</span>
-</span><span class='line'>  <span class="nv">dev: </span><span class="p">{</span>
-</span><span class='line'>    <span class="nv">files: </span><span class="p">[</span>
-</span><span class='line'>      <span class="p">{</span><span class="nv">expand: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">src: </span><span class="p">[</span><span class="s">&#39;src/**/*.js&#39;</span><span class="p">],</span> <span class="nv">dest: </span><span class="s">&#39;public/js&#39;</span><span class="p">,</span> <span class="nv">filter: </span><span class="s">&#39;isFile&#39;</span><span class="p">}</span>
-</span><span class='line'>    <span class="p">]</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-<p>Then move your requirejs.config from html to your main.js. Require.js is able to read configuration after it loaded your entry script. This is of great helpful for optimized code.</p>
-
-<p>In development phase, you can have your static server over &#8216;public&#8217;. For deployment, you need to optimize the JavaScript code: concat and uglify. This can be done with r.js, which is developed by requirejs project. Grunt also has a plugin to integrate r.js, <a href="https://github.com/gruntjs/grunt-contrib-requirejs">grunt-contrib-requirejs</a>. r.js could concat all requirejs modules by analyzing their dependency tree. You need a simple config for that:<br />
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">requirejs</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">compile</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">baseUrl</span><span class="o">:</span> <span class="s2">&quot;src/&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">mainConfigFile</span><span class="o">:</span> <span class="s2">&quot;src/main.js&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">out</span><span class="o">:</span> <span class="s2">&quot;public/js/main.js&quot;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-</p>
-
-<p>The mainConfigFile is the JavaScript file contains requirejs.config. r.js can also parse it from a requirejs module. r.js will concat and uglify all your scripts, include vendor scripts in one file, output as &#8216;public/js/main.js&#8217;. With the same name of your entry point.</p>
-
-<p>With that, you don&#8217;t have to change any single line of js/html for switching between deployment and development. During development, requirejs loads JavaScript files on demand. While on the production, it loads main.js with all dependencies combined in.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -957,6 +913,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -970,10 +930,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>

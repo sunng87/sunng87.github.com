@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="由于一些众所周知的原因，一些链接仅仅是因为feedproxy.google.com这样的链接不能打开而无法访问（链接本身是可以访问的）。这个时候你需要Firefox插件：Artificial301。 本次更新的1.1版本，新增了“Reload With Artificial301”的选项。 &hellip;">
+  <meta name="description" content="Sound menu indicator was introduced in Ubuntu Maverick(10.10). User can control playback from this menu, and view current track information. The &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/11/28/exaile-sound-menu-integration/">Exaile Sound Menu Integration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-11-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://wiki.kubuntu.org/SoundMenu">Sound menu indicator</a> was introduced in Ubuntu Maverick(10.10).  User can control playback from this menu, and view current track information.</p>
+
+<p>The control is based on mpris spec 2.0, which is a common specification of controlling media player with dbus. To enable sound menu support, media player should implement mpris 2.0, and register itself with libindicate.</p>
+
+<p>So this week,  I have been working on an exaile plugin to support sound menu and finally got a workable version.</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5213528341/" title="Screenshot of exaile sound menu by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5004/5213528341_3587622fb5.jpg" width="500" height="313" alt="Screenshot of exaile sound menu" /></a></p>
+
+<p>The code repo can be found at github:
+<a href="https://github.com/sunng87/Exaile-Soundmenu-Indicator">https://github.com/sunng87/Exaile-Soundmenu-Indicator</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -520,42 +565,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/23/when-i-am-64/">When I Am 64</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5106315535/" title="DSC_0007 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1237/5106315535_07df2a88bc.jpg" width="500" height="335" alt="DSC_0007" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/19/">&larr; Older</a>
@@ -577,6 +586,10 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
@@ -590,10 +603,6 @@ awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
     
       <li class="post">
         <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
       </li>
     
   </ul>
