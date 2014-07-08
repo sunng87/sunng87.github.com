@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="今天又到苏州河附近拍，发现在四川路桥对面的邮政博物馆楼顶拍浦东效果甚佳，闹中取静。另外在河南中路和宁波路路口有一家小杨生煎店，人相对其他地方比较少。 最后一张景不错，不过拍得曝光过度了，处理了一下 ">
+  <meta name="description" content="Alexandra is a desktop book collection manager on gnome written in ruby. With an extensible architecture, Alexandria uses different sources to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/04/30/douban-provider-for-alexandria/">Douban Provider for Alexandria</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://alexandria.rubyforge.org/">Alexandra</a> is a desktop book collection manager on gnome written in ruby. With an extensible architecture, Alexandria uses different sources to retrieve book&#8217;s data, including Amazon and many local sites.</p>
+
+<p>Douban.com is considered to be most applicable data source for books published in Chinese. So I write this provider according to Alexandria&#8217;s SPI. Now it&#8217;s possible to add Chinese books and manage reading lists.</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4564768299/" title="alexandria by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4046/4564768299_f424dc2be9.jpg" width="500" height="388" alt="alexandria" /></a></p>
+
+<p>Now the code can be found in Alexandria&#8217;s bug tracker:
+<a href="http://rubyforge.org/tracker/index.php?func=detail&aid=28160&group_id=205&atid=865">http://rubyforge.org/tracker/index.php?func=detail&aid=28160&group_id=205&atid=865</a></p>
+
+<p>However, the patch file of book_providers.rb in that list is for svn trunk head version only. To use it with currently stable version of Ubuntu, first, make sure you have Alexandria version <strong>0.6.5-0ubuntu1</strong> and <strong>libjson-ruby1.8</strong> installed.</p>
+
+<p>Download douban.rb from rubyforge:
+<a href="http://rubyforge.org/tracker/download.php/205/865/28160/4923/douban.rb">http://rubyforge.org/tracker/download.php/205/865/28160/4923/douban.rb</a>
+Copy the file to /usr/lib/ruby/1.8/alexandria/book_providers/ with super user privileges.<br />
+Use this patch to /usr/lib/ruby/1.8/alexandria/book_providers.rb<br />
+[cc lang=&#8221;ruby&#8221;]<br />
+310a311,323
+<     begin
+<       begin
+<         require 'json'
+<       rescue LoadError
+<         require 'rubygems'
+<         require 'json'
+<       end
+<       require 'alexandria/book_providers/douban'
+<     rescue LoadError =< ex
+<       log.error{ex}
+<       log.warn {'Fail to load douban as provider'}
+<     end
+<<br />
+[/cc]</p>
+
+<p>Feel free to report issue here.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -519,58 +587,6 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/02/update/">Update</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-02T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>太忙了，真的太忙了，每天重复无数遍 mvn clean install -Dmaven.test.skip， 一不小心再遇上&#8221;cidaemon.exe&#8221;锁死文件无法删除，或者SVN报点Tree conflict，无法见证奇迹就只剩下悲剧了。都是重复的工作，但是在Windows下想做automation还是一筹莫展，比如要构建多个maven项目，也不知道怎么自动化地判断maven构建成功还是失败；再者在Windows里也不知道怎么自动化的scp文件到服务器上去，还要ssh执行重启服务的命令；手足无措啊。</p>
-
-<p>最严重的问题是每天忙的要命，但是并没有感觉有应有的收获或者长进什么的，折腾了半天做的事情还是自己熟悉的小方面，只是做得相对变态而已。每天新的情况让你根本来不及重构，而且严重的问题是，重构好了又有什么用呢，谁能想到后面又有什么变化把你自己引以为豪的设计通通推翻。程序员要考虑的事情太多了，常常要揣摩一些需求方的心思，偷偷摸摸地提前做一些准备。</p>
-
-<p>我现在已经有了一个annotation driven的自动暴露Java接口的框架。之前在CRL实习时，在Jazz上开发也是用一个类似的机制，当时是使用接口的命名规范来确定暴露，比如说有以get和post开头的接口都暴露为HTTP服务，就有很多类似postUpdate、postAdd之类的名字，昨天同事说这个名字太诡异。后来参考了淘宝Open平台的实现，通通的XML描述接口，服务名、方法名、参数名、约束通通写XML配置，我懒，也放弃这个方案了。最后选择用annotation，通过反射解析Java接口，实现的效果和前两者差不多，自认为相对名称的约定要灵活一些，相对无数XML描述符要简洁一些。</p>
-
-<p>后来还为方法的每一步调用都加上监听器，每一个环节都可以注册外部自定义的监听器，所有的核心功能之外的需求都放到自定义的监听器里处理，和框架核心剥离。</p>
-
-<p>再者，框架原本直接序列化接口返回的对象，后来需求有变，要加各种各样的包装。OK，弄一个WrapperFacotry的接口出去，想怎么搞也放到框架核心之外了。Spring的@Authwire(required=false)真是解决了许多问题，在实现InitializingBean初始化一个默认实现就可以了，这样在applicationContext里可以轻松控制外部功能。</p>
-
-<p>还有的发现，序列化的框架分别用的是castor和jackson，结果做profile的时候一比吓一跳，jackson序列话的时间占整个调用的20%，castor的就占到50%了，太可怕了，恐怕要试试其他实现了。</p>
-
-<p>细节扯多了，其实框架的核心都是一天写成的，后面加各种各样的功能花了很大精力。</p>
-
-<p>最近升级到UBuntu10.04已经可以见证奇迹了，眼看着Bug越来越少，之前启动打在tty1上的ureadahead错误日志现在也隐藏了。一切趋于完美，新indicator菜单很好用。</p>
-
-<p>清明回家，下午的火车。因为回家周一不能加班了，少了3倍的工资，悲凉啊。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/26/">&larr; Older</a>
@@ -592,6 +608,10 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -605,10 +625,6 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

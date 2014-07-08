@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="最近用Groovy的HttpBuilder模块开发RESTful服务的客户端，遇到不少问题，浪费不少时间 网上的例子都是从Grape开始的，但是按照例子上运行，无论是通过grape install还是在代码里@Grab都没有办法把http builder加到classpath里， &hellip;">
+  <meta name="description" content="The Exaile plugin &#8220;Douban Covers&#8221; has been upgraded to 0.0.2. Now there is a new preference pane inside exaile preference dialog. This &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/22/exaile-doubancovers-upgrades/">Exaile-DoubanCover 0.0.2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Exaile plugin &#8220;Douban Covers&#8221; has been upgraded to 0.0.2. Now there is a new preference pane inside exaile preference dialog. This update provides you an optional choice to specify your own apikey when access douban.com open api. With an apikey, your request frequency will be raised to 40 times per minute.</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2727/4124219684_c93af1dd03.jpg" alt="" width="500" height="414" /></p>
+
+<p>Again, you can get the plugin from:
+<a href="http://bitbucket.org/sunng/exailedoubancovers/downloads/">http://bitbucket.org/sunng/exailedoubancovers/downloads</a>/</p>
+
+<p>Grab source with mercurial:
+<em>hg close http://bitbucket.org/sunng/exailedoubancovers/</em></p>
+
+<p>Also, exaile-cn has its first 0.3.0-compatible version released early today. As a part of Exaile-cn, Exaile-Doubancovers <strong>0.0.1</strong> has been packaged into the public release for the first time. Find the project at: <a href="http://code.google.com/p/exaile-cn/">http://code.google.com/p/exaile-cn/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -528,58 +574,6 @@ To check the result, click menu item at once (no restart or logout needed), agai
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/24/yan-captcha-service/">Yan Captcha Service</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;d like to announce my recent works, a project called Yan Captcha Service written in Java which is aimed to provide whole solutions of captcha for your websites. It will be very easy to use the service because 1. interfaces are based on plain http url; 2. different kinds of usage are supported to fit your requirements; 3. the architecture is open so you can add your own solid implementation of captcha; 4. less coupling with your system. And designed for scalability, currently, it applies JGroups to share sessions (memcached support will be added soon), thus you can setup a cluster for the service.</p>
-
-<p>As you may know, the open-source project is split from my current work-time project because it is more closed to my idea. However, soon we will have the product opened to our thousands (millions ?) of users. I can gain feedback from the challenge and improve the open-source edition.</p>
-
-<p>The code is maintained by open-source scm, mercurial (also known as hg). The project is now hosted on <a href="http://bitbucket.org/sunng/yan/">bitbucket.org</a>. You can clone the code to local via:
-<em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
-
-<p>To build the project, run this command in root of project directory:
-<em>mvn install</em></p>
-
-<p>To run in a develop environment:
-<em>mvn jetty:run</em></p>
-
-<p><a href="http://bitbucket.org/sunng/yan/issues/?status=new&amp;status=open" target="_blank">Issue reporting</a> and patches are always welcomed.</p>
-
-<p>Check the wiki pages for more information about the project:
-<a href="http://bitbucket.org/sunng/yan/wiki/Home">http://bitbucket.org/sunng/yan/wiki/Home</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/32/">&larr; Older</a>
@@ -601,6 +595,10 @@ To check the result, click menu item at once (no restart or logout needed), agai
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -614,10 +612,6 @@ To check the result, click menu item at once (no restart or logout needed), agai
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

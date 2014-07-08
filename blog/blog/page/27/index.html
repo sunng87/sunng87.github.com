@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="大年初一翻旧物，找到一些让人颇有感触的旧物件。2004年买的RH9，2005年夏天买的Fedora 4。前者至今还安装在我家最旧的电脑里，虽然我都忘了它的样子了。 包装 手册 CDs 这个代理商里仁软件似乎已经倒闭了。
-">
+  <meta name="description" content="Ubuntu仓库里有个weather-util包，可以用来查看天气信息。weather工具从weather.noaa.gov网站获得天气信息，对美国的城市可以直接用名字查询，其他国家只能使用id查询。id的规则和weather.com不太相同。 中国的天气站点id可以在这个页面上查到。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/18/using-weather/">Using Weather</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ubuntu仓库里有个weather-util包，可以用来查看天气信息。weather工具从weather.noaa.gov网站获得天气信息，对美国的城市可以直接用名字查询，其他国家只能使用id查询。id的规则和weather.com不太相同。</p>
+
+<p>中国的天气站点id可以在<a href="http://weather.noaa.gov/weather/CN_cc.html">这个页面</a>上查到。比如南京ZSNJ，上海浦东ZSPD。使用weather工具查询：
+<em>weather -i ZSNJ</em>
+<blockquote>Current conditions at China (ZSNJ) 32-00N 118-48E 12M (ZSNJ)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 59%<br />
+   Wind: from the SSW (210 degrees) at 4 MPH (4 KT)</blockquote></p>
+
+<p>简化操作，可以在$HOME下创建.weatherrc文件，形如<br />
+[cc lang=&#8221;ini&#8221;]<br />
+[default]<br />
+ID = ZSPD<br />
+[nj]<br />
+ID = ZSNJ<br />
+[/cc]</p>
+
+<p>就可以直接使用
+<em>weather</em>
+<blockquote>
+Current conditions at China (ZSPD) 31-07N 121-46E (ZSPD)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 47%<br />
+   Wind: from the NE (050 degrees) at 7 MPH (6 KT) (direction variable)
+</blockquote>
+和
+<em>weather nj</em>
+<blockquote>Current conditions at China (ZSNJ) 32-00N 118-48E 12M (ZSNJ)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 59%<br />
+   Wind: from the SSW (210 degrees) at 4 MPH (4 KT)</blockquote></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -647,51 +715,6 @@ index PATH_TO_INDEX<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/02/03/%E5%BE%88%E5%B1%B1%E5%AF%A8/">很山寨</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>经常访问<a href="http://www.gnu.org" target="_blank">GNU</a>的网站你会发现一些很神奇的东西，比如<a href="http://http://www.gnewsense.org/" target="_blank">gNewSense</a>，又比如最新的：
-<a title="IceCat by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4326991719/"><img src="http://farm5.static.flickr.com/4009/4326991719_a5253581dc_o.png" alt="IceCat" width="306" height="482" /></a></p>
-
-<p>怎么样，够震撼啊，<a href="http://www.gnu.org/software/gnuzilla/" target="_blank">GNUzilla</a>套件里的第一个发布，IceCat。IceCat是嘛？你知道Firefox吧，那拉开冰箱门，把Firefox塞进去，带上冰箱门，嗯，那就是IceCat了。当然是开玩笑了，GNU IceCat is the GNU version of the Firefox browser.  Its main advantage is an ethical one: it is entirely <a href="http://www.gnu.org/philosophy/free-sw.html">free software</a>.</p>
-
-<p>现在已经可以在Ubuntu中使用这个病猫，哦不，冰猫了：</p>
-
-<p><em>sudo add-apt-repository ppa:gnuzilla-team/ppa<br />
-sudo apt-get update<br />
-sudo apt-get install icecat</em></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/28/">&larr; Older</a>
@@ -713,6 +736,10 @@ sudo apt-get install icecat</em></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -726,10 +753,6 @@ sudo apt-get install icecat</em></p>
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

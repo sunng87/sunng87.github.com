@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Recently, the leiningen team has released a preview version for leiningen 2. It brings new features to the clojure build tool. But my favorite one is &hellip;">
+  <meta name="description" content="WebWorker的路径通常是写在代码源文件中，而且这个路径并非其相对父js文件的相对路径，而似乎是相对页面的路径。所以指定一个正确的可随处部署的路径变得有些麻烦。昨天有人给HeatCanvas提了这个问题我才想到上网搜索了一下，有一个还算挺不错的办法。 写一个getPath函数， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2012/03/22/%E4%B8%BAwebworker%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE%E7%9A%84%E8%B7%AF%E5%BE%84/">为WebWorker设置正确的路径</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>WebWorker的路径通常是写在代码源文件中，而且这个路径并非其相对父js文件的相对路径，而似乎是相对页面的路径。所以指定一个正确的可随处部署的路径变得有些麻烦。昨天有人给HeatCanvas提了这个问题我才想到上网搜索了一下，有一个还算挺不错的办法。</p>
+
+<p>写一个getPath函数，从document里找到父js的路径，拼到Worker的名字上。对heatcanvas.js这个文件来说就是：</p>
+
+<p>[cc lang=&#8221;javascript&#8221;]<br />
+HeatCanvas.getPath = function() {<br />
+    var scriptTags = document.getElementsByTagName(&#8220;script&#8221;);<br />
+    for (var i=0; i<scriptTags.length; i++) {<br />
+        var src = scriptTags[i].src;<br />
+        var pos = src.indexOf(&#8220;heatcanvas.js&#8221;);<br />
+        if (pos > 0) {<br />
+            return src.substring(0, pos);<br />
+        }<br />
+    }<br />
+    return &#8220;&#8221;;<br />
+};<br />
+[/cc]</p>
+
+<p>因此现在HeatCanvas已经解决了这个路径问题，现在这个库应该更好用了。当然如果你改了我的文件名我就无话可说了。
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -665,46 +720,6 @@ pyclj: 1.19659209251</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/">China Clojurians Meetup #2 Is Calling You</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击<a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">这里</a>报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。</p>
-
-<p>For English readers:<br />
-If you are interested in Clojure and also living in Beijing, feel free to join our meetup. Please register <a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">here</a>. We will see you there!
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/6/">&larr; Older</a>
@@ -726,6 +741,10 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -739,10 +758,6 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

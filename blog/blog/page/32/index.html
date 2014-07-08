@@ -9,10 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="项目的下一阶段，需要做一些数据展现方面的工作，处于对Adobe产品的抵触情绪，我个人还是倾向于用JavaScript来完成。今天找了几个画Chart的库，比较一下功能和编程接口的使用，为接下来的开发做一些准备。
-dojox.charting
-(BSD License)
-没什么悬念， &hellip;">
+  <meta name="description" content="I&#8217;d like to announce my recent works, a project called Yan Captcha Service written in Java which is aimed to provide whole solutions of captcha &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,58 @@ dojox.charting
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/24/yan-captcha-service/">Yan Captcha Service</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&#8217;d like to announce my recent works, a project called Yan Captcha Service written in Java which is aimed to provide whole solutions of captcha for your websites. It will be very easy to use the service because 1. interfaces are based on plain http url; 2. different kinds of usage are supported to fit your requirements; 3. the architecture is open so you can add your own solid implementation of captcha; 4. less coupling with your system. And designed for scalability, currently, it applies JGroups to share sessions (memcached support will be added soon), thus you can setup a cluster for the service.</p>
+
+<p>As you may know, the open-source project is split from my current work-time project because it is more closed to my idea. However, soon we will have the product opened to our thousands (millions ?) of users. I can gain feedback from the challenge and improve the open-source edition.</p>
+
+<p>The code is maintained by open-source scm, mercurial (also known as hg). The project is now hosted on <a href="http://bitbucket.org/sunng/yan/">bitbucket.org</a>. You can clone the code to local via:
+<em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
+
+<p>To build the project, run this command in root of project directory:
+<em>mvn install</em></p>
+
+<p>To run in a develop environment:
+<em>mvn jetty:run</em></p>
+
+<p><a href="http://bitbucket.org/sunng/yan/issues/?status=new&amp;status=open" target="_blank">Issue reporting</a> and patches are always welcomed.</p>
+
+<p>Check the wiki pages for more information about the project:
+<a href="http://bitbucket.org/sunng/yan/wiki/Home">http://bitbucket.org/sunng/yan/wiki/Home</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -815,45 +864,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/10/%E6%8E%A5%E5%8F%97%E5%8F%82%E8%A7%82%EF%BC%8C%E6%AC%A2%E8%BF%8E%E7%95%99%E8%A8%80/">接受参观，欢迎留言</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="alignnone" src="http://farm4.static.flickr.com/3448/3997603627_6b2ce9be05.jpg" alt="" width="500" height="333" /></div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/blog/2009/10/10/%E6%8E%A5%E5%8F%97%E5%8F%82%E8%A7%82%EF%BC%8C%E6%AC%A2%E8%BF%8E%E7%95%99%E8%A8%80/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
@@ -875,6 +885,10 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -888,10 +902,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

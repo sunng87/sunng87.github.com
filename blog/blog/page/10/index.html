@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="最近没有什么特别值得一提的事情，或者说都还在进行中还没有到值得一提的时候。 中秋节休息之后的第一天清早去驾校考交规理论，这个事没什么可说的，除了在4sq上又拓展了一点疆土，后来我又后悔没把GPS带着错过了一些还没有数据的道路。倒是那天去和回分别坐错了车，想十年前本人对城市交通网络了然于胸， &hellip;">
+  <meta name="description" content="没错我开始用Emacs了！对于一个使用lisp方言的开发的人来说，Emacs无疑是正统，是professional的象征。 其实用Emacs，远不需要太多的配置，就可以创建一个高效率的开发环境。我用了两天不到时间，当然还包括过去三年甚至更长时间里多次试图学习Emacs并最终半途而废残存的精力。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,103 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/19/beginning-emacs-for-clojure/">Beginning Emacs for Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>没错我开始用Emacs了！对于一个使用lisp方言的开发的人来说，Emacs无疑是正统，是professional的象征。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6162700542/" title="Screenshot--home-sun-projects-clojalk-src-clojalk-wal.clj by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6172/6162700542_50be6d256f.jpg" width="500" height="303" alt="Screenshot--home-sun-projects-clojalk-src-clojalk-wal.clj" /></a></p>
+
+<p>其实用Emacs，远不需要太多的配置，就可以创建一个高效率的开发环境。我用了两天不到时间，当然还包括过去三年甚至更长时间里多次试图学习Emacs并最终半途而废残存的精力。</p>
+
+<p>一步一步来，fedora系统的用户，比如<a href="http://superuser.com/questions/242587/install-gnu-emacs-gui-in-fedora">这位</a>，还有我，都会奇怪，命名有emacs，可是为什么没有GUI呢。因为系统自带的只是一个简单的版本，用yum安装一下emacs这个包才算是真正完整。</p>
+
+<p>接下来要跳关了，大家注意。<a href="https://github.com/technomancy/emacs-starter-kit">Emacs-starter-kit</a>是一个帮助初学者预先配置emacs的一套默认配置文件，有了这个配置文件，也算是爬上了巨人的肩膀，省去了很多探路的时间。安装方式，把这个git仓库的master分支打包下载到~/.emacs.d/里即可（展开到这个目录）。启动emacs后，会自动安装。（作者名字很熟悉，对了，就是leiningen的作者）</p>
+
+<p>由于package.el已经配置好了，接下来就可以安装一些必要的mode，两天的时间初探，我安装了：
+<ul>
+	<li>clojure-mode</li>
+	<li>clojurescript-mode</li>
+	<li>auto-complete</li>
+	<li>color-theme-tangotango</li>
+	<li>slime</li>
+	<li>slime-repl</li>
+</ul></p>
+
+<p>安装方式：<br />
+M-x package-install<br />
+输入包名即可。</p>
+
+<p>clojure-mode和clojurescript-mode是编辑clojure的mode，不多说。</p>
+
+<p><h4>配色</h4>
+color-theme我本来是习惯用solarized，不过尝试了几次color-theme-solarized这个包应该是有一些问题。退而选择了tangotango。要默认选择这个颜色，在init.el里加：<br />
+[cc lang=&#8221;lisp&#8221;]<br />
+(require &#8216;color-theme-tangotango)<br />
+(color-theme-tangotango)<br />
+[/cc]</p>
+
+<p><h4>代码提示</h4>
+auto-complete是代码提示和自动补全插件，安装完成后要简单配置一下才能使用：<br />
+[cc lang=&#8221;lisp&#8221;]<br />
+(require &#8216;auto-complete-config)<br />
+(add-to-list &#8216;ac-dictionary-directories &#8220;~/.emacs.d/elpa/auto-complete-1.4.20110207/dict/&#8221;)<br />
+(ac-config-default)<br />
+[/cc]<br />
+当然网上有更多的高级配置，可以搜一下。</p>
+
+<p><h4>REPL</h4>
+clojure的IDE必须要有repl的支持，在emacs中，repl通过slime这个mode来实现。此外还要额外安装swank：
+<em>lein plugin install swank-clojure 1.3.2</em>
+在项目目录通过<em>lein swank</em>启动。在emacs中：
+<em>M-x slime-connect</em>
+选择swank启动的host和port即可。这是一个支持tab提示的强大REPL，并且可以引用lein项目中的代码。</p>
+
+<p>Edit/20110920<br />
+其实只需要在clojure-mode中通过M-x clojure-jack-in 即可启动swank和slime。</p>
+
+<p><h4>ParEdit</h4>
+ParEdit是编辑括号的利器，Emacs-Starter-Kit已经把这个包配置好了。ParEdit不仅会自动打印括号，最强大的是还能阻止用户误删或误输入括号！有了它基本上括号的问题就轻松多了。<br />
+（当然，有时候需要强制删掉括号<em>C-u DEL</em>，也可能要强制输入括号<em>C-q (</em>或<em>C-q )</em>）</p>
+
+<p><h4>TagList</h4>
+很遗憾ctags不支持clojure，而且emacs似乎也没有一个比较好的TagList。我看到有人提到imenu在一定程度上倒是可以做到类似的功能：
+<em>M-x imenu<tab><tab /></tab></em></p>
+
+<p>总得来说，捅破了窗户纸，用emacs编辑clojure还是最好的选择！
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -555,80 +652,6 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/08/05/using-google-closure-library-with-clojurescript/">Using Google Closure Library With ClojureScript</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Google closure library is shipped with ClojureScript, and could be compiled with ClojureScript into a minimized javascript file. So closure library is doubtlessly the first candidate when you are considering to use an external Javascript library in your cljs browser application.</p>
-
-<p>However, different from clojure&#8217;s interoperability with Java, ClojureScript has its own characteristics when you are interoperating with JavaScript and JavaScript based libraries.</p>
-
-<p><strong>Clojure types are not fully compatible with JavaScript types</strong>
-In ClojureScript, you can never treat a Clojure map as a JavaScript object although they have similar characteristics. You have to do some conversion before passing a clojure map to javascript functions. Matthew Gilliard made <a href="https://gist.github.com/1098417#file_ajax.cljs" target="_blank">a sample</a> of such conversion.</p>
-
-<p><strong>JavaScript package is not Clojure namespace</strong>
-This could be a common mistake for ClojureScript newbie. Actually, JavaScript doesn&#8217;t have concept of &#8220;Package&#8221; or &#8220;Namespace&#8221;. Many JavaScript libraries(dojo, Google Closure) made enhancement on this. ClojureScript also takes advantage of this mechanism. So before you start to coding with closure, you may browse <a href="http://closure-library.googlecode.com/svn/docs/index.html" target="_blank">closure library API document</a>, and find a module called <em>goog.net</em> which includes lots of types. Then you write this:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns myjs<br />
-  (:require [goog.net :as gnet]))<br />
-[/cc]</p>
-
-<p>But compiler shows you &#8220;ERROR: JSC_MISSING_PROVIDE_ERROR. required &#8220;goog.net&#8221; namespace never<br />
-provided at &#8230; &#8220;. This is not a PATH issue. The root cause is that closure module has a lower granularity than Clojure ones. Types are often contained in their own modules. You can find closure source code in <em>clojurescript/closure/library/closure</em>. Modules are declare with <em>goog.provide</em> function. Thus, you should require this name instead of the logical module name.<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns myjs<br />
-  (:require [goog.net.XhrIo :as gxhr]))<br />
-[/cc]</p>
-
-<p>In addition, ClojureScript does not support &#8216;use&#8217;.</p>
-
-<p><strong>Just use full name for JavaScript class</strong>
-For functions contains in some module, you can refer it with the clojure way:<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns myjs<br />
-  (:require [goog.dom :as dom]))<br />
-(dom/$ &#8220;element-id&#8221;)<br />
-[/cc]</p>
-
-<p>But for classes, just use the full name and ignore the module alias.<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(ns myjs<br />
-  (:require [goog.net.XhrIo :as gxhr]))<br />
-(def xhr (goog.net.XhrIo.))<br />
-[/cc]</p>
-
-<p>These are basic tips before you start using Closure with ClojureScript. Leveraging on Google&#8217;s closure library, you can create cross-browser JavaScript application with Clojure easily.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -650,6 +673,10 @@ For functions contains in some module, you can refer it with the clojure way:<br
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -663,10 +690,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

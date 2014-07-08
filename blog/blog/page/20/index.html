@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Redis的几个核心数据结构定义在redis.h和dict.h中。Redis服务器总的数据结构里的根节点是redisServer，下面包含一个redisDb结构数组。数组的大小定义在redis.conf中的databases项，客户端可以通过select命令选择相应的DB。 &hellip;">
+  <meta name="description" content="Now it&#8217;s possible to use Gwibber as a desktop Douban. Setup a douban client in the account dialog: Authorize Gwibber to access private data on &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/05/douban-on-gwibber/">Douban on Gwibber</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Now it&#8217;s possible to use Gwibber as a desktop Douban.</p>
+
+<p>Setup a douban client in the account dialog:
+<a href="http://www.flickr.com/photos/40741608@N08/5053311735/" title="GwibberDoubanSetup by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4130/5053311735_5fc69747a5.jpg" width="500" height="259" alt="GwibberDoubanSetup" /></a></p>
+
+<p>Authorize Gwibber to access private data on Douban (OAuth):
+<a href="http://www.flickr.com/photos/40741608@N08/5053311377/" title="DoubanOAuthAuthorize by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4147/5053311377_43b0a4788e.jpg" width="500" height="394" alt="DoubanOAuthAuthorize" /></a></p>
+
+<p>Display Douban activities on Gwibber timeline:
+<a href="http://www.flickr.com/photos/40741608@N08/5053311635/" title="GwibberDouban by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4103/5053311635_ab6716100b.jpg" width="422" height="500" alt="GwibberDouban" /></a></p>
+
+<p>The code has been uploaded to bitbucket:
+<a href="https://bitbucket.org/sunng/gwibber-douban/overview">https://bitbucket.org/sunng/gwibber-douban/overview</a></p>
+
+<p>I am currently working on an installation script.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -665,63 +715,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/09/06/upgraded-to-maverick-meerkat/">Upgraded to Maverick Meerkat</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上周Ubuntu 10.10 Maverick Meerkat beta发布了，本人向来是在Beta版发布的时候更新，然后经历一个月的黑白颠倒最终走向光明走向stable。因为我安装的规模有点大，这次升级总共要下载两千八百多个包，花了我两天的时间。</p>
-
-<p>升级到Meerkat后，由于内核版本变成了2.6.35，原先ath5k网卡的驱动madwifi不能用了。这点一定要有心理准备，好在madwifi已经有了针对2.6.35的分支。可以从madwifi-project网站上下载：
-<a href="http://snapshots.madwifi-project.org/madwifi-0.9.4-current.tar.gz">http://snapshots.madwifi-project.org/madwifi-0.9.4-current.tar.gz</a>
-然后您可以根据UserGuide上的步骤进行操作：
-<a href="http://madwifi-project.org/wiki/UserDocs/FirstTimeHowTo">http://madwifi-project.org/wiki/UserDocs/FirstTimeHowTo</a>
-话说我升级了网卡驱动之后无线网路稳定性、速度都有了很明显的提升，对一个饱受无线掉线折磨的人来说，这个太重要了。（我先前使用的驱动是 madwifi-hal-0.10.5.6-r4119）</p>
-
-<p>其他变化包括：
-<ul>
-	<li>主题多了橙色元素</li>
-<li>indicator applet增加了几个新的图标</li>
-<li>tracker applet可以显示出来了 -_-|||</li>
-<li>Evolution 2.30 工具栏有点变化</li>
-<li>UpdateManager UI有点变化</li>
-<li>多了一个Input Method Switch的图形界面设置</li>
-<li>Indicator多了network manager</li>
-</ul></p>
-
-<p>其他更新还要慢慢体会，不过总得来说这次10.10更新不多，恐怕也和GNOME3跳票有关吧。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/21/">&larr; Older</a>
@@ -743,6 +736,10 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -756,10 +753,6 @@ redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.i
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

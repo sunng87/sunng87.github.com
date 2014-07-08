@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。 其一是3月份写的 Mapzei，是Roman Nurik的live wallpaper Muzei的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 &hellip;">
+  <meta name="description" content="Microservice has been a hot new concept in these days. Martin Fowler defined microservice in this article. From me, microservice is a set of fine- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-08T22:12:52+08:00" pubdate data-updated="true">Jul 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler defined microservice <a href="martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
+
+<p>It&rsquo;s a new concept in enterprise architecture, since the last movement in the field promotes SOA architecture. SOA encourages architects to componentize their business logic in service, and deploy service bus(ESB) for integration. Microservice can be more concrete and light-weighted. The service units in Microservice can be any standalone function, or just a tier in traditional tier based development. These units can be deployed on dedicate process or grouped into a process.</p>
+
+<p>In clojure development at <a href="https://avoscloud.com">avoscloud</a>, we are using the <a href="https://github.com/sunng87/slacker-cluster">slacker cluster framework</a> for our microsrvice architecture.</p>
+
+<p><a href="https://github.com/sunng87/slacker">Slacker RPC</a> exposes services as  clojure namespace (pretty light-weighted) All functions in the namespace can be called from remote. A slacker server can expose any number of namespaces:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">start-slacker-server</span> <span class="mi">2014</span> <span class="p">[</span><span class="nv">my.serviceA</span> <span class="nv">my.serviceB</span> <span class="nv">...</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Slacker uses a binary protocol on TCP and configurable serialization (json/edn/<a href="https://github.com/ptaoussanis/nippy">nippy</a>) for communication, which is fast and compact.</p>
+
+<p>And in slacker cluster, exposed namespaces are registered on zookeeper as ephemeral nodes. The client doesn&rsquo;t have to know which service is deployed on which process. Instead, it connects to zookeeper and look up all process address for service it interests in.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">sc</span> <span class="p">(</span><span class="nf">clustered-slacker-client</span> <span class="nv">zk-addr</span> <span class="nv">...</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="ss">&#39;sc</span> <span class="nv">my.serviceA/fn-abc</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;when calling remote function for the first time, the client will look up zookeeper for remote processes and cache the results</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fn-abc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If there are more than one process available, the client library will balance the load on each process. And for stateful service, slacker cluster also elects master node to ensure all requests go to single process. (<a href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker cluster grouping</a>)</p>
+
+<p>Zookeeper directory structure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/</span>
+</span><span class='line'><span class="p">[</span><span class="nv">my.serviceA</span>, <span class="nv">my.serviceB</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/my.serviceA</span>
+</span><span class='line'><span class="p">[</span><span class="mf">192.168</span><span class="nv">.1.100</span><span class="ss">:2104</span>, <span class="mf">192.168</span><span class="nv">.1.101</span><span class="ss">:2014...</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Decoupling processes and services made microservice deployment quite flexible. Functional namespaces can be deployed on any process, standalone or grouped together, like Martin Fowler&rsquo;s chart <a href="http://martinfowler.com/articles/microservices/images/sketch.png">shows</a>.</p>
+
+<p>All these nodes are also watched by clients. If a process crashed or put offline, the clients will get notified by zookeeper, then no requests will be made on that process. Also, when you exhausted service capacity, just simply put on another process, the client will soon balance load to the new node. Scaling services is easy like that.</p>
+
+<p>Thanks to zookeeper&rsquo;s watch mechanism, there&rsquo;s no need to configure service static and update while you add/remove nodes. This is especially important in large-scale deployment. (Since microservices are often find-grained, you will always have a lot of process to update/restart.)</p>
+
+<p>For more example about Slacker Cluster, <a href="https://github.com/sunng87/slacker-cluster">check my code repository</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -850,50 +939,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-16T21:33:00+08:00" pubdate data-updated="true">Jul 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一不小心工作四年了，四年意味着，工作的时间都超过了上大学的时间。当然这也不能说明什么，接下来还会更快地超过上高中的时间。这些年来，我越来越喜欢把22岁大学毕业作为一个中点，对称着看。往后多少年是什么样，往前多少年又是什么样。这两个样子往往存在这因果关系，离中点近的直接，离中点远的深刻。</p>
-
-<p>我很发愁给自己列计划，所以也不知道当时毕业的时候想的现在，应该是个什么摸样。反正就我照镜子的感受来说，应该没变老。这并不是说保养得好，主要是因为我第一天上班就有人问我是不是来领实习生。而最近都已经有些不开眼的妈妈跟自己的孩子说，还不快谢谢哥哥让座。</p>
-
-<p>工作了四年，四家公司，三个城市，这段说起来太沧桑坎坷，就不提了。前段时间看到某个微薄名人说刚毕业几年，应该多闯几个行业，有好处。我虽然是一直敲键盘写代码，但是也辗转了不同的软件行业。以前以为没有区别，实际上一圈下来最后回到互联网行业里，才知道这大不同，不同到甚至同是程序员你们站在一起一样可能找不到哪怕一个共同话题。互联网行业的节奏快，创新多，年轻人在其中学习的空间最大。</p>
-
-<p>另外我特别认可自己当初下了决定来AVOS。工作的第四年，是完完整整在这里，有机会有舞台面对挑战。我们上线了<a href="http://readwise.net/">美味爱读</a>，现在团队紧张地为<a href="https://delicious.com">Delicious</a>添砖加瓦。6年前我注册这个书签网站的时候，是无论如何想不到今天在上面做修改的人是自己。也就是这样的机会，最为吸引人。</p>
-
-<p>无论是公司，还是我们团队，还是我自己，现在还没有到盘点成绩的时候。希望明年夏天再回顾的时候，能有更多的收获。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -913,6 +958,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -926,10 +975,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

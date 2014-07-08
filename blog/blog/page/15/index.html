@@ -9,11 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="新版本的Exaile豆瓣电台插件。这个版本的变更： 新增分享菜单，分享当前音轨到豆瓣、新浪、开心001、人人
-改进了推荐方式，采用豆瓣电台的永久链接
-修改了0.0.8以来存在的登录bug
-修改了0.0.8以来存在的加载播放列表bug 从github获得新版本：
-https://github.com &hellip;">
+  <meta name="description" content="多少年没写Update体了，看Samson的Update Series都到了53了，咱就只好来这么个标题了。 头等大事，officially announce 一下艰难决定，经过慎重考虑我决定离开上海了。从09年3月第一次到上海到张江，现在整好两年的时间。一方面是获得了大城市的工作机会， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,50 @@ https://github.com &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/03/24/update-new-random-nextint/">&#8220;Update ${new Random().nextInt()}&#8221;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>多少年没写Update体了，看Samson的Update Series都到了53了，咱就只好来这么个标题了。</p>
+
+<p><ol>
+<li>头等大事，officially announce 一下艰难决定，经过慎重考虑我决定离开上海了。从09年3月第一次到上海到张江，现在整好两年的时间。一方面是获得了大城市的工作机会，另一方面也被在这里边缘的生活闹够了。于是这个悲喜交加的本命年春天决定告老还乡卸甲归田，过没有追求没有房东的土著生活。</li>
+<li>雁过留声踏雪留痕，我在晨晖路1001号半年最大的影响就是让这里又多了两个kindle用户，其他嘛，惭愧了。。。</li>
+<li>要说在上海有什么舍不得的话，就是这里的朋友了，同学同事真不少。有一起干活的，有一起吃饭的，有一起听歌的，各种都有，回了南京就没有这种条件了。不过其实大家在上海很忙一个月也聚不上一回，这么想的话没什么区别，赶上什么RubyConf之类的就又过来了，给沪宁线作贡献是咱的宿命。（话说今年的这些会什么时候开啊，我夏天的衣服还没有攒够呢）</li>
+<li>新赛季中超3号就揭幕了，今年舜天队的比赛可能连电视转播都没有了，你说不回南京能行吗！！能行吗！！从96年开始，今年就是第16年了。</li>
+<li>本来想说最近一两个月荒废得厉害，我回家以后要怎么怎么的，在这还是改为此处省去多少多少字吧。。。</li>
+</ol></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -586,66 +626,6 @@ pprint.pprint(results)<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/02/14/pgpoolii%E7%9A%84%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD/">pgpoolII的管理功能</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-02-14T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>pgpool是postgresql的中间件，他的主要功能包括：
-<ul>
-<li>Connection Pooling 连接池</li>
-<li>Replication 双写</li>
-<li>Load Balance 负载均衡</li>
-<li>Limiting Exceeding Connections 连接限制</li>
-<li>Parallel Query 并行查询</li>
-</ul></p>
-
-<p>除此以外，pgpool还提供了对数据库节点的健康检查功能，自动fail over。</p>
-
-<p>对pgpool的管理，pgpool本身除了工作端口（默认5433）以外，还开放一个pcp端口9898，类似FTP的控制端口。通过pcp端口可以获取pgpool的运行时信息，也可以进行运行时的操作。这些功能罗列在：<br />
-http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#reference</p>
-
-<p>封装这些命令的二进制文件也随着pgpool发行，由于是通过网络通信，所以并不要求这些工具与pgpool安装在同一台机器上。</p>
-
-<p>除此以外，为了用户友好，pgpool还有一个具有UI的用户管理工具。这个工具的功能包括：
-<ul>
-<li>系统信息，主要是pcp的信息</li>
-<li>配置文件编辑，这个功能似乎要求pgpooladmin和pgpool安装在一台机器上以便直接都写配置文件</li>
-<li>切分规则编辑</li>
-</ul></p>
-
-<p>另外，pgpool还通过一些自定义的SQL语句允许用户从工作端口提取一些配置信息和运行时信息：<br />
-http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#show-commands</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/16/">&larr; Older</a>
@@ -667,6 +647,10 @@ http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#show-commands
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -680,10 +664,6 @@ http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#show-commands
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>

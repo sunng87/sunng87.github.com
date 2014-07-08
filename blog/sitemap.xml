@@ -1909,12 +1909,18 @@
         <lastmod>2014-07-07T21:59:26+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://sunng87.github.io/blog//blog/2014/07/08/microservice-and-slacker-cluster/
+        </loc>
+        <lastmod>2014-07-08T23:26:12+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://sunng87.github.io/blog//</loc>
-        <lastmod>2014-07-07T21:59:26+08:00</lastmod>
+        <lastmod>2014-07-08T23:26:12+08:00</lastmod>
     </url>
     <url>
         <loc>http://sunng87.github.io/blog//blog/archives/</loc>
-        <lastmod>2014-07-07T21:59:26+08:00</lastmod>
+        <lastmod>2014-07-08T23:26:12+08:00</lastmod>
     </url>
     <url>
         <loc>http://sunng87.github.io/blog//robots.txt</loc>

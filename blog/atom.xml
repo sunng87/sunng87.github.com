@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-07-07T21:59:43+08:00</updated>
+  <updated>2014-07-08T23:26:19+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure Microservice Architecture With Slacker Cluster]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2014/07/08/microservice-and-slacker-cluster/"/>
+    <updated>2014-07-08T22:12:52+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2014/07/08/microservice-and-slacker-cluster</id>
+    <content type="html"><![CDATA[<p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler defined microservice <a href="martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
+
+<p>It&rsquo;s a new concept in enterprise architecture, since the last movement in the field promotes SOA architecture. SOA encourages architects to componentize their business logic in service, and deploy service bus(ESB) for integration. Microservice can be more concrete and light-weighted. The service units in Microservice can be any standalone function, or just a tier in traditional tier based development. These units can be deployed on dedicate process or grouped into a process.</p>
+
+<p>In clojure development at <a href="https://avoscloud.com">avoscloud</a>, we are using the <a href="https://github.com/sunng87/slacker-cluster">slacker cluster framework</a> for our microsrvice architecture.</p>
+
+<p><a href="https://github.com/sunng87/slacker">Slacker RPC</a> exposes services as  clojure namespace (pretty light-weighted) All functions in the namespace can be called from remote. A slacker server can expose any number of namespaces:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">start-slacker-server</span> <span class="mi">2014</span> <span class="p">[</span><span class="nv">my.serviceA</span> <span class="nv">my.serviceB</span> <span class="nv">...</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Slacker uses a binary protocol on TCP and configurable serialization (json/edn/<a href="https://github.com/ptaoussanis/nippy">nippy</a>) for communication, which is fast and compact.</p>
+
+<p>And in slacker cluster, exposed namespaces are registered on zookeeper as ephemeral nodes. The client doesn&rsquo;t have to know which service is deployed on which process. Instead, it connects to zookeeper and look up all process address for service it interests in.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">sc</span> <span class="p">(</span><span class="nf">clustered-slacker-client</span> <span class="nv">zk-addr</span> <span class="nv">...</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="ss">&#39;sc</span> <span class="nv">my.serviceA/fn-abc</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;;when calling remote function for the first time, the client will look up zookeeper for remote processes and cache the results</span>
+</span><span class='line'><span class="p">(</span><span class="nf">fn-abc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If there are more than one process available, the client library will balance the load on each process. And for stateful service, slacker cluster also elects master node to ensure all requests go to single process. (<a href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker cluster grouping</a>)</p>
+
+<p>Zookeeper directory structure:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/</span>
+</span><span class='line'><span class="p">[</span><span class="nv">my.serviceA</span>, <span class="nv">my.serviceB</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/my.serviceA</span>
+</span><span class='line'><span class="p">[</span><span class="mf">192.168</span><span class="nv">.1.100</span><span class="ss">:2104</span>, <span class="mf">192.168</span><span class="nv">.1.101</span><span class="ss">:2014...</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Decoupling processes and services made microservice deployment quite flexible. Functional namespaces can be deployed on any process, standalone or grouped together, like Martin Fowler&rsquo;s chart <a href="http://martinfowler.com/articles/microservices/images/sketch.png">shows</a>.</p>
+
+<p>All these nodes are also watched by clients. If a process crashed or put offline, the clients will get notified by zookeeper, then no requests will be made on that process. Also, when you exhausted service capacity, just simply put on another process, the client will soon balance load to the new node. Scaling services is easy like that.</p>
+
+<p>Thanks to zookeeper&rsquo;s watch mechanism, there&rsquo;s no need to configure service static and update while you add/remove nodes. This is especially important in large-scale deployment. (Since microservices are often find-grained, you will always have a lot of process to update/restart.)</p>
+
+<p>For more example about Slacker Cluster, <a href="https://github.com/sunng87/slacker-cluster">check my code repository</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mapzei 和 观察者]]></title>
@@ -849,32 +911,6 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
 <p><a href=" http://reporter.fluv.io/?bbox=118.51638793945312,31.92943755974919,119.16183471679688,32.133175697091374&obj=highway">这里</a>有一个live demo，显示南京的编辑情况，不幸而又庆幸的是，离开南京大半年，我已经远远落后于sinopitt了。</p>
 
 <p>这个项目的缘起：<a href="http://linfiniti.com/2012/12/holiday-openstreetmap-project-for-swellendam/">http://linfiniti.com/2012/12/holiday-openstreetmap-project-for-swellendam/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[螺旋发展的技术]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2012/12/21/%E8%9E%BA%E6%97%8B%E5%8F%91%E5%B1%95%E7%9A%84%E6%8A%80%E6%9C%AF/"/>
-    <updated>2012-12-21T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2012/12/21/螺旋发展的技术</id>
-    <content type="html"><![CDATA[<p>那个谁说世界是螺旋发展的，我说也真是。</p>
-
-<p>现在的云计算潮流，经常能听到哪个地方哪个企业又推广云办公了，大家只要有一个显示器一样的瘦终端就可以连到云中，走到哪办公到哪。可是一想，这不就是黑客时代的主机/终端架构吗，一个用作输入输出的终端，连接到用于运算的主机上。当然，这里又可以说出千差万别（要不然这30年也白活了），但是至少大方面上他们是相同的。</p>
-
-<p>再说这两年流行的移动应用开发，让我想到快十年前那阵的很多共享软件。那会大家还学个Windows的桌面开发，MFC什么的。后来一阵所谓B/S架构的风刮起来，人们一夜之间都不屑于做这种桌面开发了。当时几个论据，跨平台的问题，软件分发的问题，确实得到了很好的解决。但是iphone流行起来以后，仿佛一夜之间又回到了桌面开发的时代。跨平台和软件分发的事也没人提了，辛辛苦苦地为了各种分辨率做设计，做测试，似乎看起来都不是个事。因为人们发现，还是本地应用的体验好。可是谁又能保证也许有那么一天，当本地应用的优势不再那么明显的时候，大家又会谈起跨平台，软件分发的事。</p>
-
-<p>说到跨平台了，Java的WORA（write once, run anywhere）当年是很大的卖点。可后来人们发现，好像也没这个必要，WOCA可以，退一步各个平台开发也不是事。不过又过了这么多年，平台越来越多了，光手机就三四个，这样的事恐怕又要被提起了。</p>
-
-<p>最后再说个小的。当年的网页用表格布局，后来被我们俗称div+css的组合横扫了，以至于用表格布局最后都不好意思跟人打招呼。这么些年过去了，人们发现自己其实真真切切地需要用表格布局，但是为了体现时代的进步，现在叫做grid layout。看看微软提得CSS 3的grid属性：<br />
-[cc lang=&#8221;css&#8221;]<br />
-grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
-[/cc]</p>
-
-<p>活脱一个table里的colspan。</p>
-
-<p>当然，其实还是发展了，原先写在html里的东西，现在用css就可以解决。和前面的例子一样，看似一样，但是都是绕了回来。不好说是从弯路绕回直路，还是相反。在一个时期是正确的，待一些客观条件成熟了，也许换回原来的方式也是正确的。</p>
-
-<p></p>
 ]]></content>
   </entry>
   

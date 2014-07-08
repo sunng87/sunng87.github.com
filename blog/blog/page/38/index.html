@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="到上海一个星期了，借宿在亲戚家里没有办法上网。所以一直不能更新，这种状况从现在起还要延续将近一个月左右。 最近已经在新公司开始被培训了。情况简单地来说就是不太理想，即将面对的困难、问题比想象中的还要多还要复杂。画外音：出于安全的考虑希望大家不要在留言中透露公司的名字。 &hellip;">
+  <meta name="description" content="其实这事不好。
+看电子书的时候，有的没有Bookmake书签，或者叫目录也成。这样读起来就非常疲劳，经常一恍惚就根本不知道读到哪里了，上下文都弄不清怎么办。这种问题尤其对于一本1500页的电子书来说更严重。想办法自己加书签吧，reader根本不提供这个功能。这能自立更生了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/03/25/cp-bookmakes-to-another-pdf-file/">Cp Bookmakes to Another Pdf File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><p>其实这事不好。</p>
+<p>看电子书的时候，有的没有Bookmake书签，或者叫目录也成。这样读起来就非常疲劳，经常一恍惚就根本不知道读到哪里了，上下文都弄不清怎么办。这种问题尤其对于一本1500页的电子书来说更严重。想办法自己加书签吧，reader根本不提供这个功能。这能自立更生了。</p>
+<p>对于apress的电子书（我在写这些的时候内心很痛苦，作为一个第三世界的民工，这个出版社的书我一直是看电子版），如果电子书没有书签，可以从apress的官方网站上下载目录，这个目录恰好就包含书签。这样的话只要把这个书签拷贝到我们之前的电子书里就可以了。</p>
+<p>于是需要一个能够读写pdf文件的库，我找到一个pdfbox，它现在是apache incubator中的一个项目，貌似签到apache之后还没有一个正式的release。上一个release可以在sourceforge上<a href="http://sourceforge.net/projects/pdfbox/" target="_blank">项目原来的页面</a>找到，版本号我不记得了。</p>
+<p>最近比较怀旧直接用Java写。其实很简单，pdfbox都已经建模了，只要取出来、放进去、写下来（ZB一些应该是get出来，set进去，write下来）就可以了。以下是个sample</p>
+[codesyntax lang=&#8221;java&#8221; lines=&#8221;fancy&#8221;]<br />
+public class Main {</p>
+
+<p>	/**<br />
+	 * @param args<br />
+	 */<br />
+	public static void main(String[] args) throws Exception{</p>
+
+<p>		FileInputStream ctfile = new FileInputStream(&#8220;E:&#92;cs_content.pdf&#8221;);<br />
+		PDFParser parser = new PDFParser(ctfile);<br />
+		parser.parse();<br />
+		PDDocument ctpdf = parser.getPDDocument();</p>
+
+<p>		PDDocument rlpdf = PDDocument.load(&#8220;E:&#92;cs.pdf&#8221;);</p>
+
+<p>		PDDocumentOutline outline = ctpdf.getDocumentCatalog().getDocumentOutline();<br />
+		rlpdf.getDocumentCatalog().setDocumentOutline(outline);</p>
+
+<p>		FileOutputStream out = new FileOutputStream(&#8220;E:&#92;cs_out.pdf&#8221;);<br />
+		COSWriter writer = new COSWriter(out);<br />
+		writer.write(rlpdf);<br />
+		writer.close();<br />
+	}<br />
+}
+[/codesyntax]
+<p>非常简单，就不解释了。只是有一个小小的问题（其实相当严重），Apress的目录文件里bookmark是没有设置destination的（这也是ZB的说法，其实就是点了没反应）。我想了一下如果要让书签真正起到作用要去读pdf的目录页面，那里面有页码，虽然这个页码和pdf的页码有时候会有一个固定的偏移。不过读pdf似乎有那么一点麻烦，因为里面有不少控制字符。</p>
+<p>暂时就是这样。不知道有没有其他什么更好的办法。</p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -460,6 +528,10 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
       </li>
     
@@ -473,10 +545,6 @@ vdata = struct.unpack(&#8216;&lt;&#8217;+str(row*col)+&#8217;f&#8217;, datastrin
     
       <li class="post">
         <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
       </li>
     
   </ul>
