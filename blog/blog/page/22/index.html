@@ -9,8 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Exaile豆瓣电台插件发布一个多月，github和googlecode的下载量加载一起大约有190次左右。考虑的这两个用户群的交集有限，这个数字应该算是超乎期望了，呵呵。等下载量超过500的时候，我。。。
-本来计划三周做完的项目，后台服务调用的中间件，做了刚一周整个流程刚跑通就被砍了。 &hellip;">
+  <meta name="description" content="beanstalkd是一个极轻量级的消息队列服务，作者的说法叫做Work Queue。 概念 Beanstalkd里包含以下几个概念： Producer
+Worker
+Job
+Tube Producer 与传统的消息队列服务中的概念类似，是Job的生产者。这个角色通过put命令来创建Job。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +68,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/08/11/beanstalkd/">Beanstalkd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://kr.github.com/beanstalkd/">beanstalkd</a>是一个极轻量级的消息队列服务，作者的说法叫做Work Queue。</p>
+
+<p><h3>概念</h3></p>
+
+<p>Beanstalkd里包含以下几个概念：
+<ul>
+<li>Producer</li>
+<li>Worker</li>
+<li>Job</li>
+<li>Tube</li>
+</ul></p>
+
+<p>Producer 与传统的消息队列服务中的概念类似，是Job的生产者。这个角色通过put命令来创建Job。</p>
+
+<p>Worker 即消费者，worker通过reserve / release / bury / delete 等命令操作job的生命周期。</p>
+
+<p>Job 是beanstalkd中的基本单元，一个job包含id和body，从属于一个tube。Job的生命周期是beanstalkd中的核心概念，它包含DELAYED / READY / RESERVED / BURIED / DELETED等状态。beanstalkd文档中的这个图对Job的声明周期进行了说明：
+<a href="http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81">http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81</a></p>
+
+<p>Tube 是类似namespace的概念，Producer在生产Job前通过use指定相应的Tube。而Worker通过watch / Ignore命令来决定从哪些Tube中获得Job。</p>
+
+<p><h3>安装</h3></p>
+
+<p>Beanstalkd 可以通过很多Linux发行版的包管理器直接安装。依赖libevent 1.4.1 以上版本。<br />
+通过以下命令启动即可</p>
+
+<p><i>beanstalkd -d -p &lt;PORT&gt;</i></p>
+
+<p><h3>协议</h3>
+Beanstalkd在各方面都继承memcached的风格，协议也与memcached类似，同样是基于文本的：</p>
+
+<p>命令 参数 [参数&#8230;] [命令体字节数]\r\n<br />
+[命令体]\r\n</p>
+
+<p>beanstalkd很多命令的返回是yaml格式，但是系统对命令体的格式并没有限制。</p>
+
+<p><h3>客户端</h3></p>
+
+<p>Beanstalkd协议见简单，有各种语言的客户端实现。python有一个非常简单的beanstalkc，可以通过easy_install安装。不过，这个客户端缺少断线重连机制，正式发布的0.2.0版本也有一些严重的bug。可以从github上下载源代码安装，并在使用时控制重连。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -837,49 +915,6 @@ Make sure you have xulrunner-dev installed:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/07/10/update-2/">Update</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><ol>
-<li>搬家了，搬了一条街，从马路这边搬到马路那边。从二楼搬到四楼，告别了潮湿发霉的小屋，换了新环境迎接工作第二年。本来想搬出这个玉兰香苑，但是看了一圈不是太远就是太贵。都说现在是不炒房价改炒房租了，别的不知道，反正我原来那屋房租就涨了200，而且我搬出去那天就租出去了。</li>
-<li>妈妈来上海，晚上可以一起玩桌游。妈妈对卡卡松还挺感兴趣的，我们一开始玩基础版，然后加河流扩展、旅馆教堂扩展。卡卡松绝对是家庭娱乐的好工具，各位常年在外的童鞋休假回家可以带一个和父母一起玩，调节气氛，增进和谐，居家旅行，必备良方。</li>
-<li>周五盛大创新院，人间网介绍mongodb实践。人间网的用户不多，数据量不大，mongodb用来存储timeline里的status id，至今有不到900M的数据和900M的索引。交流活动持续一个小时，最火爆的环节是Q&A。人间网用mongodb的经验也不是非常丰富，很多问题也解释不清楚，最后多亏了我们组<a href="http://www.ccdaisy.com/">一位上海程序员界的新星</a>救场，除了解决了四面八方有意义无意义的问题以外，也引来了全场的叹为观止，以至于都有人说这是SDO的人嘛。其实不完全是，其实人家才大三。</li>
-<li>工作一年了，下周安静下来总结一下吧。</li>
-</ol></p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/23/">&larr; Older</a>
@@ -901,6 +936,10 @@ Make sure you have xulrunner-dev installed:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -914,10 +953,6 @@ Make sure you have xulrunner-dev installed:
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

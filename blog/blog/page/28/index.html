@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="经常访问GNU的网站你会发现一些很神奇的东西，比如gNewSense，又比如最新的： 怎么样，够震撼啊，GNUzilla套件里的第一个发布，IceCat。IceCat是嘛？你知道Firefox吧，那拉开冰箱门，把Firefox塞进去，带上冰箱门，嗯，那就是IceCat了。当然是开玩笑了，GNU &hellip;">
+  <meta name="description" content="最近琢磨字典多一些，以前一直不知道gnome自带的gnome-dictionary如何使用，因为默认的字典源里都没有中文字典，而且离线更是无法使用。其实不然，字典服务可以自架，并且可以使用自己的字典。 在自己的机器上架设dictionary server，以ubuntu为例： 安装dictd / &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/02/07/%E4%BD%BF%E7%94%A8gnome-dictionary%E5%92%8Cdictd/">使用gnome-dictionary和dictd</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近琢磨字典多一些，以前一直不知道gnome自带的gnome-dictionary如何使用，因为默认的字典源里都没有中文字典，而且离线更是无法使用。其实不然，字典服务可以自架，并且可以使用自己的字典。</p>
+
+<p>在自己的机器上架设dictionary server，以ubuntu为例：</p>
+
+<p>安装dictd / dict
+<em>sudo apt-get install dictd dict</em></p>
+
+<p>前者是字典服务器，后者是字典服务客户端。还可以从仓库里安装已经打包好的字典，如
+<em>sudo apt-get install dict-stardic</em>
+是一个英汉字典</p>
+
+<p>dictd安装好后会默认自启动，也可以通过
+<em>sudo service dictd start</em>
+来控制dictd的启动、重启和关闭。</p>
+
+<p>通过dict测试服务的状况
+<em>dict -D</em>
+命令会列出可用的数据库（即字典）</p>
+
+<p>在gnome-dictionary中添加字典源 Edit-&gt;Preference-&gt;Source-&gt;Add<br />
+Name: 自定义的字典名<br />
+Transport: Dictionary Source<br />
+Hostname: 127.0.0.1<br />
+Port: 2628</p>
+
+<p>Close之后可以到主界面打开侧边栏，在Dictionary Source中双击选定此字典，在Aailable Dictionaries里双击选中目标字典，于是就可以在gnome-dictionary里使用本地的字典服务了。</p>
+
+<p>接下来安装自己的字典。stardict的<a href="http://stardict.sourceforge.net/Dictionaries_zh_CN.php">网站</a>上有很多中文字典，上面也都标示了授权协议。要在dictd里使用这些字典，需要进行一个简单的格式转换。安装一个工具
+<em>sudo apt-get install dictconv</em></p>
+
+<p><em>它的使用方法：<br />
+dictconv -o OUTPUT_FILE INPUT_FILE</em></p>
+
+<p>在input_file指定stardict的.ifo文件，在output_file指定要生成的dictd的.index文件。这个转换非常耗时，需要有足够的耐心。这个操作将会生成.index和.dict文件。对.dict文件进行压缩：
+<em>dictzip OUT.dict</em></p>
+
+<p>转换完成后，编辑<em>/var/lib/dictd/db.list</em>文件，在其中添加一个database定义
+<em>database YOUR_DB_NAME{<br />
+data PATH_TO_DICT_DZ<br />
+index PATH_TO_INDEX<br />
+}</em></p>
+
+<p>其中PATH_TO_DICT_DZ是上一步的.dz文件，PATH_TO_INDEX是到上一步生成的.index文件的路径。编辑完成后，重启dictd服务
+<em>sudo service dictd restart</em></p>
+
+<p>使用dict -D可以查看启用的字典。</p>
+
+<p>建议备份<em>/var/lib/dictd/db.list</em>文件，因为每次从apt-get安装字典后，这个文件都会被覆盖。</p>
+
+<p>dictd服务也可以在fantasdic里访问。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -626,87 +711,6 @@ res = conn.getresponse().read()</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/01/01/happy-new-year-with-yan-0-4/">Happy New Year With Yan 0.4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the project itself. We have great changes in all modules.  Packages have been rearranged and renamed to be more comprehensible. Let&#8217;s dive into the changeset:
-<h3>Changeset</h3>
-<ul>
-	<li>ApiKey database derby / h2 support, still use hsql as default because it&#8217;s fastest (#9)</li>
-	<li>Captcha provider classes now loaded dynamically on runtime. They are not managed by guice container any longer. (#15)</li>
-	<li>The useless cache module was completely removed (#10)</li>
-	<li>ApiKey CR<span style="text-decoration: line-through;">U</span>D UI has been replaced by RESTful GET/PUT/DELETE interfaces</li>
-	<li>For text-based captcha, just return the question in ticket, no need for (also impossible to)  retrieve it from browser (#8)</li>
-	<li>Resource has been separated from the project file (#14 #18)</li>
-	<li>Add test to make sure the /ticket and /validate request are sent by the same application (#17)</li>
-	<li>Standardized error output: use HTTP error for client(browser), a selected error object for application (#24 #26)</li>
-	<li>/captcha/ request (invoked by client directly) now accepts configuration parameters</li>
-	<li>ApiKey is now binded to specified domain, it will check the /captcha request&#8217;s referer (#27)</li>
-	<li>NEW captcha provider introduced in: Tiled Image Captcha (#12)</li>
-	<li>JMX monitoring support on EhCache (#33)</li>
-	<li>a great deal of code improvements and bug-fixes</li>
-</ul>
-<h3>Interface changes</h3>
-The object return by /ticket has its attribute &#8220;url&#8221; renamed to &#8220;data&#8221;.
-<h3>Screenshots</h3>
-Use visualvm or jconsole the monitor ehcache status and statistics (enabled in 0.4 by default):</p>
-
-<p><img class="alignnone" src="http://farm5.static.flickr.com/4034/4231348850_db1b877ba8.jpg" alt="" width="500" height="313" /></p>
-
-<p>The new captcha provider in ruby and python sample application (<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">Sample Code</a>):</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2645/4230582459_bf63ce6677.jpg" alt="" width="500" height="313" />
-<h3>Download &amp; Deploy</h3>
-Since 0.4, yan package are available for download directly. Please refer to the  <a href="http://bitbucket.org/sunng/yan/downloads/" target="_blank">download page</a>, grab both yan-0.4.war and yan-resource.tar.bz2. Just throw the war package to your servlet container.  Then extract the resource package to your disk. Don&#8217;t forget to set the environment variable:
-<em>export YAN_RESOURCE=/path/to/your/resource</em></p>
-
-<p>Start the servlet container in the same context, browser <em>http://localhost:8080/yan-0.4/</em> to see the test page and emulate the captcha process.
-<h3>Retrieve the code</h3>
-Clone the mercurial repository from bitbucket.org</p>
-
-<p><em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
-
-<p>You will get a copy of whole code repository (because mercurial is a distributed version control system). You are on the default branch at the beginning. The default branch maintains the code of 0.4, if you want to see latest things on Yan, switch to the development branch by</p>
-
-<p><em>$ hg update 0.5-dev</em></p>
-
-<p>Yan 0.5 is already on the way.
-<h3>Reporting Issue</h3>
-Issue reporting and patch submitting are always welcomed. Check the <a href="http://bitbucket.org/sunng/yan/issues/" target="_blank">issue tracker on bitbucket</a>, you will find <a href="http://bitbucket.org/sunng/yan/issues/?kind=proposal&amp;version=0.5" target="_blank">new features</a> in 0.5</p>
-
-<p>Thanks for your support and <img class="alignnone" src="http://farm5.static.flickr.com/4030/4231554900_935d453250_o.png" alt="" width="250" height="40" />!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/29/">&larr; Older</a>
@@ -728,6 +732,10 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -741,10 +749,6 @@ Issue reporting and patch submitting are always welcomed. Check the <a href="htt
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

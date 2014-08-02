@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="好久没有用这么不着边际的标题了，其实这种做法是我的偏好。你要是觉着它顺口的话它确确实实是一句歌词，WG的这篇文章不推荐实在太可惜了。 这本来应该是一篇2009年的总结来着，早上上班的路上我一直在过滤哪些要说哪些值得说哪些能说。不用我说，认识我的人都知道我今年可说的事情太多了。鉴于太多太碎， &hellip;">
+  <meta name="description" content="I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/01/happy-new-year-with-yan-0-4/">Happy New Year With Yan 0.4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the project itself. We have great changes in all modules.  Packages have been rearranged and renamed to be more comprehensible. Let&#8217;s dive into the changeset:
+<h3>Changeset</h3>
+<ul>
+	<li>ApiKey database derby / h2 support, still use hsql as default because it&#8217;s fastest (#9)</li>
+	<li>Captcha provider classes now loaded dynamically on runtime. They are not managed by guice container any longer. (#15)</li>
+	<li>The useless cache module was completely removed (#10)</li>
+	<li>ApiKey CR<span style="text-decoration: line-through;">U</span>D UI has been replaced by RESTful GET/PUT/DELETE interfaces</li>
+	<li>For text-based captcha, just return the question in ticket, no need for (also impossible to)  retrieve it from browser (#8)</li>
+	<li>Resource has been separated from the project file (#14 #18)</li>
+	<li>Add test to make sure the /ticket and /validate request are sent by the same application (#17)</li>
+	<li>Standardized error output: use HTTP error for client(browser), a selected error object for application (#24 #26)</li>
+	<li>/captcha/ request (invoked by client directly) now accepts configuration parameters</li>
+	<li>ApiKey is now binded to specified domain, it will check the /captcha request&#8217;s referer (#27)</li>
+	<li>NEW captcha provider introduced in: Tiled Image Captcha (#12)</li>
+	<li>JMX monitoring support on EhCache (#33)</li>
+	<li>a great deal of code improvements and bug-fixes</li>
+</ul>
+<h3>Interface changes</h3>
+The object return by /ticket has its attribute &#8220;url&#8221; renamed to &#8220;data&#8221;.
+<h3>Screenshots</h3>
+Use visualvm or jconsole the monitor ehcache status and statistics (enabled in 0.4 by default):</p>
+
+<p><img class="alignnone" src="http://farm5.static.flickr.com/4034/4231348850_db1b877ba8.jpg" alt="" width="500" height="313" /></p>
+
+<p>The new captcha provider in ruby and python sample application (<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">Sample Code</a>):</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2645/4230582459_bf63ce6677.jpg" alt="" width="500" height="313" />
+<h3>Download &amp; Deploy</h3>
+Since 0.4, yan package are available for download directly. Please refer to the  <a href="http://bitbucket.org/sunng/yan/downloads/" target="_blank">download page</a>, grab both yan-0.4.war and yan-resource.tar.bz2. Just throw the war package to your servlet container.  Then extract the resource package to your disk. Don&#8217;t forget to set the environment variable:
+<em>export YAN_RESOURCE=/path/to/your/resource</em></p>
+
+<p>Start the servlet container in the same context, browser <em>http://localhost:8080/yan-0.4/</em> to see the test page and emulate the captcha process.
+<h3>Retrieve the code</h3>
+Clone the mercurial repository from bitbucket.org</p>
+
+<p><em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
+
+<p>You will get a copy of whole code repository (because mercurial is a distributed version control system). You are on the default branch at the beginning. The default branch maintains the code of 0.4, if you want to see latest things on Yan, switch to the development branch by</p>
+
+<p><em>$ hg update 0.5-dev</em></p>
+
+<p>Yan 0.5 is already on the way.
+<h3>Reporting Issue</h3>
+Issue reporting and patch submitting are always welcomed. Check the <a href="http://bitbucket.org/sunng/yan/issues/" target="_blank">issue tracker on bitbucket</a>, you will find <a href="http://bitbucket.org/sunng/yan/issues/?kind=proposal&amp;version=0.5" target="_blank">new features</a> in 0.5</p>
+
+<p>Thanks for your support and <img class="alignnone" src="http://farm5.static.flickr.com/4030/4231554900_935d453250_o.png" alt="" width="250" height="40" />!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -513,44 +594,6 @@ http://www.h2database.com/html/features.html#comparison</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/24/be-with-you/">Be With You</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天下班骑车到高斯路时，突然路边奔出一只小狗跟着我的自行车一起跑。小狗挺干净，出现在这种工业区人不多的路上倒是挺让人诧异。我开始放慢速度，让它跟着我不至于太辛苦。可是它还足够顽皮，一会跑在左边，一会在右边，好像是知道今天过节一样，欢实得很。不过我对路中间不时经过的汽车有所顾虑，有意得向路边靠，打算把它挤到路涯边，这样安全一些。</p>
-
-<p>大约是嫌我速度太慢了，一会后面又上来一个骑自行车的人，小狗顿时起了劲，蹦达蹦达地追了上去。那速度大概是它向往的吧，我在后面看着，直到他们一前一后，过了马路，我从另一个方向回家了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/30/">&larr; Older</a>
@@ -572,6 +615,10 @@ http://www.h2database.com/html/features.html#comparison</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -585,10 +632,6 @@ http://www.h2database.com/html/features.html#comparison</p>
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="">
+  <meta name="description" content="方式1，应用服务器负责生成验证码字符，验证码服务器主要负责验证码图片生成。 用户浏览器向应用服务器请求包含验证码的页面； 应用服务器生成验证码字符，存储在session中；应用服务器发送相关图片参数（验证码字符、宽、高、复杂度、背景色等）到验证码服务器； 验证码服务器返回图片地址到应用服务器； &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/12/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/">验证码服务的两种方式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><h3>方式1，应用服务器负责生成验证码字符，验证码服务器主要负责验证码图片生成。</h3>
+<img class="alignnone" src="http://farm3.static.flickr.com/2624/4005000566_e100e098ef.jpg" alt="" width="500" height="310" />
+<ol>
+	<li>用户浏览器向应用服务器请求包含验证码的页面；</li>
+	<li>应用服务器生成验证码字符，存储在session中；应用服务器发送相关图片参数（验证码字符、宽、高、复杂度、背景色等）到验证码服务器；</li>
+	<li>验证码服务器返回图片地址到应用服务器；</li>
+	<li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
+	<li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
+	<li>验证码服务器输出验证码图片流到用户浏览器；</li>
+	<li>用户判读验证码图片，提交表单；</li>
+	<li>应用服务器取出session中的验证码字符比对，返回结果。</li>
+</ol>
+这种方式的优点：
+<ol>
+	<li>较少的HTTP请求调用</li>
+	<li> 替换原应用中独立的验证码功能相对容易</li>
+	<li> 验证码服务器相对简单</li>
+</ol>
+<h3>方式2，验证码服务器承担验证功能，应用服务器在验证中仅起到传递作用。</h3>
+<img class="alignnone" src="http://farm3.static.flickr.com/2464/4005000760_cc402da4c1.jpg" alt="" width="500" height="310" />
+<ol>
+	<li>用户浏览器向应用服务器请求包含验证码的页面；</li>
+	<li>应用服务器发送相关图片参数（宽、高、复杂度、背景色等）到验证码服务器；</li>
+	<li>验证码服务器返回图片地址、惟一的会话id到应用服务器；</li>
+	<li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
+	<li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
+	<li>验证码服务器输出验证码图片流到用户浏览器；</li>
+	<li>用户判读验证码图片，提交表单；</li>
+	<li>应用服务器将第三步获得的会话id和用户输入的验证码字符传给验证码服务器；</li>
+	<li>验证码服务器进行验证，返回通过或拒绝；</li>
+	<li>应用服务器根据验证码服务器结果进行响应。</li>
+</ol>
+这种方式的优点：
+<ol>
+	<li>验证码服务功能完善，涵盖整个验证流程；</li>
+	<li> 验证码服务端有详细的验证日志记录，便于数据分析；</li>
+</ol>
+欢迎大家就两种方式发表意见～</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -494,46 +567,6 @@ println(lons);
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/09/30/a-shorten-url-app/">A Shorten Url App</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-09-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一不小心又是大概有一年多时间没有用过Django了。最近经常有之前部门的同事来讨论Django和Python Web开发，大概是他们用asp做的客服系统终于要换架构了。今天国庆提前放假，用了一个下午的时间重温一下。Django的Template还是相对弱一些，居然无法在template里调用model的方法。这样auth模块里判断用户登录的is_authticated()方法就不能在template里调，如此非得在view判断（Django是MTV模型，它的view即MVC里的controller），那如果是用generic_view，这个似乎就无解了？？</p>
-
-<p>贴个图。体验一下Firefox3.5开始支持的@font-face，Webkit核心和Opera浏览器都支持这个功能。不过我Ubuntu上的Midori貌似遇到Mootools就直接崩溃，看来要等到gnome2.28里epiphany了。<img class="alignnone" src="http://pic.yupoo.com/classicning/65666826c591/medium.jpg" alt="" width="500" height="365" /></p>
-
-<p>忘了提了，域名是我yy的，之所以有这样的效果是修改了hosts</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -555,6 +588,10 @@ println(lons);
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -568,10 +605,6 @@ println(lons);
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

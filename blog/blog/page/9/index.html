@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="好久没写语录式大标题了，实在是今天玩Grails受害很深很深。 Grails因为本身是通过ivy来管理依赖的，虽然后续的版本和maven的集成不断加深，但是本身还是通过ivy来解析pom.xml。也就是说最后的活还是ivy干的。如果你的项目比较大，选择了通过maven来管理项目， &hellip;">
+  <meta name="description" content="这周去丽水参加大学同学的婚礼，浙江南部又是另一番不同的景色。而且这一带没有过度的旅游开发，也没有工业污染，青山绿水完完全全的原生态。要是度假真是不错的选择，何况这里还有认识的同学。 ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/10/20/%E4%B8%BD%E6%B0%B4%E7%95%99%E5%BD%B1/">丽水留影</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-10-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这周去丽水参加大学同学的婚礼，浙江南部又是另一番不同的景色。而且这一带没有过度的旅游开发，也没有工业污染，青山绿水完完全全的原生态。要是度假真是不错的选择，何况这里还有认识的同学。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6263288831/" title="resized-DSC_0126 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6156/6263288831_8574bd5c3d.jpg" width="335" height="500" alt="resized-DSC_0126" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6263288835/" title="resized-DSC_0129 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6098/6263288835_c5711ec5f1.jpg" width="335" height="500" alt="resized-DSC_0129" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6263288841/" title="resized-DSC_0245 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6179/6263288841_3bf7e7f3e5.jpg" width="335" height="500" alt="resized-DSC_0245" /></a></p>
+
+<p></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -586,60 +630,6 @@ Windows和Linux用户都可以通过<a href="http://merkaartor.be/" target="_bla
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/09/24/i-cloned-beanstalkd-with-clojure/">I Cloned Beanstalkd With Clojure</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I just cloned <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a> with clojure and you can find this project on <a href="https://github.com/sunng87/clojalk">github</a>. It&#8217;s a light weight task queue that &#8220;producers&#8221; could put tasks in and &#8220;workers&#8221; are blocked to reserve them and process them. It will help you to split expensive operations (sending email, etc) to background.</p>
-
-<p>The features:
-<ul>
-	<li>Almost compatible with Beanstalkd protocol</li>
-	<li>Full support on Beanstalkd verbs: put/reserve/release/bury/kick</li>
-	<li>Persistence with binary write-ahead logs</li>
-	<li>Simple JMX monitoring</li></ul></p>
-
-<p></p>
-
-<p>The networking layer is based on @<a href="https://github.com/ztellman">ztellman</a>&#8217;s libraries, aleph, lamina and gloss. And I also received great help from him on implementing the protocol with gloss. </p>
-
-<p>This is not my first clojure project but the largest one. I add <a href="https://github.com/fogus/marginalia">marginalia</a> in the dev-dependencies, you can generate well formatted code and docs with `lein marg`.</p>
-
-<p>By the way, this project is not well tested. I&#8217;m still working on it to find potential issues and to fix them. Do not use it on any production environment before you have carefully gone through the code base. I just made this announcement here to let people know this project if they are interested in this topic. </p>
-
-<p>And always, Any fork/contribution is welcomed.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/10/">&larr; Older</a>
@@ -661,6 +651,10 @@ Windows和Linux用户都可以通过<a href="http://merkaartor.be/" target="_bla
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -674,10 +668,6 @@ Windows和Linux用户都可以通过<a href="http://merkaartor.be/" target="_bla
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

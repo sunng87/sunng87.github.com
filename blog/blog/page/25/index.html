@@ -9,7 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Alexandra is a desktop book collection manager on gnome written in ruby. With an extensible architecture, Alexandria uses different sources to &hellip;">
+  <meta name="description" content="今天值得说的事情挺多的。首先，Ubuntu 10.04发布以后，Sun JDK 被放到了partner 仓库里，要使用Sun JDK，添加这个仓库：
+sudo apt-add-repository &#8220;deb http://archive.canonical.com/ lucid &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/05/01/%E4%BA%94%E6%9C%88%E4%B8%80%E5%8F%B7/">五月一号</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天值得说的事情挺多的。首先，Ubuntu 10.04发布以后，Sun JDK 被放到了partner 仓库里，要使用Sun JDK，添加这个仓库：
+<em>sudo apt-add-repository &#8220;deb http://archive.canonical.com/ lucid partner&#8221;</em></p>
+
+<p>这是悲剧的开始，早晨七点四十起床，添加了这个仓库，把机器上的Sun JDK升级到6u20，为此到了八点三十五才出门。现在没有自行车不比从前了，等公交加上下来走到公司最后九点零六分打上卡。进了办公室一看大家整整齐齐地坐着了，这才听到悲剧：三薪工作日不能迟到，否则只算半天。就为了6分钟，一天半的工资没了。这事现在想起来我都郁闷，发自内心的郁闷啊。</p>
+
+<p>在上班的公交车上恰好收到邮件，是rubyforge的更新，昨天提交的patch已经被接受了，放进了svn仓库，会随Alexandria的0.6.6版本发布。项目的负责人修改了代码，把我那些\t都换成了空格。另外，豆瓣的API接口是json格式的，解析需要依赖libjson-ruby1.8这个库，这段代码被负责人修改了，真的很神奇，原来json可以就这样被转换成yaml<br />
+[cc lang=&#8221;ruby&#8221;]<br />
+def json2yaml(json)<br />
+    # insert spaces after : and , except within strings<br />
+    yaml = json.gsub(/(\:|\,)([^A-Za-z\/&#92;])/) do |match|<br />
+        &#8220;#{$1} #{$2}&#8221;<br />
+    end<br />
+    yaml.gsub!(/&#92;\//, &#8216;/&#8217;) # unescape forward slashes<br />
+    yaml<br />
+end<br />
+[/cc]<br />
+震惊了，不过我之前也太了解yaml，也许这个技巧在ruby世界是众所周知的吧。这下json模块的依赖就可以去除了，真没想到会这么简单。</p>
+
+<p>想起来我给另一个开源软件fantasdic提交的google translate的patch，作者已经认可了，但是至今还没有被加进仓库里。这位作者在日本读书不亦乐乎看来心思已经完全不在这个项目上了。</p>
+
+<p>下午下班回家又是坐公交车，越想越忿忿，晚上又去买了一辆新自行车，于是今天基本上就算是白干了。之前的自行车被偷，多半的原因是后来买的锁强度太弱。先前的锁呢又因为生锈最后没法用了，归根结底，还是我保养地不好。其实保养锁很简单的，买个肉包，把里面的肉吃掉之后，那钥匙蘸蘸剩下的油，放到锁眼里捅捅就成。</p>
+
+<p>五一了，世博了。和奥运会一样，还是和我没有什么直接关系。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -545,48 +604,6 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/04/03/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu/">Reset Default Cursor Theme and Web Browser After Installing Kubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>If you installed kubuntu parallel to ubuntu, you might find that the default browser is set to konqueror and cursor theme is oxygen which cannot modified by &#8220;gnome-default-applications-properties&#8221; and &#8220;gnome-appearance-properties&#8221;.</p>
-
-<p>To fix this, use Debian update-alternatives tool:
-<em>update-alternatives &#8211;config x-www-browser</em>
-<em>update-alternatives &#8211;config x-cursor-theme</em></p>
-
-<p>All configurable options are listed at <em>/var/lib/dkpg/alternatives</em></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/26/">&larr; Older</a>
@@ -608,6 +625,10 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -621,10 +642,6 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

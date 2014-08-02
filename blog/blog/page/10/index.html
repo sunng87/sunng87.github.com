@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="没错我开始用Emacs了！对于一个使用lisp方言的开发的人来说，Emacs无疑是正统，是professional的象征。 其实用Emacs，远不需要太多的配置，就可以创建一个高效率的开发环境。我用了两天不到时间，当然还包括过去三年甚至更长时间里多次试图学习Emacs并最终半途而废残存的精力。 &hellip;">
+  <meta name="description" content="I just cloned Beanstalkd with clojure and you can find this project on github. It&#8217;s a light weight task queue that &#8220;producers&#8221; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/09/24/i-cloned-beanstalkd-with-clojure/">I Cloned Beanstalkd With Clojure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I just cloned <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a> with clojure and you can find this project on <a href="https://github.com/sunng87/clojalk">github</a>. It&#8217;s a light weight task queue that &#8220;producers&#8221; could put tasks in and &#8220;workers&#8221; are blocked to reserve them and process them. It will help you to split expensive operations (sending email, etc) to background.</p>
+
+<p>The features:
+<ul>
+	<li>Almost compatible with Beanstalkd protocol</li>
+	<li>Full support on Beanstalkd verbs: put/reserve/release/bury/kick</li>
+	<li>Persistence with binary write-ahead logs</li>
+	<li>Simple JMX monitoring</li></ul></p>
+
+<p></p>
+
+<p>The networking layer is based on @<a href="https://github.com/ztellman">ztellman</a>&#8217;s libraries, aleph, lamina and gloss. And I also received great help from him on implementing the protocol with gloss. </p>
+
+<p>This is not my first clojure project but the largest one. I add <a href="https://github.com/fogus/marginalia">marginalia</a> in the dev-dependencies, you can generate well formatted code and docs with `lein marg`.</p>
+
+<p>By the way, this project is not well tested. I&#8217;m still working on it to find potential issues and to fix them. Do not use it on any production environment before you have carefully gone through the code base. I just made this announcement here to let people know this project if they are interested in this topic. </p>
+
+<p>And always, Any fork/contribution is welcomed.
+</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -610,48 +664,6 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/08/06/clojure-chinese-user-group%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E8%81%9A%E4%BC%9A/">Clojure Chinese User Group第一次线下聚会</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天下午赶到上海参加了clojure中文用户的第一次线下聚会，见到了国内clojure的的主要用户。感谢一直在努力组织这次活动的朋友，还有提供场地的朋友。</p>
-
-<p>这是我关于clojure构建工具、生命周期管理的slides</p>
-
-<p><div style="width:425px" id="__ss_8785604"> <strong style="display:block;margin:12px 0 4px"><a href="http://www.slideshare.net/sunng87/clojure-cnclojuremeetup" title="Clojure cnclojure-meetup" target="_blank">Clojure cnclojure-meetup</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/8785604" marginwidth="0" marginheight="0" frameborder="0" height="355" scrolling="no" width="425"></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/" target="_blank">presentations</a> from <a href="http://www.slideshare.net/sunng87" target="_blank">sunng87</a> </div> </div></p>
-
-<p>欢迎对clojure感兴趣的朋友加入<a href="http://cnlojure.org/" target="_blank">中文用户邮件列表</a>，希望这样的聚会活动可以长期的办下去。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=4f567446-b5a0-8664-be07-796569d5b7c1" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/11/">&larr; Older</a>
@@ -673,6 +685,10 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -686,10 +702,6 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>

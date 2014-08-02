@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I&#8217;d like to announce my recent works, a project called Yan Captcha Service written in Java which is aimed to provide whole solutions of captcha &hellip;">
+  <meta name="description" content="After installed PCMan File Manager with LXDE, the gnome &#8220;places&#8221; menu items were opened by PCManFM as default. To switch back to nautilus &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/25/restore-nautilus-to-open-gnome-menu-after-installed-pcmanfm/">Restore Nautilus to Open Gnome Menu After Installed PCManFM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After installed PCMan File Manager with LXDE,  the gnome &#8220;places&#8221; menu items were opened by PCManFM as default. To switch back to nautilus, follow these steps:
+<ol>
+	<li>check <em>/usr/share/applications/nautilus-folder-hanlder.desktop</em>
+make sure the line &#8221;<em>Exec=nautilus</em>&#8221; is not modified. (There are lots of hack article that teach user to change default file manager by modify this)</li>
+	<li>check <em>/usr/share/applications/defaults.list</em>
+grep the line &#8220;x-directory&#8221; by
+<em>cat /usr/share/applications/defaults.list | grep x-directory </em>
+make sure the value was kept as &#8220;nautilus-folder-handler.desktop&#8221;, if not, restore it.<br />
+Then grep the line &#8220;inode&#8221; by
+<em>cat /usr/share/applications/defaults.list | grep inode</em>
+also be sure about the result &#8220;nautilus-folder-handler.desktop&#8221;. if not, restore it again.</li>
+	<li>So it must be your own configuration that has been changed. check <em>~/.local/share/applications/defaults.list</em>
+grep the two lines described above, it must be changed to &#8220;pcmanfm-folder-handler.desktop&#8221;, so replace them by &#8220;nautilus-folder-handler.desktop&#8221;</li>
+</ol>
+To check the result, click menu item at once (no restart or logout needed), again, you see the slow file manager&#8230;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -791,79 +841,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/12/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/">验证码服务的两种方式</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-12T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><h3>方式1，应用服务器负责生成验证码字符，验证码服务器主要负责验证码图片生成。</h3>
-<img class="alignnone" src="http://farm3.static.flickr.com/2624/4005000566_e100e098ef.jpg" alt="" width="500" height="310" />
-<ol>
-	<li>用户浏览器向应用服务器请求包含验证码的页面；</li>
-	<li>应用服务器生成验证码字符，存储在session中；应用服务器发送相关图片参数（验证码字符、宽、高、复杂度、背景色等）到验证码服务器；</li>
-	<li>验证码服务器返回图片地址到应用服务器；</li>
-	<li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
-	<li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
-	<li>验证码服务器输出验证码图片流到用户浏览器；</li>
-	<li>用户判读验证码图片，提交表单；</li>
-	<li>应用服务器取出session中的验证码字符比对，返回结果。</li>
-</ol>
-这种方式的优点：
-<ol>
-	<li>较少的HTTP请求调用</li>
-	<li> 替换原应用中独立的验证码功能相对容易</li>
-	<li> 验证码服务器相对简单</li>
-</ol>
-<h3>方式2，验证码服务器承担验证功能，应用服务器在验证中仅起到传递作用。</h3>
-<img class="alignnone" src="http://farm3.static.flickr.com/2464/4005000760_cc402da4c1.jpg" alt="" width="500" height="310" />
-<ol>
-	<li>用户浏览器向应用服务器请求包含验证码的页面；</li>
-	<li>应用服务器发送相关图片参数（宽、高、复杂度、背景色等）到验证码服务器；</li>
-	<li>验证码服务器返回图片地址、惟一的会话id到应用服务器；</li>
-	<li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
-	<li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
-	<li>验证码服务器输出验证码图片流到用户浏览器；</li>
-	<li>用户判读验证码图片，提交表单；</li>
-	<li>应用服务器将第三步获得的会话id和用户输入的验证码字符传给验证码服务器；</li>
-	<li>验证码服务器进行验证，返回通过或拒绝；</li>
-	<li>应用服务器根据验证码服务器结果进行响应。</li>
-</ol>
-这种方式的优点：
-<ol>
-	<li>验证码服务功能完善，涵盖整个验证流程；</li>
-	<li> 验证码服务端有详细的验证日志记录，便于数据分析；</li>
-</ol>
-欢迎大家就两种方式发表意见～</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
@@ -885,6 +862,10 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
       </li>
     
@@ -898,10 +879,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
       </li>
     
   </ul>
