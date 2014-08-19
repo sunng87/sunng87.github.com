@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="一直关注 Rust 语言，最近一下发现了两个 web 框架，Iron 和 Nickel.rs。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 &hellip;">
+  <meta name="description" content="“微服务” (Microservice) 是今年特别热的一个概念，Martin Fowler 的文章对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。 在 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,94 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T16:46:20+08:00" pubdate data-updated="true">Aug 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
+
+<p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
+
+<p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
+
+<ul>
+<li>Push 服务：处理推送的订阅关系，触发推送</li>
+<li>长连接服务器：维持设备与服务的长连接</li>
+<li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
+<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警</li>
+<li>数据存储：群组数据，用户可以通过API访问</li>
+<li>HBase：消息记录存储</li>
+</ul>
+
+
+<p>模块间的集成，根据业务的特性分别使用 <a href="https://github.com/sunng87/slacker">Slacker</a> 远程调用框架和 <a href="http://twitter.github.io/kestrel/">Kestrel</a> 消息队列。
+对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。</p>
+
+<p>Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 <a href="http://clojure.org/macros">Clojure 宏</a>的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 <code>(require)</code> 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 <a href="https://github.com/ptaoussanis/nippy">nippy</a>，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。</p>
+
+<p>以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。</p>
+
+<h3>服务发现</h3>
+
+<p>长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 <a href="https://en.wikipedia.org/wiki/Publish/subscribe">Pub/Sub 抽象</a>的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。</p>
+
+<p>在这方面，我们利用了 <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster 框架</a>。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。</p>
+
+<p>所有的服务提供者将自己能够提供的服务注册在 <a href="https://zookeeper.apache.org/">Zookeeper</a> 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Zookeeper 目录结构</span>
+</span><span class='line'>ls /slacker/example-cluster/namespaces/
+</span><span class='line'><span class="o">[</span>my.serviceA, my.serviceB<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>ls /slacker/example-cluster/namespaces/my.serviceA
+</span><span class='line'><span class="o">[</span>192.168.1.100:2104, 192.168.1.101:2014...<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。</p>
+
+<p>在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。</p>
+
+<p>有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。</p>
+
+<p>原载 <a href="https://blog.avoscloud.com/1927/">AVOSCloud Blog</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1062,80 +1150,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-22T22:26:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>公司升级所有笔记本到SSD，本来是个好事，不过迁移是个难事。除了我，所有的同事都是OS X，他们有自动工具，毫无个性，不理他们。我们Linux要做这个事其实想想比较简单：首先，我们的分区和目录是抽象为两层的；其次，整个文件系统是透明的，只要拷贝就好了。</p>
-
-<p>首先，拿到新硬盘要按需分区和格式化。用gpartd就可以，这一步千万不要忘记把/boot的目标分区设置为bootable，否则会导致无法引导。</p>
-
-<p>分区完成之后，挂载各个分区，把当前硬盘里的所有文件用<code>cp -ar</code>拷贝到新硬盘上，这一步非常花时间。</p>
-
-<p>搞定之后要再手动mkdir几个目录</p>
-
-<ul>
-<li>/run</li>
-<li>/sys</li>
-<li>/proc</li>
-<li>/dev</li>
-</ul>
-
-
-<p>使系统启动的时候可以mount上特殊分区。</p>
-
-<p>此外，要修改<code>/etc/fstab</code>，根据新的硬盘UUID来配置。UUID可以在<code>ll /dev/disks/by-uuid</code>里看到。</p>
-
-<p>挂载一些特殊分区到新硬盘目录：</p>
-
-<ul>
-<li><code>mount -o bind /dev /mnt/new/dev</code></li>
-<li><code>mount -t proc none /mnt/new/proc</code></li>
-<li><code>mount -t sys none /mnt/new/sys</code></li>
-</ul>
-
-
-<p>然后就可以chroot到新硬盘。</p>
-
-<p>最后一步，在新硬盘上安装grub：</p>
-
-<pre><code>grub-install /dev/sdb
-</code></pre>
-
-<p>之后可以检查一下生成的/boot/grub/grub.cfg，观察一下硬盘的uuid是否正确，如果不对可以手动改掉。</p>
-
-<p>重启，见证奇迹。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -1155,6 +1169,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
       </li>
     
@@ -1168,10 +1186,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
   </ul>

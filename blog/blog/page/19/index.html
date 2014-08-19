@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="The appindicator has been enhanced again in Ubuntu 10.10 Maverick. The new datetime indicator has been introduced in the replace Gnome datetime &hellip;">
+  <meta name="description" content="Bti is well known as a command line twitter/identica/statusnet client, by Greg Kroah-Hartman. I have been using this tool in CLI environment for a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/10/31/bash-color-support-for-bti/">Bash Color Support for Bti</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://github.com/gregkh/bti">Bti</a> is well known as a command line twitter/identica/statusnet client, by <a href="http://github.com/gregkh">Greg Kroah-Hartman</a>.</p>
+
+<p>I have been using this tool in CLI environment for a long time, found it difficult for human to parse output by eyes. So I forked it and added this bash color support, to provide some highlight on tweets.
+<a href="http://www.flickr.com/photos/40741608@N08/5130529830/" title="bti-bash-color by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1346/5130529830_a1f8eaf793.jpg" width="416" height="500" alt="bti-bash-color" /></a></p>
+
+<p>To enable color support, add an option <i>&#8211;auto-color</i> to bti command, or append <i>auto-color=yes</i> to your configuration file($HOME/.bti)</p>
+
+<p>I have sent pull request to Greg, hope the patch can be merged into master. Before approved, you can check out <a href="http://github.com/sunng87/bti">my fork</a> and compile it yourself. (If liboauth not found, find it <a href="http://liboauth.sourceforge.net/">here</a>.)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -663,55 +706,6 @@ Redis doesn’t use OS swap. According to Salvatore Sanfilippo, the creator of R
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/10/07/douban-on-gwibber-2/">Douban on Gwibber #2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-07T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/40741608@N08/5058425003/" title="Gwibber douban by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4145/5058425003_6bd9c4b6e7.jpg" width="397" height="500" alt="Gwibber douban" /></a></p>
-
-<p>Douban support on gwibber, tested on Gwibber <strong>2.32.0-ubuntu2</strong> or <strong>2.32.0.1-ubuntu1</strong> , Ubuntu Maverick.</p>
-
-<p>You can download it from bitbucket:
-<a href="http://bitbucket.org/sunng/gwibber-douban/downloads">http://bitbucket.org/sunng/gwibber-douban/downloads</a></p>
-
-<p>Installation:<br />
-Unpack and run install script with super user privilege:
-<i>sudo bin/install.sh</i></p>
-
-<p>We will create backup for you. To rollback, just run <i>sudo bin/uninstall.sh</i> .</p>
-
-<p>Any feedback is welcome.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/20/">&larr; Older</a>
@@ -733,6 +727,10 @@ Unpack and run install script with super user privilege:
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
       </li>
     
@@ -746,10 +744,6 @@ Unpack and run install script with super user privilege:
     
       <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
   </ul>

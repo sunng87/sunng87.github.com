@@ -9,9 +9,11 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="JConsole
-下午给验证码做压力测试，用JMX监控Tomcat性能情况，200并发。Tomcat的配置，initial memory pool是512M，Max是768M。在15:30时我手动执行了一次GC。 Netpanzer
-跨平台的联机坦克游戏，今天才知道可以和Bot玩， &hellip;">
+  <meta name="description" content="A simple query to test rdf and sparql.
+[codesyntax lang="python"]
+import sys
+import rdflib
+from rdflib.Graph import ConjunctiveGraph g = &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +69,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/09/13/rdf-sparql-query-with-python/">RDF, Sparql Query With Python</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A simple query to test <a href="http://en.wikipedia.org/wiki/Resource_Description_Framework">rdf</a> and <a href="http://en.wikipedia.org/wiki/Sparql">sparql</a>.
+<pre>[codesyntax lang="python"]
+import sys
+import rdflib
+from rdflib.Graph import ConjunctiveGraph</pre></p>
+
+<p>g = ConjunctiveGraph()</p>
+
+<p>g.parse(sys.argv[1], format=&#8221;xml&#8221;)</p>
+
+<p>fbns = rdflib.Namespace(&#8220;http://rdf.freebase.com/ns/&#8221;)</p>
+
+<p>player_refs = g.query(&#8220;&#8221;&#8220;SELECT ?player<br />
+        WHERE {<br />
+            ?root fb:soccer.football_roster_position.player ?player .<br />
+        }&#8221;&#8220;&#8221;, initNs={&#8216;fb&#8217;:fbns})<br />
+players = []<br />
+for player in player_refs:<br />
+    gp = ConjunctiveGraph()<br />
+    gp.parse(player[0], format=&#8221;xml&#8221;)<br />
+    results = gp.query(&#8220;&#8221;&#8220;SELECT ?player_name ?player_position<br />
+        WHERE {<br />
+            ?player fb:type.object.name ?player_name .<br />
+            ?player fb:soccer.football_player.position_s ?player_position .<br />
+        }&#8221;&#8220;&#8221;, initNs={&#8216;fb&#8217;:fbns})<br />
+    l = list(results)<br />
+    for r in l:<br />
+        if r[0].language == &#8216;en&#8217;:<br />
+            players.append(r)</p>
+
+<p>for player in players:<br />
+    print player</p>
+
+<p>[/codesyntax]
+The query will return all player-position tuple from freebase&#8217;s db for specified resource.<br />
+To query for players of AC Milan, execute the script with resource location:
+<em>python rdfquery.py http://rdf.freebase.com/rdf/en/ac_milan</em>
+got:
+<em>(rdflib.Literal(&#8216;Yoann Gourcuff&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))<br />
+(rdflib.Literal(&#8216;Andrea Pirlo&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))<br />
+(rdflib.Literal(&#8216;Paolo Maldini&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
+(rdflib.Literal(&#8216;Gianluca Zambrotta&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
+(rdflib.Literal(&#8216;Davide Facchin&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/guid.9202a8c04000641f8000000000c75e75&#8217;))<br />
+(rdflib.Literal(&#8216;Marcus Plinio Diniz Paixao&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.defender&#8217;))<br />
+&#8230;</em></p>
+
+<p>All resources are stored as rdf:resource references. If you are also Milan fan like me, take a quick look at the players, well, the data is not up to date:)</p>
+
+<p>I have also tried to fetch data for my favorite local team.
+<em>python rdfquery.py http://rdf.freebase.com/rdf/en/jiangsu_shuntian<br />
+(rdflib.Literal(&#8216;Yao Hanlin&#8217;, language=u&#8217;en&#8217;, datatype=None), rdflib.URIRef(&#8216;http://rdf.freebase.com/ns/en.midfielder&#8217;))</em></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -538,42 +626,6 @@ This is my first maven managed web project. When using maven with hsqldb, there 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/07/27/%E8%B4%9D%E5%A1%94/">贝塔</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-07-27T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>[caption id=&#8221;&#8221; align=&#8221;alignnone&#8221; width=&#8221;340&#8221; caption=&#8221;贝塔 inkscape&#8221;]<img title="贝塔" src="http://farm3.static.flickr.com/2426/3762066304_0a56f126f0_o.png" alt="贝塔 inkscape" width="340" height="329" />[/caption]</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/36/">&larr; Older</a>
@@ -595,6 +647,10 @@ This is my first maven managed web project. When using maven with hsqldb, there 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
       </li>
     
@@ -608,10 +664,6 @@ This is my first maven managed web project. When using maven with hsqldb, there 
     
       <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
   </ul>

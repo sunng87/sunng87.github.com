@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="I am glad to release the Yan 0.4 at the last night of 2009. It&#8217;s an important release which witnesses the improvement on both code and the &hellip;">
+  <meta name="description" content="最近琢磨OAuth认证方式。OAuth的优点主要在于﻿ 用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源； 资源提供方对第三方应用有更细粒度的控制。 在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,157 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/01/04/oauth-step-by-step/">OAuth Step by Step</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近琢磨OAuth认证方式。OAuth的优点主要在于﻿
+<ul>
+	<li>用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源；</li>
+	<li>资源提供方对第三方应用有更细粒度的控制。</li>
+</ul>
+在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、URL编码的请求路径和请求的参数表组成。<br />
+请求的参数表是除去oauth_signature以外的所有参数，按参数名排序，并进行url转义
+<pre class="brush:python">def to_signature_key(method, url, data):
+	keys = list(data.keys())
+	keys.sort()
+	encoded = urllib.quote("&amp;".join([key+"="+data[key] for key in keys]))
+	return "&amp;".join([method, urllib.quote(url, safe="~"), encoded])
+</pre>
+有了这个通用的生成signature base string的方法，以后就可以根据OAuth协议规范按步骤进行。</p>
+
+<p>首先获取Request Token。这一步通常使用资源提供方注册的API Key和API Key Secret
+<pre class="brush:python">def request_token_params(consumer_key, consumer_secret, path, method='GET'):
+	data={}
+	data['oauth_consumer_key']=consumer_key
+	data['oauth_signature_method']='HMAC-SHA1'
+	data['oauth_timestamp']=str(int(time.time()))
+	data['oauth_nonce']=''.join([str(random.randint(0,9)) for i in range(10)])
+	print data</pre></p>
+
+<p>	msg = to_signature_key(method, path, data)<br />
+	print msg</p>
+
+<p>	signed = base64.b64encode(hmac.new(consumer_secret+&#8221;&amp;&#8221;, msg, hashlib.sha1).digest())<br />
+	print signed<br />
+	data[&#8216;oauth_signature&#8217;]=signed<br />
+	return data</p>
+
+<p>def result2dict(result_string):<br />
+	d = {}<br />
+	params = res.split(&#8216;&amp;&#8217;)<br />
+	for p in params:<br />
+		d[p.split(&#8216;=&#8217;)[0]] = p.split(&#8216;=&#8217;)[1]<br />
+	return d</p>
+
+<p>conn = httplib.HTTPConnection(&#8220;www.douban.com&#8221;, 80)</p>
+
+<p>params = request_token_params(consumer_key, consumer_secret, request_token_path)<br />
+conn.request(&#8216;GET&#8217;, request_token_path+&#8221;?&#8221;+urllib.urlencode(params))<br />
+res = conn.getresponse().read()<br />
+print res<br />
+request_token = result2dict(res)
+
+这一步可以获得未经认证的Request Token和Request Token Secret。需要注意的细节是在计算hmac签名的时候，即使只有一个Token Secret，仍然需要加上&#8221;&amp;&#8221;</p>
+
+<p>第二步要求用户授权该Request Token，打开浏览器，将用户定向到相应的授权页面，参数为上一步获得的Request Token</p>
+
+<p>第三步，用授权过的Request Token换取Access Token。这一步类似第一步，只是用于签名的token包括API Key Secret和Request Token
+<pre class="brush:python">def access_token_params(consumer_key, consumer_secret, oauth_token, oauth_secret, path, method='GET'):
+	data={}
+	data['oauth_consumer_key']=consumer_key
+	data['oauth_signature_method']='HMAC-SHA1'
+	data['oauth_timestamp']=str(int(time.time()))
+	data['oauth_nonce']=''.join([str(random.randint(0,9)) for i in range(10)])
+	data['oauth_token'] = oauth_token</pre></p>
+
+<p>	msg = to_signature_key(method, path, data)<br />
+	print msg</p>
+
+<p>	signed = base64.b64encode(hmac.new(consumer_secret+&#8221;&amp;&#8221;+oauth_secret, msg, hashlib.sha1).digest())<br />
+	print signed<br />
+	data[&#8216;oauth_signature&#8217;]=signed<br />
+	return data</p>
+
+<p>params = access_token_params(consumer_key, consumer_secret, request_token[&#8216;oauth_token&#8217;],<br />
+	request_token[&#8216;oauth_token_secret&#8217;], access_token_path)<br />
+conn.request(&#8216;GET&#8217;, access_token_path+&#8221;?&#8221;+urllib.urlencode(params))<br />
+res = conn.getresponse().read()<br />
+print res<br />
+access_token = result2dict(res)
+
+这一步将至少返回Access Token和Access Token Secret，是最终用于访问受限资源的Token。以豆瓣的实现为例，OAuth的相关参数应放在HTTP头里随请求进行发送。
+<pre class="brush:python">def oauth_header(consumer_key, consumer_secret, oauth_token, oauth_secret, path, realm):
+	data = access_token_params(consumer_key, consumer_secret, oauth_token, oauth_secret, path, method="POST")
+	header_string = ','.join([key+'="'+data[key]+'"' for key in data.keys()])
+	return 'OAuth realm="'+realm+'",'+header_string</pre></p>
+
+<p>posturl = &#8216;http://api.douban.com/miniblog/saying&#8217;</p>
+
+<p>content = &#8220;&#8221;&#8220;&lt;?xml version=&#8217;1.0&#8217; encoding=&#8217;UTF-8&#8217;?&gt;<br />
+&lt;entry xmlns:ns0=&#8221;http://www.w3.org/2005/Atom&#8221; xmlns:db=&#8221;http://www.douban.com/xmlns/&#8221;&gt;<br />
+&lt;content&gt;li lei ju le han mei mei&lt;/content&gt;<br />
+&lt;/entry&gt;<br />
+&#8221;&#8221;&#8221;</p>
+
+<p>header = {}<br />
+header[&#8216;Authorization&#8217;] = oauth_header(consumer_key, consumer_secret,<br />
+		access_token[&#8216;oauth_token&#8217;], access_token[&#8216;oauth_token_secret&#8217;],<br />
+		posturl, &#8220;http://api.douban.com&#8221;)<br />
+header[&#8216;Content-Type&#8217;] = &#8216;application/atom+xml&#8217;<br />
+print header</p>
+
+<p>conn.request(&#8216;POST&#8217;, posturl, content, header)<br />
+res = conn.getresponse().read()</p>
+
+<p>print res</p>
+
+<p>conn.close()
+
+在这一步中，用于生成signature base string的url是要访问的受限资源地址，而签名的参数表依然是oauth相关的参数。<br />
+生成的Authorization头如下
+<pre class="brush:text">Authorization: OAuth realm="http://api.douban.com",
+    oauth_nonce="8735717688",
+    oauth_timestamp="1262613619",
+    oauth_consumer_key="0bc081a01168b263234184e0343a1729",
+    oauth_signature_method="HMAC-SHA1",
+    oauth_token="5fb836c37543ad691f28a44a5fcb083b",
+    oauth_signature="jk6p5qaXVPrGQctSzpO5jjYHfDk="
+</pre>
+用这个头就可以在一定的时间内访问所有授权范围内的受限资源。</p>
+
+<p>代码是ugly了一些，不过应该相对易于理解吧。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -539,61 +690,6 @@ Jetty采用默认配置 maxThreads 200。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/12/24/java%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%80%9F%E5%BA%A6%E5%AF%B9%E6%AF%94/">Java嵌入式数据库的速度对比</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-12-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Yan的APIKEY一直是用嵌入式的数据库存储的，最初使用的是hsqldb，最近又添加了H2和Derby的支持，基本上囊括了所有开源的Java嵌入式数据库。实现多了自然需要挑选、比较一下。</p>
-
-<p>数据库特性的比较，H2的网站上有很好的Matrix，一目了然<br />
-http://www.h2database.com/html/features.html#comparison</p>
-
-<p>关于速度的比较，今天做了一个简单的测试。</p>
-
-<p>分别从derby / H2 / hsqldb中取出10 、100、1000条数据，循环100000次，比较耗时，如下：</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2665/4210754380_5cb4d7b0a8_o.png" alt="" width="376" height="394" /></p>
-
-<p>三者的速度差距非常明显，hsqldb远快于其他两个。</p>
-
-<p>而在10、100、1000条记录的索引上查询，并取出指定记录呢，同样是100000次，如下：</p>
-
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2716/4210754396_e52acc7e69_o.png" alt="" width="376" height="394" /></p>
-
-<p>再索引上查询，速度受记录数量的影响非常微弱了。但是hsqldb还是远快于其他二者，有趣的是derby的速度要略微快于H2.</p>
-
-<p>根据这样的结果，在Yan的应用中，hsqldb还是最理想的实现。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/30/">&larr; Older</a>
@@ -615,6 +711,10 @@ http://www.h2database.com/html/features.html#comparison</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
       </li>
     
@@ -628,10 +728,6 @@ http://www.h2database.com/html/features.html#comparison</p>
     
       <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
   </ul>

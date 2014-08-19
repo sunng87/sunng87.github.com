@@ -9,8 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="搬家了，搬了一条街，从马路这边搬到马路那边。从二楼搬到四楼，告别了潮湿发霉的小屋，换了新环境迎接工作第二年。本来想搬出这个玉兰香苑，但是看了一圈不是太远就是太贵。都说现在是不炒房价改炒房租了，别的不知道，反正我原来那屋房租就涨了200，而且我搬出去那天就租出去了。
-妈妈来上海，晚上可以一起玩桌游 &hellip;">
+  <meta name="description" content="Problem
+When running mongod/mongo/mongos, you got message like this:
+mongod: error while loading shared libraries: libmozjs.so: cannot open shared &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/13/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid/">Fixing &#8220;Libmozjs&#8221; Missing When Using Mongodb on Ubuntu Lucid</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Problem</strong>
+When running mongod/mongo/mongos, you got message like this:
+<i>mongod: error while loading shared libraries: libmozjs.so: cannot open shared object file: No such file or directory</i></p>
+
+<p><strong>Solution</strong>
+Make sure you have xulrunner-dev installed:
+<em>sudo apt-get install xulrunner-dev</em></p>
+
+<p>then find libmozjs on your filesystem:
+<em>sudo locate libmozjs</em></p>
+
+<p>in lucid, it&#8217;s supposed to locate at:
+<em>/usr/lib/xulrunner-1.9.2.6/libmozjs.so</em></p>
+
+<p>(and some other directories, such as firefox / thunderbird / seamonkey)</p>
+
+<p>Just create a symbol link:
+<em>sudo ln -s /usr/lib/xulrunner-1.9.2.6/libmozjs.so /usr/lib/</em></p>
+
+<p>try to restart mongodb:
+<em>sudo service mongodb start</em></p>
+
+<p>take a look at process list:
+<em>ps aux | grep mongo</em></p>
+
+<p>it works.</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -580,52 +644,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/13/perfomed-my-first-commit-to-openstreetmap-org/">Perfomed My First Commit to OpenStreetMap.org</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>每每看到OSM上<a href="http://osm.org/go/5nFq9bhH-">南京的地图</a>都一阵唏嘘，这么多年了几乎没有任何变化，仅有的一些数据也都是错误百出，身为一个南京人，又是一个GIS专业毕业的，深感压力巨大。</p>
-
-<p>实际上编辑OSM没有大家想象的那么复杂。任何人都可以注册登录网站，用默认的Potlatch工具进行编辑，即使你手上没有数据也可以编辑一些基本的属性，比如把错误的中山路纠正为北京东路。我从MapMyTracks上导出GPX文件上传到OSM，GPS数据会在OSM上被显示出来，根据这些数据稍作加工就是道路信息了。浏览器里的编辑器功能并不强大，KDE桌面的Merkaator的编辑能力要强大得多，可以对道路进行split/join操作，这些操作对之前南京地图上各种错误的数据非常必要。</p>
-
-<p>其实OpenStreetMap可以借助一些背景图进行数字化，但是在国内，目前只有分辨率非常低Yahoo卫星地图可以用。至于Google的卫星地图，<a href="http://wiki.openstreetmap.org/wiki/FAQ#What_images_and_maps_may_I_use_to_make_maps_from.3F">由于License的原因</a>，你是不能在编辑自由地图时使用的。</p>
-
-<p>上海的OSM已经非常完善，数据完善的程度、渲染出地图的壮观已经让你难以想象，连去年开通的张江电车已经在地图上标出，还有各个站名。注册后可以发现，仅仅在浦东就有十几位OSM的贡献者。相比之下，南京在这方面一片空白，甚至还没有苏州的地图完善。考虑到南京有这么多学校这么多GIS专业学生，每年做那么多无用的、自以为是的数字化作业，真正有意义的工作却无人问津，并非没有人愿意去做，而恐怕是大部分人对OSM都闻所未闻。</p>
-
-<p>今后每周我回抽出一定的时间来编辑南京的地图，也算是为家乡做一些贡献吧。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -647,6 +665,10 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
       </li>
     
@@ -660,10 +682,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     
       <li class="post">
         <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
       </li>
     
   </ul>
