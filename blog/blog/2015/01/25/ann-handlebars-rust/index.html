@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Handlebars 的 Rust 实现 - Here comes the Sun</title>
+  <meta name="author" content="Sun Ning">
+
+  
+  <meta name="description" content="本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust">
+  <link href="/blog/favicon.png" rel="icon">
+  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/blog/atom.xml" rel="alternate" title="Here comes the Sun" type="application/atom+xml">
+  <script src="/blog/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/blog/">Here comes the Sun</a></h1>
+  
+    <h2>Sun Ning's web log</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/blog/">Blog</a></li>
+  <li><a href="/blog/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Handlebars 的 Rust 实现</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-25T16:22:50+08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。我也是其中一员，去年还给<a href="">程序员杂志写了一篇 Rust 的文章</a>，结果现在程序员杂志也停刊了。</p>
+
+<p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
+
+<p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
+
+<ul>
+<li>不要把 rust 代码写进 html 模版里，反例： jsp, ejs</li>
+<li>不要把 html 代码写进 rust 里，反例： hiccup</li>
+<li>能够复用，基于“继承”而不是 include</li>
+<li>能够简单地自定义标签，反例：mustach</li>
+</ul>
+
+
+<p>基于以上的原则，<a href="https://github.com/sunng87/handlebars-rust">handlebars-rust</a> 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 <a href="https://github.com/sunng87/handlebars-iron">handlebars-iron</a> 项目，作为一个 <a href="http://ironframework.io">Iron 框架</a>的 middlaware。</p>
+
+<p>简单总结几点收获：</p>
+
+<ul>
+<li>Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型</li>
+<li>静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 <code>false</code>/<code>0</code>/<code>""</code>/<code>[]</code> 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 <code>Json</code> 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 <code>ToJson</code>，算是设计上的一个取舍。</li>
+<li>Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的</li>
+<li>关于 Rust 的 ownership 看<a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html">这篇文章</a>，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错</li>
+<li>有任何问题都可以在 stackoverflow 上问，有几个人会很快回复</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-25T16:22:50+08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/blog/categories/programming/'>programming</a>, <a class='category' href='/blog/blog/categories/rust/'>rust</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/" title="Previous Post: AVOS Cloud 实时通信服务架构：微服务和服务发现">&laquo; AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sunng87',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sun Ning -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sunng-blog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust/';
+        var disqus_url = 'http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

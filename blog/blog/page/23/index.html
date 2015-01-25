@@ -9,9 +9,8 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Problem
-When running mongod/mongo/mongos, you got message like this:
-mongod: error while loading shared libraries: libmozjs.so: cannot open shared &hellip;">
+  <meta name="description" content="clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数： [cc lang=&#8221;lisp&#8221;]
+(defn addup ([limit] (addup limit 0 0)) ([limit current &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +66,107 @@ mongod: error while loading shared libraries: libmozjs.so: cannot open shared &h
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/07/15/clojure-recur/">Clojure Recur</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数：</p>
+
+<p>[cc lang=&#8221;lisp&#8221;]<br />
+(defn addup<br />
+    ([limit] (addup limit 0 0))<br />
+    ([limit current sum]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (addup limit (+ 1 current) (+ current sum)))))<br />
+[/cc]</p>
+
+<p>调用</p>
+
+<p>(addup 10)</p>
+
+<p>可以得到55</p>
+
+<p>但是调用</p>
+
+<p>(addup 50000)</p>
+
+<p>不出意外，出现了StackOverflowException， 这是递归典型的错误。</p>
+
+<p>为此，需要进行优化。尾递归优化是指如果递归满足一定条件，编译器可以将递归展开，避免出现栈溢出的问题。这里的条件，就是递归的最后一次调用是否是其本身，比如上面的代码，最后一次操作仍然是addup，即满足尾递归的条件，而如果同样的代码写成：</p>
+
+<p>[cc lang=&#8221;lisp&#8221;]<br />
+(defn addup2<br />
+    ([limit] (addup2 limit 0))<br />
+    ([limit current]<br />
+        (if (< limit current)<br />
+            0<br />
+            (+ current (addup2 limit (+ current 1))))))[/cc]</p>
+
+<p>最后一个操作是+，不满足尾递归循环，无法进行优化。</p>
+
+<p>clojure默认不进行尾递归优化，需要使用关键字recur来保证优化，把第一段代码写成：</p>
+
+<p>[cc lang=&#8221;lisp&#8221;]<br />
+(defn addup<br />
+    ([limit] (addup limit 0 0))<br />
+    ([limit current sum]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (recur limit (+ 1 current) (+ current sum)))))<br />
+[/cc]</p>
+
+<p>社区的解释是，如果程序员在无法进行尾递归优化的代码中使用recur会发生报错，这样有助于他们发现代码中潜在的缺陷。</p>
+
+<p>在第二段代码中使用recur，会得到异常：</p>
+
+<p>java.lang.UnsupportedOperationException: Can only recur from tail position</p>
+
+<p>此外，clojure提供loop函数简化书写：</p>
+
+<p>[cc lang=&#8221;lisp&#8221;]<br />
+(defn addup3<br />
+    ([limit]<br />
+    (loop [current 0 sum 0]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (recur (+ current 1) (+ current sum))))))<br />
+[/cc]</p>
+
+<p>这种写法同样可以应用尾递归优化而不会导致栈溢出。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -596,54 +696,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/06/16/%E6%88%91%E5%9C%A8%E9%82%A3%E9%87%8C%E5%90%83%E6%8B%89%E9%9D%A2/">我在那里吃拉面</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-16T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>“终于找到一家和我身份地位品味收入都相符的拉面馆。” 这条本来要发到twitter上的，结果不料哪哪出了问题，没发出去，却被我吃面条的时候记下来了。自从有了饭否twitter，只言片语多了，真正坐下来搞创作的动力却没有了，咱虽然比不上<a href="http://www.google.com.hk/search?hl=zh-CN&newwindow=1&safe=strict&q=%E6%9E%81%E5%B0%91%E9%83%A8%E5%88%86%E6%90%9E%E8%89%BA%E6%9C%AF%E7%9A%84%E7%94%B7%E9%9D%92%E5%B9%B4&aq=f&aqi=&aql=&oq=&gs_rfai=">极少部分搞艺术的男青年</a>，但追求上进也不该含糊是吧。</p>
-
-<p>纵然再有追求，也比不上清真拉面馆热卖鱼香肉丝面。上海郊区天高真主远，远亲不如近邻，再不<a href="http://it.21cn.com/itnews/hygc/2010/06/13/7588720.shtml">创个新</a>，小小的拉面馆恐怕连在这里匹配我的身份地位和品味的可能性也没有了。但是在首都的时候就不一样，同样是少数民族兄弟开的面馆，人家可不含糊，别说是买鱼香肉丝了，门都不让进。</p>
-
-<p>在<a href="http://osm.org/go/50je@Ocrn-">宝盛里</a>的半年，我发现最贴近我们民工生活的就要数西北拉面和成都小吃，碗大量足（当然也不会有拿着筷子在碗里一粒一粒拣肉末吃的男士）。就为了第一次在成都小吃发现盖浇饭里鸡丁可以比花生多，我在那家店里活活吃过了夏秋冬，后来我每每想起这事都难免情绪激动。而之所以没能熬到冬去春来，也是因为老板时间长了实在看不下去，问我要不要换点别的。我是受宠若惊，才不得不转战拉面店。那家叫不上名字店，名字不重要你知道它在哪就成，墙上还挂着清真寺的画，就像很多湘菜馆会挂毛主席像一样。你可以想象这样一家店是绝对做不出卖鱼香肉丝的勾当的。十三块一个的烤羊腿是他们冬天的热门；端菜的小孩最多也就初中年纪，解析几何他大概是不会清楚了，但是你不催他他也还是不会给你上菜。</p>
-
-<p>另一家印象深刻的面馆是<a href="http://osm.org/go/50jfFm40@-">中关村软件园北门</a>对面的，名字好像叫老马拉面，店的规模还不小，在那个鸟不那啥的地方算是鹤立鸡群了，是软件园民工，西北旺、西二旗一代租住户，应届大学毕业生理想的消费场所。我就在那吃过一次，印象深刻仅仅是因为一位服务员长得好看。那是北门最美好的两件事物之一，另一件是那里成排的杨树，我每次在那里等642路等会被这两件事物陶醉。</p>
-
-<p>思绪万千了又。其实我就是感叹能找到一家10块钱以内打发晚饭晚上十点还不会饿的地方，抑制不住内心的喜悦，又回忆起以前了。</p>
-
-<p>最后标题是借名记唐师曾的书名。</p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/24/">&larr; Older</a>
@@ -665,6 +717,10 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -678,10 +734,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -717,13 +769,6 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -733,7 +778,7 @@ redis目前只有基于TCP的文本协议，与memcache类似，有一些改进�
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

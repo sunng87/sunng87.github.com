@@ -9,7 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="前段时间说发展兴趣爱好，于是又多了一个心灵手巧的爱好：静态模型。昨天买了一套油罐车模型（ATZ 5-4320）1：72，今天上午花了一上午时间就把它组装起来了。这种静态模型需要用胶水把各个零件粘合起来。所以对心灵手巧的要求程度比较高，作为一个小时候手工课沿着线剪纸都剪不齐的娃来说，其实这是一种挑战 &hellip;">
+  <meta name="description" content="介绍一下Clojure社区的活跃人物，有助于大家更好地学习和了解clojure，以下罗列的前提是包含但不限于，排名亦不分先后。 Rich Hickey (richhickey)
+Clojure的创始人。 Michael Fogus (fogus)
+The joy of clojure一书的作者， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,71 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/08/27/clojure-developers-you-should-follow/">Clojure Developers You Should Follow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>介绍一下Clojure社区的活跃人物，有助于大家更好地学习和了解clojure，以下罗列的前提是包含但不限于，排名亦不分先后。</p>
+
+<p><h3>Rich Hickey (richhickey)</h3>
+Clojure的创始人。</p>
+
+<p><h3>Michael Fogus (fogus)</h3>
+The joy of clojure一书的作者，clojure社区的活跃人物，Clojure/core的成员。参与和维护着很多clojure项目。</p>
+
+<p><h3>James Reeves (weavejester)</h3>
+Compojure等一系列web框架的作者。是Clojure web开发方面的先驱，还维护着大量的clojure项目。</p>
+
+<p><h3>Mark McGranaghan (mmcgrana)</h3>
+Clojure web规范Ring的创始人，还维护着clj-redis等项目。</p>
+
+<p><h3>Stuart Hallowa (stuarthalloway)</h3>
+Programming Clojure一书的作者，Clojure的核心开发人员之一。</p>
+
+<p><h3>Christophe Grand (cgrand)</h3>
+cgrand是clojure web开发方面的专家，维护了enlive moustache等库。</p>
+
+<p><h3>Phil Hagelberg (technomancy)</h3>
+Clojure构建工具leiningen的作者。</p>
+
+<p><h3>Zach Tellman (ztellman)</h3>
+Zach是框架aleph/lamina/gloss的作者，是clojure网络编程的专家。</p>
+
+<p><h3>Nathan Marz (nathanmarz)</h3>
+Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目。</p>
+
+<p>以上列举的人都可以在github和twitter上找到。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=eafeb545-d70d-8011-8df5-66febda32431" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -553,75 +620,6 @@ For functions contains in some module, you can refer it with the clojure way:<br
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/07/22/%E4%BD%BF%E7%94%A8defrecord%E4%B8%8Edefprotocol%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">使用defrecord与defprotocol的注意事项</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>简单地说，protocol是clojure中的接口，record是clojure中的数据类型。</p>
-
-<p>可以通过这样的code定义一个protocol<br />
-[cc lang=&#8221;clojure&#8221;]<br />
-(defprotoco DummyProtocol<br />
-  &#8220;doc string&#8230;&#8221;<br />
-  (method-one [self x] &#8220;doc string&#8230;&#8221;))<br />
-[/cc]</p>
-
-<p>需要注意的是，protocol里所有方法的第一个参数都是self/this参数（类似python），从第二个开始才是调用时传入的参数。如果方法要重载呢？</p>
-
-<p>[cc lang=&#8221;clojure&#8221;]<br />
-(defprotocol DummyProtocol<br />
-  &#8220;doc string&#8230;&#8221;<br />
-  (method-one [self x] [self x y] &#8220;doc string&#8221;)<br />
-)
-[/cc]</p>
-
-<p>Apress的 Practical Clojure 书里的例子，给重载的参数表加上了括号，这样会导致编译错误（<a href="http://book.douban.com/annotation/13819191/" target="_blank">注记</a>）。</p>
-
-<p>定义一个record实现protocol</p>
-
-<p>[cc lang＝&#8221;clojure&#8221;]<br />
-(defrecord DummyRecord [a b c]<br />
-  DummyProtocol<br />
-  (method-one [self x] (+ a x))<br />
-  (method-one [self x y] (+ a x y)))<br />
-[/cc]<br />
-Practical Clojure里关于这部分的代码，又丢掉了self参数（<a href="http://book.douban.com/annotation/13819264/" target="_blank">注记</a>）。</p>
-
-<p>最后还有一个问题，如果直接use你的ns，你会发现调用record时出现：<br />
-java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
-
-<p>怎么回事，不是都use了吗？原因是record被编译成了java对象，所以引用时要用java对象的引用方式，import之。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/12/">&larr; Older</a>
@@ -643,6 +641,10 @@ java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -656,10 +658,6 @@ java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -695,13 +693,6 @@ java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -711,7 +702,7 @@ java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

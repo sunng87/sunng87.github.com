@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="daf同学最近迷上画画了。 这次发图是先斩后奏，嗯
-">
+  <meta name="description" content="某人已经发展到上班时间写blog了。 继续说验证码服务，找到两个比较典型的。recaptcha非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），vidoop提供了一种很有特点的验证码机制。 两个服务都提供了python的接口封装便于接入， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/10/13/%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%8D%E5%8A%A1recaptcha%E5%92%8Cvidoop/">验证码服务recaptcha和vidoop</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>某人已经发展到上班时间写blog了。</p>
+
+<p>继续说验证码服务，找到两个比较典型的。<a href="http://recaptcha.net/" target="_blank">recaptcha</a>非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），<a href="http://vidoop.com/" target="_blank">vidoop</a>提供了一种很有特点的验证码机制。</p>
+
+<p>两个服务都提供了python的接口封装便于接入，通过api接口可以管中窥豹，大致了解这两个验证服务的机制。
+<h3>recaptcha</h3>
+下面是一段结合了web.py的简单调用
+<pre class="brush:python">public_key = "******"
+private_key = "********"
+class Recaptcha(object):
+    def GET(self):
+        r = recaptcha.displayhtml(public_key)
+        return render.recapt(r)</pre></p>
+
+<p>    def POST(self):<br />
+        params = web.input()<br />
+        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field, params.recaptcha_response_field<br />
+        remote_ip = web.ctx.ip<br />
+        result = recaptcha.submit(recaptcha_challenge_field, recaptcha_response_field, private_key, remote_ip)<br />
+        return result.is_valid
+我在GET请求中获取验证码，在POST请求中提交验证码。</p>
+
+<p>recaptcha返回的是一段recaptcha自己风格的html片段，效果大家参考twitter的验证码，实际上是一个iframe，iframe的url中包含了哈希串。其中的字段名也自然被写死成recaptcha_challenge_field和recaptcha_response_field，考虑到应用服务器无需验证这两个field的输入，所以也无可厚非。recaptcha_response_field用于输入字符，recaptcha_challenge_field在载入时被修改为一个唯一key。</p>
+
+<p>提交验证时，recaptcha需要提供以上两个用户输入和应用的privatekey以及浏览器ip。recaptcha通过recaptcha_challenge_field 应用的private key以及用户出口ip可以唯一标示用户，并包含一些冗余实现安全相关策略。
+<h3>Vidoop</h3>
+Vidoop提供的服务机制与recaptcha大同小异
+<pre class="brush:python">
+customer_id = "***"
+site_id = "localtest"
+api_username = "******"
+api_password = "******"
+vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
+
+<p>class Vidoop(object):<br />
+    def GET(self):<br />
+        captcha_id, captcha_url, captcha_categories, captcha_text = vdp.create_captcha()<br />
+        return render.vidoop(captcha_id, captcha_url, captcha_categories, captcha_text)</p>
+
+<p>    def POST(self):<br />
+        params =web.input()<br />
+        captcha_id, captcha_code = params.id, params.code<br />
+        try:<br />
+            vdp.submit_captcha(captcha_id, captcha_code)<br />
+            return True<br />
+        except:<br />
+            return False
+</p>
+
+<p>提交验证时只需要要captcha_id和用户输入，这里相对recaptcha做了简化，但已经足够验证需要了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -511,50 +595,6 @@ println(lons);
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/03/libchamplain-map-widget-of-gnome-desktop/">Libchamplain: Map Widget of Gnome Desktop</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>续昨，虽然昨天升级到了gnome2.28，也安装了libchamplain，但是却没有发现这个库应用。Ubuntu上的Empathy似乎是没有把location support编译进去。看不到效果怎么办，好在<a href="http://www.pierlux.com/" target="_blank">libchamplain的作者</a>还提供了另一个应用。这是一个eog的插件，用于读取照片的exif信息中的gps latitude和longitude，进而将他显示在libchamplain的地图里。</p>
-
-<p><img class="alignnone" src="http://pic.yupoo.com/classicning/2698882a6ac0/medium.jpg" alt="" width="500" height="343" /></p>
-
-<p>安装这个插件可以follow<a href="http://live.gnome.org/EyeOfGnome/Plugins" target="_blank">官方网站上的做法</a>，当然开发包、头文件之类的东西要齐备。</p>
-
-<p>libchamplain使用了<a href="http://www.clutter-project.org/" target="_blank">clutter</a>，在载入地图的时候还有fadein的效果。clutter是将要应用在下一代桌面gnome shell中的图形特效库。</p>
-
-<p>插件是用C写的，可以看成是libchamplain的一个例子，作者说已经有了其他语言的binding，如此未来在gnome桌面上开发tile地图程序会变得简单。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/34/">&larr; Older</a>
@@ -576,6 +616,10 @@ println(lons);
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -589,10 +633,6 @@ println(lons);
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -628,13 +668,6 @@ println(lons);
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -644,7 +677,7 @@ println(lons);
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

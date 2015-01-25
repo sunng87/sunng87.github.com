@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="As the screenshot shows, now you can embed HeatCanavs in your OpenLayers application, as well as OpenSteetMap. Three steps to create such kind of &hellip;">
+  <meta name="description" content="jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/06/10/jip-embed-on-the-fly-classpath-resolution-for-jython/">jip.embed: On-the-fly Classpath Resolution for Jython</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you don&#8217;t have to download jars manually and append them to your -Dpython.path. You just pick your editor, import jip.embed, code your business, then save and run it.</p>
+
+<p>Code example:</p>
+
+<p>[cc lang=&#8221;python&#8221;]<br />
+import jip.embed<br />
+jip.embed.require(&#8216;commons-lang:commons-lang:2.6&#8217;)<br />
+from org.apache.commons.lang import StringUtils</p>
+
+<p>print StringUtils.reverse(&#8216;jip rocks&#8217;)<br />
+[/cc]</p>
+
+<p>Output:<br />
+[cc]<br />
+skcor pij<br />
+[/cc]<br />
+(jip will print some log here if dependencies are included for first time)</p>
+
+<p>So please check out my new released jip, 0.7:
+<a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></p>
+
+<p>For virtualenv user, you can install full-featured jip via pip:
+<font face="monospace">$ pip install jip</font></p>
+
+<p>To install jip globally, download the package from <a href="http://pypi.python.org/pypi/jip">python cheese shop</a> and run:
+<font face="monospace">$ jython setup.py install </font><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=36db589c-cfdd-8173-8d89-3b7aeb29cb5c" /></div></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -563,69 +624,6 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/">去西安</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-05-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>除了02年在北京打了几天酱油，我还没有因为打着去玩的旗号出过远门（到镇江这里就不算远门了）。今年五一痛下决心，卷入五一滚滚洪流，抱着轻度腹胀不下火线的精神，突破了我所到达的经度下限。
-<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=108.378,33.958,109.39,34.539&amp;layer=mapnik" style="border: 1px solid black"></iframe><br /><small><a href="http://www.openstreetmap.org/?lat=34.2485&amp;lon=108.884&amp;zoom=10&amp;layers=M">View Larger Map</a></small></p>
-
-<p>我坐的K560是一趟开到延安老区的车，老区人民伤不起，一路上尽给到乌鲁木齐到拉萨的车让道了。晚上在上铺作原地翻滚，发现铁皮太厚根本没有信号，为了不虚此行，早晨7点就从上面跳下来，在窗边占个座位打开GPS。抬头一看已经到了开封，不对，才到开封。
-<a href="http://www.openstreetmap.org/user/Sunng/traces/1001751">http://www.openstreetmap.org/user/Sunng/traces/1001751</a></p>
-
-<p>到了西安已经是下午三点半，找到<a href="http://torrge.me/">老支书</a>，见到身强体壮的新版寇巨头。晚上我们就在曲江新区迷了路，冥冥之中深夜里摸到了我国第一个官二代并富二代，胡亥长眠的地方。最后还好老支书迷途知返，及时拿出诺基亚表明自己身份，与二代们划清界限，我们才又绕道大雁塔回了住处。
-<a href="http://www.flickr.com/photos/40741608@N08/5682156883/" title="DSC_0018 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5069/5682156883_de539a9bc6.jpg" alt="DSC_0018" height="335" width="500" /></a></p>
-
-<p>第二天是逛城墙。逛城墙之前先说一下出发前吃的腊汁肉揪片，太好吃了，就是油有点大：我当时就指出如果是吃面条吃出高血脂脂肪肝什么的，跟那帮大鱼大肉的比起来实在是有点冤枉。扯回来，西安现存的城墙是明代以后的，保存完好，不过不大，GPS显示周长在15公里左右。从城墙的东西南北四个门上去都可以租到自行车，默认是100分钟，基本上可以很宽裕地把全程骑行下来。
-<a href="http://www.openstreetmap.org/user/Sunng/traces/1001753">http://www.openstreetmap.org/user/Sunng/traces/1001753</a>
-<a href="http://www.flickr.com/photos/40741608@N08/5682732066/" title="DSC_0025 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5023/5682732066_9d8ea3a532.jpg" alt="DSC_0025" height="500" width="335" /></a></p>
-
-<p>那天天气不太好，本来想拍拍城墙上夕阳斜照点点余辉什么的，结果相机没有被淋雨已经万幸了。况且西安经度比较低，太阳落山的时间要晚不少，执着于点点余辉的话，挑个好天先去吃一顿在上城墙吧。
-<a href="http://www.flickr.com/photos/40741608@N08/5682165935/" title="DSC_0035 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5021/5682165935_ea19227047.jpg" alt="DSC_0035" height="335" width="500" /></a></p>
-
-<p>主题来了，下了城墙我们直奔<del datetime="2011-05-04T12:35:03+00:00">钟</del>鼓楼后面的回民街。用老支书的话说，这都是硬菜，花样繁多个个顶事，瓶颈不再别处，在你的胃。去了才发现战斗力低下，我们前后去了两次，吃了羊肉馅饼、羊肉串、镜糕、桂花糕、灌汤包、小酥肉。我就不一一描述了，说得再好吃也得真正去了才能体会。去不了就看看吧：
-<a href="http://www.flickr.com/photos/40741608@N08/5683869110/" title="DSC_0056 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5024/5683869110_2fe22459fe.jpg" alt="DSC_0056" height="335" width="500" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/5683303271/" title="DSC_0059 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5102/5683303271_4f4490d2b9.jpg" alt="DSC_0059" height="500" width="336" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/5683869494/" title="DSC_0058 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5190/5683869494_7ea613f211.jpg" alt="DSC_0058" height="335" width="500" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/5683305289/" title="DSC_0067 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5105/5683305289_f0f81393ab.jpg" alt="DSC_0067" height="335" width="500" /></a>
-<a href="http://www.flickr.com/photos/40741608@N08/5683872666/" title="DSC_0069 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5227/5683872666_fd2a4f9c18.jpg" alt="DSC_0069" height="500" width="336" /></a>
-这个是卖桂花糕的大叔，pose很专业，但是遇到不专业的人拍照。大叔我对不起你啊！
-<a href="http://www.flickr.com/photos/40741608@N08/5683307385/" title="DSC_0077 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5065/5683307385_615a7883d0.jpg" alt="DSC_0077" height="500" width="336" /></a></p>
-
-<p>更多照片请移步到<a href="http://www.flickr.com/photos/40741608@N08/">flickr</a>。此外您应当理解，在这种环境下，是没有心思好好拍照的。</p>
-
-<p>最后感谢老支书无微不至的接待。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=20f8d469-f3be-8f4a-8906-0f0eccb11b3b" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/14/">&larr; Older</a>
@@ -647,6 +645,10 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -660,10 +662,6 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -699,13 +697,6 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -715,7 +706,7 @@ $ mv sunng87-exaile-doubanfm-gnome-shell-extension-5cc29c6/ ~/.local/share/gnome
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

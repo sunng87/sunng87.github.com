@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content=" ">
+  <meta name="description" content="web.py是个很小的python框架，特点就是小，连session都没有实现人家就发布了。前几天KungfuRails大会上他们吹牛说Sinatra可以写出世界上最小的Webapp，但是有web.py的化，那个最小至少要加上个“之一”。 Web. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,84 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2009/11/02/lighttpd%E9%80%9A%E8%BF%87fastcgi%E8%BF%90%E8%A1%8Cweb-py%E7%A8%8B%E5%BA%8F/">Lighttpd通过FastCGI运行web.py程序</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://webpy.org/" target="_blank">web.py</a>是个很小的python框架，特点就是小，连session都没有实现人家就发布了。前几天KungfuRails大会上他们吹牛说<a href="http://www.sinatrarb.com" target="_blank">Sinatra</a>可以写出世界上最小的Webapp，但是有web.py的化，那个最小至少要加上个“之一”。</p>
+
+<p>Web.py在Lighttpd上通过fastcgi运行的配置，可以在web.py的网站上找到文档：
+<a href="http://webpy.org/cookbook/fastcgi-lighttpd">http://webpy.org/cookbook/fastcgi-lighttpd</a></p>
+
+<p>实际我用的时候把静态的index.html用作首页，稍改动一下：
+<pre class="brush:plain">server.document-root = "/home/sun/projects/sdostatweb"</pre></p>
+
+<p>server.modules   += ( &#8220;mod_fastcgi&#8221; )<br />
+server.modules   += ( &#8220;mod_rewrite&#8221; )</p>
+
+<p>server.port = 4000</p>
+
+<p>mimetype.assign = (<br />
+    &#8220;.html&#8221; =&gt; &#8220;text/html&#8221;<br />
+)</p>
+
+<p>index-file.names = ( &#8220;index.html&#8221; )</p>
+
+<p>fastcgi.server = ( &#8220;/sdostatweb.py&#8221; =&gt;<br />
+(( &#8220;socket&#8221; =&gt; &#8220;/tmp/fastcgi.socket&#8221;,<br />
+        &#8220;bin-path&#8221; =&gt; &#8220;/home/sun/projects/sdostatweb/sdostatweb.py&#8221;,<br />
+        &#8220;max-procs&#8221; =&gt; 5,<br />
+        &#8220;bin-environment&#8221; =&gt; (<br />
+        &#8220;REAL_SCRIPT_NAME&#8221; =&gt; &#8220;&#8221;<br />
+    ),<br />
+        &#8220;check-local&#8221; =&gt; &#8220;disable&#8221;<br />
+    ))<br />
+)</p>
+
+<p>url.rewrite-once = (<br />
+    &#8220;^/$&#8221; =&gt; &#8220;/static/index.html&#8221;,<br />
+    &#8220;^/flotr/(.*)$&#8221; =&gt; &#8220;/static/flotr/$1&#8221;,<br />
+    &#8220;^/static/(.*)$&#8221; =&gt; &#8220;/static/$1&#8221;,<br />
+    &#8220;^/(.*)$&#8221; =&gt; &#8220;/sdostatweb.py/$1&#8221;,</p>
+
+<p>)
+另外用fastcgi的方式使用web.py，需要安装flup。</p>
+
+<p>详细的事，可以看看新浪的Tim Yang的优化：
+<a href="http://timyang.net/python/python-webpy-lighttpd/">http://timyang.net/python/python-webpy-lighttpd/</a></p>
+
+<p>我之前真不敢相信搜狐Mail是跑在web.py上。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -753,91 +831,6 @@ To check the result, click menu item at once (no restart or logout needed), agai
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2009/10/13/%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%8D%E5%8A%A1recaptcha%E5%92%8Cvidoop/">验证码服务recaptcha和vidoop</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>某人已经发展到上班时间写blog了。</p>
-
-<p>继续说验证码服务，找到两个比较典型的。<a href="http://recaptcha.net/" target="_blank">recaptcha</a>非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），<a href="http://vidoop.com/" target="_blank">vidoop</a>提供了一种很有特点的验证码机制。</p>
-
-<p>两个服务都提供了python的接口封装便于接入，通过api接口可以管中窥豹，大致了解这两个验证服务的机制。
-<h3>recaptcha</h3>
-下面是一段结合了web.py的简单调用
-<pre class="brush:python">public_key = "******"
-private_key = "********"
-class Recaptcha(object):
-    def GET(self):
-        r = recaptcha.displayhtml(public_key)
-        return render.recapt(r)</pre></p>
-
-<p>    def POST(self):<br />
-        params = web.input()<br />
-        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field, params.recaptcha_response_field<br />
-        remote_ip = web.ctx.ip<br />
-        result = recaptcha.submit(recaptcha_challenge_field, recaptcha_response_field, private_key, remote_ip)<br />
-        return result.is_valid
-我在GET请求中获取验证码，在POST请求中提交验证码。</p>
-
-<p>recaptcha返回的是一段recaptcha自己风格的html片段，效果大家参考twitter的验证码，实际上是一个iframe，iframe的url中包含了哈希串。其中的字段名也自然被写死成recaptcha_challenge_field和recaptcha_response_field，考虑到应用服务器无需验证这两个field的输入，所以也无可厚非。recaptcha_response_field用于输入字符，recaptcha_challenge_field在载入时被修改为一个唯一key。</p>
-
-<p>提交验证时，recaptcha需要提供以上两个用户输入和应用的privatekey以及浏览器ip。recaptcha通过recaptcha_challenge_field 应用的private key以及用户出口ip可以唯一标示用户，并包含一些冗余实现安全相关策略。
-<h3>Vidoop</h3>
-Vidoop提供的服务机制与recaptcha大同小异
-<pre class="brush:python">
-customer_id = "***"
-site_id = "localtest"
-api_username = "******"
-api_password = "******"
-vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
-
-<p>class Vidoop(object):<br />
-    def GET(self):<br />
-        captcha_id, captcha_url, captcha_categories, captcha_text = vdp.create_captcha()<br />
-        return render.vidoop(captcha_id, captcha_url, captcha_categories, captcha_text)</p>
-
-<p>    def POST(self):<br />
-        params =web.input()<br />
-        captcha_id, captcha_code = params.id, params.code<br />
-        try:<br />
-            vdp.submit_captcha(captcha_id, captcha_code)<br />
-            return True<br />
-        except:<br />
-            return False
-</p>
-
-<p>提交验证时只需要要captcha_id和用户输入，这里相对recaptcha做了简化，但已经足够验证需要了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/33/">&larr; Older</a>
@@ -859,6 +852,10 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -872,10 +869,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -911,13 +904,6 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -927,7 +913,7 @@ vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

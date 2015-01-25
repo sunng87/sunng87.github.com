@@ -9,8 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="又到了A Year of Edits节目时间了，去年的场景还历历在目。2012年OSM上的南京地图，变化更加可观。 脚本和mapnik依然在原处，mapnik升级到2.1.x，配置文件有了一些变化。
-">
+  <meta name="description" content="这周的工作，界面上能展示的不多。我们对时间线做了比较大的手术。 原先的时间线的工作机制，是以☐☐☐☐☐☐☐☐☐☐☐☐☐（此处省略200字）。这样的机制有两个明显的问题： 看过和没有看过的文章常常交错在一起，让人迷惘 一夜过后，时间线上出现很神奇的情况，文章的热度排列为「冷…热…冷…热…」 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2013/01/31/1307/">R/W Update#1: 更好的时间线</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://i.imgur.com/wReNhae.jpg" alt="" /></p>
+
+<p>这周的工作，界面上能展示的不多。我们对时间线做了比较大的手术。</p>
+
+<p>原先的时间线的工作机制，是以☐☐☐☐☐☐☐☐☐☐☐☐☐（此处省略200字）。这样的机制有两个明显的问题：
+<ol /></p>
+
+<p>	<li>    看过和没有看过的文章常常交错在一起，让人迷惘</li></p>
+
+<p> 	<li>   一夜过后，时间线上出现很神奇的情况，文章的热度排列为「冷…热…冷…热…」</li>
+</p>
+
+<p>不仅是很多用户，我自己使用的过程中也感到很不方便。于是我们痛下决心，抄起键盘对时间线大刀阔斧一番。 一小时前上线的版本已经基本解决了上面提到的问题。如若问题依旧，请参考题图。</p>
+
+<p>还有可以提一句，用户名旁边显示的数字是你的 Karma。目前 Karma 可以通过评论和评论被投票获得。</p>
+
+<p><img src="http://i.imgur.com/tqjVRN6.png" alt="" /></p>
+
+<p>还有什么比工程师写得产品博客更平淡的，而且他还要一边 test on production。</p>
+
+<p>对对对，我们的工程师 <a href="https://github.com/debugger87/">debugger87</a> 昨天回家结婚，顺便过年了，我们祝他新婚愉快。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -530,57 +585,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/">Cljts: Java Topology Suite for Clojure</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I almost forgot to announce this library I made half of a year ago. This library is aiming to bring Clojure to GIS. So you can manipulate geometry objects with a set of clojure functions.</p>
-
-<p>The library covers :
-<ul>
-	<li>Geometries defined in Simple Feature Spec</li>
-	<li>Spatial relationship test, based on DE-9IM.</li>
-	<li>IO functions, WKT and WKB support</li>
-	<li>some spatial analysis functions such as buffer, convex-hull</li>
-</ul></p>
-
-<p>Also, this week Alexey Pushkin sent pull request and added support for Perpared Geometry and Affine transformations.</p>
-
-<p>The current release of cljts is 0.2.0-SNAPSHOT. You can find API document at <a href="http://sunng87.github.com/cljts/">here</a>. </p>
-
-<p>If you are also interested in bringing clojure to GIS, feel free to get connected and hope I could help you.
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/4/">&larr; Older</a>
@@ -602,6 +606,10 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -615,10 +623,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -654,13 +658,6 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -670,7 +667,7 @@ Adding -var-missing is just an attempt to implement lazy loading of vars. And it
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

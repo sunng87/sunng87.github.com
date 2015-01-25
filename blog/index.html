@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="“微服务” (Microservice) 是今年特别热的一个概念，Martin Fowler 的文章对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。 在 &hellip;">
+  <meta name="description" content="本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-25T16:22:50+08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。我也是其中一员，去年还给<a href="">程序员杂志写了一篇 Rust 的文章</a>，结果现在程序员杂志也停刊了。</p>
+
+<p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
+
+<p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
+
+<ul>
+<li>不要把 rust 代码写进 html 模版里，反例： jsp, ejs</li>
+<li>不要把 html 代码写进 rust 里，反例： hiccup</li>
+<li>能够复用，基于“继承”而不是 include</li>
+<li>能够简单地自定义标签，反例：mustach</li>
+</ul>
+
+
+<p>基于以上的原则，<a href="https://github.com/sunng87/handlebars-rust">handlebars-rust</a> 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 <a href="https://github.com/sunng87/handlebars-iron">handlebars-iron</a> 项目，作为一个 <a href="http://ironframework.io">Iron 框架</a>的 middlaware。</p>
+
+<p>简单总结几点收获：</p>
+
+<ul>
+<li>Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型</li>
+<li>静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 <code>false</code>/<code>0</code>/<code>""</code>/<code>[]</code> 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 <code>Json</code> 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 <code>ToJson</code>，算是设计上的一个取舍。</li>
+<li>Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的</li>
+<li>关于 Rust 的 ownership 看<a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html">这篇文章</a>，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错</li>
+<li>有任何问题都可以在 stackoverflow 上问，有几个人会很快回复</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1075,81 +1136,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-04T23:40:00+08:00" pubdate data-updated="true">Mar 4<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as integration solution between clojure systems.</p>
-
-<p>The recent update in slacker, slacker-cluster and link are:</p>
-
-<h3>link</h3>
-
-<p>There are two releases in the <a href="https://github.com/sunng87/link">link</a> library, features include:</p>
-
-<ul>
-<li>Ported to Netty 4</li>
-<li>WebSocket server handler</li>
-<li>Ability to shutdown server</li>
-<li>Ability to use core.async with link ring adapter</li>
-</ul>
-
-
-<h3>slacker</h3>
-
-<p>The most recent release of <a href="https://github.com/sunng87/slacker">slacker</a> is 0.11.0:</p>
-
-<ul>
-<li>New ping-interval option for clients</li>
-<li>Async callback will accept two argument, and can handle exceptions</li>
-<li>Slingshot removed, we are now using clojure built-in ex-info</li>
-<li>All client creation functions and defn-remote are delayed</li>
-<li>Bugfix for issue when several clients started in a process</li>
-</ul>
-
-
-<h3>slacker-cluster</h3>
-
-<p>There&rsquo;s major enhancement in <a href="https://github.com/sunng87/slacker-cluster">slacker cluster</a> 0.11.0</p>
-
-<ul>
-<li>Server exception no longer blocks client</li>
-<li>Added options to call functions on multiple servers, control return type and exception handling</li>
-</ul>
-
-
-<p>All these libraries are available on github. I will write more about how we use them in AVOS Cloud in future.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
@@ -1169,6 +1155,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -1182,10 +1172,6 @@
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -1221,13 +1207,6 @@
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -1237,7 +1216,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

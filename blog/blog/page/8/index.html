@@ -9,7 +9,7 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="Glad to roll out the first release of the slacker framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of &hellip;">
+  <meta name="description" content="最近GNOME发布了期待已久的extension.gnome.org，这个网站允许你直接通过浏览器安装和管理gnome-shell扩展，有点类似app store的感觉，混乱的~/.local/share/gnome-shell/extensions/终于有了一个官方的界面。 网站开通的第一时间， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/12/03/%E4%BB%8Egnome%E7%BD%91%E7%AB%99%E5%AE%89%E8%A3%85exaile-doubanfm-gnome-shell-extension/">从GNOME网站安装exaile-doubanfm-gnome-shell-extension</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近GNOME发布了期待已久的extension.gnome.org，这个网站允许你直接通过浏览器安装和管理gnome-shell扩展，有点类似app store的感觉，混乱的~/.local/share/gnome-shell/extensions/终于有了一个官方的界面。</p>
+
+<p>网站开通的第一时间，我提交了exaile-doubanfm-gnome-shell-extension，经过review和修改，这个扩展也得到了进一步的完善，适配了gnome-shell 3.2的风格。</p>
+
+<p>你可以从这个地址直接安装启用
+<a href="https://extensions.gnome.org/extension/24/exaile-doubanfm-control/" target="_blank">https://extensions.gnome.org/extension/24/exaile-doubanfm-control/</a></p>
+
+<p>它会在exaile douban.fm启动后显示一个菜单在gnome-shell上，你可以通过这个菜单进行基本的操作。</p>
+
+<p>如果喜欢，别忘了在extension.gnome.org上vote一下 ：）</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -620,85 +665,6 @@ gource上的wiki里，ffmpeg如果报错File for preset &#8216;slow&#8217; not f
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/10/26/%E6%99%AE%E9%80%9A%E9%9D%92%E5%B9%B4%E3%80%81%E4%BA%8C%E9%80%BC%E9%9D%92%E5%B9%B4%E4%B8%8E%E6%96%87%E8%89%BA%E9%9D%92%E5%B9%B4%E7%9A%84java%E4%BB%A3%E7%A0%81%E7%BC%A9%E8%BF%9B/">普通青年、二逼青年与文艺青年的Java代码缩进</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-10-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>普通青年</p>
-
-<p>[cc lang=&#8221;java&#8221;]<br />
-while(true) {<br />
-    if (something) {<br />
-        System.out.println(something);<br />
-        break;<br />
-    }<br />
-}
-[/cc]<br />
-特点： tab与空格混用，无其他特点。<br />
-常见于：各类代码仓库。</p>
-
-<p>二逼青年</p>
-
-<p>[cc lang=&#8221;java&#8221;]<br />
-while(true) <br />
-{</p>
-
-<p>    if (something) <br />
-    {<br />
-        System.out.println(something);<br />
-        break;<br />
-    }</p>
-
-<p>}<br />
-[/cc]<br />
-特点：总担心代码不够长<br />
-见于：各类劣质技术书籍</p>
-
-<p>文艺青年<br />
-[cc lang=&#8221;java&#8221;]<br />
-while(true) <br />
-  {<br />
-  if (something) <br />
-    {<br />
-      System.out.println(something);<br />
-      break;<br />
-    }<br />
-  }<br />
-[/cc]<br />
-特点：普通Java青年永远不会理解的缩进，lisp程序员会心一笑<br />
-见于：Clojure源码
-</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/9/">&larr; Older</a>
@@ -720,6 +686,10 @@ while(true) <br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -733,10 +703,6 @@ while(true) <br />
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -772,13 +738,6 @@ while(true) <br />
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -788,7 +747,7 @@ while(true) <br />
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

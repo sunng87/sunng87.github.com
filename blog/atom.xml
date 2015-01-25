@@ -4,7 +4,7 @@
   <title><![CDATA[Here comes the Sun]]></title>
   <link href="http://sunng87.github.io/blog//atom.xml" rel="self"/>
   <link href="http://sunng87.github.io/blog//"/>
-  <updated>2014-08-19T16:56:10+08:00</updated>
+  <updated>2015-01-25T17:07:51+08:00</updated>
   <id>http://sunng87.github.io/blog//</id>
   <author>
     <name><![CDATA[Sun Ning]]></name>
@@ -12,6 +12,40 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Handlebars 的 Rust 实现]]></title>
+    <link href="http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust/"/>
+    <updated>2015-01-25T16:22:50+08:00</updated>
+    <id>http://sunng87.github.io/blog//blog/2015/01/25/ann-handlebars-rust</id>
+    <content type="html"><![CDATA[<p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。我也是其中一员，去年还给<a href="">程序员杂志写了一篇 Rust 的文章</a>，结果现在程序员杂志也停刊了。</p>
+
+<p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
+
+<p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
+
+<ul>
+<li>不要把 rust 代码写进 html 模版里，反例： jsp, ejs</li>
+<li>不要把 html 代码写进 rust 里，反例： hiccup</li>
+<li>能够复用，基于“继承”而不是 include</li>
+<li>能够简单地自定义标签，反例：mustach</li>
+</ul>
+
+
+<p>基于以上的原则，<a href="https://github.com/sunng87/handlebars-rust">handlebars-rust</a> 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 <a href="https://github.com/sunng87/handlebars-iron">handlebars-iron</a> 项目，作为一个 <a href="http://ironframework.io">Iron 框架</a>的 middlaware。</p>
+
+<p>简单总结几点收获：</p>
+
+<ul>
+<li>Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型</li>
+<li>静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 <code>false</code>/<code>0</code>/<code>""</code>/<code>[]</code> 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 <code>Json</code> 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 <code>ToJson</code>，算是设计上的一个取舍。</li>
+<li>Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的</li>
+<li>关于 Rust 的 ownership 看<a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html">这篇文章</a>，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错</li>
+<li>有任何问题都可以在 stackoverflow 上问，有几个人会很快回复</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AVOS Cloud 实时通信服务架构：微服务和服务发现]]></title>
@@ -1125,35 +1159,6 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
 <p>点亮 Arduino 基本上没什么问题。但是在 Archlinux 上访问 serial port 需要一些配置。首先要把用户加入 uucp 组确保可以访问 /dev/tty* 的设备。其次，需要给当前用户访问 /run/lock 的权限，否则 Arduino IDE 还是无法访问到 Arduino，这点在 Archlinux 的 Wiki 上有提及。</p>
 
 <p>我这个开关电路太简单了就不详细说了，参考书是一本 Getting started with Arduino。据说这本书出第二版了，第一版上 Arduino 的版本不是 Uno，所以图片有一些出入，不过接口都没有变化。这第一个二极管开关的电路还是挺有成就感的，晚上我就可以让台灯什么的都退了休吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[R/W Update#1: 更好的时间线]]></title>
-    <link href="http://sunng87.github.io/blog//blog/2013/01/31/1307/"/>
-    <updated>2013-01-31T00:00:00+08:00</updated>
-    <id>http://sunng87.github.io/blog//blog/2013/01/31/1307</id>
-    <content type="html"><![CDATA[<p><img src="http://i.imgur.com/wReNhae.jpg" alt="" /></p>
-
-<p>这周的工作，界面上能展示的不多。我们对时间线做了比较大的手术。</p>
-
-<p>原先的时间线的工作机制，是以☐☐☐☐☐☐☐☐☐☐☐☐☐（此处省略200字）。这样的机制有两个明显的问题：
-<ol /></p>
-
-<p>	<li>    看过和没有看过的文章常常交错在一起，让人迷惘</li></p>
-
-<p> 	<li>   一夜过后，时间线上出现很神奇的情况，文章的热度排列为「冷…热…冷…热…」</li>
-</p>
-
-<p>不仅是很多用户，我自己使用的过程中也感到很不方便。于是我们痛下决心，抄起键盘对时间线大刀阔斧一番。 一小时前上线的版本已经基本解决了上面提到的问题。如若问题依旧，请参考题图。</p>
-
-<p>还有可以提一句，用户名旁边显示的数字是你的 Karma。目前 Karma 可以通过评论和评论被投票获得。</p>
-
-<p><img src="http://i.imgur.com/tqjVRN6.png" alt="" /></p>
-
-<p>还有什么比工程师写得产品博客更平淡的，而且他还要一边 test on production。</p>
-
-<p>对对对，我们的工程师 <a href="https://github.com/debugger87/">debugger87</a> 昨天回家结婚，顺便过年了，我们祝他新婚愉快。</p>
 ]]></content>
   </entry>
   

@@ -9,8 +9,10 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="庆祝教师节，今天请假休息出门放松。 线路：
-609 -> 其昌栈渡口 -> 秦皇岛路渡口 -> 37 -> 33 -> 金陵西路渡口 -> 东昌路渡口 -> 东川线 609从张江路经金桥路出张江，经过碧云路、云山路、羽山路、源深路、福山路等，连接了浦东几个人口稠密的地区。 &hellip;">
+  <meta name="description" content="Pylonsbook的第八章，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。 首先查看你使用的各种库的版本：
+paster shell development.ini
+[cc lang=&#8221;python&#8221;]
+import pylons &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +68,157 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/">迁移pylonsbook Chapter 8到pylons1.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Pylonsbook的<a href="http://pylonsbook.com/en/1.1/starting-the-simplesite-tutorial.html">第八章</a>，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。</p>
+
+<p>首先查看你使用的各种库的版本：
+<i>paster shell development.ini</i>
+[cc lang=&#8221;python&#8221;]<br />
+import pylons<br />
+pylons.__version__<br />
+import sqlalchemy<br />
+sqlalchemy.__version__<br />
+import webhelpers<br />
+webhelpers.__version__<br />
+[/cc]</p>
+
+<p>Pylons 1.0开始鼓励通过继承Base类的声明式ORM（pylonsbook介绍的是pylons 0.9x，sqlalchemy 0.5x，使用mapper的方式）<br />
+对pylons1.0，mode/__init__.py中声明model的代码如下：<br />
+[cc lang=&#8221;python&#8221;]<br />
+from sqlalchemy import *<br />
+from sqlalchemy.orm import relationship</p>
+
+<p>class PageTag(Base):<br />
+    __tablename__ = &#8216;pagetag&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;pagetag_seq_id&#8217;, optional=True), primary_key=True)<br />
+    pageid = Column(&#8216;pageid&#8217;, Integer, ForeignKey(&#8216;page.id&#8217;))<br />
+    tagid = Column(&#8216;tagid&#8217;, Integer, ForeignKey(&#8216;tag.id&#8217;))</p>
+
+<p>class Page(Base):<br />
+    &#8220;&#8221;&#8220;docstring for Page&#8221;&#8220;&#8221;<br />
+    __tablename__ = &#8216;page&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;page_seq_id&#8217;, optional=True), primary_key=True)<br />
+    content = Column(&#8216;content&#8217;, Text, nullable=False)<br />
+    posted = Column(&#8216;posted&#8217;, DateTime, default=now())<br />
+    title = Column(&#8216;title&#8217;, Unicode(255), default=u&#8217;Untitled Page&#8217;)<br />
+    heading = Column(&#8216;heading&#8217;, Unicode(255))</p>
+
+<p>    tags = relationship(PageTag, backref=&#8217;page&#8217;)<br />
+    comments = relationship(&#8220;Comment&#8221;, backref=&#8217;page&#8217;)</p>
+
+<p>class Tag(Base):<br />
+    &#8220;&#8221;&#8220;docstring for Tag&#8221;&#8220;&#8221;<br />
+    __tablename__ = &#8216;tag&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;tag_seq_id&#8217;, optional=True), primary_key=True)<br />
+    name = Column(&#8216;name&#8217;, Unicode(20), nullable=False, unique=True)</p>
+
+<p>class Comment(Base):<br />
+    __tablename__ = &#8216;comment&#8217;<br />
+    id = Column(&#8216;id&#8217;, Integer, Sequence(&#8216;comment_seq_id&#8217;, optional=True), primary_key=True)<br />
+    content = Column(&#8216;content&#8217;, Text, default=u&#8221;)<br />
+    name = Column(&#8216;name&#8217;, Unicode(255))<br />
+    email = Column(&#8216;email&#8217;, Unicode(255), nullable=False)<br />
+    created = Column(&#8216;created&#8217;, TIMESTAMP, default=now())<br />
+    pageid = Column(Integer, ForeignKey(&#8216;page.id&#8217;))</p>
+
+<p>[/cc]</p>
+
+<p><em>init_model</em> 方法的内容也不相同，但是对Session的配置都是在Session.configure里进行。 如果设置autocommit=True，即使设置了autoflush=True仍然需要Session.flush()一下才能把变更写入数据库。否则，则需要显示调用Session.commit()</p>
+
+<p>在写controller的部分，pylonsbook大量用了<br />
+[cc lang=&#8221;python&#8221;]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.get(int(id))<br />
+[/cc]</p>
+
+<p>或<br />
+[cc lang=&#8221;python&#8221;]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.filter_by(id=id).first()<br />
+[/cc]<br />
+在新版本里只需要<br />
+[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
+c.page=Session.query(model.Page).get(id)<br />
+[/cc]<br />
+即可。</p>
+
+<p>在模板部分，pylons现在默认不依赖formbuild，所以文中提到的helper方法要额外安装formbuild库。不过这些也可以用过webhelper来实现，在lib/helpers.py里：<br />
+[cc lang=&#8221;python&#8221; inline=&#8221;true&#8221;]<br />
+from webhelpers.html.tags import *<br />
+[/cc]</p>
+
+<p>在field.html中<br />
+[cc lang=&#8221;html&#8221;]</p>
+
+<p><p>Heading: ${h.text(<br />
+    &#8220;heading&#8221;<br />
+)}
+</p></p>
+
+<p><p>
+Title: ${h.text(<br />
+    &#8220;title&#8221;<br />
+)}
+</p></p>
+
+<p><p>
+Content: ${h.textarea(<br />
+    &#8220;content&#8221;, cols=40, rows=10<br />
+)}
+</p></p>
+
+<p>[/cc]</p>
+
+<p>模板中一个非常常用的方法url_for在pylons1.0里被改为pylons.url，需要修改/lib/helpers.py<br />
+[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
+from pylons import url<br />
+[/cc]</p>
+
+<p>书中所有的重定向都是直接设置response相关属性实现的，实际可以用redirect，结合url：<br />
+[cc lang=&#8221;python&#8221;  inline=&#8221;true&#8221;]<br />
+redirect(url(controller=&#8217;page&#8217;, action=&#8217;view&#8217;, id=page.id))<br />
+[/cc]</p>
+
+<p>分页部分，如果你使用的是sqlalchemy 0.6的话，随pylons 1.0发布的Webhelpers 0.6还不支持 sqlalchemy 0.6的query object，需要手动升级到1.2. (<i>easy_install -U webhelpers</i>)</p>
+
+<p>最后关于flash状态，webhelpers里有一个专门的实现，不过还是不太好用：
+<a href="http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/">http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -840,70 +993,6 @@ public final class BasonManager{<br />
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2010/08/17/geb-for-browser-functional-testing/">Geb for Browser Functional Testing</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-17T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>虽然现在不做前段了，但是发现好的工具还是很兴奋。今天在twitter上看到Grails in Action的作者 @pledbrook 转了一个geb 0.4的消息，顺带看了一下这个工具<br />
-http://geb.codehaus.org</p>
-
-<p>geb项目旨在创造一套groovy dsl帮助人们进行webapp的functional test。它是对selenium的封装，举例：<br />
-[cc lang=&#8221;groovy&#8221;]<br />
-@Grapes([<br />
-    @Grab(&#8216;org.seleniumhq.selenium:selenium-firefox-driver:latest.release&#8217;),<br />
-    @Grab(&#8216;org.codehaus.geb:geb-core:latest.release&#8217;)<br />
-])<br />
-import geb.*</p>
-
-<p>println &#8220;Dependencies downloaded, ready for testing&#8221;<br />
-Browser.drive(&#8216;http://sunng.info:8000/Pacajus&#8217;){<br />
-    assert title== &#8216;Pacajus&#8217;</p>
-
-<p>    assert $(&#8220;p&#8221;, 3).text() == &#8216;Population: 41558&#8217;<br />
-}
-println &#8220;Tested, bye&#8221;<br />
-[/cc]</p>
-
-<p>打开页面，执行断言。如果断言失败，driver方法会报null：<br />
-Caught: geb.error.DriveException: null</p>
-
-<p>只要在命令行用groovy执行即可，grapes会搞定依赖关系。</p>
-
-<p>很方便吧，文档上说还可以跟grails / junit等等集成，快去看看吧
-<a href="http://geb.codehaus.org/manual/latest/index.html">http://geb.codehaus.org/manual/latest/index.html</a></p>
-
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/22/">&larr; Older</a>
@@ -925,6 +1014,10 @@ Caught: geb.error.DriveException: null</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -938,10 +1031,6 @@ Caught: geb.error.DriveException: null</p>
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -977,13 +1066,6 @@ Caught: geb.error.DriveException: null</p>
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -993,7 +1075,7 @@ Caught: geb.error.DriveException: null</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

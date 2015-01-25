@@ -9,9 +9,9 @@
   <meta name="author" content="Sun Ning">
 
   
-  <meta name="description" content="这个周末就是我正式工作两年的日子了，第二年过得稍微有些起伏，晚上写了一点总结。但是刚才读了一下觉得不太满意，也不太合适发出来。这样，即将跨入三年级的时候，我就改改风格谈谈愿望吧。
-1. 把日常工作做好，积累技术，流程，项目管理的经验
-2. 业余时间拓展周边领域的知识：数据挖掘，数据分析，可视化方面 &hellip;">
+  <meta name="description" content="简单地说，protocol是clojure中的接口，record是clojure中的数据类型。 可以通过这样的code定义一个protocol
+[cc lang=&#8221;clojure&#8221;]
+(defprotoco DummyProtocol &#8220;doc string&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/blog/2011/07/22/%E4%BD%BF%E7%94%A8defrecord%E4%B8%8Edefprotocol%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">使用defrecord与defprotocol的注意事项</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>简单地说，protocol是clojure中的接口，record是clojure中的数据类型。</p>
+
+<p>可以通过这样的code定义一个protocol<br />
+[cc lang=&#8221;clojure&#8221;]<br />
+(defprotoco DummyProtocol<br />
+  &#8220;doc string&#8230;&#8221;<br />
+  (method-one [self x] &#8220;doc string&#8230;&#8221;))<br />
+[/cc]</p>
+
+<p>需要注意的是，protocol里所有方法的第一个参数都是self/this参数（类似python），从第二个开始才是调用时传入的参数。如果方法要重载呢？</p>
+
+<p>[cc lang=&#8221;clojure&#8221;]<br />
+(defprotocol DummyProtocol<br />
+  &#8220;doc string&#8230;&#8221;<br />
+  (method-one [self x] [self x y] &#8220;doc string&#8221;)<br />
+)
+[/cc]</p>
+
+<p>Apress的 Practical Clojure 书里的例子，给重载的参数表加上了括号，这样会导致编译错误（<a href="http://book.douban.com/annotation/13819191/" target="_blank">注记</a>）。</p>
+
+<p>定义一个record实现protocol</p>
+
+<p>[cc lang＝&#8221;clojure&#8221;]<br />
+(defrecord DummyRecord [a b c]<br />
+  DummyProtocol<br />
+  (method-one [self x] (+ a x))<br />
+  (method-one [self x y] (+ a x y)))<br />
+[/cc]<br />
+Practical Clojure里关于这部分的代码，又丢掉了self参数（<a href="http://book.douban.com/annotation/13819264/" target="_blank">注记</a>）。</p>
+
+<p>最后还有一个问题，如果直接use你的ns，你会发现调用record时出现：<br />
+java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
+
+<p>怎么回事，不是都use了吗？原因是record被编译成了java对象，所以引用时要用java对象的引用方式，import之。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -582,67 +651,6 @@ Total:          0    8   8.1      6      85</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2011/06/10/jip-embed-on-the-fly-classpath-resolution-for-jython/">jip.embed: On-the-fly Classpath Resolution for Jython</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-10T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you don&#8217;t have to download jars manually and append them to your -Dpython.path. You just pick your editor, import jip.embed, code your business, then save and run it.</p>
-
-<p>Code example:</p>
-
-<p>[cc lang=&#8221;python&#8221;]<br />
-import jip.embed<br />
-jip.embed.require(&#8216;commons-lang:commons-lang:2.6&#8217;)<br />
-from org.apache.commons.lang import StringUtils</p>
-
-<p>print StringUtils.reverse(&#8216;jip rocks&#8217;)<br />
-[/cc]</p>
-
-<p>Output:<br />
-[cc]<br />
-skcor pij<br />
-[/cc]<br />
-(jip will print some log here if dependencies are included for first time)</p>
-
-<p>So please check out my new released jip, 0.7:
-<a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></p>
-
-<p>For virtualenv user, you can install full-featured jip via pip:
-<font face="monospace">$ pip install jip</font></p>
-
-<p>To install jip globally, download the package from <a href="http://pypi.python.org/pypi/jip">python cheese shop</a> and run:
-<font face="monospace">$ jython setup.py install </font><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=36db589c-cfdd-8173-8d89-3b7aeb29cb5c" /></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/blog/page/13/">&larr; Older</a>
@@ -664,6 +672,10 @@ skcor pij<br />
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
       </li>
     
@@ -677,10 +689,6 @@ skcor pij<br />
     
       <li class="post">
         <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
       </li>
     
   </ul>
@@ -716,13 +724,6 @@ skcor pij<br />
 </section>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/classicing?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/classicing">My Delicious Bookmarks &raquo;</a></p>
-</section>
-
 
 
 
@@ -732,7 +733,7 @@ skcor pij<br />
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Sun Ning -
+  Copyright &copy; 2015 - Sun Ning -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
