@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Here comes the Sun</title>
+  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/ann/atom.xml"/>
+  <id>http://sunng87.github.io/blog/blog/</id>
+  <updated>2013-04-24T00:00:00+08:00</updated>
+  <generator uri="http://octopress.org/">Octopress</generator>
+  
+  <rights>Copyright © 2015, Sun Ning</rights>
+
+  <entry>
+    <title type="html">Checkout Ring Adapter for Jetty 9</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/"/>
+    
+    <id>/blog/2013/04/24/checkout-ring-adapter-for-jetty-9</id>
+    <published>2013-04-24T00:00:00+08:00</published>
+    <updated>2013-04-24T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>The Clojure world has been using Jetty 7 for quite a long time because it's supported by the Ring development team. However, Jetty 9 brings us exciting features like WebSocket and SPDY. In order to use websocket in my Clojure web application, I built this adapter last weekend.</p>
+
+<p>[info.sunng/ring-jetty9-adapter "0.1.0"]</p>
+
+<p>The API for Clojure is still consistent with the one for jetty 7.<br />
+[cc lang="clojure"]<br />
+(use 'ring.adapter.jetty9)<br />
+(run-jetty app {})<br />
+[/cc]</p>
+
+<p>Options supported in jetty 9 are almost same as jetty 7 except the configurator is dropped. And a new "WebSockets" option is added. Accepting a map of context path and websocket class, it enables websocket protocol in your web application.</p>
+
+<p>[cc lang="clojure"]<br />
+(use 'ring.adapter.jetty9)<br />
+(run-jetty app {:websockets {"/loc" LocationTracker}})<br />
+[/cc]</p>
+
+<p>Due to the lack of WebSocket API standards, I don't spend time on the WebSocket abstraction. Just use Jetty's internal API for websocket. Here is a typical implementation of websocket listener.<br />
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c1">;; sample code</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">ns</span><span class="w"> </span><span class="n">xxx.ws.location</span><span class="w">
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="no">:gen-class</span><span class="w">
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:name</span><span class="w"> </span><span class="n">xxx.LocationTracker</span><span class="w">
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:init</span><span class="w"> </span><span class="n">init</span><span class="w">
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:state</span><span class="w"> </span><span class="n">state</span><span class="w">
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:extends</span><span class="w"> </span><span class="n">org.eclipse.jetty.websocket.api.WebSocketAdapter</span><span class="w">
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:prefix</span><span class="w"> </span><span class="n">ws-</span><span class="w">
+</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>   </span><span class="no">:exposes-methods</span><span class="w"> </span><span class="p">&#x7b;</span><span class="n">onWebSocketConnect</span><span class="w"> </span><span class="n">superOnWebSocketConnect</span><span class="p">&#x7d;)</span><span class="w">
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="no">:require</span><span class="w"> </span><span class="p">[</span><span class="n">clojure.data.json</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">json</span><span class="p">]</span><span class="w">
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>            </span><span class="p">[</span><span class="n">clojure.tools.logging</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">logging</span><span class="p">]</span><span class="w">
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>            </span><span class="p">[</span><span class="n">monger.collection</span><span class="w"> </span><span class="no">:as</span><span class="w"> </span><span class="n">mc</span><span class="p">])</span><span class="w">
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="no">:import</span><span class="w"> </span><span class="p">(</span><span class="nf">org.eclipse.jetty.websocket.api</span><span class="w"> </span><span class="n">WebSocketAdapter</span><span class="p">)</span><span class="w">
+</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>           </span><span class="p">(</span><span class="nf">java.util</span><span class="w"> </span><span class="n">UUID</span><span class="p">)))</span><span class="w">
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">ws-init</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">[[]</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:client-id</span><span class="w"> </span><span class="p">(</span><span class="nb">str</span><span class="w"> </span><span class="p">(</span><span class="nf">UUID/randomUUID</span><span class="p">))&#x7d;])</span><span class="w">
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">ws-onWebSocketConnect</span><span class="w"> </span><span class="p">[</span><span class="n">this</span><span class="w"> </span><span class="n">session</span><span class="p">]</span><span class="w">
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="nf">.superOnWebSocketConnect</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">session</span><span class="p">)</span><span class="w">
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="nf">logging/warn</span><span class="w"> </span><span class="s">"new connection: "</span><span class="w"> </span><span class="p">(</span><span class="nf">get-client-id</span><span class="w"> </span><span class="n">this</span><span class="p">))</span><span class="w">
+</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">ws-onWebSocketText</span><span class="w"> </span><span class="p">[</span><span class="n">this</span><span class="w"> </span><span class="n">message</span><span class="p">]</span><span class="w">
+</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">msg</span><span class="w"> </span><span class="p">(</span><span class="nf">json/read-json</span><span class="w"> </span><span class="n">message</span><span class="p">)]</span><span class="w">
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span><span class="p">(</span><span class="nf">case</span><span class="w"> </span><span class="p">(</span><span class="no">:type</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w">
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>      </span><span class="n">...</span><span class="p">)))</span><span class="w">
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">ws-onWebSocketClose</span><span class="w"> </span><span class="p">[</span><span class="n">this</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">reason</span><span class="p">]</span><span class="w">
+</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="nf">logging/debug</span><span class="w"> </span><span class="s">"close socket"</span><span class="p">))</span></div></div></pre></div></figure>
+
+
+<p>Since Jetty will create new instance of adapter for each connection, it requires heavy usage of "gen-class" . Remember to add the namespace to AOT compilation. Detailed Jetty API spec can be found <a href="http://download.eclipse.org/jetty/stable-9/apidocs/org/eclipse/jetty/websocket/api/WebSocketAdapter.html" target="_blank">here</a>.<br />
+ 
+And also find the project is <a href="https://github.com/sunng87/ring-jetty9-adapter" target="_blank">here</a>.</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">[ANN] Handlebars Clojure API</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/04/12/ann-handlebars-clojure-api/"/>
+    
+    <id>/blog/2013/04/12/ann-handlebars-clojure-api</id>
+    <published>2013-04-12T00:00:00+08:00</published>
+    <updated>2013-04-12T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>The ONLY real-world modern clojure templating system. <br />
+I just can't believe that the clojure world doesn't build web application with server-side template.<br />
+hiccup and enlive are neither **real-world**. So people tends to use single page architecture for a clojure backend. That's PAINFUL.</p>
+
+<p>Available on clojars [hbs "0.4.1"], code and docs on <a href="https://github.com/readwise/hbs" target="_blank">github</a>. We have been using hbs on <a href="http://readwise.net" target="_blank">readwise.net</a> for a long time.</p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">ANN 美味爱读 readwise.net</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/"/>
+    
+    <id>/blog/2012/12/05/ann美味爱读-readwise-net</id>
+    <published>2012-12-05T00:00:00+08:00</published>
+    <updated>2012-12-05T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>诚惶诚恐地，但是还是得把这盘菜捧出来给大家尝尝。</p>
+
+<p>我们的新产品，<a href="http://readwise.net/" target="_blank">美味爱读(ReadWise)</a>现在正式开放帐号申请了。</p>
+
+<p>从哪里说起呢，美味书签，包括整个AVOS都在做信息提取相关的互联网产品，美味爱读依然延续的这个路线。美味爱读是一个阅读产品，不过与市面上其他的类似产品相比，我们有点不同。</p>
+
+<p>首先，我们通过技术手段，给每天抓取到的RSS文章打上粒度极细的标签（就像Delicious那样的tag），初到网站时，您可以选择自己感兴趣的几个标签，从而获得相关的新文章。
+<img src="http://i.imgur.com/UsPfE.png" alt="" /></p>
+
+<p>其二，我们会跟踪文章在互联网上的传播情况，在微博和twitter上的引用次数，借此来判断它的价值，影响它在阅读器里的位置。我们还会从这些网站抓取用户的评论，看看别人如何说。
+<img src="http://i.imgur.com/Qxncb.png" alt="" /></p>
+
+<p>由于时间和资源有限，初期我们还只有技术和科技相关的内容。其中有很多英文，有的用户可能会对此存在疑问。考虑这个领域有的特殊性，为了保证信息的质量，我们最后还是决定不回避这些英文内容。这恐怕也是开了先河，既然要不同，那就要不同地彻底。当然很快随着领域的扩大，内容的增加，高质量的中文文章肯定会越来越多。
+<img src="http://i.imgur.com/A3t71.png" alt="" /></p>
+
+<p>我们采用的responsive UI可以在各种分辨率的屏幕上工作，所以Android的Chrome和iPhone的浏览器也可以直接访问，不用担心。
+<img src="http://i.imgur.com/WexJU.png" alt="" /></p>
+
+<p>最后，在阅读的UI上，可以用键盘J/K查看文章，O打开链接，M标记收藏。之所以强调一下，是因为这是一个工程师驱动的产品，这样的小功能是必备的。</p>
+
+<p>这是我来北京后的第一个完整的项目，参与了从原型到初期开发，到现在的开放邀请，经历了宝贵的从无到有的过程。现在终于推开门，迈出第一步。</p>
+
+<p>产品的详细介绍，请移步我们的<a href="http://readwise.net/blog/12-17-2012/this-is-our-ann.html" target="_blank">产品博客</a>。</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Heatcanvas Is Available via Bower</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/11/19/heatcanvas-is-available-via-bower/"/>
+    
+    <id>/blog/2012/11/19/heatcanvas-is-available-via-bower</id>
+    <published>2012-11-19T00:00:00+08:00</published>
+    <updated>2012-11-19T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>The heat map toolkit, heatcanvas, is now available via twitter's package management tool, bower.</p>
+
+<p>You can now install heatcanvas with a single command:</p>
+
+<p>bower install heatcanvas</p>
+
+<p>Enjoy this library.</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Exaile 豆瓣电台插件 0.0.13</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/11/12/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-13/"/>
+    
+    <id>/blog/2012/11/12/exaile-豆瓣电台插件-0-0-13</id>
+    <published>2012-11-12T00:00:00+08:00</published>
+    <updated>2012-11-12T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>近来工作甚忙，一直没有精力来更新这个插件。加之exaile被archlinux清到了aur仓库，项目的前景亦是堪忧。恰好有两位热心网友@JoveYu和@watermelonlh在github上提出愿意帮助维护这个项目。两位都是很好的贡献者，用了一周左右的时间，居然看遍了我乱糟糟的代码，更看遍了Exaile更乱糟糟的代码。说干就干，还真让这个插件在Exaile 0.3.3健健康康地运行起来。而这段时间我没能给两位什么具体的帮助，着实惭愧。</p>
+
+<p>不管怎样，现在我们又拥有了和原先一模一样的功能：
+<img src="http://i.imgur.com/L3oqp.png" alt="" /></p>
+
+<p>你可以在github找到这个项目并下载最新的版本：<br />
+https://github.com/sunng87/exaile-doubanfm-plugin</p>
+
+<p>同时，适用于GNOME 3.6的扩展也已经在审核中了，一旦成功，根据gnome-shell据说最新的自动更新功能，已经安装的用户可以直接更新的最新版本。
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">New Shake Syntax</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/23/new-shake-syntax/"/>
+    
+    <id>/blog/2012/09/23/new-shake-syntax</id>
+    <published>2012-09-23T00:00:00+08:00</published>
+    <updated>2012-09-23T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p>
+
+<p>Using vars, local bindings in shake macros:<br />
+[cc lang="clojure"]<br />
+(require '[shake.core :as sh])</p>
+
+<p>(let [x "/home/nsun"]<br />
+  (sh/ls -l $x))<br />
+[/cc]</p>
+
+<p>So you have to prefix the clojure variable with a dollar sign. This is quite similar to what we did in shell programming.</p>
+
+<p>And more interesting, you can also use a $ prefixed clojure form in shake:</p>
+
+<p>[cc lang="clojure"]<br />
+(sh/curl $(format "https://github.com/%s" "sunng87"))<br />
+[/cc]</p>
+
+<p>Thanks to Clojure macro system, it has great flexibility to manipulate symbols and code lists, making inventing new syntax much easier than other languages. Shake can be a great example in describing macro system.
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Shake: Every Program Can Be a Clojure Function</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/21/shake-every-program-can-be-a-clojure-function/"/>
+    
+    <id>/blog/2012/09/21/shake-every-program-can-be-a-clojure-function</id>
+    <published>2012-09-21T00:00:00+08:00</published>
+    <updated>2012-09-21T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>You might have heard of <a href="http://amoffat.github.com/sh/index.html">sh</a>, which brings python an interface to call subprocesses. The API of sh is pretty cool: Every command can be treated as a python function, and imported from a namespace. Options and arguments are passed in as python string.</p>
+
+<p>But I think in Clojure, things can be even cooler. We dynamically create symbols for every program. We will have a beautiful DSL so you don't have to quote arguments as string. So when you are using this library, it may look like:</p>
+
+<p>[cc lang="clojure"]<br />
+(ls)<br />
+(uname -a)<br />
+(ip -4 addr)<br />
+[/cc]</p>
+
+<p>And actually it's just like that! I create this library called <strong><a href="https://github.com/sunng87/shake/" target="_blank">shake</a></strong>. When you load `shake.core`, it indexes all the executables in your path. Then all programs are available to you in a clojure native way.</p>
+
+<p>[cc lang="clojure"]</p>
+
+<p>(use 'shake.core)<br />
+(uname -a) ;; returns a java.lang.Process, that you can send data, read data and wait for termination.</p>
+
+<p>;; for those just need output<br />
+(alter-var-root *print-outpt* (fn [_] true))<br />
+(uname -a)<br />
+;; it prints ...<br />
+[/cc]</p>
+
+<p>There's a lot of fun in implementing this library. First, to be able to use custom symbol in the DSL, you have to make these executables as macros. Second, find a way to programmably create vars which are named by string. The power of Clojure enables all the ideas and makes it possible. Check out the source code if you are interested in: <a href="https://github.com/sunng87/shake/">https://github.com/sunng87/shake/</a>. </p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Cljts: Java Topology Suite for Clojure</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/"/>
+    
+    <id>/blog/2012/09/15/cljts-java-topology-suite-for-clojure</id>
+    <published>2012-09-15T00:00:00+08:00</published>
+    <updated>2012-09-15T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>I almost forgot to announce this library I made half of a year ago. This library is aiming to bring Clojure to GIS. So you can manipulate geometry objects with a set of clojure functions.</p>
+
+<p>The library covers :
+<ul>
+	<li>Geometries defined in Simple Feature Spec</li>
+	<li>Spatial relationship test, based on DE-9IM.</li>
+	<li>IO functions, WKT and WKB support</li>
+	<li>some spatial analysis functions such as buffer, convex-hull</li>
+</ul></p>
+
+<p>Also, this week Alexey Pushkin sent pull request and added support for Perpared Geometry and Affine transformations.</p>
+
+<p>The current release of cljts is 0.2.0-SNAPSHOT. You can find API document at <a href="http://sunng87.github.com/cljts/">here</a>. </p>
+
+<p>If you are also interested in bringing clojure to GIS, feel free to get connected and hope I could help you.
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Timing Brings Perf4j to Clojure</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/"/>
+    
+    <id>/blog/2012/07/02/timing-brings-perf4j-to-clojure</id>
+    <published>2012-07-02T00:00:00+08:00</published>
+    <updated>2012-07-02T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p><a href="https://github.com/sunng87/timing" target="_blank">Timing</a> is a dead simple clojure library wraps perf4j, while perf4j is an advanced library to log call time. It's like log4j to System.out.println, that to System.currentTimeMillies. </p>
+
+<p>The core part of Timing library is a `timed` macro. You can put any forms in it and it will log the call time.</p>
+
+<p>[cc lang="clojure"]<br />
+(timed "demo"<br />
+  (look-for-something-from-the-moon)<br />
+  ...)<br />
+[/cc]</p>
+
+<p>And it logs:<br />
+start[1341215254682] time[1000] tag[demo]</p>
+
+<p>Timing looks up your classpath at startup for a logging backend: slf4j or log4j. If neither of them found, it fails back to log to stderr. By the way, log4j is the recommended logging backend. There are some predefined appender in perf4j to generate semi-realtime summary and charts. Anyway, Timing, as a library, doesn't depend on any library other than perf4j.</p>
+
+<p>The project is hosted at <a href="https://github.com/sunng87/timing" target="_blank">github</a> and available on clojars of version "0.1.0".</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker 0.8.0</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/04/22/slacker-0-8-0/"/>
+    
+    <id>/blog/2012/04/22/slacker-0-8-0</id>
+    <published>2012-04-22T00:00:00+08:00</published>
+    <updated>2012-04-22T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>A new release 0.8.0 of <a href="https://github.com/sunng87/slacker">slacker</a> has been pushed to clojars. Let's go through the changes in this version.</p>
+
+<p><h3>Clojure 1.3 compatible</h3>
+Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3. Also, you can use 1.3 API in slacker. For example, a timeout argument is supported in deref, which is useful when dealing with promise returned by slacker's asynchronous call.</p>
+
+<p><h3>Performance Boost</h3></p>
+
+<p>The performance enhancement is on the highest priority in this release.  I have migrated the NIO infrastructure to a new library called <a href="https://github.com/sunng87/link">link</a>. Now slacker 0.8.0 is at least <strong>8x</strong> faster than previous release. There is significant improvement both on per-request latency and overall throughput. And the server thread model is optimized for data-intensive tasks. Heavy IO tasks in hosted functions won't block the whole server. </p>
+
+<p><h3>slacker as a ring app</h3></p>
+
+<p>Instead of running default transportation, slacker now can be configured as a ring app and deployed on any ring adapter. </p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.server)<br />
+(use 'ring.adapter.jetty)</p>
+
+<p>(run-jetty (slacker-ring-app (the-ns 'slacker.example.api)) {:port 8080})<br />
+[/cc]</p>
+
+<p>This will expose the name space <em>slacker.example.api</em> with HTTP. Functions could be called with following URL pattern:</p>
+
+<p>http://localhost:8080/&lt;namespace&gt;/&lt;function&gt;.&lt;content-type&gt;</p>
+
+<p>For instance: http://localhost:8080/slacker.example.api/timestamp.json</p>
+
+<p><h3>defn-remote</h3></p>
+
+<p>There is a minor update for the defn-remote macro. </p>
+
+<p>In 0.7.0, you have to specify remote namespace with an option:<br />
+[cc lang="clojure"]<br />
+(defn-remote sc timestamp :remote-ns "slacker.example.api")<br />
+[/cc]</p>
+
+<p>In 0.8.0, it's more convenience: <br />
+[cc lang="clojure"]<br />
+(defn-remote sc slacker.example.api/timestamp)<br />
+[/cc]</p>
+
+<p>To keep the core library compact, in 0.8.0, the cluster support has been moved to a standalone project <a href="https://github.com/sunng87/slacker-cluster">slacker-cluster</a>. </p>
+
+<p>All above summarized my recent work in the slacker project. If you have any question with this library, feel free to drop me an email sunng@about.me .
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">What's New in Slacker 0.7.0 ?</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/"/>
+    
+    <id>/blog/2012/03/09/whats-new-in-slacker-0-7-0</id>
+    <published>2012-03-09T00:00:00+08:00</published>
+    <updated>2012-03-09T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>I just released [slacker "0.7.0"] to clojars. This is the first release after my presentation on the Clojure China Meetup. <a href="https://github.com/lbt05" target="_blank">lbt05</a> contributed an ACL module to slacker, which is the most significant feature in this release. </p>
+
+<p>The ACL module provides a simple DSL to define access rules.</p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.acl)<br />
+(use 'slacker.server)</p>
+
+<p>(defrules myrule<br />
+  (allow ["10.60.15.*"]))</p>
+
+<p>(start-slacker-server ...<br />
+                      :acl myrule)<br />
+[/cc]</p>
+
+<p>"myrule" defines a limited access control list. Only clients from IP segment 10.60.15.* could access the slacker service.</p>
+
+<p>And there are also minor enhancements in this release:</p>
+
+<p><ul>
+<li>Content compression, new content type :deflate-carb :deflate-json and :deflate-clj</li>
+<li>In debug mode, server side stacktraces are printed on client</li>
+<li>Zookeeper node path refined</li>
+<li>New options in use-remote, :only and :exclude</li>
+<li>Cheshire used as json library</li>
+</ul></p>
+
+<p>slacker 0.7.0 will be the last version on clojure 1.2 . As aleph 0.2.1 is coming near, we will migrate to clojure 1.3 as soon as possible. If you like to taste slacker on your 1.3 application now, there is a 0.7.1-SNAPSHOT available.</p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Python's Valentines Day Gift to Clojure</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/"/>
+    
+    <id>/blog/2012/02/14/pythons-valentines-day-gift-to-clojure</id>
+    <published>2012-02-14T00:00:00+08:00</published>
+    <updated>2012-02-14T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>Inspired by meh's <a href="https://github.com/meh/ruby-clj" target="_blank">Ruby-Clj</a> module, I created the python equivalent "pyclj" last weekend. Pyclj is a clojure literal reader/writer for python. It enables data exchange between python and clojure, in a clojure-native way. It's Valentines Day today, I'd like to release it as the gift of python to clojure :)</p>
+
+<p>The API is very simple. It's all like python's data modules (json, pickle)</p>
+
+<p>[cc lang="python"]<br />
+import clj</p>
+
+<p>clj.loads("[1 2 3]")<br />
+clj.dumps({"a":1, "b":2})<br />
+[/cc]</p>
+
+<p>Clojure types are mapping to python data structures :</p>
+
+<p><table border="1">
+<tbody><tr>
+<th>Clojure</th>
+<th>Python</th>
+</tr>
+<tr>
+<td>list</td>
+<td>list</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>list</td>
+</tr>
+<tr>
+<td>set</td>
+<td>set</td>
+</tr>
+<tr>
+<td>map</td>
+<td>dict</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>None</td>
+</tr>
+<tr>
+<td>string</td>
+<td>string</td>
+</tr>
+<tr>
+<td>int</td>
+<td>int</td>
+</tr>
+<tr>
+<td>float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>char</td>
+<td>string</td>
+</tr>
+<tr>
+<td>keyword</td>
+<td>string</td>
+</tr>
+</tbody></table></p>
+
+<p>But how we win clojure's heart from ruby? </p>
+
+<p>We are faster.</p>
+
+<p>Considering clojure literal below:<br />
+[cc lang="clojure"]<br />
+[1 2 3 true false nil {:a 21.3 :b 43.2} "Hello"]<br />
+[/cc]</p>
+
+<p>Comparing ruby-clj(0.0.4.5, ruby 1.9.3p0) and pyclj(0.1.3 python 2.7.2):<br />
+[cc lang="ruby"]<br />
+require 'clj'</p>
+
+<p>s = "[1 2 3 true false nil {:a 21.3 :b 43.2} \"Hello\"]"</p>
+
+<p>t1 = Time.now()<br />
+for i in 0...10000<br />
+  Clojure.parse(s)<br />
+end<br />
+puts Time.now()-t1<br />
+[/cc]</p>
+
+<p>[cc lang="python"]<br />
+import clj<br />
+import time</p>
+
+<p>s = "[1 2 3 true false nil {:a 21.3 :b 43.2} \"Hello\"]"</p>
+
+<p>t1 = time.time()<br />
+for i in range(10000):<br />
+  clj.loads(s)<br />
+print time.time()-t1<br />
+[/cc]</p>
+
+<p>The result:<br />
+ruby: <del datetime="2012-02-16T05:30:18+00:00"><strong>13.451157809</strong></del>
+python: <del datetime="2012-02-16T05:30:18+00:00"><strong>0.712423086166</strong></del>
+Edit 20120216 13:30<br />
+ruby-clj 0.0.5.3 has resolved the performance issue :) <br />
+The new result ruby-clj/0.0.5.4 Vs pyclj0.1.4 (on my laptop):<br />
+ruby-clj: 2.044872364<br />
+pyclj: 1.19659209251</p>
+
+<p>The project is hosted on <a href="https://github.com/sunng87/pyclj" target="_blank">github</a>. Feel free to join the development and enhance it.</p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">HeatCanvas Performance Enhanced</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/11/heatcanvas-performance-enhanced/"/>
+    
+    <id>/blog/2012/02/11/heatcanvas-performance-enhanced</id>
+    <published>2012-02-11T00:00:00+08:00</published>
+    <updated>2012-02-11T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p><img src="http://i.imgur.com/6vkpo.png" alt="heatcanvas" /></p>
+
+<p>时隔半年日日沉浸在clojure世界里的时候，多亏了github上<a href="https://github.com/dazuma">Daniel Azuma</a>的提示，现在HeatCanvas通过Image Data数组来绘制图像。过去由于不太熟悉Canvas API，我用的是fillRect来填充1像素大小的区域，模拟像素的渲染。但是这种方式导致浏览器渲染的效率非常低。</p>
+
+<p>ImageDataArray允许用户开辟一个固定大小的buffer，并设置每一像素的像素值，然后一次性地渲染到canvas上。详情可以参考这里：<a href="https://developer.mozilla.org/En/HTML/Canvas/Pixel_manipulation_with_canvas" target="_blank">Pixel manipulation with canvas</a></p>
+
+<p>这次性能的提升基本没有影响API，唯一的区别是如果原先自定义了value-color的映射函数的话，现在不再接受hsl的css字符串了，新的API需要你返回一个四个元素的数组，分别代表h, s, l, a，值域[0-1]。</p>
+
+<p>感谢关注HeatCanvas的朋友。</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker Cluster</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/04/slacker-cluster/"/>
+    
+    <id>/blog/2012/02/04/slacker-cluster</id>
+    <published>2012-02-04T00:00:00+08:00</published>
+    <updated>2012-02-04T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>Cluster support is one of the big thing in slacker 0.6.x. Cluster enables high-availability and load balancing on slacker client and server. </p>
+
+<p>Slacker cluster has a centralized registry, a zookeeper node, stores information of all the namespaces and servers instances in the cluster. Once a client declared remote functions, by calling `defn-remote` or `use-remote`, it reads all available servers offering that namespace from the registry and create connection to each of them. We the user issues a request, the client randomly pick up a connection from them. So the load is eventually distributed to every instance of slacker servers. And thanks to zookeeper's notification feature, the client watches certain znode. It will be notified when 1. a connected server goes offline 2. a new server serving required namespace added into the cluster. Thus you don't have to change client code or restart client when server changes. </p>
+
+<p>To start a slacker server and add it to a cluster, you have to provide cluster information using the new <strong>:cluster</strong> option:<br />
+[cc lang="clojure"]<br />
+(start-slacker-server (the-ns 'slacker.example.api)<br />
+                      2104<br />
+                      :cluster {:zk "127.0.0.1:2181"<br />
+                                :name "example-cluster"})<br />
+[/cc]</p>
+
+<p><ul>
+	<li>:zk is the address of zookeeper node</li>
+	<li>:name is a znode qualified string, to identify the cluster</li>
+</ul></p>
+
+<p>On the client side, it's important to use APIs from `slacker.client.cluster` instead of `slacker.client`:</p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.client.cluster)<br />
+;; arguments: cluster-name, zookeeper address<br />
+(def sc (clustered-slackerc "example-cluster" "127.0.0.1:2181"))<br />
+(use-remote 'sc 'slacker.example.api)</p>
+
+<p>;; call the function from a random server<br />
+(timestamp)<br />
+[/cc]</p>
+
+<p>If all servers provide 'slacker.example.api go offline, slacker client will raise a "not-found" exception.</p>
+
+<p>Slacker cluster is also designed with simple and clean in mind. You don't have to change you business code to make it remote or cluster. Everything is transparent and non-invasive. Enjoy it.</p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker 0.6: Exposing Multiple Namespaces</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/"/>
+    
+    <id>/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces</id>
+    <published>2012-02-03T00:00:00+08:00</published>
+    <updated>2012-02-03T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I'm glad to announce [slacker "0.6.1"].</p>
+
+<p>One thing in slacker 0.6.x is you can expose multiple namespaces from a single server.</p>
+
+<p>Suppose you have two namespaces `redday.stats` and `redday.api`, both contains functions you want to expose.</p>
+
+<p>[cc lang="clojure"]<br />
+  (start-slacker-server [(the-ns 'redday.stats)<br />
+                         (the-ns 'redday.api)]<br />
+                        6565)<br />
+[/cc]</p>
+
+<p>This will expose `redday.stats` and `redday.api` on port 6565.</p>
+
+<p>On the client side, we have a new `use-remote` behaviors like clojure's use. Instead of local one, it imports functions from a remote namespace to your current namespace. </p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.client)<br />
+;; create a slacker client<br />
+(def scp (slackerc "127.0.0.1:6565")) </p>
+
+<p>(use-remote 'scp 'redday.api) ;; caution, use the symbol of 'scp here <br />
+(use-remote 'scp 'redday.stats)</p>
+
+<p>;;top-titles is a function in redday.api<br />
+;;now you can use the remote function transparently<br />
+(top-titles "programming") </p>
+
+<p>;;check function metadata you can find more slacker properties<br />
+(meta top-titles)<br />
+[/cc]</p>
+
+<p>If you need to configure callback to a particular function, you can still use `defn-remote` to specify the callback function. In slacker 0.6.0, a `:remote-ns` is required when you define such a remote function.<br />
+[cc lang="clojure"]<br />
+(defn-remote top-titles :remote-ns "redday.api" :callback #(println %))<br />
+[/cc]</p>
+
+<p>The complete code example (both server and client) can be found <a href="https://bitbucket.org/sunng/slacker-demo/overview">here</a>. </p>
+
+<p>In next post, I will explain another big new feature of 0.6.x, cluster support.</p>
+
+<p></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">ClojureDocs Android App</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/24/clojuredocs-android-app/"/>
+    
+    <id>/blog/2012/01/24/clojuredocs-android-app</id>
+    <published>2012-01-24T00:00:00+08:00</published>
+    <updated>2012-01-24T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>利用春节的假期写了一个Android应用，可以在<a href="http://clojuredocs.org" target="_blank">ClojureDocs.org</a>上搜索clojure API，浏览文档、源代码和社区贡献的代码实例。ClojureDocs在我学习Clojure的过程中起了很大的作用，所以我想这个网站应该对很多人有用。</p>
+
+<p>无暇去学习Android平台上繁琐的知识，不过好在有Phonegap这样的框架，可以把网页应用转化为本地应用，并且提供访问本地设备的API。通过Phonegap开发的程序还可以直接移植到iphone平台上。ClojureDocs Android就是运行在Phonegap中。</p>
+
+<p>首页：
+<img src="http://i.imgur.com/zdMCt.png" alt="" /></p>
+
+<p>搜索界面
+<img src="http://i.imgur.com/MVCz4.png" alt="" /></p>
+
+<p>API函数界面
+<img src="http://i.imgur.com/M0fEI.png" alt="" /></p>
+
+<p>你可以从github获得代码和签名过的apk：<a href="https://github.com/sunng87/clojuredocs-android" target="_blank">https://github.com/sunng87/clojuredocs-android</a></p>
+
+<p>Known Issue，phonegap程序在屏幕旋转时会崩溃，已经在2.3和3.2上重现，目前还不清楚具体的原因。(Edit 20120127: Fixed in 1.0.4)</p>
+
+<p>欢迎任何的pull request。
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Weekend Project: LazyPress</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/08/weekend-project-lazypress/"/>
+    
+    <id>/blog/2012/01/08/weekend-project-lazypress</id>
+    <published>2012-01-08T00:00:00+08:00</published>
+    <updated>2012-01-08T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>发布一个典型的weekend project, 名字叫做<a href="http://lazypress.cloundfoundry.com">LazyPress</a>.顾名思义,这是一个在线的写作系统. 取名Lazy, 除了因为它用Clojure写成,更因为他的简单: 没有繁琐的注册,没有繁琐的分类tag,没有繁琐的格式化,无论是使用还是开发都力求做到最简单.<br />
+LazyPress采用Mozilla刚刚发布的<a href="http://browserid.org/">BrowserID</a>. 技术作为账号系统, 用户只需要在首次登录后提供一个ID即可(原本这一步也可以省略, 但是为了保护您的邮箱隐私, 现在需要一个LazyPress专用的ID). 这样LazyPress本身不存储用户的密码,也简化了用户账号管理的代价. BrowserID的登录流程非常简单, 速度也比传统的OpenID和OAuth要快, 用户体验要比多次跳转好很多.<br />
+LazyPress使用Markdown进行文本格式化, 简单的编辑器可以支持绝大多数格式的要求. 另外,在浏览器后台LazyPress使用HTML5 LocalStorage技术自动保存用户的文本草稿, 如果用户没有成功发布, 可以在下次浏览器打开时进行恢复.</p>
+
+<p>LazyPress后台存储采用mongodb. 正是mongodb的schema free特性降低了项目功能重构的成本, 促进了人们更快更频繁地优化产品的模型. 这应该是文档型数据库之于传统关系型数据库最大的优势. (犹如git之于svn, 开分支的成本要低得多, 看似是一个普通的功能改进, 实则鼓励促进了开发人员通过开分支实现自己的修改)<br />
+LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标准的Java web应用直接部署在cloudfoundry上. 前端继续使用的是我偏爱的Mootools库, 因为使用了很多新的浏览器技术, 所以目前只能保证在最新的Firefox和Chromium/Chrome上正常使用.</p>
+
+<p>Fork me on github: <a href="http://github.com/sunng87/lazypress">http://github.com/sunng87/lazypress</a></p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker 0.4.0 Released</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/04/slacker-0-4-0-released/"/>
+    
+    <id>/blog/2012/01/04/slacker-0-4-0-released</id>
+    <published>2012-01-04T00:00:00+08:00</published>
+    <updated>2012-01-04T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release.</p>
+
+<p><h3>Breaking Changes</h3></p>
+
+<p><ul>
+	<li>New maven coordinator: [slacker "0.4.0"] (groupId renamed to slakcer)</li>
+	<li>defremote renamed to <strong>defn-remote</strong></li>
+	<li>SlackerException removed. slacker now uses slingshot for exception handling</li>
+	<li>Rename :async option of defn-remote to <strong>:async?</strong></li></ul></p>
+
+<p></p>
+
+<p><h3>What's new in 0.4.0</h3>
+<ul>
+	<li>Add new serialization type <strong>:clj</strong></li>
+	<li>New interceptors: execution time stats, args logger, slow watch dog</li>
+	<li>New HTTP interface</li>
+	<li>Server inspect commands	</li></ul></p>
+
+<p><li> utility functions/macros <strong>defn-remote-all</strong>, <strong>defn-remote-batch</strong> and <strong>meta-remote</strong></li></p>
+
+<p></p>
+
+<p>Get more information on <a href="https://github.com/sunng87/slacker" target="_blank">github</a>.
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker 0.2.0 Is Out</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/10/slacker-0-2-0-is-out/"/>
+    
+    <id>/blog/2011/12/10/slacker-0-2-0-is-out</id>
+    <published>2011-12-10T00:00:00+08:00</published>
+    <updated>2011-12-10T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p><a href="https://github.com/sunng87/slacker">Slacker 0.2.0</a> has been pushed to clojars today. Connection pooling and json serialization are available in this release.</p>
+
+<p><h4>Connection Pool</h4>
+Generally, pooling connection is a good idea in high concurrence application. To make slacker for real world, connection pool support is a high-prioritized feature in its development. The new connection pool is backended by commons-pool which you might familiar with. To use connection pool, just create slacker client with a new function `slackerc-pool`</p>
+
+<p>[cc lang="clojure"]<br />
+(def scp (slackerc-pool "localhost" 2104))<br />
+[/cc]</p>
+
+<p>Then you can use this pool just like a single client.</p>
+
+<p>Some options are available to configure the pool by your wish:
+<ul>
+	<li><em>:max-active</em>, max connections opened by the pool</li>
+	<li><em>:exhausted-action</em> <br />
+            <ul>
+               <li><em>:fail</em> throw an exception when pool exhausted.</li>
+<li><em>:block</em> block current thread and wait until max-wait exceed (throw an exception)</li>
+	<li><em>:grow</em> automatically create new connection and add it to pool</li></ul></li></ul></p>
+
+<p>            
+<li><em>:max-wait</em> max wait time before throwing an exception</li>
+	<li><em>:min-idle</em> minimal number of pool hold idle connections </li></p>
+
+<p>
+The options are inherited from GenericObjectPool, you can find detailed information from their <a href="http://commons.apache.org/pool/apidocs/org/apache/commons/pool/impl/GenericObjectPool.html">javadoc</a>.</p>
+
+<p><h4>JSON Serialization</h4>
+slacker just added json serialization provided by clj-json. According to my test, clj-json is 1x faster than carbonite in serialization. <br />
+[cc lang="clojure"]<br />
+(def sc (slackerc "localhost" 2104 :content-type :json))<br />
+[/cc]</p>
+
+<p>However, with json serialization, you may lost some clojure types like keyword and set in type conversion. You should be caution when using json as serialization method. </p>
+
+<p>In next release, I am planning to use <a href="https://github.com/AlibabaTech/fastjson/" target="_blank">fastjson</a> as json lib which provides option to write type name into json so it could be a full featured serialization for clojure. And fastjson is claimed even faster than jackson.</p>
+
+<p><h4>Performance</h4>
+slacker gains high performance with its non-blocking server, serialization and direct function call. As tested on a dual 6 core server,  it reaches 10000+ TPS for a single client (50 connections, 50 threads). The server just use 35% CPU so I consider it could have even more TPS if there is two or more client machines.</p>
+
+<p>So if you are interested in some benchmarks, you can test it with client like <a href="https://gist.github.com/1449860" target="_blank">this</a>. All the requests are using synchronous call because I believe it's the most common case you use slacker.</p>
+
+<p><h4>Next steps</h4>
+Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" target="_blank">cn-clojure</a> mailing list, I'm going to add HTTP transport for slacker. With HTTP transport, it's easier to debug and evaluate your clojure functions, it also makes slacker available to ClojureScript. </p>
+
+<p>At lst, thanks Zach Tellman for reviewing my client code. 
+</p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Slacker 0.1.0 Is Out</title>
+    
+    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/02/slacker-0-1-0-is-out/"/>
+    
+    <id>/blog/2011/12/02/slacker-0-1-0-is-out</id>
+    <published>2011-12-02T00:00:00+08:00</published>
+    <updated>2011-12-02T00:00:00+08:00</updated>
+    <author>
+      <name>Sun Ning</name>
+      <uri>http://sunng87.github.io/blog/blog/</uri>
+    </author>
+    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+<![CDATA[
+
+<p>Glad to roll out the first release of the <strong>slacker</strong> framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of non-invasive APIs for both server and client. The remote invocation is completely transparent to user.</p>
+
+<p>In addition to APIs introduced in <a href="http://sunng.info/blog/2011/11/clojure-rpc-prototyping-and-early-thoughts/">last post</a>, asynchronous approach is supported in client API :<br />
+[cc lang="clojure"]<br />
+(defremote remote-func :async true)<br />
+@(remote-func)<br />
+[/cc]<br />
+If you add option `:async` to defremote, then the function facade will return a promise. You have to deref it by yourself. Also you can use the `:callback` option in defremote to specify a callback function.<br />
+[cc lang="clojure"]<br />
+(defremote remote-func :callback #(println %))<br />
+(remote-func)<br />
+[/cc]</p>
+
+<p>This gives you much more flexibility of using remote function. But be careful it will break consistency between local and remote mode. </p>
+
+<p>To use slacker, add it to your project.clj<br />
+[cc lang="clojure"]<br />
+:dependencies [[info.sunng/slacker "0.1.0"]]<br />
+[/cc]</p>
+
+<p>You can find examples on the <a href="https://github.com/sunng87/slacker" target="_blank">github page</a>. </p>
+
+
+
+]]>
+    </content>
+  </entry>
+
+</feed>

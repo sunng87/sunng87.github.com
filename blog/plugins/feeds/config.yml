@@ -1,8 +1,0 @@
-read_more_label: "Continue reading →"
-permalink_label: "Permalink"
-category_feeds: true
-
-permalinks: 
-  main_feed:      /atom.xml
-  category_feed:  /blog/categories/:category/atom.xml
-
