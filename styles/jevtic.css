@@ -5,16 +5,15 @@
 }
 
 body {
-    background-color: #1f3b31;
+    background-color: #FFF;
     background-repeat:repeat-x;
     background-position:top center;
     font-family: 'Monda',sans-serif;
     height:100%;
+    padding: 20px;
 }
 
 #page{
-    margin-top:40px;
-    margin-left:20px;
     z-index:0;
     /*width:450px;*/
 }
@@ -33,8 +32,8 @@ div.info {
     float:left;
     margin-bottom:20px;
     margin-left:10px;
-    color:#FFF;
-    font-size:1.4em;
+    color:#555;
+    font-size:1em;
 }
 div.info h1 {
     font-size:3em;
@@ -52,20 +51,17 @@ ul.links {
     margin-bottom:5px;
 }
 ul.links li {
-    display: inline-block;
     font-size:0.8em;
     padding-right:8px;
+    list-style: inside;
 }
 ul.links li:last-child {
     border:0;
 }
 a:link,a:visited{
-    border-bottom:1px #FFF dashed;
-    color: #FFF;
+    color: #222;
     text-decoration:none;
 }
 a:hover {
     color: #67CC67;
 }
-
-
