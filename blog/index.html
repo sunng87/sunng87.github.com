@@ -1,1260 +1,3154 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+
+  <head>
   <meta charset="utf-8">
-  <title>Here comes the Sun</title>
-  <meta name="author" content="Sun Ning">
-
-  
-  <meta name="description" content="本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言， &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://sunng87.github.io/blog/">
-  <link href="/blog/favicon.png" rel="icon">
-  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" title="Here comes the Sun" type="application/atom+xml">
-  <script src="/blog/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>Here comes the Sun</title>
+  <meta name="description" content="">
 
-  
-
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/blog/">Here comes the Sun</a></h1>
-  
-    <h2>Sun Ning's web log</h2>
-  
-</hgroup>
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/blog/">Blog</a></li>
-  <li><a href="/blog/blog/archives">Archives</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="home">
+
+  <h1 class="page-heading">Posts</h1>
+
+  <ul class="post-list">
     
-      <h1 class="entry-title"><a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-25T16:22:50+08:00" pubdate data-updated="true">Jan 25<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。我也是其中一员，去年还给<a href="">程序员杂志写了一篇 Rust 的文章</a>，结果现在程序员杂志也停刊了。</p>
-
-<p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
-
-<p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
-
-<ul>
-<li>不要把 rust 代码写进 html 模版里，反例： jsp, ejs</li>
-<li>不要把 html 代码写进 rust 里，反例： hiccup</li>
-<li>能够复用，基于“继承”而不是 include</li>
-<li>能够简单地自定义标签，反例：mustach</li>
-</ul>
-
-
-<p>基于以上的原则，<a href="https://github.com/sunng87/handlebars-rust">handlebars-rust</a> 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 <a href="https://github.com/sunng87/handlebars-iron">handlebars-iron</a> 项目，作为一个 <a href="http://ironframework.io">Iron 框架</a>的 middlaware。</p>
-
-<p>简单总结几点收获：</p>
-
-<ul>
-<li>Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型</li>
-<li>静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 <code>false</code>/<code>0</code>/<code>""</code>/<code>[]</code> 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 <code>Json</code> 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 <code>ToJson</code>，算是设计上的一个取舍。</li>
-<li>Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的</li>
-<li>关于 Rust 的 ownership 看<a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html">这篇文章</a>，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错</li>
-<li>有任何问题都可以在 stackoverflow 上问，有几个人会很快回复</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-19T16:46:20+08:00" pubdate data-updated="true">Aug 19<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
-
-<p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
-
-<p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
-
-<ul>
-<li>Push 服务：处理推送的订阅关系，触发推送</li>
-<li>长连接服务器：维持设备与服务的长连接</li>
-<li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
-<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警</li>
-<li>数据存储：群组数据，用户可以通过API访问</li>
-<li>HBase：消息记录存储</li>
-</ul>
-
-
-<p>模块间的集成，根据业务的特性分别使用 <a href="https://github.com/sunng87/slacker">Slacker</a> 远程调用框架和 <a href="http://twitter.github.io/kestrel/">Kestrel</a> 消息队列。
-对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。</p>
-
-<p>Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 <a href="http://clojure.org/macros">Clojure 宏</a>的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 <code>(require)</code> 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 <a href="https://github.com/ptaoussanis/nippy">nippy</a>，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。</p>
-
-<p>以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。</p>
-
-<h3>服务发现</h3>
-
-<p>长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 <a href="https://en.wikipedia.org/wiki/Publish/subscribe">Pub/Sub 抽象</a>的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。</p>
-
-<p>在这方面，我们利用了 <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster 框架</a>。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。</p>
-
-<p>所有的服务提供者将自己能够提供的服务注册在 <a href="https://zookeeper.apache.org/">Zookeeper</a> 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Zookeeper 目录结构</span>
-</span><span class='line'>ls /slacker/example-cluster/namespaces/
-</span><span class='line'><span class="o">[</span>my.serviceA, my.serviceB<span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'>ls /slacker/example-cluster/namespaces/my.serviceA
-</span><span class='line'><span class="o">[</span>192.168.1.100:2104, 192.168.1.101:2014...<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。</p>
-
-<p>在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。</p>
-
-<p>有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。</p>
-
-<p>原载 <a href="https://blog.avoscloud.com/1927/">AVOSCloud Blog</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-02T18:02:12+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
-
-<h2>安装</h2>
-
-<p>安装 Docker, Arch Linux 仓库里很早就有，非常方便：<code>sudo pacman -S docker</code>。完成之后启动他：<code>sudo systemctl start docker</code>。</p>
-
-<p>之后我们拉一个 ubuntu 的镜像下来：<code>docker pull ubuntu</code>。</p>
-
-<p>完成之后，我们启动一个 container，做一些基本的 setup：<code>docker run -i -t ubuntu:14.04 /bin/bash</code></p>
-
-<p>这相当与运行在 ubuntu:14.04 这个镜像上运行一个 shell，接下来就进入了这个 shell 环境，和 ubuntu 安装版本完全一致，我们做一些基础的准备，安装一些必要的工具：<code>apt-get install build-essentials git curl libssl-dev</code></p>
-
-<p>之后，就可以下载 Rust 提供的脚本来安装 nightly 版本了：<code>curl -s http://www.rust-lang.org/rustup.sh &gt; rustup</code></p>
-
-<p>这里有个问题，rustup 脚本判断64位系统时会出错导致安装失败：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Detect 64 bit linux systems with 32 bit userland and force 32 bit compilation</span>
-</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG_OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG_CPUTYPE</span> <span class="o">=</span> x86_64 <span class="o">]</span>
-</span><span class='line'><span class="k">then</span>
-</span><span class='line'><span class="k">    </span>file -L <span class="s2">&quot;$SHELL&quot;</span> | grep -q <span class="s2">&quot;x86[_-]64&quot;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> !<span class="o">=</span> 0 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</span><span class='line'>    <span class="k">fi</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>因为在我的机器上已知系统是64位，就强行绕过了他的判断。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG_OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG_CPUTYPE</span> <span class="o">=</span> x86_64 <span class="o">]</span>
-</span><span class='line'><span class="k">then</span>
-</span><span class='line'><span class="k">    </span>file -L <span class="s2">&quot;$SHELL&quot;</span> | grep -q <span class="s2">&quot;x86[_-]64&quot;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> 0 <span class="o">]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</span><span class='line'>    <span class="k">fi</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>之后执行 rustup 就可以直接安装最近的 rustc 和 cargo 了。安装完成执行 <code>rustc -v</code> 和 <code>cargo --version</code> （两个工具还不统一！）可以了解安装情况。</p>
-
-<p>exit 退出 shell，commit 你的镜像，这样一个干净的镜像要好好保存：<code>docker commit IMAGE_ID sunng/rust-nightly</code></p>
-
-<h2>Hello World</h2>
-
-<p>之后可以写点代码了，我们不在 docker 里写，我们在 host 机器上写，然后挂载到 docker 上，因此 emacs 什么的也不用配置了。</p>
-
-<p>创建一个目录，比如在 <code>$HOME/var/docker/helloworld</code>下，最简单的 rust 项目只要两个文件： <code>Cargo.toml</code> 和 <code>src/main.rs</code>。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#Cargo.toml</span>
-</span><span class='line'><span class="o">[</span>package<span class="o">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">name</span> <span class="o">=</span> <span class="s2">&quot;hello-world&quot;</span>
-</span><span class='line'><span class="nv">version</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
-</span><span class='line'><span class="nv">authors</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;sunng@about.me&quot;</span> <span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="c1">//main.rs</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>构建项目不需要手动 rustc 了，那是上个世纪的东西，我们直接 <code>cargo build</code> 就可以：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>其中 <code>-v</code> 参数用于挂载目录，<code>-w</code> 参数指定执行的 pwd。</p>
-
-<p>如果构建成功，就可以执行了，在 docker 中执行：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly target/hello-world</code></p>
-
-<p>其实可以直接在 host 系统里执行也是完全可以的：<code>$HOME/var/docker/helloworld/target/hello-world</code>。</p>
-
-<h2>Web Hello World</h2>
-
-<p>前面说了 Rust 都有 web 框架了，我们就写一个 Web 版本的 Hello World 吧。这次用 Iron 框架，首先添加依赖到 Cargo 文件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="p">[</span><span class="n">package</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;hello-world&quot;</span>
-</span><span class='line'><span class="n">version</span> <span class="o">=</span> <span class="s">&quot;0.1.0&quot;</span>
-</span><span class='line'><span class="n">authors</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;sunng@about.me&quot;</span> <span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">[</span><span class="n">dependencies</span><span class="p">.</span><span class="n">iron</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/iron/iron.git&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">[</span><span class="n">dependencies</span><span class="p">.</span><span class="n">core</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">git</span> <span class="o">=</span> <span class="s">&quot;https://github.com/iron/core.git&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Cargo 目前还没有中央仓库，但是<a href="http://crates.io/faq.html#github">据说将来会有</a>。目前还都是用 git 仓库来直接添加，所以构建环境里必须要有 git。</p>
-
-<p>照着 <a href="https://github.com/iron/iron/blob/master/examples/hello.rs">Iron 的例子</a>写一个最简单的 hello world 程序。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="n">extern</span> <span class="n">crate</span> <span class="n">iron</span><span class="p">;</span>
-</span><span class='line'><span class="n">extern</span> <span class="n">crate</span> <span class="n">http</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">use</span> <span class="n">std</span><span class="o">::</span><span class="n">io</span><span class="o">::</span><span class="n">net</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">Ipv4Addr</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="n">iron</span><span class="o">::</span><span class="p">{</span><span class="n">Iron</span><span class="p">,</span> <span class="n">Server</span><span class="p">,</span> <span class="n">Chain</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">Alloy</span><span class="p">,</span> <span class="n">Status</span><span class="p">,</span> <span class="n">Unwind</span><span class="p">,</span> <span class="n">FromFn</span><span class="p">};</span>
-</span><span class='line'><span class="k">use</span> <span class="n">http</span><span class="o">::</span><span class="n">status</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">fn</span> <span class="n">hello_world</span><span class="p">(</span><span class="n">_</span><span class="o">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Request</span><span class="p">,</span> <span class="n">res</span><span class="o">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Response</span><span class="p">,</span> <span class="n">_</span><span class="o">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Alloy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Status</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">res</span><span class="p">.</span><span class="n">serve</span><span class="p">(</span><span class="n">status</span><span class="o">::</span><span class="n">Ok</span><span class="p">,</span> <span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">Unwind</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">let</span> <span class="k">mut</span> <span class="n">server</span><span class="o">:</span> <span class="n">Server</span> <span class="o">=</span> <span class="n">Iron</span><span class="o">::</span><span class="n">new</span><span class="p">();</span>
-</span><span class='line'>  <span class="n">server</span><span class="p">.</span><span class="n">chain</span><span class="p">.</span><span class="n">link</span><span class="p">(</span><span class="n">FromFn</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="n">hello_world</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">server</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">Ipv4Addr</span><span class="p">(</span><span class="m">127</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="m">3000</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>编译 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>运行 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld -p 3000:3000 sunng/nightly target/hello-world</code></p>
-
-<p>新增的参数<code>-p</code>是把 docker 环境里的端口3000映射到 host 上的3000，这样我们才能在外面访问。</p>
-
-<p>最后还有一个问题，因为程序听的是127.0.0.1，所以在 host 上是无法访问这个端口的，修改代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'>  <span class="n">server</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">Ipv4Addr</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="m">3000</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>就可以正常工作了。</p>
-
-<h2>Wrap up</h2>
-
-<p>总结一下上面用 docker 比虚拟机的好处：</p>
-
-<ul>
-<li>占用资源少，启动快</li>
-<li>与 host 共享网络、硬盘都非常方便，满足开发需要不成问题</li>
-<li>所有都是命令，与 host 系统上的进程集成也非常方便</li>
-<li>支持镜像的版本控制和仓库</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-08T22:12:52+08:00" pubdate data-updated="true">Jul 8<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
-
-<p>It&rsquo;s a new concept in enterprise architecture, since the last movement in the field promotes SOA architecture. SOA encourages architects to componentize their business logic in service, and deploy service bus(ESB) for integration. Microservice can be more concrete and light-weighted. The service units in Microservice can be any standalone function, or just a tier in traditional tier based development. These units can be deployed on dedicate process or grouped into a process.</p>
-
-<p>In clojure development at <a href="https://avoscloud.com">avoscloud</a>, we are using the <a href="https://github.com/sunng87/slacker-cluster">slacker cluster framework</a> for our microsrvice architecture.</p>
-
-<p><a href="https://github.com/sunng87/slacker">Slacker RPC</a> exposes services as  clojure namespace (pretty light-weighted) All functions in the namespace can be called from remote. A slacker server can expose any number of namespaces:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">start-slacker-server</span> <span class="mi">2014</span> <span class="p">[</span><span class="nv">my.serviceA</span> <span class="nv">my.serviceB</span> <span class="nv">...</span><span class="p">])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Slacker uses a binary protocol on TCP and configurable serialization (json/edn/<a href="https://github.com/ptaoussanis/nippy">nippy</a>) for communication, which is fast and compact.</p>
-
-<p>And in slacker cluster, exposed namespaces are registered on zookeeper as ephemeral nodes. The client doesn&rsquo;t have to know which service is deployed on which process. Instead, it connects to zookeeper and look up all process address for service it interests in.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="k">def </span><span class="nv">sc</span> <span class="p">(</span><span class="nf">clustered-slacker-client</span> <span class="nv">zk-addr</span> <span class="nv">...</span><span class="p">))</span>
-</span><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="ss">&#39;sc</span> <span class="nv">my.serviceA/fn-abc</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;;when calling remote function for the first time, the client will look up zookeeper for remote processes and cache the results</span>
-</span><span class='line'><span class="p">(</span><span class="nf">fn-abc</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If there are more than one process available, the client library will balance the load on each process. And for stateful service, slacker cluster also elects master node to ensure all requests go to single process. (<a href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker cluster grouping</a>)</p>
-
-<p>Zookeeper directory structure:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/</span>
-</span><span class='line'><span class="p">[</span><span class="nv">my.serviceA</span>, <span class="nv">my.serviceB</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">ls</span> <span class="nv">/slacker/example-cluster/namespaces/my.serviceA</span>
-</span><span class='line'><span class="p">[</span><span class="mf">192.168</span><span class="nv">.1.100</span><span class="ss">:2104</span>, <span class="mf">192.168</span><span class="nv">.1.101</span><span class="ss">:2014...</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Decoupling processes and services made microservice deployment quite flexible. Functional namespaces can be deployed on any process, standalone or grouped together, like Martin Fowler&rsquo;s chart <a href="http://martinfowler.com/articles/microservices/images/sketch.png">shows</a>.</p>
-
-<p>All these nodes are also watched by clients. If a process crashed or put offline, the clients will get notified by zookeeper, then no requests will be made on that process. Also, when you exhausted service capacity, just simply put on another process, the client will soon balance load to the new node. Scaling services is easy like that.</p>
-
-<p>Thanks to zookeeper&rsquo;s watch mechanism, there&rsquo;s no need to configure service static and update while you add/remove nodes. This is especially important in large-scale deployment. (Since microservices are often find-grained, you will always have a lot of process to update/restart.)</p>
-
-<p>For more about Slacker Cluster, <a href="https://github.com/sunng87/slacker-cluster">check my code repository</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-07T21:17:47+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。</p>
-
-<p>其一是3月份写的 <a href="https://play.google.com/store/apps/details?id=info.sunng.muzei.maps">Mapzei</a>，是<a href="https://plus.google.com/+RomanNurik/posts">Roman Nurik</a>的live wallpaper <a href="https://play.google.com/store/apps/details?id=net.nurik.roman.muzei">Muzei</a>的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。</p>
-
-<p>另一个是<a href="http://guancha.cn">观察者网</a>的<a href="https://play.google.com/store/apps/details?id=info.sunng.guanchazhe">客户端</a>，看新闻用。应用本身倒没有什么，用了一些典型的开源库：</p>
-
-<ul>
-<li>UniversalImageLoader</li>
-<li>SuperListView</li>
-<li>ButterKnife</li>
-<li>Eventbus</li>
-</ul>
-
-
-<p>另外这个应用还发布在了<a href="http://app.mi.com/detail/65794">小米商店</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-01T17:11:58+08:00" pubdate data-updated="true">Jul 1<span>st</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
-
-<h3>增加文件打开数</h3>
-
-<p>第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ulimit -n 999999</span></code></pre></td></tr></table></div></figure>
-
-
-<p>持久化这个配置，可以在<code>/etc/security/</code>（或<code>/etc/security.d/</code>，取决于你的发行版）下建立文件，增加</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>*        hard    nofile      999999
-</span><span class='line'>*     soft    nofile      999999</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这将对所有用户起效。</p>
-
-<h3>增加客户端端口数</h3>
-
-<p>当Linux发起客户端连接时，如果没有显式指定，会给客户端socket绑定一个 ephemeral 端口。这个端口的范围是从这个区间选取的：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> $ cat /proc/sys/net/ipv4/ip_local_port_range
-</span><span class='line'>32768 61000
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如果这个区间的端口耗尽，socket就会产生<code>cannot assign requested address</code>的错误。要增加端口范围，我们需要把他设置得更大：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo echo "1025 65535" &gt; /proc/sys/net/ipv4/ip_local_port_range</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样，单台机器就可以发出六万多个连接。</p>
-
-<h3>增加虚拟网卡</h3>
-
-<p>对于内存大一点的客户端机器，六万多个连接远不是其性能极限。由于IP消息中，一条消息是由 <code>src_addr</code>, <code>src_port</code>, <code>dst_addr</code>, <code>dst_port</code> 四元组标识，所以要增加连接，我们需要更多IP。在Linux上，我们可以启动虚拟网卡绑定额外的IP。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ifconfig eth0:0 192.168.1.100
-</span><span class='line'>$ sudo ifconfig eth0:1 192.168.1.101
-</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
-
-
-<p>要关闭这些虚拟网卡</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo ifconfig eth0:0 down</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>使用虚拟网卡连接</h3>
-
-<p>拥有多个IP之后，客户端socket需要显示绑定这些IP才行，以python为例，在connect前调用：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">local_addr</span><span class="p">,</span> <span class="n">local_port</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>可以指定连接的源地址和端口。在普通的Linux编程里，当你指定<code>local_port</code>为<code>0</code>时，Linux会分配一个之前提到的 ephemeral 端口。但是当使用虚拟IP时，如果仍然指定0，系统并不会因为IP不同而重用端口号，达到六万多的限制后，仍然会抛出不能获得地址的异常。</p>
-
-<p>实际上是可以获得的，这里需要用户显式地指定端口好。如果需要大规模的连接，那就一个一个绑定好了。</p>
-
-<h3>启用time_wait reuse和recycle</h3>
-
-<p>Linux的socket进入<code>time_wait</code>后需要有一定的时间回收，之后端口才能重新使用。这在大规模测试的时候就比较麻烦，为了免去等待，可以打开<code>tw_reuse</code>和<code>tw_recycle</code>这两个选项。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">$</span> <span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp_tw_recycle</span>
-</span><span class='line'><span class="err">$</span> <span class="n">echo</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">tcp_tw_reuse</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>注意这两个选项都比较激进，最好仅在测试机上使用。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-09T21:06:39+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>What are Slacker and Slacker Cluster</h2>
-
-<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&rsquo;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
-
-<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
-
-<h2>Grouping in Slacker Cluster</h2>
-
-<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
-
-<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
-
-<h3>:random</h3>
-
-<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
-
-<h3>:leader</h3>
-
-<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
-
-<h3>:all</h3>
-
-<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it&rsquo;s broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there&rsquo;s only one server called, just like local invocation. In <code>:all</code>, there&rsquo;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
-
-<h3>Custom</h3>
-
-<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
-
-<h2>Grouping results</h2>
-
-<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
-
-<p>In short words:</p>
-
-<ul>
-<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
-<li><code>:vector</code> returns  a vector of all results.</li>
-<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
-<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
-</ul>
-
-
-<h2>Grouping exceptions</h2>
-
-<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
-
-<h2>Granularity</h2>
-
-<p>The grouping options can be set to client level:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="s">&quot;cluster-name&quot;</span> <span class="s">&quot;127.0.0.1:2181&quot;</span> <span class="ss">:grouping</span> <span class="ss">:leader</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>or function level:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">slacker.example.api/timestamp</span>
-</span><span class='line'>  <span class="ss">:grouping</span> <span class="ss">:all</span>
-</span><span class='line'>  <span class="ss">:grouping-results</span> <span class="ss">:single</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Conclusion</h2>
-
-<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-27T21:47:45+08:00" pubdate data-updated="true">May 27<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model &ldquo;fork-join&rdquo; for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
-
-<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
-
-<p><img src="http://i.imgur.com/w6RlNZo.png" alt="linear execution" /></p>
-
-<p>This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it&rsquo;s always better to run them in parallel. Here we have <code>(fork)</code> command for the situation.</p>
-
-<p>For example, you are using the <em>fanout-on-write</em> model to build an activity stream. Once a user posted a new status, you need to find all followers(stage 1) of that user and append the status to their timeline(stage 2).</p>
-
-<p>In previous version of papaline, these two stages are:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">find-followers</span> <span class="p">[</span><span class="nv">id</span> <span class="nv">msg</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">followers</span> <span class="p">(</span><span class="nf">query-db-for-followers</span> <span class="nv">id</span><span class="p">)]</span>
-</span><span class='line'>    <span class="p">[</span><span class="nv">followers</span> <span class="nv">msg</span><span class="p">]))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">fanout-to-user-timeline</span> <span class="p">[</span><span class="nv">user-ids</span> <span class="nv">msg</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">user-id</span> <span class="nv">user-ids</span><span class="p">]</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">write-redis-list</span> <span class="nv">user-id</span> <span class="nv">msg</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the second task, the msg is appended to user&rsquo;s timeline one by one.</p>
-
-<p>Using <code>(fork)</code>, the <code>fanout-to-user-timeline</code> can be executed in parallel.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">find-followers</span> <span class="p">[</span><span class="nv">id</span> <span class="nv">msg</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">followers</span> <span class="p">(</span><span class="nf">query-db-for-followers</span> <span class="nv">id</span><span class="p">)]</span>
-</span><span class='line'>    <span class="p">(</span><span class="nf">fork</span> <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nb">vector </span><span class="nv">%</span> <span class="nv">msg</span><span class="p">)</span> <span class="nv">followers</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">fanout-to-user-timeline</span> <span class="p">[</span><span class="nv">user-ids</span> <span class="nv">msg</span><span class="p">]</span>
-</span><span class='line'>  <span class="p">(</span><span class="nf">write-redis-list</span> <span class="nv">user-id</span> <span class="nv">msg</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After the <code>find-followers</code> function, the result will be splitted into <code>(count followers)</code> parts and sent into input channel of stage 2. So the tasks execution will be like:</p>
-
-<p><img src="http://i.imgur.com/MLhZ0Pm.png" alt="forked execution" /></p>
-
-<p>To collect the results of all forked sub-tasks, you can use <code>(join)</code>. If the return value is wrapped with join, it won&rsquo;t trigger next stage immediately but to wait all forked tasks to finish.</p>
-
-<p><img src="http://i.imgur.com/BVDEH9Q.png" alt="join" /></p>
-
-<p>So with <code>(fork)</code> and <code>(join)</code>, it&rsquo;s very flexible to change execution model in Papaline.  Internally, I use clojure&rsquo;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of <a href="http://github.com/sunng87/papaline">Papaline</a>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-20T17:21:44+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&rsquo;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
-
-<p>The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don&rsquo;t have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it&rsquo;s a fixed thread pool with <em>(processors * 4) + 42</em> threads. That&rsquo;s much flexible and efficient.</p>
-
-<p>Papaline takes advantages of this feature. The base concept in papaline is <strong>stage</strong> and <strong>pipeline</strong>. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels.</p>
-
-<p>When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage&rsquo;s inbound channel. The user-visible behavior is much like <code>comp</code>, but in concurrent.</p>
-
-<p>Also core.async offers different type of channel buffers: fixed <code>buffer</code>, <code>sliding-buffer</code> and <code>dropping-buffer</code>. They are channels equivalent to j.u.c thread pool&rsquo;s <code>RejectedExecutionHandler</code>.</p>
-
-<p>We have already deployed papaline in our asynchronous system and it works great by far. Find the project on <a href="https://github.com/sunng87/papaline">github</a> if you are interested in.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-20T16:31:54+08:00" pubdate data-updated="true">Apr 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文原载于2014年3月《程序员》杂志编程语言专题。</p>
-
-<p>Rust 语言是近两年来 Mozilla 正在开发的一种新编程语言，它以并发，安全和实用为口号，主要使用场景是系统编程，用来取代C++语言的角色。有人戏称 Mozilla 由于大量使用 C++，深知其弊端，所以诞生了 Rust。目前，Rust 的两个主要产品是 Mozilla 下一代的浏览器布局引擎 Servo 和 Rust 编译器。由于语言在快速的开发和演进中，每个版本都会产生一些不兼容的变更，所以现在并非是学习这门语言细节并真正使用它的最佳时机。不过，这并不影响我们了解 Rust 语言：作为多年来鲜有的新系统编程语言，他本身有很多新颖之处，也可以帮助我们了解一些编程语言设计的流行趋势。</p>
-
-<h2>并发</h2>
-
-<p>和现在流行的很多新语言一样，Rust 在语言层面支持了绿色线程（Green threads）：Task。Task 作为并发执行的单元，是用户空间的“线程”，创建和调度成本较低，可以大量共存。Task之间通过消息传递通信，没有直接的共享数据。从最近的流行趋势来看，绿色线程几乎已经成为并发方案大战最终的赢家。除了Rust，之前流行的Go语言，Erlang，Python的Gevent，以及最近Clojure世界里正在发展的core.async，采用的都是这种绿色线程的模式。</p>
-
-<p>绿色线程的程序与传统多线程程序的写法几乎一致。在编写服务器程序时，与事件驱动的回调机制相比，编写更简单，表义更清晰。当并发任务增多时，传统的多线程程序由于启动线程和调度线程的成本高而使系统整体性能降低。而绿色线程可以基本不受限制，随意创建。Rust的文档指出在32位系统上可以支持数十万个Task同时存在。</p>
-
-<p>Task也是Rust程序的基础单元，一个Rust进程又多个并行的task组成，main函数本身也是一个Task。Task之间通过一个 (Port, Chan) 元组传递数据。Port和Chan相当于管道的两端，Port用于取数据，Chan用于发送数据。下面的例子里，我们通过do spawn语法（类似Ruby的block语法），启动一个新Task，并打印收到的数据。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">(){</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="n">Chan</span><span class="o">::</span><span class="n">new</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">chan</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">do</span> <span class="n">spawn</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">received_msg</span> <span class="o">=</span> <span class="n">port</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">received_msg</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>引用系统</h2>
-
-<p>Rust 语言设计的核心是安全性（这里安全性指safety，而非 security）。Rust 希望通过语言的机制和编译器的功能，把程序员易于犯错，不易检查的问题解决在编译期，避免运行时的Segmentation Fault。Rust 的设计可以说是处处小心。Clojure语言强调可变性给编程带来的复杂性，在 Rust 语言中，设计者对这点也有格外的重视。除非特别声明为 mut，所有 Rust 的局部变量默认都是不可变的，对不可变变量值的修改会导致 编译器直接报错。</p>
-
-<p>Rust 的安全性还通过独有的引用类型系统来实现。</p>
-
-<p>Rust 语言中堆内存块的引用类型叫做box。最新版本的Rust 在语言层面只保留了一种owned box，它在使用时具有一种所有权（ownership）的概念，只有具有所有权的变量才可以访问这段内存。Owned box在同一时刻只允许一个变量作为所有者，它的变量赋值称为move。一旦owned pointer被赋值，用户就无法通过原先的引用访问这块数据，这种错误会在编译时检查。
-一个简单的例子：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">a</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="o">~</span><span class="m">50</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">b</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>~ 代表owned box，这里我们把一个包含值为50的owned box赋给owned pointer a。然后把a的所有权通过赋值的形式move给b。最后我们试图通过 <code>*a</code> 访问这个值。在C语言里，这时a和b同时指向统一块内存，可以通过<code>*a</code>访问到这里的值。但Rust的所有权机制给予了这段内存额外的保护。编译这段程序将失败：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">4</span><span class="o">:</span><span class="m">23</span><span class="o">:</span> <span class="m">4</span><span class="o">:</span><span class="m">24</span> <span class="n">error</span><span class="o">:</span> <span class="k">use</span> <span class="n">of</span> <span class="n">moved</span> <span class="n">value</span><span class="o">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span>
-</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">4</span>     <span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{:?}&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
-</span><span class='line'>                               <span class="o">^</span>
-</span><span class='line'><span class="p">...</span>
-</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">3</span><span class="o">:</span><span class="m">9</span><span class="o">:</span> <span class="m">3</span><span class="o">:</span><span class="m">10</span> <span class="k">note</span><span class="o">:</span> <span class="err">`</span><span class="n">a</span><span class="err">`</span> <span class="n">moved</span> <span class="n">here</span> <span class="n">because</span> <span class="n">it</span> <span class="n">has</span> <span class="k">type</span> <span class="err">`</span><span class="o">~</span><span class="k">int</span><span class="err">`</span><span class="p">,</span> <span class="n">which</span> <span class="n">is</span> <span class="n">moved</span> <span class="n">by</span> <span class="n">default</span> <span class="p">(</span><span class="k">use</span> <span class="err">`</span><span class="n">ref</span><span class="err">`</span> <span class="n">to</span> <span class="n">override</span><span class="p">)</span>
-</span><span class='line'><span class="n">own</span><span class="p">.</span><span class="n">rs</span><span class="o">:</span><span class="m">3</span>     <span class="k">let</span> <span class="n">b</span><span class="o">:</span> <span class="o">~</span><span class="k">int</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-</span><span class='line'>                 <span class="o">^</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>编译器会明确地指出错误的引用在何处被move。事实上所有owned box的生命周期管理都是直接在编译时完成的，编译器通过静态检查跟踪使用情况，完成内存开辟和回收。这是Rust 确保编程正确、安全的重要手段。</p>
-
-<p>新版本的Rust在标准库中提供 <code>std::rc::Rc</code>（引用计数） 和 <code>std::gc::Gc</code> （垃圾回收）类型，取代了原先的managed box，用来提供可以有限共享的引用类型。</p>
-
-<p>在 Task 间传递数据，如果要避免数据拷贝，也有专门的引用类型：用于不可变数据的<code>extra::arc::Arc</code> (atomically reference counted ，原子的引用计数类型) , 以及用于可变数据的 RWArc（带读写锁的原子引用计数类型） 。RWArc在操作可变数据时，通过内在的读写锁控制对共享数据的访问，从而在API层面实现安全性。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='rust'><span class='line'><span class="n">extern</span> <span class="k">mod</span> <span class="n">extra</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="n">extra</span><span class="o">::</span><span class="n">arc</span><span class="o">::</span><span class="p">{</span><span class="n">RWArc</span><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">fn</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="o">~</span><span class="s">&quot;hello world&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">arc_ref</span> <span class="o">=</span> <span class="n">RWArc</span><span class="o">::</span><span class="n">new</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="n">Chan</span><span class="o">::</span><span class="n">new</span><span class="p">();</span>
-</span><span class='line'>        <span class="n">chan</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">arc_ref</span><span class="p">.</span><span class="n">clone</span><span class="p">());</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">do</span> <span class="n">spawn</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">let</span> <span class="n">arc_local_ref</span> <span class="o">=</span> <span class="n">port</span><span class="p">.</span><span class="n">recv</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">arc_local_ref</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">str</span><span class="p">.</span><span class="n">push_char</span><span class="p">(</span><span class="sc">&#39;!&#39;</span><span class="p">);</span>
-</span><span class='line'>            <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">arc_local_ref</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="o">|</span><span class="n">str</span><span class="o">|</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">println</span><span class="p">(</span><span class="o">*</span><span class="n">str</span><span class="p">);</span>
-</span><span class='line'>            <span class="p">});</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Rust谨慎地定义如此繁多，各具功能的引用类型，就是希望用户在编程过程中，根据应用场景、引用的功能职责，选择合适的类型，进而在引用类型系统和编译器的保护下，减少在运行时出错的机会。这一点也和Clojure的4种引用类型的设计初衷类似，不过Clojure并不能提供太多编译时的安全保护。</p>
-
-<h2>更多</h2>
-
-<p>篇幅所限，我只选择了Rust最具特点的两个部分介绍。Rust是一门具备自身显著特点，精心设计的语言，而绝非普通的“又一门编程语言”。在语法层面，它包含了模式匹配，闭包，泛型等流行功能，作为系统编程语言，使用的舒适度不亚于脚本语言。另外还可以通过FFI（Foreign Function Interface）调用已有的C语言库，满足了实用性的需要。</p>
-
-<p>如果你也开始对这门新语言感兴趣，可以：</p>
-
-<ul>
-<li>通过<a href="http://static.rust-lang.org/doc/master/tutorial.html">它的文档</a>学习最新版本的语法和细节</li>
-<li>加入<a href="https://mail.mozilla.org/listinfo/rust-dev">rust-dev邮件列表</a>了解开发者的讨论</li>
-<li>关注<a href="https://github.com/mozilla/rust">Rust项目代码仓库</a></li>
-<li>关注<a href="https://delicious.com/tag/rust">Delicious</a> 和 <a href="http://www.reddit.com/r/rust">Reddit</a> 上流行的 rust 链接</li>
-<li>关注<a href="http://cmr.github.io/">The week in Rust</a>，介绍每周 Rust 语言正在发生的变化</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+      <li>
+        <span class="post-meta">Jul 25, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2015/07/25/ring-on-http2/">Running Ring Web Application on HTTP2 With Rj9a</a>
+        </h2>
       </li>
     
-      <li class="post">
-        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+      <li>
+        <span class="post-meta">Jan 25, 2015</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
+        </h2>
       </li>
     
-      <li class="post">
-        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+      <li>
+        <span class="post-meta">Aug 19, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
+        </h2>
       </li>
     
-      <li class="post">
-        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+      <li>
+        <span class="post-meta">Aug 2, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
+        </h2>
       </li>
     
-      <li class="post">
-        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+      <li>
+        <span class="post-meta">Jul 8, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 7, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 1, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/07/01/extend-linux-ephemeral-ports/">扩展 Linux Ephemeral 端口限制</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 9, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker Cluster 0.12: Grouping</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 27, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/05/27/fork-join-in-papaline/">Fork-Join in Papaline</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 20, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/">Papaline: Concurrent Pipeline With core.async</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 20, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/04/20/rust-concurrent-made-safely/">Rust语言：安全的并发</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 4, 2014</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2014/03/04/slacker-0-dot-11-released/">Slacker Library Updated</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 22, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/10/22/swapping-harddisk-without-pain/">Archlinux 安全更换硬盘</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 8, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/10/08/delicious-released/">Delicious 发布</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 16, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/07/16/four-years-as-programmer/">工作四周年</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 5, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/07/05/grunt-for-requirejs-projects/">Grunt for Requirejs Projects</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 29, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/06/29/%E7%BB%99-raspberry-pi-%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA-ip-%E7%9A%84%E6%B6%B2%E6%99%B6%E5%B1%8F/">给 Raspberry Pi 添加一个显示 IP 的液晶屏</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 7, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/">纸上得来终觉浅</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 24, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/">Checkout Ring Adapter for Jetty 9</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 12, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/04/12/ann-handlebars-clojure-api/">[ANN] Handlebars Clojure API</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 23, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/02/23/%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BC%80%E5%85%B3/">第一个开关</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 31, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/01/31/1307/">R/W Update#1: 更好的时间线</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 9, 2013</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2013/01/09/openstreetmap-nanjing-a-year-of-edits-2012/">OpenStreetMap Nanjing: A Year of Edits, 2012</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 24, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/12/24/osm-reporter/">OSM Reporter</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 21, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/12/21/%E8%9E%BA%E6%97%8B%E5%8F%91%E5%B1%95%E7%9A%84%E6%8A%80%E6%9C%AF/">螺旋发展的技术</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 5, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/">ANN 美味爱读 readwise.net</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 19, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/11/19/heatcanvas-is-available-via-bower/">Heatcanvas Is Available via Bower</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 12, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/11/12/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-13/">Exaile 豆瓣电台插件 0.0.13</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 27, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/10/27/adding-var-missing-to-clojure-namespace/">Adding -var-missing to Clojure Namespace</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 23, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/09/23/new-shake-syntax/">New Shake Syntax</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 21, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/09/21/shake-every-program-can-be-a-clojure-function/">Shake: Every Program Can Be a Clojure Function</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 15, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/">Cljts: Java Topology Suite for Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 9, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/09/09/%E4%B8%B0%E5%AE%81%E8%8D%89%E5%8E%9F/">丰宁草原</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 19, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/08/19/%E4%BA%AC%E5%BC%A0%E9%93%81%E8%B7%AF/">京张铁路</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 19, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/07/19/top-github-users-in-china/">Top Github Users in China</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 13, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/07/13/%E6%9B%B4%E6%96%B0%E4%BA%86stages/">更新了stages</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 2, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/">Timing Brings Perf4j to Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 17, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/06/17/%E7%99%BBpy%E5%B1%B1/">登Py山</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 2, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/06/02/keep-alive/">Keep-Alive</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 11, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/05/11/%E5%8A%A0%E5%85%A5%E4%BA%86%E7%BE%8E%E5%91%B3%E4%B9%A6%E7%AD%BE/">加入了美味书签</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 22, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/04/22/slacker-0-8-0/">Slacker 0.8.0</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 20, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/04/20/visualizing-openstreetmap-nanjing-contribution/">Visualizing OpenStreetMap Nanjing Contribution</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 12, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/04/12/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">多线程服务器</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 2, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/04/02/slacker-performance-enhanced/">Slacker Performance Enhanced</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 22, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/22/%E4%B8%BAwebworker%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE%E7%9A%84%E8%B7%AF%E5%BE%84/">为WebWorker设置正确的路径</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 21, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/21/my-favorite-feature-in-leiningen-2/">My Favorite Feature in Leiningen 2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 19, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/19/%E5%88%B7htc-evo-3d-gsm/">刷HTC EVO 3D GSM</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 11, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/11/kliment-voroshilov-tank-2/">Kliment Voroshilov Tank 2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 9, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/">What's New in Slacker 0.7.0 ?</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 6, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/03/06/slacker-slides-on-cnclojure-meetup/">Slacker Slides on Cnclojure Meetup</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 24, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/24/dosync-dosync-with-event-listener/">Dosync+: Dosync With Event Listener</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 18, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/18/%E7%87%95%E5%AD%90%E7%9F%B6/">燕子矶</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 14, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/">Python's Valentines Day Gift to Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 11, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/11/heatcanvas-performance-enhanced/">HeatCanvas Performance Enhanced</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 9, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/">China Clojurians Meetup #2 Is Calling You</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 4, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/04/slacker-cluster/">Slacker Cluster</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 3, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/">Slacker 0.6: Exposing Multiple Namespaces</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 1, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/02/01/%E7%88%AC%E5%B1%B1%EF%BC%81/">爬山！</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 24, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/01/24/clojuredocs-android-app/">ClojureDocs Android App</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 19, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/01/19/openstreetmap-nanjing-a-year-of-edits/">OpenStreetMap Nanjing: A Year of Edits</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 13, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/01/13/clojure-on-cloudfoundry/">Clojure on CloudFoundry</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 8, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/01/08/weekend-project-lazypress/">Weekend Project: LazyPress</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 4, 2012</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2012/01/04/slacker-0-4-0-released/">Slacker 0.4.0 Released</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 31, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/31/code-2011/">Code 2011</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 29, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/29/%E4%BD%BF%E7%94%A8enlive%E4%BD%9C%E4%B8%BA%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/">使用Enlive作为模板引擎</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 24, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/24/roar-for-mootools-1-4/">Roar for Mootools 1.4</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 22, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/22/tf101-101/">TF101 101</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 19, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/19/finished-my-machine-learning-courses/">Finished My Machine Learning Courses</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 18, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/18/extend-slacker-server-with-interceptors/">Extend Slacker Server With Interceptors</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 16, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/16/%E4%BD%BF%E7%94%A8clojure-thread-macro%E7%9A%84%E5%BF%83%E5%BE%97/">使用Clojure Thread Macro的心得</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 10, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/10/slacker-0-2-0-is-out/">Slacker 0.2.0 Is Out</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/03/%E4%BB%8Egnome%E7%BD%91%E7%AB%99%E5%AE%89%E8%A3%85exaile-doubanfm-gnome-shell-extension/">从GNOME网站安装exaile-doubanfm-gnome-shell-extension</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 2, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/02/slacker-0-1-0-is-out/">Slacker 0.1.0 Is Out</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 1, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/12/01/exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B60-0-11%E5%8F%91%E5%B8%83/">Exaile豆瓣电台插件0.0.11发布</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 27, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/11/27/clojure-rpc-prototyping-and-early-thoughts/">Clojure RPC, Prototyping and Early Thoughts</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 19, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/11/19/spark-in-common-lisp/">Spark in Common Lisp</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 16, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/11/16/my-response-to-spark-visualize-your-mercurial-commit-history-from-commandline/">My Response to Spark: Visualize Your Mercurial Commit History From Commandline</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 4, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/11/04/%E5%86%8D%E8%A7%812011%E8%B5%9B%E5%AD%A3/">再见2011赛季</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 1, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/11/01/lein-control-0-2-1-is-out/">Lein-control 0.2.1 Is Out</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 30, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/30/clojalk-scm-visualization/">Clojalk SCM Visualization</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 27, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/27/visualize-reddit-upvotes-by-subreddit/">Visualize Reddit Upvotes by Subreddit</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 26, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/26/%E6%99%AE%E9%80%9A%E9%9D%92%E5%B9%B4%E3%80%81%E4%BA%8C%E9%80%BC%E9%9D%92%E5%B9%B4%E4%B8%8E%E6%96%87%E8%89%BA%E9%9D%92%E5%B9%B4%E7%9A%84java%E4%BB%A3%E7%A0%81%E7%BC%A9%E8%BF%9B/">普通青年、二逼青年与文艺青年的Java代码缩进</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 21, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/21/substract-a-vector-from-a-matrix-in-octave/">Substract a Vector From a Matrix in Octave</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 20, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/20/%E4%B8%BD%E6%B0%B4%E7%95%99%E5%BD%B1/">丽水留影</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 15, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/15/grails%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BE%9D%E8%B5%96%E5%BF%85%E9%A1%BB%E4%BF%9D%E8%AF%81%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%89%88%E6%9C%AC%E4%B8%80%E8%87%B4%EF%BC%81/">Grails的核心依赖必须保证项目中版本一致！</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 13, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/13/you-say-goodbye-and-i-say-hello/">You Say Goodbye and I Say Hello.</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 12, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/12/voting-with-your-reddit-account-on-rageviewer/">Voting With Your Reddit Account on RageViewer</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 10, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/10/the-distribution-of-intelligence/">The Distribution of Intelligence</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 6, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/06/%E5%B1%B1%E6%B0%B4%E5%9F%8E%E6%9E%97/">山水城林夕阳晚景</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 5, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/05/gps%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8Eopenstreetmap%E7%BC%96%E8%BE%91/">GPS数据采集与OpenStreetMap编辑</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 4, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/04/%E6%B8%B8%E6%B5%99%E6%B1%9F%E5%8F%A4%E9%95%87/">游浙江古镇</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 2, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/02/upgraded-to-gnome-3-2/">Upgraded to GNOME 3.2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 1, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/10/01/moving-to-archlinux/">Moving to ArchLinux</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 24, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/24/i-cloned-beanstalkd-with-clojure/">I Cloned Beanstalkd With Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 19, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/19/beginning-emacs-for-clojure/">Beginning Emacs for Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 17, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/17/%E6%B5%81%E6%B0%B4%E5%B8%90/">流水帐</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 7, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/07/rageviewer-updates/">RageViewer Updated</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 6, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/06/squealer-a-test-framework-for-pig-script-is-using-jip/">Squealer (a Test Framework for Pig Script) Is Using Jip</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 4, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/04/%E5%90%89%E5%B0%94157/">吉尔157</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/09/03/%E7%9B%9B%E5%A4%A7%E7%9A%84%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%89%A9/">盛大的中秋礼物</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/28/clojure-client-for-beanstalkd-forked/">Clojure Client for Beanstalkd Forked</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 27, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/27/clojure-developers-you-should-follow/">Clojure Developers You Should Follow</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 20, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/20/%E8%8B%8F%E5%88%B6%E6%B2%B9%E7%BD%90%E8%BD%A6%E6%A8%A1%E5%9E%8B/">苏制油罐车模型</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 6, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/06/clojure-chinese-user-group%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E8%81%9A%E4%BC%9A/">Clojure Chinese User Group第一次线下聚会</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 5, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/05/using-google-closure-library-with-clojurescript/">Using Google Closure Library With ClojureScript</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/08/03/rageviewer-updated/">RageViewer Updated</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 29, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/29/geohash-rewritten-with-clojure/">Geohash Rewritten With Clojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/28/clojure-control-plugin-for-leiningen/">Clojure-Control Plugin for Leiningen</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 26, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/26/reddit-clj-clojure-wrapper-for-reddit-api/">Reddit.clj: Clojure Wrapper for Reddit API</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 25, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/25/weekend-project-rageviewer/">Weekend Project: RageViewer</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 24, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/24/clojurescript-recipes/">ClojureScript Recipes</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 22, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/22/%E4%BD%BF%E7%94%A8defrecord%E4%B8%8Edefprotocol%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">使用defrecord与defprotocol的注意事项</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 18, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/18/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%BA%8C%E5%B9%B4/">工作第二年</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 18, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/18/heatcanvas-support-for-leaflet/">HeatCanvas Support for Leaflet</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 13, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/13/staged-event-driven-architecture/">Staged Event-Driven Architecture</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 9, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/09/%E8%87%AA%E5%88%B6%E5%B1%B1%E5%AF%A8%E6%91%A9%E5%8D%A1/">自制山寨摩卡</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/07/03/failure-detection/">Failure Detection</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 30, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">最近的一些想法</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 24, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/24/ngeohash-node-module-for-geohash-algorithm/">Ngeohash: Node Module for Geohash Algorithm</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 15, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/15/checkout-my-forked-version-of-reddit-is-fun/">Checkout My Forked Version of Reddit-is-fun</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 14, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/14/update-on-heatcanvas-and-gefr/">Update on HeatCanvas and Gefr</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 10, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/10/jip-embed-on-the-fly-classpath-resolution-for-jython/">jip.embed: On-the-fly Classpath Resolution for Jython</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 6, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/06/openlayers-extension-for-heatcanvas/">OpenLayers Extension for HeatCanvas</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 4, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/04/take-my-coffee/">Take My Coffee</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/03/heatcanvas-hits-1-0-and-public-available/">HeatCanvas Hits 1.0, and Public Available</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 1, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/06/01/%E7%BD%91%E7%AB%99%E4%BA%94%E6%9C%88%E8%AE%BF%E9%97%AE%E9%87%8F%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96/">网站五月访问量的可视化</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/28/%E6%89%8B%E5%8A%A8%E8%AE%BE%E7%BD%AEfedora15%E7%BD%91%E5%8D%A1/">手动设置Fedora15网卡</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 15, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/15/jip-0-5-1-released/">Jip 0.5.1 Released</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 13, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/13/%E7%94%A8coffeescript%E9%87%8D%E5%86%99%E4%BA%86%E9%A6%96%E9%A1%B5/">用coffeescript重写了首页</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 9, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/09/%E5%AE%89%E8%A3%85exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6%E5%8F%8Agnome-shell%E6%89%A9%E5%B1%95/">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 7, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/07/gnome-shell-extension-for-exaile-doubanfm-plugin/">GNOME-Shell Extension for Exaile DoubanFM Plugin</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/">去西安</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 29, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/29/convert-a-python-function-to-java-anonymous-class/">Convert a Python Function to Java Anonymous Class</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/28/gpars%E7%9A%84actor%E5%AE%9E%E7%8E%B0/">GPars的Actor实现</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 26, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou/">GPS Track of Train K221: Nanjing to Guangzhou</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 22, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/22/%E5%91%8A%E5%88%ABubuntu%EF%BC%8C%E8%BF%81%E7%A7%BB%E5%88%B0fedora-15%EF%BC%8Cgnome-3/">告别Ubuntu，迁移到Fedora 15，GNOME 3</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 17, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/17/exaile-sound-menu-support-updated-now-compatible-with-natty/">Exaile Sound Menu Support Updated, Now Compatible With Natty</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 14, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/14/dont-repeat-yourself-distribute-jython-package-with-jip-dist/">Don't Repeat Yourself: Distribute Jython Package With jip.dist</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 10, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/10/enhanced-jip-to-simplify-jython-module-distribution/">Enhanced Jip to Simplify Jython Module Distribution</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 9, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/09/gefr-with-multiple-backends-support/">Gefr With Multiple Backends Support</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 5, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/05/jip-0-2-released/">Jip 0.2 Released</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 3, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/04/03/%E5%8D%97%E4%BA%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%91%A8%E6%9C%AB/">南京的第一个周末</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/28/gefr-api-updates/">Gefr API Updates</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 27, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/27/setting-up-soldat-and-gefr/">Setting Up Soldat and Gefr</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 24, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/24/update-new-random-nextint/">"Update ${new Random().nextInt()}"</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 19, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/19/exaile-doubanfm-plugin-0-0-9/">Exaile DoubanFM Plugin 0.0.9</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 14, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/14/continuous-learning/">Continuous Learning</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 11, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/11/tiny-lifestream-widget-available-on-sunng-info/">Tiny LifeStream Widget Available on sunng.info</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 8, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/08/correct-source-file-encoding-with-one-liner/">Correct Source File Encoding With One Liner</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 5, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/03/05/when-nodejs-meets-mapnik/">When Nodejs Meets Mapnik</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 28, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/28/python3-script-to-query-free-toefl-seats/">Python3 Script to Query Free TOEFL Seats</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 27, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/27/%E5%AE%81%E5%A4%8F%E5%B7%9D%E4%B8%A4%E5%A4%B4%E5%A4%B4%E5%B0%96/">宁夏川两头头尖</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 21, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/21/using-dojo-on-chromechromium-from-local-file-system/">Using Dojo on Chrome/Chromium From Local File System</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 15, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/15/fix-oggoga-not-play-in-firefox-3-6/">Fix Ogg/oga Not Play in Firefox 3.6</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 14, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/14/pgpoolii%E7%9A%84%E7%AE%A1%E7%90%86%E5%8A%9F%E8%83%BD/">pgpoolII的管理功能</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 8, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%89%9B/">春节留影，牛</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 8, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%83%9F%E7%81%AB/">春节留影，烟火</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 8, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E5%86%9C%E6%9D%91/">春节留影，农村</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 2, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/02/02/breaking-changes-in-compojure-0-6-0/">Breaking Changes in Compojure 0.6.0</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 22, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/22/%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8E%E8%B7%AF%E5%BE%84%E7%AE%A1%E7%90%86/">包管理与路径管理</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 14, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/14/update-on-exaile-soundmenu-indicator-and-exaile-doubanfm-plugin/">Update on Exaile-soundmenu-indicator and Exaile-doubanfm-plugin</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 12, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/12/html5-form-in-opera-11/">HTML5 Form in Opera 11</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 8, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/08/soldat-gefr/">Soldat & Gefr</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 4, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/04/jip-0-1/">Jip 0.1</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 1, 2011</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2011/01/01/happy-new-year/">Happy New Year!</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 30, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/30/setup-a-jython-development-environment/">Setup a Jython Development Environment</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 28, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/28/my-first-http-server-soldat-http/">My First Http Server, Soldat-http</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/24/lm-tooling-2010/">LM Tooling, 2010</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 21, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/21/exaile-doubanfm-plugin-0-0-6b/">Exaile Doubanfm Plugin 0.0.6b</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 19, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/19/blackboard-pattern/">Blackboard Pattern</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 14, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/14/for-12-13/">For 12.13</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/11/douban-is-now-available-as-a-cover-provider-of-covergloobus/">Douban Is Now Available as a Cover Provider of CoverGloobus</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 7, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/07/%E6%AC%A2%E8%BF%8E%E5%8A%A0%E5%85%A5osm%E4%B8%AD%E6%96%87%E9%82%AE%E4%BB%B6%E5%88%97%E8%A1%A8/">欢迎加入OSM中文邮件列表</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 3, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/12/03/i-am-location-aware/">I Am Location Aware</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 29, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/29/dbus-python-in-case-you-dont-know/">Dbus-python, in Case You Don't Know</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 28, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/28/exaile-sound-menu-integration/">Exaile Sound Menu Integration</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 21, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/21/artificial301-firefox-addon-1-1/">Artificial301 Firefox Addon 1.1</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 20, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/20/first-week/">First Week</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 14, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/14/%E7%BB%88%E4%BA%8E%E8%83%BD%E7%94%A8unity%E5%92%8Cgnome-shell%E4%BA%86/">终于能用Unity和Gnome-shell了</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 9, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/09/awesome-autostart/">Awesome Autostart</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/08/%E9%95%87%E6%B1%9F%E5%92%8C%E6%A0%96%E9%9C%9E%E5%B1%B1/">镇江和栖霞山</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 4, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/11/04/qq360/">QQ360</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 31, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/31/bash-color-support-for-bti/">Bash Color Support for Bti</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 29, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/29/installing-weather-indicator-on-maverick/">Installing Weather Indicator on Maverick</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 26, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/26/exaile-doubanfm-0-0-5/">Exaile 豆瓣电台插件 0.0.5</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 23, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/23/when-i-am-64/">When I Am 64</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 21, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/21/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-4/">Exaile 豆瓣电台插件 0.0.4</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 20, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/20/%E8%B1%86%E7%93%A3-on-ubuntu/">豆瓣 on Ubuntu</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 17, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/17/python-web-%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-bottle/">Python Web 开发框架 Bottle</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 16, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/16/kindle%E5%B7%B2%E8%BF%87%E4%B8%87%E9%87%8D%E5%B1%B1/">Kindle已过万重山</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/11/a-fine-day/">A Fine Day</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/08/the-4k-story/">The 4k Story</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 7, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/07/douban-on-gwibber-2/">Douban on Gwibber #2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 6, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/06/rhythmbox-plugin-for-douban-fm/">Rhythmbox Plugin for Douban FM</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 5, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/05/douban-on-gwibber/">Douban on Gwibber</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 1, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/10/01/redis-data-struct/">Redis Data Struct</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/24/visualize-call-tree-of-a-c-function/">Visualize Call Tree of a C Function</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 22, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/22/lua-script-for-geany-to-view-manpage-of-functions/">Lua Script for Geany to View Manpage of Functions</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 18, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/18/gui-debugging-tools/">GUI Debugging Tools</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 16, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/16/artificial301/">Artificial301</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 15, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/15/hudson-tips/">Hudson Tips</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/12/%E8%BF%81%E7%A7%BBpylonsbook-chapter-8%E5%88%B0pylons1-0/">迁移pylonsbook Chapter 8到pylons1.0</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 10, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/10/9%E6%9C%8810%E6%97%A5%E8%BF%90%E8%BD%AC%E8%AE%B0/">9月10日运转记</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 7, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/07/newly-designed-front-page/">Newly Designed Front Page</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 6, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/06/upgraded-to-maverick-meerkat/">Upgraded to Maverick Meerkat</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 5, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/05/a-day-in-expo/">A Day in Expo</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/09/02/ls-my-python-packages/">Ls My Python Packages</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 31, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/31/open-for-a-new-job/">Open for a New Job</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 28, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/28/%E5%91%A8%E8%AE%B0/">周记</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 23, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/23/bason-a-bson-serialization-code-generator/">Bason: A BSON Serialization Code Generator</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 19, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/19/introduction-to-amoeba/">Introduction to Amoeba</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 17, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/17/geb-for-browser-functional-testing/">Geb for Browser Functional Testing</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 13, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/13/next-to-richard-stallman/">Next to Richard Stallman</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/11/beanstalkd/">Beanstalkd</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 9, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/09/%E8%BF%91%E5%86%B5-2/">近况</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 3, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/08/03/exaile-doubanfm-plugin-for-exaile-0-3-2/">Exaile-doubanfm-plugin for Exaile 0.3.2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 31, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/31/sunngs-pastebin/">Sunng's Pastebin</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 26, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/26/%E7%94%A8markdown%E4%B9%A6%E5%86%99%E6%96%87%E6%A1%A3/">用markdown书写文档</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 21, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/21/bottle-fapws3/">Bottle & Fapws3</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 17, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/17/bayeux-protocol/">Bayeux Protocol</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 16, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/16/websocket-protocol/">Websocket Protocol</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 15, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/15/clojure-recur/">Clojure Recur</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 13, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/13/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid/">Fixing "Libmozjs" Missing When Using Mongodb on Ubuntu Lucid</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 10, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/10/update-2/">Update</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 4, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/04/exaile-doubanfm-plugin-0-0-2/">Exaile-doubanfm-plugin 0.0.2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/07/02/exaile%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6exaile-doubanfm-plugin/">Exaile豆瓣电台插件(exaile-doubanfm-plugin)</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 30, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/30/exaile-douban-covers-0-0-3-released/">Exaile-Douban-Covers 0.0.3 Released</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 27, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/27/twitter-talks-about-lbs-feature/">Twitter Talks About the LBS Feature and Implementation</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/24/redis/">Redis</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 22, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/22/%E4%B8%8B%E7%8F%AD%E4%BA%86/">下班了</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 18, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/18/%E8%BF%91%E6%97%A5%E7%90%90%E4%BA%8B/">近日琐事</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 16, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/16/%E6%88%91%E5%9C%A8%E9%82%A3%E9%87%8C%E5%90%83%E6%8B%89%E9%9D%A2/">我在那里吃拉面</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 13, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/13/perfomed-my-first-commit-to-openstreetmap-org/">Perfomed My First Commit to OpenStreetMap.org</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/12/rpc-serialization-and-schema/">RPC, Serialization and Schema</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/08/t-sdo-com%E4%B8%8A%E7%BA%BF/">t.sdo.com上线</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/08/ibatis-infinite-loop/">Ibatis Infinite Loop When getFirstResultSet</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 5, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/06/05/python%E8%8E%B7%E5%8F%96%E6%9C%AC%E6%9C%BAip/">Python获取本机IP</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 25, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/25/alexandria-with-douban-support/">Alexandria With Douban Support</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/24/%E6%88%91%E7%9A%84%E5%8D%A1%E5%8D%A1%E9%A2%82/">我的卡卡颂</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 19, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/19/maven-recipe-1-test-java-code-with-groovy/">Maven Recipe #1: Test Java Code With Groovy</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 16, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/16/maven-recipe-0/">Maven Recipe #0</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/12/%E5%BC%80%E5%A7%8B%E5%AE%9E%E8%B7%B5poromodo-technique/">开始实践Poromodo Technique</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/02/openttd/">交通游戏OpenTTD</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 1, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/05/01/%E4%BA%94%E6%9C%88%E4%B8%80%E5%8F%B7/">五月一号</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 30, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/30/douban-provider-for-alexandria/">Douban Provider for Alexandria</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 25, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/25/%E5%9C%A8%E8%8B%8F%E5%B7%9E%E6%B2%B3/">在苏州河</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/24/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%9C%B1%E5%AE%B6%E8%A7%92%E4%BA%86/">今天在朱家角了</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 24, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/24/my-first-hello-world-web-app-using-compojure/">My First Hello World Web App Using Compojure</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 20, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/20/xauth-org-openaddresses-org/">XAuth.org & OpenAddresses.org</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 18, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/18/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%A4%8D%E7%89%A9%E5%9B%AD/">今天在植物园</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 14, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/14/%E6%82%B2%E5%89%A7%E4%B8%8D%E6%AD%A2%E4%BD%A0%E4%B8%80%E4%B8%AA/">悲剧不止你一个</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/08/%E4%BA%8B%E4%B8%8E%E6%84%BF%E8%BF%9D/">事与愿违</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 6, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/06/we-are-using-hudson-for-continuous-integration/">We Are Using Hudson for Continuous Integration</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 3, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/03/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu/">Reset Default Cursor Theme and Web Browser After Installing Kubuntu</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/04/02/update/">Update</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 26, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/26/%E5%B0%81%E9%97%AD%E5%BC%80%E5%8F%912/">封闭开发2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 22, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/22/%E6%90%9E%E5%AE%9Agwibber/">搞定gwibber</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 20, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/20/%E5%B0%86%EF%BC%81%E5%B0%86%EF%BC%81%E5%B0%86%EF%BC%81/">将！将！将！</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/12/firefox-addon-for-wms-development/">Firefox Addon for Wms Development</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/11/%E5%B0%81%E9%97%AD%E8%BF%91%E5%86%B5/">封闭近况</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 10, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/10/sunng-info-in-mosaic/">Sunng.info in Mosaic</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 3, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/03/new-features-in-jts-1-11/">New Features in JTS 1.11</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/03/02/%E5%B0%81%E9%97%AD%E5%BC%80%E5%8F%91/">封闭开发</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 19, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/19/get-your-conky-location-aware/">Get Your Conky Location Aware</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 18, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/18/using-weather/">Using Weather</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 14, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/14/%E8%80%81%E7%89%A9%E4%BB%80-old-stuff/">老物什 / Old Stuff</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 14, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/14/i-%E2%99%A5-free-and-open-source-software/">I ♥ Free and Open Source Software</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/12/virtual-machine-searcher-for-gnome-deskbar-applet/">Virtual Machine Searcher for Gnome Deskbar Applet</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 12, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/12/list-your-installed-virtualbox-virtual-marchines-using-vbox-python-xpcom-api/">List Your Installed Virtualbox Virtual Marchines Using Vbox Python Xpcom Api</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/11/%E8%A7%A3%E5%86%B3ubuntu-openbox%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E7%9A%84%E9%97%AE%E9%A2%98/">解决Ubuntu Openbox无法启动的问题</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 11, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/11/sunngs-canvas-based-heatmap-api/">Sunng's Canvas Based Heatmap API</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 10, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/10/%E6%97%A0%E9%A2%98/">无题</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 8, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/08/suppressing-simple-xmls-class-attribute/">Suppressing Simple-xml's Class Attribute</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 7, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/07/%E4%BD%BF%E7%94%A8gnome-dictionary%E5%92%8Cdictd/">使用gnome-dictionary和dictd</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 3, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/03/%E5%BE%88%E5%B1%B1%E5%AF%A8/">很山寨</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 2, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/02/02/patch-for-fantadic-google-source/">Patch for Fantasdic Google Source</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 31, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/31/%E7%BF%BB%E8%AF%91po/">翻译po</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 30, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/30/emerillon-map-viewer-for-gnome-desktop/">Emerillon: Map Viewer for Gnome Desktop</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 28, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/28/all-new-sunng-info/">All New SUNNG.INFO</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 27, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/27/new-composite-based-captcha-image/">New Composite Based Captcha Image</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 19, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/19/%E8%BF%91%E5%86%B5/">近况</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 10, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/10/which-university/">Which University</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 4, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/04/oauth-step-by-step/">OAuth Step by Step</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jan 1, 2010</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2010/01/01/happy-new-year-with-yan-0-4/">Happy New Year With Yan 0.4</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 31, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/31/uncle-wang-%E4%BB%96%E5%8E%BB%E5%B9%B4%E9%80%80%E4%BA%86%E4%BC%91/">Uncle Wang 他去年退了休</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 30, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/30/%E6%88%91%E6%98%AF%E4%B8%80%E7%9B%8F%E5%B0%8F%E7%81%AF/">我是一盏小灯</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 30, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/30/setting-environment-variables-for-netbeans-continued/">Setting Environment Variables for NetBeans, Continued</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 29, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/29/setting-environment-variables-for-glassfish-v3/">Setting Environment Variables for Glassfish V3</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 28, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/28/setting-environment-variables-for-netbeans/">Setting Environment Variables for NetBeans</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 26, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/26/web-2-0-icon-captcha/">Web 2.0 Icon Captcha</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 26, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/26/hush/">Hush!</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 25, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/25/load-test-on-yan/">Load Test on Yan</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 24, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/24/java%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%80%9F%E5%BA%A6%E5%AF%B9%E6%AF%94/">Java嵌入式数据库的速度对比</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 24, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/24/be-with-you/">Be With You</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 23, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/23/%E9%82%A3%E5%B9%B4%E6%A6%95%E6%A0%91%E4%B8%8B/">那年榕树下</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/22/%E4%B8%8A%E6%B5%B7%E5%9B%BE%E4%B9%A6%E9%A6%86/">上海图书馆</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 21, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/21/use-yan-in-ruby-web-application/">Using Yan in Ruby Web Application</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 20, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/20/yan-0-3/">Yan 0.3</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 9, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/09/a-button-by-gimp/">A Button by GIMP</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Dec 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/12/06/tikhonov/">Tikhonov</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 29, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/29/adding-ubuntu-gis-repository/">Adding Ubuntu-GIS Repository</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 27, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/27/%E5%9C%A8rhel4%E4%B8%8A%E6%90%AD%E5%BB%BApythonlighttpdfastcgi%E7%8E%AF%E5%A2%83/">在RHEL4上搭建Python/Lighttpd/FastCGI环境</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 26, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/26/nginx-http-push/">Nginx HTTP Push</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 23, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/23/%E8%BF%99%E4%B8%80%E5%88%87%E6%B2%A1%E6%9C%89%E6%83%B3%E8%B1%A1%E7%9A%84%E9%82%A3%E4%B9%88%E7%B3%9F/">这一切没有想象的那么糟</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/22/exaile-doubancovers-upgrades/">Exaile-DoubanCover 0.0.2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 20, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/20/groovy-http-builder-tips/">Groovy Http-builder Tips</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 15, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/15/%E5%90%AC%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%A7%BF%E5%8A%BF/">听豆瓣电台的最佳姿势</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 12, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/12/use-pipe-in-subprocess/">Use Pipe in Subprocess</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/10/doubancovers-has-been-merged-into-exaile-cn/">DoubanCovers Has Been Merged Into Exaile-cn</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/10/come-back-to-see-you/">Come Back to See You</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 5, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/05/exaile-cover-plugin-douban-covers/">Exaile Cover Plugin: Douban Covers</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Nov 2, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/11/02/lighttpd%E9%80%9A%E8%BF%87fastcgi%E8%BF%90%E8%A1%8Cweb-py%E7%A8%8B%E5%BA%8F/">Lighttpd通过FastCGI运行web.py程序</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 28, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/28/%E8%8A%A6%E8%8D%9F%E5%92%8C%E6%A1%94%E5%AD%90%E4%BB%AC/">芦荟和桔子们</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 25, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/25/restore-nautilus-to-open-gnome-menu-after-installed-pcmanfm/">Restore Nautilus to Open Gnome Menu After Installed PCManFM</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 24, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/24/yan-captcha-service/">Yan Captcha Service</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/22/open-source-charting-libraries-in-javascript/">Open Source Charting Toolkits in JavaScript</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 20, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/20/time-tracking-and-task-management-with-taskcoach/">Time Tracking and Task Management With TaskCoach</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 18, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/18/%E9%9F%B3%E4%B9%90%E8%8A%82%E7%9C%8B%E5%BC%A0%E6%A5%9A%E5%BD%92%E6%9D%A5/">音乐节看张楚归来</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 17, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/17/%E7%83%A7%E9%A5%AD%E5%8F%88/">烧饭又</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 15, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/15/%E5%8F%A6%E4%B8%80%E7%A7%8D%E9%AA%8C%E8%AF%81%E7%A0%81%E6%96%B9%E5%BC%8F/">另一种验证码方式</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 14, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/14/jettyjsp-eclipsegtk2-18/">Jetty7/JSP, Eclipse/GTK2.18</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 13, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/13/%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%8D%E5%8A%A1recaptcha%E5%92%8Cvidoop/">验证码服务recaptcha和vidoop</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 13, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/13/%E5%85%88%E6%96%A9%E5%90%8E%E5%A5%8F/">先斩后奏</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 12, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/12/%E9%AA%8C%E8%AF%81%E7%A0%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F/">验证码服务的两种方式</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/10/%E6%8E%A5%E5%8F%97%E5%8F%82%E8%A7%82%EF%BC%8C%E6%AC%A2%E8%BF%8E%E7%95%99%E8%A8%80/">接受参观，欢迎留言</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 9, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/09/%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95ppt%E8%BD%AC/">豆瓣架构发展PPT[转]</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 8, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/08/%E9%98%BF%E5%B7%B4/">阿巴</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/06/%E5%88%B0%E5%A4%B4%E4%BA%86/">到头了</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/06/mapping-geometry-in-grails-and-mysql/">Mapping Geometry in Grails and MySQL</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 5, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/05/reading-gps-data-from-exif-using-groovy/">Reading GPS Data From EXIF Using Groovy</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 4, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/04/gnome-shell/">Gnome Shell</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 3, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/03/libchamplain-map-widget-of-gnome-desktop/">Libchamplain: Map Widget of Gnome Desktop</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Oct 2, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/10/02/upgrade-to-karmic/">Upgrade to Karmic</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 30, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/30/a-shorten-url-app/">A Shorten Url App</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 29, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/29/%E9%A6%96%E9%A1%B5%E6%9B%B4%E6%96%B0/">首页更新</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 27, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/27/0-2/">0:2</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 24, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/24/performance-visualization-with-gnuplot-continued/">Performance Visualization With Gnuplot, Continued</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 23, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/23/performance-visualization-with-gnuplot/">Performance Visualization With Gnuplot</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/22/some-python-segments/">Some Python Segments</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 20, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/20/%E7%83%A7%E9%A5%AD%E5%86%8D/">烧饭再</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 19, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/19/geohash/">GeoHash</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 13, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/13/%E7%83%A7%E9%A5%AD/">烧饭</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 13, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/13/rdf-sparql-query-with-python/">RDF, Sparql Query With Python</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/10/two-screenshots/">3 Screenshots</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Sep 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/09/06/%E6%A2%B3%E7%90%86/">梳理</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 27, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/27/activemq-unknownhostexception-on-startup/">ActiveMQ: UnknownHostException on Startup</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 24, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/24/yamb-is-now-hosted-on-kenai-com/">YAMB Is Now Hosted on kenai.com</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 7, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/07/inside-grails-flash-scope/">Inside Grails Flash Scope</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/06/%E5%8F%B2%E6%9C%89%E5%85%88%E4%BE%8B%E7%9A%84%E4%B8%80%E8%B7%A4/">史有先例的一跤</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 3, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/03/another-simple-micro-blogging-tool-initialized/">Another Simple Micro-blogging Tool Initialized</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 2, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/02/notes-of-even-faster-web-sites/">Notes of Even Faster Web Sites</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Aug 1, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/08/01/alexander-sukhanov/">Alexander Sukhanov</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 27, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/27/%E8%B4%9D%E5%A1%94/">贝塔</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 27, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/27/using-mysql-on-archlinux/">Using MySQL on ArchLinux</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 18, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/18/osm-static-api-with-javafx/">OSM Static API With JavaFX</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 16, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/16/%E9%80%81%E5%BE%80-%E8%BF%8E%E6%9D%A5-%E9%80%81%E5%BE%80-%E8%BF%8E%E6%9D%A5/">送往 迎来 送往 迎来</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 13, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/13/%D0%BF%D0%BE%D0%B5%D1%82-%D0%B3%D0%B8%D1%82%D0%B0%D1%80%D0%B0/">Поет гитара</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/10/up-and-running-postgresql-and-postgis-on-ubuntu-8-10-step-by-step/">[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step by Step</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/10/opera-mini/">Opera-mini</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/10/db-dump-with-chroot/">DB Dump With Chroot</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 9, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/09/%E5%BC%A0%E6%B1%9F%E6%B7%B1%E5%A4%84/">张江深处</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jul 2, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/07/02/pylons-tips/">Pylons Tips</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 25, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/06/25/%E8%8E%AB%E6%84%81%E5%89%8D%E8%B7%AF%E6%97%A0%E7%9F%A5%E5%B7%B1/">莫愁前路无知己</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 17, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/06/17/20090617/">20090617</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 10, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/06/10/%E8%BF%99%E4%B9%9F%E6%98%AF%E4%B8%80%E7%A7%8D/">这也是一种</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 6, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/06/06/how-you-waste-your-storage/">How You Waste Your Storage?</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Jun 4, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/06/04/the-day-of-silence/">The Day of Silence</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 29, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/05/29/desktop-switcher%E4%BB%A5%E4%B8%8B/">Desktop-switcher以下</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/05/22/%E6%88%91%E8%B5%B0%E5%90%91%E6%80%A5%E6%B5%81%E7%9A%84%E6%B2%B3%E7%95%94/">我走向急流的河畔</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 8, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/05/08/lily-studio-new-official-site/">Lily Studio New Official Site</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">May 5, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/05/05/%E6%97%A9%E8%B5%B7%EF%BC%8C%E5%86%99%E4%B8%80%E4%B8%AA%E5%8F%98%E8%89%B2%E7%9A%84%E5%B0%8F%E7%A8%8B%E5%BA%8F/">早起，写一个变色的小程序</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/04/22/%E6%8A%8Awx%E7%9A%84%E7%AA%97%E4%BD%93%E7%BB%98%E5%9B%BE%E8%BE%93%E5%87%BA%E5%88%B0%E4%BD%8D%E5%9B%BE/">把wx的窗体绘图输出到位图</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 19, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/04/19/%E8%BF%99%E5%B0%B1%E6%98%AF%E7%94%9F%E6%B4%BB/">这就是生活</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Apr 18, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/04/18/yes-it-is/">Yes, It Is</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 25, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/25/cp-bookmakes-to-another-pdf-file/">Cp Bookmakes to Another Pdf File</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 14, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/14/%E4%B8%8A%E6%B5%B7%E8%BF%99%E5%87%A0%E5%A4%A9/">上海这几天</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 4, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/04/%E7%9C%8B%E5%9B%BE%E4%B8%8D%E8%AF%B4%E8%AF%9D/">看图不说话</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 3, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/03/gwibber-and-webkit/">Gwibber and WebKit</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 2, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/02/%E6%9C%80%E5%90%8E%E4%B8%80%E8%AF%BE/">最后一课</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Mar 1, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/03/01/location-support-on-empathy/">Location Support on Empathy</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 22, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/02/22/squirrel-sql-client-3%E5%8F%91%E5%B8%83%E4%BA%86/">SQuirrel SQL Client 3发布了</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 20, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/02/20/python%E8%AF%BB%E5%8F%96%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6/">Python读取二进制文件</a>
+        </h2>
+      </li>
+    
+      <li>
+        <span class="post-meta">Feb 18, 2009</span>
+
+        <h2>
+          <a class="post-link" href="/blog/blog/2009/02/18/%E9%87%8E%E7%81%AB%E7%83%A7%E4%B8%8D%E5%B0%BD%EF%BC%8C%E8%8D%89%E6%9C%A8%E8%8A%B1%E9%B8%9F%E9%B1%BC/">野火烧不尽，草木花鸟鱼</a>
+        </h2>
       </li>
     
   </ul>
-</section>
 
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
+  <p class="rss-subscribe">subscribe <a href="/blog/feed.xml">via RSS</a></p>
 
-        github.showRepos({
-            user: 'sunng87',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
-</section>
+</div>
 
-
-
-
-
-  
-</aside>
-
+      </div>
     </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Sun Ning -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
 </footer>
-  
 
-<script type="text/javascript">
-      var disqus_shortname = 'sunng-blog';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+  </body>
 
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
 </html>

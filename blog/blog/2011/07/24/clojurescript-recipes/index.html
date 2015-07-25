@@ -1,288 +1,106 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+
+  <head>
   <meta charset="utf-8">
-  <title>ClojureScript Recipes - Here comes the Sun</title>
-  <meta name="author" content="Sun Ning">
-
-  
-  <meta name="description" content="一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。 &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2011/07/24/clojurescript-recipes">
-  <link href="/blog/favicon.png" rel="icon">
-  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" title="Here comes the Sun" type="application/atom+xml">
-  <script src="/blog/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>ClojureScript Recipes</title>
+  <meta name="description" content="一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。简单地说cljs是clojure在javascript上的...">
 
-  
-
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/blog/2011/07/24/clojurescript-recipes/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/blog/">Here comes the Sun</a></h1>
-  
-    <h2>Sun Ning's web log</h2>
-  
-</hgroup>
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/blog/">Blog</a></li>
-  <li><a href="/blog/blog/archives">Archives</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">ClojureScript Recipes</h1>
-    
-    
-      <p class="meta">
-        
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
+  <header class="post-header">
+    <h1 class="post-title">ClojureScript Recipes</h1>
+    <p class="post-meta">Jul 24, 2011</p>
   </header>
 
-
-<div class="entry-content"><p>一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。简单地说cljs是clojure在javascript上的实现，通过cljsc可以把clojure编译成js，运行在浏览器里或是Node环境里。</p>
+  <article class="post-content">
+    <p>一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。简单地说cljs是clojure在javascript上的实现，通过cljsc可以把clojure编译成js，运行在浏览器里或是Node环境里。</p>
 
 <p>目前clojurescript还没有正式的发布版本，需要从github签出开发版本。
 <ol>
 	<li>cljs是在Oracle JDK上开发的，引用了sun.org.mozilla.javascript.internal.Context，这个类在OpenJDK里叫做sun.org.mozilla.javascript.Context。所以没有办法，暂时只能在Oracle JDK上用clojurescript。</li>
 	<li>cljs自带的所有脚本，启动jvm时，heap size都是开2G的。可怜我所有的内存才2.5G，还是分布在两台电脑上（#@&amp;*……@￥@！）。不过我手动把它改为512M后cljsc还是依然可以正常运行的。</li>
-	<li>cljs与javascript的互操作是最麻烦的部分，一般情况cljs通过(js*)这个form来访问javascript数据和对象，比如访问document：(js* &#8220;document&#8221;)。进而访问getElementById时，即(.getElementById (js* &#8220;document&#8221;) &#8220;some-id&#8221;)。</li>
-	<li>cljs访问js对象时，通过(aget)而不是(.属性名)，例如(aget rage &#8220;ups&#8221;)编译后为rage.ups，如果(.ups rage)就会被当作函数调用。不过奇怪的是如果(.title rage)依然会被编译成rage.title。这种不一致的情况在对.url也存在。当然用aget是可以获得一致的结果的（aget在clojure里是根据索引取java数组的form，在cljs里可以支持js object了）。</li>
+	<li>cljs与javascript的互操作是最麻烦的部分，一般情况cljs通过(js*)这个form来访问javascript数据和对象，比如访问document：(js* "document")。进而访问getElementById时，即(.getElementById (js* "document") "some-id")。</li>
+	<li>cljs访问js对象时，通过(aget)而不是(.属性名)，例如(aget rage "ups")编译后为rage.ups，如果(.ups rage)就会被当作函数调用。不过奇怪的是如果(.title rage)依然会被编译成rage.title。这种不一致的情况在对.url也存在。当然用aget是可以获得一致的结果的（aget在clojure里是根据索引取java数组的form，在cljs里可以支持js object了）。</li>
 	<li>当访问无参数的js对象时，cljs与clojure有不同。例如在clojure里(.toString date)，而在cljs里，这样写编译的结果是date.toString，注意没有括号，直接访问这个function对象了。所以在cljs里，正确的写法有些变化(. date (toString))。</li>
 	<li>创建js对象，可以通过(js-obj)这个form</li>
-	<li>修改dom属性，需要用(set!)这个form，如 (set! (.src img) &#8220;http://xxx&#8221;)。如果把cljs用在网页里，类似这样的操作比比皆是，这和clojure大不相同。</li>
+	<li>修改dom属性，需要用(set!)这个form，如 (set! (.src img) "http://xxx")。如果把cljs用在网页里，类似这样的操作比比皆是，这和clojure大不相同。</li>
 	<li>cljs里没有STM，暂时也不支持ref。可以直接用def定义变量，随意地访问和修改，js环境是单线程环境。</li>
 	<li>对于要对外访问的方法，在声明时加上^:export可以让编译器不修改方法的名字。</li>
 </ol>
-用cljs开发有趣归有趣，调试还是很困难的，建议开发的时候就写好打log的代码(js* &#8220;console.log&#8221;)，因为目前cljsc编译的速度也不快，反复地修改代价还是挺高的。当然，为了cool，以上都不是问题。</p>
-</div>
+用cljs开发有趣归有趣，调试还是很困难的，建议开发的时候就写好打log的代码(js* "console.log")，因为目前cljsc编译的速度也不快，反复地修改代价还是挺高的。当然，为了cool，以上都不是问题。</p>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-24T00:00:00+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/blog/categories/shou-yi/'>手艺</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2011/07/24/clojurescript-recipes/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2011/07/24/clojurescript-recipes/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/blog/2011/07/22/%E4%BD%BF%E7%94%A8defrecord%E4%B8%8Edefprotocol%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" title="Previous Post: 使用defrecord与defprotocol的注意事项">&laquo; 使用defrecord与defprotocol的注意事项</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/blog/2011/07/25/weekend-project-rageviewer/" title="Next Post: Weekend Project: RageViewer">Weekend Project: RageViewer &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
+  </article>
 
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'sunng87',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Sun Ning -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
 </footer>
-  
 
-<script type="text/javascript">
-      var disqus_shortname = 'sunng-blog';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2011/07/24/clojurescript-recipes/';
-        var disqus_url = 'http://sunng87.github.io/blog//blog/2011/07/24/clojurescript-recipes/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+  </body>
 
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
 </html>

@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://sunng87.github.io/blog//sitemap.xml 

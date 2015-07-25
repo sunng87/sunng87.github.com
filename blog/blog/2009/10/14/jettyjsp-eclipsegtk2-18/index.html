@@ -1,280 +1,98 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+
+  <head>
   <meta charset="utf-8">
-  <title>Jetty7/JSP, Eclipse/GTK2.18 - Here comes the Sun</title>
-  <meta name="author" content="Sun Ning">
-
-  
-  <meta name="description" content="Jetty7.0上周发布了，这是jetty迁进eclipse社区之后的第一个正式版本。但是下载之后发现这个版本居然没有jsp支持。原来，jetty的jsp实现一直使用的是glassfish的实现，嵌入eclipse社区之后，这变成了一个问题。功能完全的版本（hightide） &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2009/10/14/jettyjsp-eclipsegtk2-18">
-  <link href="/blog/favicon.png" rel="icon">
-  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" title="Here comes the Sun" type="application/atom+xml">
-  <script src="/blog/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>Jetty7/JSP, Eclipse/GTK2.18</title>
+  <meta name="description" content="Jetty7.0上周发布了，这是jetty迁进eclipse社区之后的第一个正式版本。但是下载之后发现这个版本居然没有jsp支持。原来，jetty的jsp实现一直使用的是glassfish的实现，嵌入eclipse社区之后，这变成了一个问题。功能完全的版本（hightide）依然可以从codehaus的镜像里下载...">
 
-  
-
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/blog/2009/10/14/jettyjsp-eclipsegtk2-18/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/blog/">Here comes the Sun</a></h1>
-  
-    <h2>Sun Ning's web log</h2>
-  
-</hgroup>
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/blog/">Blog</a></li>
-  <li><a href="/blog/blog/archives">Archives</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Jetty7/JSP, Eclipse/GTK2.18</h1>
-    
-    
-      <p class="meta">
-        
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-14T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
+  <header class="post-header">
+    <h1 class="post-title">Jetty7/JSP, Eclipse/GTK2.18</h1>
+    <p class="post-meta">Oct 14, 2009</p>
   </header>
 
-
-<div class="entry-content"><p><p>Jetty7.0上周发布了，这是jetty迁进eclipse社区之后的第一个正式版本。但是下载之后发现这个版本居然没有jsp支持。原来，jetty的jsp实现一直使用的是glassfish的实现，嵌入eclipse社区之后，这变成了一个问题。功能完全的版本（hightide）依然可以从codehaus的镜像里下载：<br />
+  <article class="post-content">
+    <p><p>Jetty7.0上周发布了，这是jetty迁进eclipse社区之后的第一个正式版本。但是下载之后发现这个版本居然没有jsp支持。原来，jetty的jsp实现一直使用的是glassfish的实现，嵌入eclipse社区之后，这变成了一个问题。功能完全的版本（hightide）依然可以从codehaus的镜像里下载：<br />
 <a href="http://dev.eclipse.org/mhonarc/lists/jetty-dev/msg00198.html">http://dist.codehaus.org/jetty/</a></p>
 <p>比较一下大小就能看出，eclipse的版本只有2.1M，hightide的版本15M。为此，社区里有详细的讨论：<br />
 <a href="http://dev.eclipse.org/mhonarc/lists/jetty-dev/msg00198.html">http://dev.eclipse.org/mhonarc/lists/jetty-dev/msg00198.html</a></p>
 <p>Gnome2.28发布了，但是Eclipse在Gtk2.18上工作时，会发生按钮失灵的问题，主要集中在finish next和ok等关键的按钮。简单的解决方法是焦点在按钮上时通过按回车来执行。比较彻底的方法是在eclipse执行的环境中，设置环境变量<em>GDK_NATIVE_WINDOWS=true</em></p>
 <p>这个bug被报告在这里：<br />
 <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=291257">https://bugs.eclipse.org/bugs/show_bug.cgi?id=291257</a></p></p>
-</div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-10-14T00:00:00+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/blog/categories/zhuang-bei/'>装备</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2009/10/14/jettyjsp-eclipsegtk2-18/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2009/10/14/jettyjsp-eclipsegtk2-18/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/blog/2009/10/13/%E9%AA%8C%E8%AF%81%E7%A0%81%E6%9C%8D%E5%8A%A1recaptcha%E5%92%8Cvidoop/" title="Previous Post: 验证码服务recaptcha和vidoop">&laquo; 验证码服务recaptcha和vidoop</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/blog/2009/10/15/%E5%8F%A6%E4%B8%80%E7%A7%8D%E9%AA%8C%E8%AF%81%E7%A0%81%E6%96%B9%E5%BC%8F/" title="Next Post: 另一种验证码方式">另一种验证码方式 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
+  </article>
 
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'sunng87',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Sun Ning -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
 </footer>
-  
 
-<script type="text/javascript">
-      var disqus_shortname = 'sunng-blog';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2009/10/14/jettyjsp-eclipsegtk2-18/';
-        var disqus_url = 'http://sunng87.github.io/blog//blog/2009/10/14/jettyjsp-eclipsegtk2-18/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+  </body>
 
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
 </html>

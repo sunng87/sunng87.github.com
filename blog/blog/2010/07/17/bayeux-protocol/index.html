@@ -1,98 +1,53 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+
+  <head>
   <meta charset="utf-8">
-  <title>Bayeux Protocol - Here comes the Sun</title>
-  <meta name="author" content="Sun Ning">
-
-  
-  <meta name="description" content="运行一个CometD Demo非常简单，只要创建一个Maven项目即可（CometD Howtos）：
-$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org maven会提示用户选择archetype，包括cometd的版本1、 &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  
-  <link rel="canonical" href="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol">
-  <link href="/blog/favicon.png" rel="icon">
-  <link href="/blog/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/blog/atom.xml" rel="alternate" title="Here comes the Sun" type="application/atom+xml">
-  <script src="/blog/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/blog/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <title>Bayeux Protocol</title>
+  <meta name="description" content="运行一个CometD Demo非常简单，只要创建一个Maven项目即可（CometD Howtos）：$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org">
 
-  
-
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/blog/2010/07/17/bayeux-protocol/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/blog/">Here comes the Sun</a></h1>
-  
-    <h2>Sun Ning's web log</h2>
-  
-</hgroup>
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/blog/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:sunng87.github.io/blog/" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/blog/">Blog</a></li>
-  <li><a href="/blog/blog/archives">Archives</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">Bayeux Protocol</h1>
-    
-    
-      <p class="meta">
-        
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
+  <header class="post-header">
+    <h1 class="post-title">Bayeux Protocol</h1>
+    <p class="post-meta">Jul 17, 2010</p>
   </header>
 
-
-<div class="entry-content"><p>运行一个CometD Demo非常简单，只要创建一个Maven项目即可（<a href="http://cometd.org/documentation/howtos/primer">CometD Howtos</a>）：
+  <article class="post-content">
+    <p>运行一个CometD Demo非常简单，只要创建一个Maven项目即可（<a href="http://cometd.org/documentation/howtos/primer">CometD Howtos</a>）：
 <i>$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org</i></p>
 
 <p>maven会提示用户选择archetype，包括cometd的版本1、版本2，jetty6、jetty7的实现，以及客户端dojo或jquery的实现。这里可以选择最新的：
@@ -123,28 +78,28 @@ WebSocket-Location: ws://127.0.0.1:8080/cometd-jetty/cometd/handshake</blockquot
 
 <p>双方完成WebSocket连接的建立。客户端通过websocket发送JSON，进行bayuex的握手：</p>
 
-<p><blockquote>[{&#8220;version&#8221;:&#8221;1.0&#8221;,&#8221;minimumVersion&#8221;:&#8221;0.9&#8221;,&#8221;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;],&#8221;advice&#8221;:{&#8220;timeout&#8221;:60000,&#8221;interval&#8221;:0},&#8221;id&#8221;:&#8221;1&#8221;}]</blockquote></p>
+<p><blockquote>[{"version":"1.0","minimumVersion":"0.9","channel":"/meta/handshake","supportedConnectionTypes":["websocket","long-polling","callback-polling"],"advice":{"timeout":60000,"interval":0},"id":"1"}]</blockquote></p>
 
 <p>服务端返回JSON，下发clientId完成握手：</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;,&#8221;version&#8221;:&#8221;1.0&#8221;,&#8221;successful&#8221;:true,&#8221;minimumVersion&#8221;:&#8221;1.0&#8221;,&#8221;id&#8221;:&#8221;1&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;]}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/handshake","clientId":"8g6dbnlqr2k6jfo1tdpaeb7iw","version":"1.0","successful":true,"minimumVersion":"1.0","id":"1","supportedConnectionTypes":["websocket","long-polling","callback-polling"]}]</blockquote></p>
 
 <p>握手完成，bayuex连接建立。</p>
 
 <p>在Demo中，客户端添加了一个handshake的listerner<br />
-[cc lang=&#8221;javascript&#8221;]<br />
+[cc lang="javascript"]<br />
     function _metaHandshake(handshake)<br />
     {<br />
         if (handshake.successful === true)<br />
         {<br />
             cometd.batch(function()<br />
             {<br />
-                cometd.subscribe(&#8216;/hello&#8217;, function(message)<br />
+                cometd.subscribe('/hello', function(message)<br />
                 {<br />
-                    dojo.byId(&#8216;body&#8217;).innerHTML += &#8217;<div>Server Says: &#8217; + message.data.greeting + &#8217;</div>&#8217;;<br />
+                    dojo.byId('body').innerHTML += '<div>Server Says: ' + message.data.greeting + '</div>';<br />
                 });<br />
                 // Publish on a service channel since the message is for the server only<br />
-                cometd.publish(&#8216;/service/hello&#8217;, { name: &#8216;World&#8217; });<br />
+                cometd.publish('/service/hello', { name: 'World' });<br />
             });<br />
         }<br />
     }<br />
@@ -153,23 +108,23 @@ WebSocket-Location: ws://127.0.0.1:8080/cometd-jetty/cometd/handshake</blockquot
 id用于区分每个请求，<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_38">bayuex spec规定</a>向/meta和/service发送的请求必须包含id字段，用于标示请求响应。<br />
 请求的内容最终聚合为一个Json</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;World&#8221;},&#8221;id&#8221;:&#8221;3&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/subscribe","subscription":"/hello","id":"2","clientId":"8g6dbnlqr2k6jfo1tdpaeb7iw"},{"channel":"/service/hello","data":{"name":"World"},"id":"3","clientId":"8g6dbnlqr2k6jfo1tdpaeb7iw"}]</blockquote></p>
 
 <p>服务端发回响应，id=2的请求成功，订阅/hello频道成功</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/subscribe","successful":true,"id":"2","subscription":"/hello"}]</blockquote></p>
 
 <p>之后，服务端发回/hello channel的消息</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;greeting&#8221;:&#8221;Hello, World&#8221;}},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;3&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/hello","data":{"greeting":"Hello, World"}},{"channel":"/service/hello","successful":true,"id":"3"}]</blockquote></p>
 
 <p>客户端还要定期发送连接请求保持连接</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;connectionType&#8221;:&#8221;websocket&#8221;,&#8221;advice&#8221;:{&#8220;timeout&#8221;:0},&#8221;id&#8221;:&#8221;4&#8221;,&#8221;clientId&#8221;:&#8221;8g6dbnlqr2k6jfo1tdpaeb7iw&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/connect","connectionType":"websocket","advice":{"timeout":0},"id":"4","clientId":"8g6dbnlqr2k6jfo1tdpaeb7iw"}]</blockquote></p>
 
 <p>服务端返回，连接成功</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;advice&#8221;:{&#8220;reconnect&#8221;:&#8221;retry&#8221;,&#8221;interval&#8221;:2500,&#8221;timeout&#8221;:15000},&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;4&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/connect","advice":{"reconnect":"retry","interval":2500,"timeout":15000},"successful":true,"id":"4"}]</blockquote></p>
 
 <p>connect请求是用于在客户端和服务端维持连接， Bayeux标准中提到(<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_52">1</a>, <a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_53">2</a>)：</p>
 
@@ -183,11 +138,11 @@ The client MUST maintain only a single outstanding connect message. If the serve
 
 <p>而当断开连接时，客户端向服务端发送</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;id&#8221;:&#8221;188&#8221;,&#8221;clientId&#8221;:&#8221;a8iutjvfp7dtwhzrfujeonk5q&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/disconnect","id":"188","clientId":"a8iutjvfp7dtwhzrfujeonk5q"}]</blockquote></p>
 
 <p>服务端响应</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;188&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/disconnect","successful":true,"id":"188"}]</blockquote></p>
 
 <p>Bayuex基本上就可以理解为一个websocket上的应用协议了。</p>
 
@@ -220,18 +175,18 @@ Set-Cookie: BAYEUX_BROWSER=df92-h8q89f416mutgbpxrwb8185u;Path=/<br />
 Content-Length: 213<br />
 Server: Jetty(7.1.5.v20100705)</blockquote></p>
 
-<p>[{&#8220;channel&#8221;:&#8221;/meta/handshake&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;,&#8221;version&#8221;:&#8221;1.0&#8221;,&#8221;successful&#8221;:true,&#8221;minimumVersion&#8221;:&#8221;1.0&#8221;,&#8221;id&#8221;:&#8221;1&#8221;,&#8221;supportedConnectionTypes&#8221;:[&#8220;websocket&#8221;,&#8221;long-polling&#8221;,&#8221;callback-polling&#8221;]}]</p>
+<p>[{"channel":"/meta/handshake","clientId":"9185k23lo482oq1po3ivxup2cj","version":"1.0","successful":true,"minimumVersion":"1.0","id":"1","supportedConnectionTypes":["websocket","long-polling","callback-polling"]}]</p>
 
 <p>握手完成，执行客户端定义的回调。发送bayeux请求，通过一个新的XHR上<br />
-[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;World&#8221;},&#8221;id&#8221;:&#8221;3&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</p>
+[{"channel":"/meta/subscribe","subscription":"/hello","id":"2","clientId":"9185k23lo482oq1po3ivxup2cj"},{"channel":"/service/hello","data":{"name":"World"},"id":"3","clientId":"9185k23lo482oq1po3ivxup2cj"}]</p>
 
 <p>服务端同时返回三个bayuex的请求响应</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/subscribe&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;2&#8221;,&#8221;subscription&#8221;:&#8221;/hello&#8221;},{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;greeting&#8221;:&#8221;Hello, World&#8221;}},{&#8220;channel&#8221;:&#8221;/service/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;3&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/subscribe","successful":true,"id":"2","subscription":"/hello"},{"channel":"/hello","data":{"greeting":"Hello, World"}},{"channel":"/service/hello","successful":true,"id":"3"}]</blockquote></p>
 
 <p>客户端开始发送连接请求</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;connectionType&#8221;:&#8221;long-polling&#8221;,&#8221;advice&#8221;:{&#8220;timeout&#8221;:0},&#8221;id&#8221;:&#8221;4&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/connect","connectionType":"long-polling","advice":{"timeout":0},"id":"4","clientId":"9185k23lo482oq1po3ivxup2cj"}]</blockquote></p>
 
 <p>注意这里使用的是<a href="http://svn.cometd.com/trunk/bayeux/bayeux.html#toc_69">long-polling</a>方式，这是由dojo针对浏览器特性决定的。</p>
 
@@ -239,200 +194,62 @@ Server: Jetty(7.1.5.v20100705)</blockquote></p>
 
 <p>如果没有新消息，服务端阻塞十秒后返回</p>
 
-<p><blockquote>[{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;7&#8221;}]</blockquote></p>
+<p><blockquote>[{"channel":"/meta/connect","successful":true,"id":"7"}]</blockquote></p>
 
 <p>客户端接收到返回立刻发起新的connect请求</p>
 
 <p>当有新消息时，阻塞在服务器端的connect请求会立即返回，同时带回新的消息，如
-<blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;555&#8221;},&#8221;id&#8221;:&#8221;6&#8221;},{&#8220;channel&#8221;:&#8221;/meta/connect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;619&#8221;}]</blockquote>
+<blockquote>[{"channel":"/hello","data":{"name":"555"},"id":"6"},{"channel":"/meta/connect","successful":true,"id":"619"}]</blockquote>
 而如果是本客户端publish的新消息，会在请求成功的响应中返回，不会影响connect连接，如：
-<blockquote>[{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;data&#8221;:{&#8220;name&#8221;:&#8221;nihao&#8221;},&#8221;id&#8221;:&#8221;715&#8221;},{&#8220;channel&#8221;:&#8221;/hello&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;715&#8221;}]</blockquote></p>
+<blockquote>[{"channel":"/hello","data":{"name":"nihao"},"id":"715"},{"channel":"/hello","successful":true,"id":"715"}]</blockquote></p>
 
 <p>断开时，仍然是通过xhr post一条bayuex命令到服务端
-<blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;id&#8221;:&#8221;750&#8221;,&#8221;clientId&#8221;:&#8221;9185k23lo482oq1po3ivxup2cj&#8221;}]</blockquote>
+<blockquote>[{"channel":"/meta/disconnect","id":"750","clientId":"9185k23lo482oq1po3ivxup2cj"}]</blockquote>
 服务端响应：
-<blockquote>[{&#8220;channel&#8221;:&#8221;/meta/disconnect&#8221;,&#8221;successful&#8221;:true,&#8221;id&#8221;:&#8221;750&#8221;}]</blockquote></p>
+<blockquote>[{"channel":"/meta/disconnect","successful":true,"id":"750"}]</blockquote></p>
 
 <p>至此，通过long polling方式实现bayuex的cometd客户端也描述清楚了。long-polling仍然是通过connect请求来实现pull的方式准实时，与websocket真正push的方式还是存在区别的。</p>
 
 <p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-</div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Sun Ning</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/blog/categories/ba-xi/'>把戏</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/" data-via="Sunng" data-counturl="http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/blog/2010/07/16/websocket-protocol/" title="Previous Post: Websocket Protocol">&laquo; Websocket Protocol</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/blog/2010/07/21/bottle-fapws3/" title="Next Post: bottle & fapws3">bottle & fapws3 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
+  </article>
 
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>About Me</h1>
-  <p>Ning Sun. Programmer. Map enthusiast. (<a href="http://sunng.info/">more</a>)</p>
-</section>
-<section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/blog/2015/01/25/ann-handlebars-rust/">Handlebars 的 Rust 实现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/">AVOS Cloud 实时通信服务架构：微服务和服务发现</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/08/02/rust-with-docker/">在 Docker 中安装和使用 Rust Nightly 版本</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/08/microservice-and-slacker-cluster/">Clojure Microservice Architecture With Slacker Cluster</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/blog/2014/07/07/new-android-apps/">Mapzei 和 观察者</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/sunng87">@sunng87</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'sunng87',
-            count: 5,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/blog/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
+      </div>
     </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Sun Ning -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
 </footer>
-  
 
-<script type="text/javascript">
-      var disqus_shortname = 'sunng-blog';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/';
-        var disqus_url = 'http://sunng87.github.io/blog//blog/2010/07/17/bayeux-protocol/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
+  </body>
 
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
 </html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Running Ring Web Application on HTTP2 With Rj9a</title>
+  <meta name="description" content="Ring-jetty9-adapter(rj9a) just received an update, the 0.9, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That me...">
+
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng87.github.io/blog//blog/blog/2015/07/25/ring-on-http2/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
+</head>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Running Ring Web Application on HTTP2 With Rj9a</h1>
+    <p class="post-meta">Jul 25, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
+
+<p>In case you still have no idea about HTTP2, it&#39;s the biggest update to HTTP, the protocol we use everyday and everywhere. In short, <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP2</a> introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that&#39;s part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.</p>
+
+<p>The basic part of HTTP2 is fully compatible for 1.1, so you won&#39;t have to modify your application code to use it. In rj9a, just add option <code>:h2? true</code> to enable HTTP2. And <code>:h2c? true</code> to enable its variance on plain socket.</p>
+
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">dummy-app</span><span class="w"> </span><span class="p">[</span><span class="n">req</span><span class="p">]</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:body</span><span class="w"> </span><span class="s">"It works"</span><span class="w"> </span><span class="no">:status</span><span class="w"> </span><span class="mi">200</span><span class="p">&#x7d;)</span><span class="w"></span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">jetty/run-jetty</span><span class="w"> </span><span class="n">dummy-app</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:port</span><span class="w"> </span><span class="mi">5000</span><span class="w">
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:h2c?</span><span class="w"> </span><span class="n">true</span><span class="w">
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:h2?</span><span class="w"> </span><span class="n">true</span><span class="w">
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:ssl?</span><span class="w"> </span><span class="n">true</span><span class="w">
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:ssl-port</span><span class="w"> </span><span class="mi">5443</span><span class="w">
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:keystore</span><span class="w"> </span><span class="s">"..."</span><span class="w">
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:key-password</span><span class="w"> </span><span class="s">"..."</span><span class="p">&#x7d;)</span><span class="w"></span>
+</div></div></pre></div></figure>
+
+<p>To test HTTP2 interface, you will need to install <a href="https://nghttp2.org">nghttp</a>. It&#39;s pretty similar to curl:</p>
+
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="gp">$ </span>nghttp -v https://localhost:5443
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.000] Connected
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>The negotiated protocol: h2-14
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>12, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>2<span class="o">)</span>
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_MAX_CONCURRENT_STREAMS<span class="o">(</span>0x03<span class="o">)</span>:100]
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_INITIAL_WINDOW_SIZE<span class="o">(</span>0x04<span class="o">)</span>:65535]
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>3&gt;
+</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>201, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>5&gt;
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>101, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>7&gt;
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>9&gt;
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>7, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>11&gt;
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>3, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send HEADERS frame &lt;<span class="nv">length</span><span class="o">=</span>37, <span class="nv">flags</span><span class="o">=</span>0x25, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_STREAM | END_HEADERS | PRIORITY
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">padlen</span><span class="o">=</span>0, <span class="nv">dep_stream_id</span><span class="o">=</span>11, <span class="nv">weight</span><span class="o">=</span>16, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; Open new stream
+</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>         :method: GET
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>         :path: /
+</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>         :scheme: https
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>         :authority: localhost:5443
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>         accept: <span class="k">*</span>/<span class="k">*</span>
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>         accept-encoding: gzip, deflate
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'>         user-agent: nghttp2/1.0.1
+</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] recv SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>12, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
+</div></div><div data-line='30' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>2<span class="o">)</span>
+</div></div><div data-line='31' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_HEADER_TABLE_SIZE<span class="o">(</span>0x01<span class="o">)</span>:4096]
+</div></div><div data-line='32' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_INITIAL_WINDOW_SIZE<span class="o">(</span>0x04<span class="o">)</span>:65535]
+</div></div><div data-line='33' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] send SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>0, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
+</div></div><div data-line='34' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; ACK
+</div></div><div data-line='35' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='36' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] recv SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>0, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
+</div></div><div data-line='37' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; ACK
+</div></div><div data-line='38' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='39' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv <span class="o">(</span><span class="nv">stream_id</span><span class="o">=</span>13<span class="o">)</span> :status: 200
+</div></div><div data-line='40' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv <span class="o">(</span><span class="nv">stream_id</span><span class="o">=</span>13<span class="o">)</span> server: Jetty<span class="o">(</span>9.3.1.v20150714<span class="o">)</span>
+</div></div><div data-line='41' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv HEADERS frame &lt;<span class="nv">length</span><span class="o">=</span>20, <span class="nv">flags</span><span class="o">=</span>0x04, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
+</div></div><div data-line='42' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_HEADERS
+</div></div><div data-line='43' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">padlen</span><span class="o">=</span>0<span class="o">)</span>
+</div></div><div data-line='44' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; First response header
+</div></div><div data-line='45' class='code-highlight-row numbered'><div class='code-highlight-line'>It works[  0.033] recv DATA frame &lt;<span class="nv">length</span><span class="o">=</span>8, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
+</div></div><div data-line='46' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_STREAM
+</div></div><div data-line='47' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] send GOAWAY frame &lt;<span class="nv">length</span><span class="o">=</span>8, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
+</div></div><div data-line='48' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">last_stream_id</span><span class="o">=</span>0, <span class="nv">error_code</span><span class="o">=</span>NO_ERROR<span class="o">(</span>0x00<span class="o">)</span>, opaque_data<span class="o">(</span>0<span class="o">)=[])</span>
+</div></div></pre></div></figure>
+
+<p>The verbose output shows us every detail about request and response in HTTP2.</p>
+
+<p>Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and <a href="http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting">put alpn-boot jar in your bootclasspath</a>.  I have created <a href="https://github.com/sunng87/lein-bootclasspath-deps">a leiningen plugin</a> to manage bootclasspath in clojure project.</p>
+
+<p>The complete example is available in <a href="https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj">github repository</a>.</p>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+  </body>
+
+</html>
