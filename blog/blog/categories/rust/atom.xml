@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/rust/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/rust/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2015-01-25T16:22:50+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">Handlebars 的 Rust 实现</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2015/01/25/ann-handlebars-rust/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/01/25/ann-handlebars-rust/"/>
     
     <id>/blog/2015/01/25/ann-handlebars-rust</id>
     <published>2015-01-25T16:22:50+08:00</published>
     <updated>2015-01-25T16:22:50+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
@@ -58,16 +58,16 @@
   <entry>
     <title type="html">在 Docker 中安装和使用 Rust Nightly 版本</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/08/02/rust-with-docker/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/02/rust-with-docker/"/>
     
     <id>/blog/2014/08/02/rust-with-docker</id>
     <published>2014-08-02T18:02:12+08:00</published>
     <updated>2014-08-02T18:02:12+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
@@ -199,16 +199,16 @@
   <entry>
     <title type="html">Rust语言：安全的并发</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/04/20/rust-concurrent-made-safely/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/"/>
     
     <id>/blog/2014/04/20/rust-concurrent-made-safely</id>
     <published>2014-04-20T16:31:54+08:00</published>
     <updated>2014-04-20T16:31:54+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>本文原载于2014年3月《程序员》杂志编程语言专题。</p>

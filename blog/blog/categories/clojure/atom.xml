@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/clojure/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/clojure/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2015-07-25T14:54:54+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">Running Ring Web Application on HTTP2 With Rj9a</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2015/07/25/ring-on-http2/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/07/25/ring-on-http2/"/>
     
     <id>/blog/2015/07/25/ring-on-http2</id>
     <published>2015-07-25T14:54:54+08:00</published>
     <updated>2015-07-25T14:54:54+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
@@ -107,16 +107,16 @@
   <entry>
     <title type="html">Clojure Microservice Architecture With Slacker Cluster</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/07/08/microservice-and-slacker-cluster/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/08/microservice-and-slacker-cluster/"/>
     
     <id>/blog/2014/07/08/microservice-and-slacker-cluster</id>
     <published>2014-07-08T22:12:52+08:00</published>
     <updated>2014-07-08T22:12:52+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
@@ -165,16 +165,16 @@
   <entry>
     <title type="html">Slacker Cluster 0.12: Grouping</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
     
     <id>/blog/2014/06/09/grouping-in-slacker-0-dot-12</id>
     <published>2014-06-09T21:06:39+08:00</published>
     <updated>2014-06-09T21:06:39+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <h2>What are Slacker and Slacker Cluster</h2>
@@ -247,16 +247,16 @@
   <entry>
     <title type="html">Fork-Join in Papaline</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/05/27/fork-join-in-papaline/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/05/27/fork-join-in-papaline/"/>
     
     <id>/blog/2014/05/27/fork-join-in-papaline</id>
     <published>2014-05-27T21:47:45+08:00</published>
     <updated>2014-05-27T21:47:45+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model &quot;fork-join&quot; for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
@@ -311,16 +311,16 @@
   <entry>
     <title type="html">Papaline: Concurrent Pipeline With core.async</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
     
     <id>/blog/2014/04/20/concurrent-pipeline-with-core-async</id>
     <published>2014-04-20T17:21:44+08:00</published>
     <updated>2014-04-20T17:21:44+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&#39;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
@@ -344,16 +344,16 @@
   <entry>
     <title type="html">Slacker Library Updated</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/03/04/slacker-0-dot-11-released/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/03/04/slacker-0-dot-11-released/"/>
     
     <id>/blog/2014/03/04/slacker-0-dot-11-released</id>
     <published>2014-03-04T23:40:00+08:00</published>
     <updated>2014-03-04T23:40:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as integration solution between clojure systems.</p>

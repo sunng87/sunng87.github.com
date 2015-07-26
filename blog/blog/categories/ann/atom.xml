@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/ann/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/ann/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2013-04-24T00:00:00+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">Checkout Ring Adapter for Jetty 9</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2013/04/24/checkout-ring-adapter-for-jetty-9/"/>
     
     <id>/blog/2013/04/24/checkout-ring-adapter-for-jetty-9</id>
     <published>2013-04-24T00:00:00+08:00</published>
     <updated>2013-04-24T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>The Clojure world has been using Jetty 7 for quite a long time because it's supported by the Ring development team. However, Jetty 9 brings us exciting features like WebSocket and SPDY. In order to use websocket in my Clojure web application, I built this adapter last weekend.</p>
@@ -86,16 +86,16 @@ And also find the project is <a href="https://github.com/sunng87/ring-jetty9-ada
   <entry>
     <title type="html">[ANN] Handlebars Clojure API</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/04/12/ann-handlebars-clojure-api/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2013/04/12/ann-handlebars-clojure-api/"/>
     
     <id>/blog/2013/04/12/ann-handlebars-clojure-api</id>
     <published>2013-04-12T00:00:00+08:00</published>
     <updated>2013-04-12T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>The ONLY real-world modern clojure templating system. <br />
@@ -115,16 +115,16 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
   <entry>
     <title type="html">ANN 美味爱读 readwise.net</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/12/05/ann%E7%BE%8E%E5%91%B3%E7%88%B1%E8%AF%BB-readwise-net/"/>
     
     <id>/blog/2012/12/05/ann美味爱读-readwise-net</id>
     <published>2012-12-05T00:00:00+08:00</published>
     <updated>2012-12-05T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>诚惶诚恐地，但是还是得把这盘菜捧出来给大家尝尝。</p>
@@ -160,16 +160,16 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
   <entry>
     <title type="html">Heatcanvas Is Available via Bower</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/11/19/heatcanvas-is-available-via-bower/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/11/19/heatcanvas-is-available-via-bower/"/>
     
     <id>/blog/2012/11/19/heatcanvas-is-available-via-bower</id>
     <published>2012-11-19T00:00:00+08:00</published>
     <updated>2012-11-19T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>The heat map toolkit, heatcanvas, is now available via twitter's package management tool, bower.</p>
@@ -189,16 +189,16 @@ hiccup and enlive are neither **real-world**. So people tends to use single page
   <entry>
     <title type="html">Exaile 豆瓣电台插件 0.0.13</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/11/12/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-13/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/11/12/exaile-%E8%B1%86%E7%93%A3%E7%94%B5%E5%8F%B0%E6%8F%92%E4%BB%B6-0-0-13/"/>
     
     <id>/blog/2012/11/12/exaile-豆瓣电台插件-0-0-13</id>
     <published>2012-11-12T00:00:00+08:00</published>
     <updated>2012-11-12T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>近来工作甚忙，一直没有精力来更新这个插件。加之exaile被archlinux清到了aur仓库，项目的前景亦是堪忧。恰好有两位热心网友@JoveYu和@watermelonlh在github上提出愿意帮助维护这个项目。两位都是很好的贡献者，用了一周左右的时间，居然看遍了我乱糟糟的代码，更看遍了Exaile更乱糟糟的代码。说干就干，还真让这个插件在Exaile 0.3.3健健康康地运行起来。而这段时间我没能给两位什么具体的帮助，着实惭愧。</p>
@@ -221,16 +221,16 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
   <entry>
     <title type="html">New Shake Syntax</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/23/new-shake-syntax/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/09/23/new-shake-syntax/"/>
     
     <id>/blog/2012/09/23/new-shake-syntax</id>
     <published>2012-09-23T00:00:00+08:00</published>
     <updated>2012-09-23T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p>
@@ -263,16 +263,16 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
   <entry>
     <title type="html">Shake: Every Program Can Be a Clojure Function</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/21/shake-every-program-can-be-a-clojure-function/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/09/21/shake-every-program-can-be-a-clojure-function/"/>
     
     <id>/blog/2012/09/21/shake-every-program-can-be-a-clojure-function</id>
     <published>2012-09-21T00:00:00+08:00</published>
     <updated>2012-09-21T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>You might have heard of <a href="http://amoffat.github.com/sh/index.html">sh</a>, which brings python an interface to call subprocesses. The API of sh is pretty cool: Every command can be treated as a python function, and imported from a namespace. Options and arguments are passed in as python string.</p>
@@ -311,16 +311,16 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
   <entry>
     <title type="html">Cljts: Java Topology Suite for Clojure</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/09/15/cljts-java-topology-suite-for-clojure/"/>
     
     <id>/blog/2012/09/15/cljts-java-topology-suite-for-clojure</id>
     <published>2012-09-15T00:00:00+08:00</published>
     <updated>2012-09-15T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>I almost forgot to announce this library I made half of a year ago. This library is aiming to bring Clojure to GIS. So you can manipulate geometry objects with a set of clojure functions.</p>
@@ -349,16 +349,16 @@ https://github.com/sunng87/exaile-doubanfm-plugin</p>
   <entry>
     <title type="html">Timing Brings Perf4j to Clojure</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/07/02/timing-brings-perf4j-to-clojure/"/>
     
     <id>/blog/2012/07/02/timing-brings-perf4j-to-clojure</id>
     <published>2012-07-02T00:00:00+08:00</published>
     <updated>2012-07-02T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="https://github.com/sunng87/timing" target="_blank">Timing</a> is a dead simple clojure library wraps perf4j, while perf4j is an advanced library to log call time. It's like log4j to System.out.println, that to System.currentTimeMillies. </p>
@@ -387,16 +387,16 @@ start[1341215254682] time[1000] tag[demo]</p>
   <entry>
     <title type="html">Slacker 0.8.0</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/04/22/slacker-0-8-0/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/04/22/slacker-0-8-0/"/>
     
     <id>/blog/2012/04/22/slacker-0-8-0</id>
     <published>2012-04-22T00:00:00+08:00</published>
     <updated>2012-04-22T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>A new release 0.8.0 of <a href="https://github.com/sunng87/slacker">slacker</a> has been pushed to clojars. Let's go through the changes in this version.</p>
@@ -453,16 +453,16 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
   <entry>
     <title type="html">What's New in Slacker 0.7.0 ?</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/03/09/whats-new-in-slacker-0-7-0/"/>
     
     <id>/blog/2012/03/09/whats-new-in-slacker-0-7-0</id>
     <published>2012-03-09T00:00:00+08:00</published>
     <updated>2012-03-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>I just released [slacker "0.7.0"] to clojars. This is the first release after my presentation on the Clojure China Meetup. <a href="https://github.com/lbt05" target="_blank">lbt05</a> contributed an ACL module to slacker, which is the most significant feature in this release. </p>
@@ -505,16 +505,16 @@ Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3
   <entry>
     <title type="html">Python's Valentines Day Gift to Clojure</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/14/pythons-valentines-day-gift-to-clojure/"/>
     
     <id>/blog/2012/02/14/pythons-valentines-day-gift-to-clojure</id>
     <published>2012-02-14T00:00:00+08:00</published>
     <updated>2012-02-14T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>Inspired by meh's <a href="https://github.com/meh/ruby-clj" target="_blank">Ruby-Clj</a> module, I created the python equivalent "pyclj" last weekend. Pyclj is a clojure literal reader/writer for python. It enables data exchange between python and clojure, in a clojure-native way. It's Valentines Day today, I'd like to release it as the gift of python to clojure :)</p>
@@ -637,16 +637,16 @@ pyclj: 1.19659209251</p>
   <entry>
     <title type="html">HeatCanvas Performance Enhanced</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/11/heatcanvas-performance-enhanced/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/11/heatcanvas-performance-enhanced/"/>
     
     <id>/blog/2012/02/11/heatcanvas-performance-enhanced</id>
     <published>2012-02-11T00:00:00+08:00</published>
     <updated>2012-02-11T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><img src="http://i.imgur.com/6vkpo.png" alt="heatcanvas" /></p>
@@ -668,16 +668,16 @@ pyclj: 1.19659209251</p>
   <entry>
     <title type="html">Slacker Cluster</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/04/slacker-cluster/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/04/slacker-cluster/"/>
     
     <id>/blog/2012/02/04/slacker-cluster</id>
     <published>2012-02-04T00:00:00+08:00</published>
     <updated>2012-02-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>Cluster support is one of the big thing in slacker 0.6.x. Cluster enables high-availability and load balancing on slacker client and server. </p>
@@ -724,16 +724,16 @@ pyclj: 1.19659209251</p>
   <entry>
     <title type="html">Slacker 0.6: Exposing Multiple Namespaces</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces/"/>
     
     <id>/blog/2012/02/03/slacker-0-6-exposing-multiple-namespaces</id>
     <published>2012-02-03T00:00:00+08:00</published>
     <updated>2012-02-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I'm glad to announce [slacker "0.6.1"].</p>
@@ -788,16 +788,16 @@ pyclj: 1.19659209251</p>
   <entry>
     <title type="html">ClojureDocs Android App</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/24/clojuredocs-android-app/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/01/24/clojuredocs-android-app/"/>
     
     <id>/blog/2012/01/24/clojuredocs-android-app</id>
     <published>2012-01-24T00:00:00+08:00</published>
     <updated>2012-01-24T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>利用春节的假期写了一个Android应用，可以在<a href="http://clojuredocs.org" target="_blank">ClojureDocs.org</a>上搜索clojure API，浏览文档、源代码和社区贡献的代码实例。ClojureDocs在我学习Clojure的过程中起了很大的作用，所以我想这个网站应该对很多人有用。</p>
@@ -829,16 +829,16 @@ pyclj: 1.19659209251</p>
   <entry>
     <title type="html">Weekend Project: LazyPress</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/08/weekend-project-lazypress/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/01/08/weekend-project-lazypress/"/>
     
     <id>/blog/2012/01/08/weekend-project-lazypress</id>
     <published>2012-01-08T00:00:00+08:00</published>
     <updated>2012-01-08T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>发布一个典型的weekend project, 名字叫做<a href="http://lazypress.cloundfoundry.com">LazyPress</a>.顾名思义,这是一个在线的写作系统. 取名Lazy, 除了因为它用Clojure写成,更因为他的简单: 没有繁琐的注册,没有繁琐的分类tag,没有繁琐的格式化,无论是使用还是开发都力求做到最简单.<br />
@@ -859,16 +859,16 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <entry>
     <title type="html">Slacker 0.4.0 Released</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/01/04/slacker-0-4-0-released/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/01/04/slacker-0-4-0-released/"/>
     
     <id>/blog/2012/01/04/slacker-0-4-0-released</id>
     <published>2012-01-04T00:00:00+08:00</published>
     <updated>2012-01-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>Slacker 0.4.0 has been released to clojars.org . There are new features and breaking changes in this release.</p>
@@ -906,16 +906,16 @@ LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标�
   <entry>
     <title type="html">Slacker 0.2.0 Is Out</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/10/slacker-0-2-0-is-out/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/12/10/slacker-0-2-0-is-out/"/>
     
     <id>/blog/2011/12/10/slacker-0-2-0-is-out</id>
     <published>2011-12-10T00:00:00+08:00</published>
     <updated>2011-12-10T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="https://github.com/sunng87/slacker">Slacker 0.2.0</a> has been pushed to clojars today. Connection pooling and json serialization are available in this release.</p>
@@ -975,16 +975,16 @@ Inspired by discussion in <a href="http://groups.google.com/group/cn-clojure" ta
   <entry>
     <title type="html">Slacker 0.1.0 Is Out</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/02/slacker-0-1-0-is-out/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/12/02/slacker-0-1-0-is-out/"/>
     
     <id>/blog/2011/12/02/slacker-0-1-0-is-out</id>
     <published>2011-12-02T00:00:00+08:00</published>
     <updated>2011-12-02T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>Glad to roll out the first release of the <strong>slacker</strong> framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of non-invasive APIs for both server and client. The remote invocation is completely transparent to user.</p>

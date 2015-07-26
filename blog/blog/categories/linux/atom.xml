@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/linux/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/linux/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2014-07-01T17:11:58+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">扩展 Linux Ephemeral 端口限制</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/07/01/extend-linux-ephemeral-ports/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/01/extend-linux-ephemeral-ports/"/>
     
     <id>/blog/2014/07/01/extend-linux-ephemeral-ports</id>
     <published>2014-07-01T17:11:58+08:00</published>
     <updated>2014-07-01T17:11:58+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>

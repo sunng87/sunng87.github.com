@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/programming/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/programming/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2015-07-25T14:54:54+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">Running Ring Web Application on HTTP2 With Rj9a</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2015/07/25/ring-on-http2/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/07/25/ring-on-http2/"/>
     
     <id>/blog/2015/07/25/ring-on-http2</id>
     <published>2015-07-25T14:54:54+08:00</published>
     <updated>2015-07-25T14:54:54+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
@@ -107,16 +107,16 @@
   <entry>
     <title type="html">Handlebars 的 Rust 实现</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2015/01/25/ann-handlebars-rust/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/01/25/ann-handlebars-rust/"/>
     
     <id>/blog/2015/01/25/ann-handlebars-rust</id>
     <published>2015-01-25T16:22:50+08:00</published>
     <updated>2015-01-25T16:22:50+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
@@ -153,16 +153,16 @@
   <entry>
     <title type="html">AVOS Cloud 实时通信服务架构：微服务和服务发现</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/"/>
     
     <id>/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery</id>
     <published>2014-08-19T16:46:20+08:00</published>
     <updated>2014-08-19T16:46:20+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
@@ -218,16 +218,16 @@
   <entry>
     <title type="html">在 Docker 中安装和使用 Rust Nightly 版本</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/08/02/rust-with-docker/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/02/rust-with-docker/"/>
     
     <id>/blog/2014/08/02/rust-with-docker</id>
     <published>2014-08-02T18:02:12+08:00</published>
     <updated>2014-08-02T18:02:12+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
@@ -359,16 +359,16 @@
   <entry>
     <title type="html">Clojure Microservice Architecture With Slacker Cluster</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/07/08/microservice-and-slacker-cluster/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/08/microservice-and-slacker-cluster/"/>
     
     <id>/blog/2014/07/08/microservice-and-slacker-cluster</id>
     <published>2014-07-08T22:12:52+08:00</published>
     <updated>2014-07-08T22:12:52+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
@@ -417,16 +417,16 @@
   <entry>
     <title type="html">扩展 Linux Ephemeral 端口限制</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/07/01/extend-linux-ephemeral-ports/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/01/extend-linux-ephemeral-ports/"/>
     
     <id>/blog/2014/07/01/extend-linux-ephemeral-ports</id>
     <published>2014-07-01T17:11:58+08:00</published>
     <updated>2014-07-01T17:11:58+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
@@ -498,16 +498,16 @@
   <entry>
     <title type="html">Slacker Cluster 0.12: Grouping</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
     
     <id>/blog/2014/06/09/grouping-in-slacker-0-dot-12</id>
     <published>2014-06-09T21:06:39+08:00</published>
     <updated>2014-06-09T21:06:39+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <h2>What are Slacker and Slacker Cluster</h2>
@@ -580,16 +580,16 @@
   <entry>
     <title type="html">Fork-Join in Papaline</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/05/27/fork-join-in-papaline/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/05/27/fork-join-in-papaline/"/>
     
     <id>/blog/2014/05/27/fork-join-in-papaline</id>
     <published>2014-05-27T21:47:45+08:00</published>
     <updated>2014-05-27T21:47:45+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model &quot;fork-join&quot; for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
@@ -644,16 +644,16 @@
   <entry>
     <title type="html">Papaline: Concurrent Pipeline With core.async</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
     
     <id>/blog/2014/04/20/concurrent-pipeline-with-core-async</id>
     <published>2014-04-20T17:21:44+08:00</published>
     <updated>2014-04-20T17:21:44+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&#39;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
@@ -677,16 +677,16 @@
   <entry>
     <title type="html">Rust语言：安全的并发</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/04/20/rust-concurrent-made-safely/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/"/>
     
     <id>/blog/2014/04/20/rust-concurrent-made-safely</id>
     <published>2014-04-20T16:31:54+08:00</published>
     <updated>2014-04-20T16:31:54+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>本文原载于2014年3月《程序员》杂志编程语言专题。</p>
@@ -789,16 +789,16 @@
   <entry>
     <title type="html">Slacker Library Updated</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2014/03/04/slacker-0-dot-11-released/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/03/04/slacker-0-dot-11-released/"/>
     
     <id>/blog/2014/03/04/slacker-0-dot-11-released</id>
     <published>2014-03-04T23:40:00+08:00</published>
     <updated>2014-03-04T23:40:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as integration solution between clojure systems.</p>

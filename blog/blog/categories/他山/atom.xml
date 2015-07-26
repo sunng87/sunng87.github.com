@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/他山/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/他山/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2011-08-27T00:00:00+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">Clojure Developers You Should Follow</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/08/27/clojure-developers-you-should-follow/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/08/27/clojure-developers-you-should-follow/"/>
     
     <id>/blog/2011/08/27/clojure-developers-you-should-follow</id>
     <published>2011-08-27T00:00:00+08:00</published>
     <updated>2011-08-27T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>介绍一下Clojure社区的活跃人物，有助于大家更好地学习和了解clojure，以下罗列的前提是包含但不限于，排名亦不分先后。</p>
@@ -64,16 +64,16 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
   <entry>
     <title type="html">Rhythmbox Plugin for Douban FM</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/10/06/rhythmbox-plugin-for-douban-fm/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/10/06/rhythmbox-plugin-for-douban-fm/"/>
     
     <id>/blog/2010/10/06/rhythmbox-plugin-for-douban-fm</id>
     <published>2010-10-06T00:00:00+08:00</published>
     <updated>2010-10-06T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://code.google.com/p/dbfmplugin/">Rhythmbox 豆瓣电台插件</a>是由cdredfox基于<a href="http://github.com/sunng87/exaile-doubanfm-plugin/blob/master/libdoubanfm.py">libdoubanfm</a>开发的另一个Linux桌面豆瓣电台客户端。如果您是Rhythmbox的忠实用户，现在您有一个新的选择了。</p>
@@ -89,16 +89,16 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
   <entry>
     <title type="html">XAuth.org & OpenAddresses.org</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/04/20/xauth-org-openaddresses-org/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/04/20/xauth-org-openaddresses-org/"/>
     
     <id>/blog/2010/04/20/xauth-org-openaddresses-org</id>
     <published>2010-04-20T00:00:00+08:00</published>
     <updated>2010-04-20T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>XAuth.org 提供一个新的轻量级认证机制，他的机制可以参考：
@@ -116,16 +116,16 @@ Nathan是twitter的clojure dev，维护着一些与hadoop相关的clojure项目�
   <entry>
     <title type="html">豆瓣架构发展PPT[转]</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2009/10/09/%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95ppt%E8%BD%AC/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2009/10/09/%E8%B1%86%E7%93%A3%E6%9E%B6%E6%9E%84%E5%8F%91%E5%B1%95ppt%E8%BD%AC/"/>
     
     <id>/blog/2009/10/09/豆瓣架构发展ppt转</id>
     <published>2009-10-09T00:00:00+08:00</published>
     <updated>2009-10-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>今天下午看到了这个豆瓣架构发展历程的PPT，是今年上半年QCon上的，看了以后感觉很有启发意义。随着用户量的增大，压力的增加，功能的扩展，豆瓣架构上做出相应的变化，从最初一台机器上跑lighttpd/mysql/Quixote/memcached到现在的DoubanFS存储，DoubanDB分布式Key-Value Store，加上多台mysql，多台appserver，专门的后台运算服务器等等。</p>

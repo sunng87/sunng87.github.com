@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/自话/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/自话/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2013-07-16T21:33:00+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">工作四周年</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/07/16/four-years-as-programmer/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2013/07/16/four-years-as-programmer/"/>
     
     <id>/blog/2013/07/16/four-years-as-programmer</id>
     <published>2013-07-16T21:33:00+08:00</published>
     <updated>2013-07-16T21:33:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>一不小心工作四年了，四年意味着，工作的时间都超过了上大学的时间。当然这也不能说明什么，接下来还会更快地超过上高中的时间。这些年来，我越来越喜欢把22岁大学毕业作为一个中点，对称着看。往后多少年是什么样，往前多少年又是什么样。这两个样子往往存在这因果关系，离中点近的直接，离中点远的深刻。</p>
@@ -43,16 +43,16 @@
   <entry>
     <title type="html">纸上得来终觉浅</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2013/06/07/%E7%BA%B8%E4%B8%8A%E5%BE%97%E6%9D%A5%E7%BB%88%E8%A7%89%E6%B5%85/"/>
     
     <id>/blog/2013/06/07/纸上得来终觉浅</id>
     <published>2013-06-07T00:00:00+08:00</published>
     <updated>2013-06-07T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>之前看过无数的书无数的文章，讲可扩展性讲大型架构，不过真到了自己上场，毕竟还是没有从头到尾实践过，心里还有些没底。每做一个决定，每选定一个方案，心里都要反复打鼓，这是不是在给自己挖坑，是不是导致今后要浪费很多可乐咖啡的一个决定。第一份工作在盛大的时候，参与过这种规模比较大的项目，但是核心的部分，容量规划，性能评估，优化，都是那时的老大操心，我在一旁旁观。操心和旁观的区别大了去了，晚上睡不着的那几个小时，旁观的人享受不到，等来临的时候，就要如履薄冰地担着。</p>
@@ -70,16 +70,16 @@
   <entry>
     <title type="html">R/W Update#1: 更好的时间线</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2013/01/31/1307/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2013/01/31/1307/"/>
     
     <id>/blog/2013/01/31/1307</id>
     <published>2013-01-31T00:00:00+08:00</published>
     <updated>2013-01-31T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><img src="http://i.imgur.com/wReNhae.jpg" alt="" /></p>
@@ -113,16 +113,16 @@
   <entry>
     <title type="html">螺旋发展的技术</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/12/21/%E8%9E%BA%E6%97%8B%E5%8F%91%E5%B1%95%E7%9A%84%E6%8A%80%E6%9C%AF/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/12/21/%E8%9E%BA%E6%97%8B%E5%8F%91%E5%B1%95%E7%9A%84%E6%8A%80%E6%9C%AF/"/>
     
     <id>/blog/2012/12/21/螺旋发展的技术</id>
     <published>2012-12-21T00:00:00+08:00</published>
     <updated>2012-12-21T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>那个谁说世界是螺旋发展的，我说也真是。</p>
@@ -153,16 +153,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">Keep-Alive</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/06/02/keep-alive/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/06/02/keep-alive/"/>
     
     <id>/blog/2012/06/02/keep-alive</id>
     <published>2012-06-02T00:00:00+08:00</published>
     <updated>2012-06-02T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>史无前例，上个月只写了一篇blog，再加上网站遭遇认证很多地方都访问不了，故而有必要keep alive一下，该reconnect的请自觉重连。</p>
@@ -192,16 +192,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">加入了美味书签</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/05/11/%E5%8A%A0%E5%85%A5%E4%BA%86%E7%BE%8E%E5%91%B3%E4%B9%A6%E7%AD%BE/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/05/11/%E5%8A%A0%E5%85%A5%E4%BA%86%E7%BE%8E%E5%91%B3%E4%B9%A6%E7%AD%BE/"/>
     
     <id>/blog/2012/05/11/加入了美味书签</id>
     <published>2012-05-11T00:00:00+08:00</published>
     <updated>2012-05-11T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>距离上次更新已经有大半个月的时间了，最近一直忙着搬家和适应新环境。现在我又跑到北京来工作，好在这次终于不是在上地。我记得在写工作第三年的愿望的时候，有一条就是能加入一个优秀的小团队。那么目前看来一切顺利，美味书签这样的团队就是我一直希望能找到的。</p>
@@ -221,16 +221,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">Kliment Voroshilov Tank 2</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/03/11/kliment-voroshilov-tank-2/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/03/11/kliment-voroshilov-tank-2/"/>
     
     <id>/blog/2012/03/11/kliment-voroshilov-tank-2</id>
     <published>2012-03-11T00:00:00+08:00</published>
     <updated>2012-03-11T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>业余时间，我除了写括号以外，也会做点模型，不过是入门水平。用淘宝店家的话说，你随便涂涂就行了。这个KV-2坦克是去年秋天买的，后来周末学车加上天冷坐不住就搁置下来。现在稍微暖和一点，就赶紧把开工。</p>
@@ -269,16 +269,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">爬山！</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/01/%E7%88%AC%E5%B1%B1%EF%BC%81/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/01/%E7%88%AC%E5%B1%B1%EF%BC%81/"/>
     
     <id>/blog/2012/02/01/爬山！</id>
     <published>2012-02-01T00:00:00+08:00</published>
     <updated>2012-02-01T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>今天是2月1号，本人决定从今天开始到月底的每个工作日中午去爬山锻炼身体，以摆脱目前体重极速增长的困局。口说无凭，立此为据。</p>
@@ -296,16 +296,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">Finished My Machine Learning Courses</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/19/finished-my-machine-learning-courses/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/12/19/finished-my-machine-learning-courses/"/>
     
     <id>/blog/2011/12/19/finished-my-machine-learning-courses</id>
     <published>2011-12-19T00:00:00+08:00</published>
     <updated>2011-12-19T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>经过三个月的时间，终于看完了ml-class的所有视频课程，完成了所有review questions，提交了所有programming exercises.感觉不错，之前一直对数据挖掘相关的方面感兴趣，回想一下大学时候一些地统计分析甚至遥感图像数据处理的课都跟机器学习相关，但是毕竟不是这方面的课程，所以介绍的不是很系统。今年秋天斯坦福推出这个在线课程，机器学习作为其中之一真算是弥补了我们民间科学爱好者的遗憾了。</p>
@@ -338,16 +338,16 @@ grid-column: 1; grid-column-span: 3; grid-row: 1;<br />
   <entry>
     <title type="html">普通青年、二逼青年与文艺青年的Java代码缩进</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/10/26/%E6%99%AE%E9%80%9A%E9%9D%92%E5%B9%B4%E3%80%81%E4%BA%8C%E9%80%BC%E9%9D%92%E5%B9%B4%E4%B8%8E%E6%96%87%E8%89%BA%E9%9D%92%E5%B9%B4%E7%9A%84java%E4%BB%A3%E7%A0%81%E7%BC%A9%E8%BF%9B/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/10/26/%E6%99%AE%E9%80%9A%E9%9D%92%E5%B9%B4%E3%80%81%E4%BA%8C%E9%80%BC%E9%9D%92%E5%B9%B4%E4%B8%8E%E6%96%87%E8%89%BA%E9%9D%92%E5%B9%B4%E7%9A%84java%E4%BB%A3%E7%A0%81%E7%BC%A9%E8%BF%9B/"/>
     
     <id>/blog/2011/10/26/普通青年、二逼青年与文艺青年的java代码缩进</id>
     <published>2011-10-26T00:00:00+08:00</published>
     <updated>2011-10-26T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>普通青年</p>
@@ -404,16 +404,16 @@ while(true) <br />
   <entry>
     <title type="html">You Say Goodbye and I Say Hello.</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/10/13/you-say-goodbye-and-i-say-hello/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/10/13/you-say-goodbye-and-i-say-hello/"/>
     
     <id>/blog/2011/10/13/you-say-goodbye-and-i-say-hello</id>
     <published>2011-10-13T00:00:00+08:00</published>
     <updated>2011-10-13T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><iframe width="560" height="315" src="http://www.youtube.com/embed/HBZ8ulc5NTg" frameborder="0" allowfullscreen></iframe></p>
@@ -448,16 +448,16 @@ You say goodbye and I say <strong>hello world</strong></p>
   <entry>
     <title type="html">流水帐</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/09/17/%E6%B5%81%E6%B0%B4%E5%B8%90/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/09/17/%E6%B5%81%E6%B0%B4%E5%B8%90/"/>
     
     <id>/blog/2011/09/17/流水帐</id>
     <published>2011-09-17T00:00:00+08:00</published>
     <updated>2011-09-17T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>最近没有什么特别值得一提的事情，或者说都还在进行中还没有到值得一提的时候。</p>
@@ -511,16 +511,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">GPS Track of Train K221: Nanjing to Guangzhou</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou/"/>
     
     <id>/blog/2011/04/26/gps-track-of-train-k221-nanjing-to-guangzhou</id>
     <published>2011-04-26T00:00:00+08:00</published>
     <updated>2011-04-26T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>GPS Logger完成了它有生以来最长的一次旅行，1477分钟，行程1767公里，途径江苏、安徽、江西、湖南、广东，包含了宁芜线、浙赣线、京广线等。有了GPS终端，贴地的旅途就变成一件非常严肃的事情。这周末去西安，这个GPS也是16个小时上铺车程唯一的安慰了。
@@ -538,16 +538,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">南京的第一个周末</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/04/03/%E5%8D%97%E4%BA%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%91%A8%E6%9C%AB/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/04/03/%E5%8D%97%E4%BA%AC%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%91%A8%E6%9C%AB/"/>
     
     <id>/blog/2011/04/03/南京的第一个周末</id>
     <published>2011-04-03T00:00:00+08:00</published>
     <updated>2011-04-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>回了南京，最大的变化就是心里踏实多了，从上大学以后几乎就没有再在家里好好呆过。虽然年纪轻轻就告老还乡有点不太给力，但是这样实在是比在外乡遥遥无期地飘着感觉要好（飘着好，遥遥无期地飘着不好）。</p>
@@ -573,16 +573,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">I Am Location Aware</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/12/03/i-am-location-aware/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/12/03/i-am-location-aware/"/>
     
     <id>/blog/2010/12/03/i-am-location-aware</id>
     <published>2010-12-03T00:00:00+08:00</published>
     <updated>2010-12-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>身为一个跟GIS沾过边的人，我直到今年才真正知道我在哪。尽管有了带GPS功能的手机，但是为了能离cartographer更进一步，今天我又买了一个专门的GPS Logger设备Holux M1000C。所谓GPS Logger就是以固定时间间隔采集GPS数据并记录的设备，现在国内的绝大多数GPS设备都是以导航为主，少有这样功能简单价格合理的GPS产品。
@@ -620,16 +620,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">QQ360</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/11/04/qq360/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/11/04/qq360/"/>
     
     <id>/blog/2010/11/04/qq360</id>
     <published>2010-11-04T00:00:00+08:00</published>
     <updated>2010-11-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>作为一个Linux桌面用户，若不是早些时候幡然悔悟投靠了自由软件，今天怕是也难以有隔岸观狗，苟全性命于乱世的心境。其实我是有两个想法的，一个是新浪的UC，一个是360自己。</p>
@@ -655,16 +655,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">周记</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/08/28/%E5%91%A8%E8%AE%B0/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/08/28/%E5%91%A8%E8%AE%B0/"/>
     
     <id>/blog/2010/08/28/周记</id>
     <published>2010-08-28T00:00:00+08:00</published>
     <updated>2010-08-28T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>先讲个<a href="http://www.douban.com/group/topic/13651452/">笑话</a>，然后回顾一下这个星期。</p>
@@ -692,16 +692,16 @@ actual: (not (= "tomcat" "tomcat"))</blockquote>
   <entry>
     <title type="html">Next to Richard Stallman</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/08/13/next-to-richard-stallman/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/08/13/next-to-richard-stallman/"/>
     
     <id>/blog/2010/08/13/next-to-richard-stallman</id>
     <published>2010-08-13T00:00:00+08:00</published>
     <updated>2010-08-13T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><p>我这个人一般不八卦，你知道的。但是个别时候实在是情难以堪。</p>
@@ -761,16 +761,16 @@ It all started one night when I got home very late from work (where I get to pla
   <entry>
     <title type="html">近况</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/08/09/%E8%BF%91%E5%86%B5-2/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/08/09/%E8%BF%91%E5%86%B5-2/"/>
     
     <id>/blog/2010/08/09/近况-2</id>
     <published>2010-08-09T00:00:00+08:00</published>
     <updated>2010-08-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><ol>
@@ -793,16 +793,16 @@ It all started one night when I got home very late from work (where I get to pla
   <entry>
     <title type="html">Update</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/07/10/update-2/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/07/10/update-2/"/>
     
     <id>/blog/2010/07/10/update-2</id>
     <published>2010-07-10T00:00:00+08:00</published>
     <updated>2010-07-10T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><ol>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/留影/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/留影/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2012-09-09T00:00:00+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">丰宁草原</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/09/09/%E4%B8%B0%E5%AE%81%E8%8D%89%E5%8E%9F/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/09/09/%E4%B8%B0%E5%AE%81%E8%8D%89%E5%8E%9F/"/>
     
     <id>/blog/2012/09/09/丰宁草原</id>
     <published>2012-09-09T00:00:00+08:00</published>
     <updated>2012-09-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>来了北京以后一直没有停止到处游走的脚步，这周末去了丰宁的坝上草原。第一回去草原，第一回骑马，第一回看日出。</p>
@@ -61,16 +61,16 @@
   <entry>
     <title type="html">燕子矶</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/18/%E7%87%95%E5%AD%90%E7%9F%B6/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/18/%E7%87%95%E5%AD%90%E7%9F%B6/"/>
     
     <id>/blog/2012/02/18/燕子矶</id>
     <published>2012-02-18T00:00:00+08:00</published>
     <updated>2012-02-18T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>作为几乎是很多人脑海里南京最北端的地方，燕子矶平时算是人迹罕至。我上一次去这个公园是99年小学毕业的夏天，一晃都已经13年（13年！）过去了。</p>
@@ -108,16 +108,16 @@
   <entry>
     <title type="html">丽水留影</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/10/20/%E4%B8%BD%E6%B0%B4%E7%95%99%E5%BD%B1/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/10/20/%E4%B8%BD%E6%B0%B4%E7%95%99%E5%BD%B1/"/>
     
     <id>/blog/2011/10/20/丽水留影</id>
     <published>2011-10-20T00:00:00+08:00</published>
     <updated>2011-10-20T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>这周去丽水参加大学同学的婚礼，浙江南部又是另一番不同的景色。而且这一带没有过度的旅游开发，也没有工业污染，青山绿水完完全全的原生态。要是度假真是不错的选择，何况这里还有认识的同学。</p>
@@ -139,16 +139,16 @@
   <entry>
     <title type="html">山水城林夕阳晚景</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/10/06/%E5%B1%B1%E6%B0%B4%E5%9F%8E%E6%9E%97/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/10/06/%E5%B1%B1%E6%B0%B4%E5%9F%8E%E6%9E%97/"/>
     
     <id>/blog/2011/10/06/山水城林</id>
     <published>2011-10-06T00:00:00+08:00</published>
     <updated>2011-10-06T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.flickr.com/photos/40741608@N08/6214194078/" title="resized-DSC_0004.JPG by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6032/6214194078_164b4fd0d6.jpg" width="335" height="500" alt="resized-DSC_0004.JPG" /></a></p>
@@ -188,16 +188,16 @@
   <entry>
     <title type="html">游浙江古镇</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/10/04/%E6%B8%B8%E6%B5%99%E6%B1%9F%E5%8F%A4%E9%95%87/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/10/04/%E6%B8%B8%E6%B5%99%E6%B1%9F%E5%8F%A4%E9%95%87/"/>
     
     <id>/blog/2011/10/04/游浙江古镇</id>
     <published>2011-10-04T00:00:00+08:00</published>
     <updated>2011-10-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>这居然是我第一次踏上浙江的土地。</p>
@@ -263,16 +263,16 @@
   <entry>
     <title type="html">吉尔157</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/09/04/%E5%90%89%E5%B0%94157/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/09/04/%E5%90%89%E5%B0%94157/"/>
     
     <id>/blog/2011/09/04/吉尔157</id>
     <published>2011-09-04T00:00:00+08:00</published>
     <updated>2011-09-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>这是1CM的ZIL157卡车模型，虽说是五十年代的苏联车，可是咱们看着也眼熟，因为它就是解放卡车(CA30)的原型。这是我的第二个模型。万事开头难，可是做到第二个了怎么还是很难，嗯，说明这头还没有开完。难就难在，打开包装发现少了两根车轴！这车的版件是散装的，也弄不清是丢了还是本来就缺。无奈，最后用的是回形针的铁丝代替，所以后面后轮有粗糙了。但是总体来说，有了上一辆车的经验，加上配置的新的工具笔刀，这次还是挺顺利的。</p>
@@ -299,16 +299,16 @@
   <entry>
     <title type="html">盛大的中秋礼物</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/09/03/%E7%9B%9B%E5%A4%A7%E7%9A%84%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%89%A9/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/09/03/%E7%9B%9B%E5%A4%A7%E7%9A%84%E4%B8%AD%E7%A7%8B%E7%A4%BC%E7%89%A9/"/>
     
     <id>/blog/2011/09/03/盛大的中秋礼物</id>
     <published>2011-09-03T00:00:00+08:00</published>
     <updated>2011-09-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>真没想到，离开盛大快一年了，人事部门还记着给我寄东西。过年收到大礼包算是惊喜，这次收到月饼就是有点感动了。难得啊，居然还有人惦记着咱，而且因为离开上海当时登记的电话也失效了，负责的人事还辗转了一番才找到我。当然这个不是针对我，所有的离职员工貌似都收到了盛大寄来的中秋礼物。能做到这点的公司，全世界不多吧。</p>
@@ -342,16 +342,16 @@
   <entry>
     <title type="html">苏制油罐车模型</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/08/20/%E8%8B%8F%E5%88%B6%E6%B2%B9%E7%BD%90%E8%BD%A6%E6%A8%A1%E5%9E%8B/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/08/20/%E8%8B%8F%E5%88%B6%E6%B2%B9%E7%BD%90%E8%BD%A6%E6%A8%A1%E5%9E%8B/"/>
     
     <id>/blog/2011/08/20/苏制油罐车模型</id>
     <published>2011-08-20T00:00:00+08:00</published>
     <updated>2011-08-20T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>前段时间说发展兴趣爱好，于是又多了一个心灵手巧的爱好：静态模型。昨天买了一套油罐车模型（<a href="http://www.icm.com.ua/catalogue/technics/30-atz-5-4320.html" target="_blank">ATZ 5-4320</a>）1：72，今天上午花了一上午时间就把它组装起来了。这种静态模型需要用胶水把各个零件粘合起来。所以对心灵手巧的要求程度比较高，作为一个小时候手工课沿着线剪纸都剪不齐的娃来说，其实这是一种挑战。
@@ -386,16 +386,16 @@
   <entry>
     <title type="html">自制山寨摩卡</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/07/09/%E8%87%AA%E5%88%B6%E5%B1%B1%E5%AF%A8%E6%91%A9%E5%8D%A1/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/07/09/%E8%87%AA%E5%88%B6%E5%B1%B1%E5%AF%A8%E6%91%A9%E5%8D%A1/"/>
     
     <id>/blog/2011/07/09/自制山寨摩卡</id>
     <published>2011-07-09T00:00:00+08:00</published>
     <updated>2011-07-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>一共也没去过几次咖啡店，但是几乎每次要的都是摩卡，感情特深。所谓摩卡就是不明颗粒+奶油(optional)+牛奶+咖啡+巧克力（排名分先后）。我晕，扯这些没用的干啥，先上图：
@@ -424,16 +424,16 @@
   <entry>
     <title type="html">Take My Coffee</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/06/04/take-my-coffee/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/06/04/take-my-coffee/"/>
     
     <id>/blog/2011/06/04/take-my-coffee</id>
     <published>2011-06-04T00:00:00+08:00</published>
     <updated>2011-06-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>是coffee不是Java也不是CoffeeScript。买了两个月的咖啡机，到今天才终于把磨豆机和拉花杯都制备齐了。我上周用搪瓷缸打牛奶场面真是残不忍睹。不过我发现其实设备区别不大，蒸汽的掌握还是很重要的；牛奶的选择也很重要，鉴于家里没有其他牛奶可选，这部分跳过。蒸汽喷嘴与牛奶的举例很重要，我的咖啡机上还有个橡胶嘴我今天把它彻底扔掉了，直接用金属的喷嘴即可。按照某视频介绍，蒸汽嘴距离牛奶表面3毫米。这个距离如果太大就会导致牛奶乱喷，如果直接把喷嘴伸进牛奶我还没有尝试。</p>
@@ -463,16 +463,16 @@
   <entry>
     <title type="html">去西安</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/"/>
     
     <id>/blog/2011/05/03/去西安</id>
     <published>2011-05-03T00:00:00+08:00</published>
     <updated>2011-05-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>除了02年在北京打了几天酱油，我还没有因为打着去玩的旗号出过远门（到镇江这里就不算远门了）。今年五一痛下决心，卷入五一滚滚洪流，抱着轻度腹胀不下火线的精神，突破了我所到达的经度下限。
@@ -513,16 +513,16 @@
   <entry>
     <title type="html">春节留影，牛</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%89%9B/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%89%9B/"/>
     
     <id>/blog/2011/02/08/春节留影，牛</id>
     <published>2011-02-08T00:00:00+08:00</published>
     <updated>2011-02-08T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>家里有两头牛，准确说本来是一头，一个半月前添了新成员。仔细看，都是双眼皮。</p>
@@ -571,16 +571,16 @@
   <entry>
     <title type="html">春节留影，烟火</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%83%9F%E7%81%AB/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E7%83%9F%E7%81%AB/"/>
     
     <id>/blog/2011/02/08/春节留影，烟火</id>
     <published>2011-02-08T00:00:00+08:00</published>
     <updated>2011-02-08T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>村里能放烟花，是到了后几天才想起来的事。在妹妹的协助下实验了一把，ISO1600，快门优先半秒曝光</p>
@@ -606,16 +606,16 @@
   <entry>
     <title type="html">春节留影，农村</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E5%86%9C%E6%9D%91/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/02/08/%E6%98%A5%E8%8A%82%E7%95%99%E5%BD%B1%EF%BC%8C%E5%86%9C%E6%9D%91/"/>
     
     <id>/blog/2011/02/08/春节留影，农村</id>
     <published>2011-02-08T00:00:00+08:00</published>
     <updated>2011-02-08T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>北方农村的冬天外屋凋敝满眼看不到一点绿色，空气里弥漫烧煤和烧秸秆的烟气。这个时候的夕阳还是很到位的。</p>
@@ -641,16 +641,16 @@
   <entry>
     <title type="html">Happy New Year!</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/01/01/happy-new-year/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/01/01/happy-new-year/"/>
     
     <id>/blog/2011/01/01/happy-new-year</id>
     <published>2011-01-01T00:00:00+08:00</published>
     <updated>2011-01-01T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.flickr.com/photos/40741608@N08/5311404087/" title="IMG_0276 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5081/5311404087_fea4651daf.jpg" width="500" height="375" alt="IMG_0276" /></a>
@@ -669,16 +669,16 @@
   <entry>
     <title type="html">镇江和栖霞山</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/11/08/%E9%95%87%E6%B1%9F%E5%92%8C%E6%A0%96%E9%9C%9E%E5%B1%B1/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/11/08/%E9%95%87%E6%B1%9F%E5%92%8C%E6%A0%96%E9%9C%9E%E5%B1%B1/"/>
     
     <id>/blog/2010/11/08/镇江和栖霞山</id>
     <published>2010-11-08T00:00:00+08:00</published>
     <updated>2010-11-08T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>放假在家，不甘寂寞，去了南京周边一些地方。回来才发现，去的居然都是寺庙！</p>
@@ -709,16 +709,16 @@
   <entry>
     <title type="html">When I Am 64</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/10/23/when-i-am-64/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/10/23/when-i-am-64/"/>
     
     <id>/blog/2010/10/23/when-i-am-64</id>
     <published>2010-10-23T00:00:00+08:00</published>
     <updated>2010-10-23T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.flickr.com/photos/40741608@N08/5106315535/" title="DSC_0007 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1237/5106315535_07df2a88bc.jpg" width="500" height="335" alt="DSC_0007" /></a></p>
@@ -732,16 +732,16 @@
   <entry>
     <title type="html">A Day in Expo</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/09/05/a-day-in-expo/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/09/05/a-day-in-expo/"/>
     
     <id>/blog/2010/09/05/a-day-in-expo</id>
     <published>2010-09-05T00:00:00+08:00</published>
     <updated>2010-09-05T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>A day in Expo, Shanghai.</p>
@@ -785,16 +785,16 @@
   <entry>
     <title type="html">在苏州河</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/04/25/%E5%9C%A8%E8%8B%8F%E5%B7%9E%E6%B2%B3/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/04/25/%E5%9C%A8%E8%8B%8F%E5%B7%9E%E6%B2%B3/"/>
     
     <id>/blog/2010/04/25/在苏州河</id>
     <published>2010-04-25T00:00:00+08:00</published>
     <updated>2010-04-25T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>今天又到苏州河附近拍，发现在四川路桥对面的邮政博物馆楼顶拍浦东效果甚佳，闹中取静。另外在河南中路和宁波路路口有一家小杨生煎店，人相对其他地方比较少。</p>
@@ -824,16 +824,16 @@
   <entry>
     <title type="html">今天在朱家角了</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/04/24/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%9C%B1%E5%AE%B6%E8%A7%92%E4%BA%86/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/04/24/%E4%BB%8A%E5%A4%A9%E5%9C%A8%E6%9C%B1%E5%AE%B6%E8%A7%92%E4%BA%86/"/>
     
     <id>/blog/2010/04/24/今天在朱家角了</id>
     <published>2010-04-24T00:00:00+08:00</published>
     <updated>2010-04-24T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><a href="http://www.flickr.com/photos/40741608@N08/4548344670/" title="DSC_0026 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4046/4548344670_336a34ea42.jpg" width="335" height="500" alt="DSC_0026" /></a></p>

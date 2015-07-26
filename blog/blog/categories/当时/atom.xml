@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng87.github.io/blog/blog/blog/categories/当时/atom.xml"/>
-  <id>http://sunng87.github.io/blog/blog/</id>
+  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
+  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/当时/atom.xml"/>
+  <id>http://sunng.info/blog/</id>
   <updated>2012-08-19T00:00:00+08:00</updated>
   <generator uri="http://octopress.org/">Octopress</generator>
   
@@ -12,16 +12,16 @@
   <entry>
     <title type="html">京张铁路</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/08/19/%E4%BA%AC%E5%BC%A0%E9%93%81%E8%B7%AF/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/08/19/%E4%BA%AC%E5%BC%A0%E9%93%81%E8%B7%AF/"/>
     
     <id>/blog/2012/08/19/京张铁路</id>
     <published>2012-08-19T00:00:00+08:00</published>
     <updated>2012-08-19T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>这两周体验了一下北京周边的铁路。上周从北京西到张家口，这周从北京北到延庆。</p>
@@ -43,16 +43,16 @@
   <entry>
     <title type="html">登Py山</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/06/17/%E7%99%BBpy%E5%B1%B1/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/06/17/%E7%99%BBpy%E5%B1%B1/"/>
     
     <id>/blog/2012/06/17/登py山</id>
     <published>2012-06-17T00:00:00+08:00</published>
     <updated>2012-06-17T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>我的个天总算是有可写的东西了。</p>
@@ -102,16 +102,16 @@
   <entry>
     <title type="html">China Clojurians Meetup #2 Is Calling You</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you/"/>
     
     <id>/blog/2012/02/09/chinese-clojurians-meeup-2-is-calling-you</id>
     <published>2012-02-09T00:00:00+08:00</published>
     <updated>2012-02-09T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击<a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">这里</a>报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。</p>
@@ -129,16 +129,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">Code 2011</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/12/31/code-2011/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/12/31/code-2011/"/>
     
     <id>/blog/2011/12/31/code-2011</id>
     <published>2011-12-31T00:00:00+08:00</published>
     <updated>2011-12-31T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>成功人士是不写总结的，所以我来写个总结。</p>
@@ -176,16 +176,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">再见2011赛季</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/11/04/%E5%86%8D%E8%A7%812011%E8%B5%9B%E5%AD%A3/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/11/04/%E5%86%8D%E8%A7%812011%E8%B5%9B%E5%AD%A3/"/>
     
     <id>/blog/2011/11/04/再见2011赛季</id>
     <published>2011-11-04T00:00:00+08:00</published>
     <updated>2011-11-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>虽然还有两个月才能结束这个2011年，但是舜天队的赛季已经结束了。经过大半年的鏖战，大起大落之后，最终球队取得了史无前例的第四名，这让我们看了十多年次级联赛的球迷一时间几乎无法接受。今年赶在联赛开始前我换工作回到南京，去主场的机会也比以前上学或是在外地时多了很多，最终今年一共看了6个主场，是看球16年以来最多的一年。当然不出意外明年还要刷新这个纪录！</p>
@@ -240,16 +240,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">Clojure Chinese User Group第一次线下聚会</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/08/06/clojure-chinese-user-group%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E8%81%9A%E4%BC%9A/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/08/06/clojure-chinese-user-group%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E4%B8%8B%E8%81%9A%E4%BC%9A/"/>
     
     <id>/blog/2011/08/06/clojure-chinese-user-group第一次线下聚会</id>
     <published>2011-08-06T00:00:00+08:00</published>
     <updated>2011-08-06T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>今天下午赶到上海参加了clojure中文用户的第一次线下聚会，见到了国内clojure的的主要用户。感谢一直在努力组织这次活动的朋友，还有提供场地的朋友。</p>
@@ -269,16 +269,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">工作第二年</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/07/18/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%BA%8C%E5%B9%B4/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/07/18/%E5%B7%A5%E4%BD%9C%E7%AC%AC%E4%BA%8C%E5%B9%B4/"/>
     
     <id>/blog/2011/07/18/工作第二年</id>
     <published>2011-07-18T00:00:00+08:00</published>
     <updated>2011-07-18T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><p>这个周末就是我正式工作两年的日子了，第二年过得稍微有些起伏，晚上写了一点总结。但是刚才读了一下觉得不太满意，也不太合适发出来。这样，即将跨入三年级的时候，我就改改风格谈谈愿望吧。</p>
@@ -296,16 +296,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">最近的一些想法</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/"/>
     
     <id>/blog/2011/06/30/最近的一些想法</id>
     <published>2011-06-30T00:00:00+08:00</published>
     <updated>2011-06-30T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p><p>最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。</p>
@@ -323,16 +323,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">Take My Coffee</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/06/04/take-my-coffee/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/06/04/take-my-coffee/"/>
     
     <id>/blog/2011/06/04/take-my-coffee</id>
     <published>2011-06-04T00:00:00+08:00</published>
     <updated>2011-06-04T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>是coffee不是Java也不是CoffeeScript。买了两个月的咖啡机，到今天才终于把磨豆机和拉花杯都制备齐了。我上周用搪瓷缸打牛奶场面真是残不忍睹。不过我发现其实设备区别不大，蒸汽的掌握还是很重要的；牛奶的选择也很重要，鉴于家里没有其他牛奶可选，这部分跳过。蒸汽喷嘴与牛奶的举例很重要，我的咖啡机上还有个橡胶嘴我今天把它彻底扔掉了，直接用金属的喷嘴即可。按照某视频介绍，蒸汽嘴距离牛奶表面3毫米。这个距离如果太大就会导致牛奶乱喷，如果直接把喷嘴伸进牛奶我还没有尝试。</p>
@@ -362,16 +362,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">去西安</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/05/03/%E5%8E%BB%E8%A5%BF%E5%AE%89/"/>
     
     <id>/blog/2011/05/03/去西安</id>
     <published>2011-05-03T00:00:00+08:00</published>
     <updated>2011-05-03T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>除了02年在北京打了几天酱油，我还没有因为打着去玩的旗号出过远门（到镇江这里就不算远门了）。今年五一痛下决心，卷入五一滚滚洪流，抱着轻度腹胀不下火线的精神，突破了我所到达的经度下限。
@@ -412,16 +412,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">"Update ${new Random().nextInt()}"</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/03/24/update-new-random-nextint/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/03/24/update-new-random-nextint/"/>
     
     <id>/blog/2011/03/24/update-new-random-nextint</id>
     <published>2011-03-24T00:00:00+08:00</published>
     <updated>2011-03-24T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>多少年没写Update体了，看Samson的Update Series都到了53了，咱就只好来这么个标题了。</p>
@@ -443,16 +443,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">Continuous Learning</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/03/14/continuous-learning/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/03/14/continuous-learning/"/>
     
     <id>/blog/2011/03/14/continuous-learning</id>
     <published>2011-03-14T00:00:00+08:00</published>
     <updated>2011-03-14T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>一直想总结一下学习的方法，今天看到Programmer的97件事里，作者叫做Clint Shank的Continuous Learning这篇，感觉比较靠谱，跟大伙分享一下。</p>
@@ -494,16 +494,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">宁夏川两头头尖</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2011/02/27/%E5%AE%81%E5%A4%8F%E5%B7%9D%E4%B8%A4%E5%A4%B4%E5%A4%B4%E5%B0%96/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2011/02/27/%E5%AE%81%E5%A4%8F%E5%B7%9D%E4%B8%A4%E5%A4%B4%E5%A4%B4%E5%B0%96/"/>
     
     <id>/blog/2011/02/27/宁夏川两头头尖</id>
     <published>2011-02-27T00:00:00+08:00</published>
     <updated>2011-02-27T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>前天在豆瓣电台上听到赵牧阳的《<a href="http://site.douban.com/zhaomuyang/?s=24204">黄河谣</a>》，循声找过去发现这两天在上海有小演出，一时兴起叫上纯西北人<a href="http://www.phio.me/">亚洲</a>就决定去听听。</p>
@@ -529,16 +529,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">For 12.13</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/12/14/for-12-13/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/12/14/for-12-13/"/>
     
     <id>/blog/2010/12/14/for-12-13</id>
     <published>2010-12-14T00:00:00+08:00</published>
     <updated>2010-12-14T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>For people of Nanjing, <a href="http://en.wikipedia.org/wiki/Nanking_Massacre">December 13th</a> is a day that they can never forget.</p>
@@ -560,16 +560,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">First Week</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/11/20/first-week/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/11/20/first-week/"/>
     
     <id>/blog/2010/11/20/first-week</id>
     <published>2010-11-20T00:00:00+08:00</published>
     <updated>2010-11-20T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>这周是加入新公司的第一周，一切从新开始。这已经是两年里的第三家公司了，这个嘛，哎，比较坎坷。</p>
@@ -593,16 +593,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">A Fine Day</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/10/11/a-fine-day/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/10/11/a-fine-day/"/>
     
     <id>/blog/2010/10/11/a-fine-day</id>
     <published>2010-10-11T00:00:00+08:00</published>
     <updated>2010-10-11T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>好久没有聊生活了，最近心绪比较杂乱，虽说不像以前那么忙，不过也没像以前那样有时间来贫一下。好在今天倒是这么多年难得的一个顺风日，一切顺利。</p>
@@ -624,16 +624,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">9月10日运转记</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/09/10/9%E6%9C%8810%E6%97%A5%E8%BF%90%E8%BD%AC%E8%AE%B0/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/09/10/9%E6%9C%8810%E6%97%A5%E8%BF%90%E8%BD%AC%E8%AE%B0/"/>
     
     <id>/blog/2010/09/10/9月10日运转记</id>
     <published>2010-09-10T00:00:00+08:00</published>
     <updated>2010-09-10T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>庆祝教师节，今天请假休息出门放松。</p>
@@ -668,16 +668,16 @@ If you are interested in Clojure and also living in Beijing, feel free to join o
   <entry>
     <title type="html">五月一号</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/05/01/%E4%BA%94%E6%9C%88%E4%B8%80%E5%8F%B7/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/05/01/%E4%BA%94%E6%9C%88%E4%B8%80%E5%8F%B7/"/>
     
     <id>/blog/2010/05/01/五月一号</id>
     <published>2010-05-01T00:00:00+08:00</published>
     <updated>2010-05-01T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>今天值得说的事情挺多的。首先，Ubuntu 10.04发布以后，Sun JDK 被放到了partner 仓库里，要使用Sun JDK，添加这个仓库：
@@ -713,16 +713,16 @@ end<br />
   <entry>
     <title type="html">悲剧不止你一个</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2010/04/14/%E6%82%B2%E5%89%A7%E4%B8%8D%E6%AD%A2%E4%BD%A0%E4%B8%80%E4%B8%AA/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2010/04/14/%E6%82%B2%E5%89%A7%E4%B8%8D%E6%AD%A2%E4%BD%A0%E4%B8%80%E4%B8%AA/"/>
     
     <id>/blog/2010/04/14/悲剧不止你一个</id>
     <published>2010-04-14T00:00:00+08:00</published>
     <updated>2010-04-14T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>近日连连悲剧，今天一早收到root@apache.org发送的邮件：
@@ -744,16 +744,16 @@ end<br />
   <entry>
     <title type="html">那年榕树下</title>
     
-    <link rel="alternate" type="text/html" href="http://sunng87.github.io/blog/blog/blog/2009/12/23/%E9%82%A3%E5%B9%B4%E6%A6%95%E6%A0%91%E4%B8%8B/"/>
+    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2009/12/23/%E9%82%A3%E5%B9%B4%E6%A6%95%E6%A0%91%E4%B8%8B/"/>
     
     <id>/blog/2009/12/23/那年榕树下</id>
     <published>2009-12-23T00:00:00+08:00</published>
     <updated>2009-12-23T00:00:00+08:00</updated>
     <author>
       <name>Sun Ning</name>
-      <uri>http://sunng87.github.io/blog/blog/</uri>
+      <uri>http://sunng.info/blog/</uri>
     </author>
-    <content type="html" xml:base="http://sunng87.github.io/blog/blog/" >
+    <content type="html" xml:base="http://sunng.info/blog/" >
 <![CDATA[
 
 <p>有的朋友看到这标题，肯定感叹，哎呀妈呀，这哥们也堕落了，开始写软文了。好吧，就算是软文吧，我决定东拉西扯地码一些字，不同于上周五的工作指标，这次完全是自觉自愿的。</p>

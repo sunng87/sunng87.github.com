@@ -10,8 +10,8 @@
   <meta name="description" content="最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。这是root cause，其实进了代码里面的问题更多。于是...">
 
   <link rel="stylesheet" href="/blog/css/main.css">
-  <link rel="canonical" href="http://sunng87.github.io/blog//blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">
-  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng87.github.io/blog//blog/feed.xml" />
+  <link rel="canonical" href="http://sunng.info//blog/blog/2011/06/30/%E6%9C%80%E8%BF%91%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng.info//blog/feed.xml" />
 </head>
 
   <body>

@@ -3,10 +3,10 @@
   <channel>
     <title>Here comes the Sun</title>
     <description></description>
-    <link>http://sunng87.github.io/blog//blog/</link>
-    <atom:link href="http://sunng87.github.io/blog//blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 25 Jul 2015 19:42:42 +0800</pubDate>
-    <lastBuildDate>Sat, 25 Jul 2015 19:42:42 +0800</lastBuildDate>
+    <link>http://sunng.info//blog/</link>
+    <atom:link href="http://sunng.info//blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 26 Jul 2015 11:10:25 +0800</pubDate>
+    <lastBuildDate>Sun, 26 Jul 2015 11:10:25 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -86,8 +86,8 @@
 &lt;p&gt;The complete example is available in &lt;a href=&quot;https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj&quot;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Sat, 25 Jul 2015 14:54:54 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2015/07/25/ring-on-http2/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2015/07/25/ring-on-http2/</guid>
+        <link>http://sunng.info//blog/blog/2015/07/25/ring-on-http2/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/07/25/ring-on-http2/</guid>
         
         
         <category>programming</category>
@@ -124,8 +124,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 25 Jan 2015 16:22:50 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2015/01/25/ann-handlebars-rust/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2015/01/25/ann-handlebars-rust/</guid>
+        <link>http://sunng.info//blog/blog/2015/01/25/ann-handlebars-rust/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/01/25/ann-handlebars-rust/</guid>
         
         
         <category>programming</category>
@@ -181,8 +181,8 @@
 &lt;p&gt;原载 &lt;a href=&quot;https://blog.avoscloud.com/1927/&quot;&gt;AVOSCloud Blog&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 19 Aug 2014 16:46:20 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</guid>
+        <link>http://sunng.info//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</guid>
         
         
         <category>programming</category>
@@ -312,8 +312,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sat, 02 Aug 2014 18:02:12 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/08/02/rust-with-docker/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/08/02/rust-with-docker/</guid>
+        <link>http://sunng.info//blog/blog/2014/08/02/rust-with-docker/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/08/02/rust-with-docker/</guid>
         
         
         <category>programming</category>
@@ -364,8 +364,8 @@
 &lt;p&gt;For more about Slacker Cluster, &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;check my code repository&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 08 Jul 2014 22:12:52 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/07/08/microservice-and-slacker-cluster/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/07/08/microservice-and-slacker-cluster/</guid>
+        <link>http://sunng.info//blog/blog/2014/07/08/microservice-and-slacker-cluster/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/08/microservice-and-slacker-cluster/</guid>
         
         
         <category>programming</category>
@@ -392,8 +392,8 @@
 &lt;p&gt;另外这个应用还发布在了&lt;a href=&quot;http://app.mi.com/detail/65794&quot;&gt;小米商店&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Mon, 07 Jul 2014 21:17:47 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/07/07/new-android-apps/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/07/07/new-android-apps/</guid>
+        <link>http://sunng.info//blog/blog/2014/07/07/new-android-apps/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/07/new-android-apps/</guid>
         
         
         <category>android</category>
@@ -463,8 +463,8 @@
 &lt;p&gt;注意这两个选项都比较激进，最好仅在测试机上使用。&lt;/p&gt;
 </description>
         <pubDate>Tue, 01 Jul 2014 17:11:58 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</guid>
+        <link>http://sunng.info//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</guid>
         
         
         <category>linux</category>
@@ -537,8 +537,8 @@
 &lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster&lt;/a&gt; has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.&lt;/p&gt;
 </description>
         <pubDate>Mon, 09 Jun 2014 21:06:39 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</guid>
+        <link>http://sunng.info//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</guid>
         
         
         <category>clojure</category>
@@ -593,8 +593,8 @@
 &lt;p&gt;So with &lt;code&gt;(fork)&lt;/code&gt; and &lt;code&gt;(join)&lt;/code&gt;, it&amp;#39;s very flexible to change execution model in Papaline.  Internally, I use clojure&amp;#39;s &lt;a href=&quot;http://clojure.org/metadata&quot;&gt;metadata&lt;/a&gt; to add flags for the return value, without ruining the non-invasive design of &lt;a href=&quot;http://github.com/sunng87/papaline&quot;&gt;Papaline&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 27 May 2014 21:47:45 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/05/27/fork-join-in-papaline/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/05/27/fork-join-in-papaline/</guid>
+        <link>http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</guid>
         
         
         <category>clojure</category>
@@ -618,8 +618,8 @@
 &lt;p&gt;We have already deployed papaline in our asynchronous system and it works great by far. Find the project on &lt;a href=&quot;https://github.com/sunng87/papaline&quot;&gt;github&lt;/a&gt; if you are interested in.&lt;/p&gt;
 </description>
         <pubDate>Sun, 20 Apr 2014 17:21:44 +0800</pubDate>
-        <link>http://sunng87.github.io/blog//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</link>
-        <guid isPermaLink="true">http://sunng87.github.io/blog//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</guid>
+        <link>http://sunng.info//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</guid>
         
         
         <category>clojure</category>
