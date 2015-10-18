@@ -5,9 +5,74 @@
     <description></description>
     <link>http://sunng.info//blog/</link>
     <atom:link href="http://sunng.info//blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 26 Jul 2015 11:10:25 +0800</pubDate>
-    <lastBuildDate>Sun, 26 Jul 2015 11:10:25 +0800</lastBuildDate>
+    <pubDate>Sun, 18 Oct 2015 15:21:53 +0800</pubDate>
+    <lastBuildDate>Sun, 18 Oct 2015 15:21:53 +0800</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Summarizing Changes in Slacker 0.13</title>
+        <description>&lt;p&gt;After a year of feature development and minor fixes, &lt;a href=&quot;https://github.com/sunng87/slacker&quot;&gt;Slacker&lt;/a&gt; and &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster&lt;/a&gt; version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.&lt;/p&gt;
+
+&lt;p&gt;Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.&lt;/p&gt;
+
+&lt;h3&gt;Application managed thread pool&lt;/h3&gt;
+
+&lt;p&gt;During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue. &lt;/p&gt;
+
+&lt;p&gt;The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by &lt;code&gt;:threads&lt;/code&gt; option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.&lt;/p&gt;
+
+&lt;h3&gt;Interrupt&lt;/h3&gt;
+
+&lt;p&gt;0.13 introduces a new low-level API called &lt;code&gt;interrupt&lt;/code&gt; and a new option &lt;code&gt;interrupt-on-timeout&lt;/code&gt;. This is backend by a new protocol level command, &lt;code&gt;interrupt&lt;/code&gt;. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once &lt;code&gt;interrupt&lt;/code&gt; received.&lt;/p&gt;
+
+&lt;p&gt;Typically you don&amp;#39;t have to call &lt;code&gt;interrupt&lt;/code&gt; on slacker client. The &lt;code&gt;interrupt-on-timeout&lt;/code&gt; option allows you to cancel a tasks on both client and server when it&amp;#39;s timeout. Following the design principle of transparence, the cancellation is synchronized to server-side, just like a local invocation. &lt;/p&gt;
+
+&lt;h3&gt;Plug-able Serializers&lt;/h3&gt;
+
+&lt;p&gt;To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.&lt;/p&gt;
+
+&lt;p&gt;The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(&lt;code&gt;:json&lt;/code&gt;) and nippy(&lt;code&gt;:nippy&lt;/code&gt;). &lt;a href=&quot;https://github.com/ptaoussanis/nippy&quot;&gt;Nippy&lt;/a&gt; is high recommanded for Slacker. It&amp;#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.&lt;/p&gt;
+
+&lt;p&gt;You can also extend our serializer system by create new implementations for serializer multi-method.&lt;/p&gt;
+
+&lt;h3&gt;Server data for Slacker Cluster&lt;/h3&gt;
+
+&lt;p&gt;The new Slacker Cluster &lt;code&gt;start-slacker-server&lt;/code&gt; offers a new option &lt;code&gt;:server-data&lt;/code&gt;. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.&lt;/p&gt;
+
+&lt;p&gt;In the client grouping function, you can use the data to filter servers:&lt;/p&gt;
+
+&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slacker.client.cluster&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:refer&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clustered-slackerc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;defn-remote&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-function&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:grouping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ns&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;               &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;;; test :prod? property of server data&lt;/span&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;w&quot;&gt;               &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rand-nth&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:prod?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;server-data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
+
+&lt;p&gt;The grouping function in this snippet filters production servers, and choose one from them to call.&lt;/p&gt;
+
+&lt;p&gt;The server side looks pretty simple:&lt;/p&gt;
+
+&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slacker.server.cluster&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:refer&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start-slacker-server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;start-slacker-server&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-port&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-ns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:server-data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:prod?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
+
+&lt;p&gt;Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc. &lt;/p&gt;
+
+&lt;p&gt;After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016. &lt;/p&gt;
+</description>
+        <pubDate>Sun, 18 Oct 2015 13:45:37 +0800</pubDate>
+        <link>http://sunng.info//blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/</link>
+        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/</guid>
+        
+        
+        <category>programming</category>
+        
+        <category>clojure</category>
+        
+      </item>
     
       <item>
         <title>Running Ring Web Application on HTTP2 With Rj9a</title>
@@ -595,31 +660,6 @@
         <pubDate>Tue, 27 May 2014 21:47:45 +0800</pubDate>
         <link>http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</link>
         <guid isPermaLink="true">http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</guid>
-        
-        
-        <category>clojure</category>
-        
-        <category>programming</category>
-        
-      </item>
-    
-      <item>
-        <title>Papaline: Concurrent Pipeline With core.async</title>
-        <description>&lt;p&gt;According to &lt;a href=&quot;http://en.wikipedia.org/wiki/Staged_event-driven_architecture&quot;&gt;wikipedia&lt;/a&gt;, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, &lt;a href=&quot;https://github.com/sunng87/stages&quot;&gt;stages&lt;/a&gt;, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&amp;#39;s &lt;a href=&quot;https://github.com/sunng87/papaline&quot;&gt;papaline&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don&amp;#39;t have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it&amp;#39;s a fixed thread pool with &lt;em&gt;(processors * 4) + 42&lt;/em&gt; threads. That&amp;#39;s much flexible and efficient.&lt;/p&gt;
-
-&lt;p&gt;Papaline takes advantages of this feature. The base concept in papaline is &lt;strong&gt;stage&lt;/strong&gt; and &lt;strong&gt;pipeline&lt;/strong&gt;. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels. &lt;/p&gt;
-
-&lt;p&gt;When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage&amp;#39;s inbound channel. The user-visible behavior is much like &lt;code&gt;comp&lt;/code&gt;, but in concurrent.&lt;/p&gt;
-
-&lt;p&gt;Also core.async offers different type of channel buffers: fixed &lt;code&gt;buffer&lt;/code&gt;, &lt;code&gt;sliding-buffer&lt;/code&gt; and &lt;code&gt;dropping-buffer&lt;/code&gt;. They are channels equivalent to j.u.c thread pool&amp;#39;s &lt;code&gt;RejectedExecutionHandler&lt;/code&gt;. &lt;/p&gt;
-
-&lt;p&gt;We have already deployed papaline in our asynchronous system and it works great by far. Find the project on &lt;a href=&quot;https://github.com/sunng87/papaline&quot;&gt;github&lt;/a&gt; if you are interested in.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 20 Apr 2014 17:21:44 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/04/20/concurrent-pipeline-with-core-async/</guid>
         
         
         <category>clojure</category>

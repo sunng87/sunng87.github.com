@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Summarizing Changes in Slacker 0.13</title>
+  <meta name="description" content="After a year of feature development and minor fixes, Slacker and Slacker Cluster version 0.13 is now available. In this article, I will summarize changes in ...">
+
+  <link rel="stylesheet" href="/blog/css/main.css">
+  <link rel="canonical" href="http://sunng.info//blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/">
+  <link rel="alternate" type="application/rss+xml" title="Here comes the Sun" href="http://sunng.info//blog/feed.xml" />
+</head>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/blog/">Here comes the Sun</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Summarizing Changes in Slacker 0.13</h1>
+    <p class="post-meta">Oct 18, 2015</p>
+  </header>
+
+  <article class="post-content">
+    <p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
+
+<p>Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.</p>
+
+<h3>Application managed thread pool</h3>
+
+<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue. </p>
+
+<p>The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by <code>:threads</code> option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.</p>
+
+<h3>Interrupt</h3>
+
+<p>0.13 introduces a new low-level API called <code>interrupt</code> and a new option <code>interrupt-on-timeout</code>. This is backend by a new protocol level command, <code>interrupt</code>. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once <code>interrupt</code> received.</p>
+
+<p>Typically you don&#39;t have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it&#39;s timeout. Following the design principle of transparence, the cancellation is synchronized to server-side, just like a local invocation. </p>
+
+<h3>Plug-able Serializers</h3>
+
+<p>To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.</p>
+
+<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommanded for Slacker. It&#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
+
+<p>You can also extend our serializer system by create new implementations for serializer multi-method.</p>
+
+<h3>Server data for Slacker Cluster</h3>
+
+<p>The new Slacker Cluster <code>start-slacker-server</code> offers a new option <code>:server-data</code>. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.</p>
+
+<p>In the client grouping function, you can use the data to filter servers:</p>
+
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">slacker.client.cluster</span><span class="w"> </span><span class="no">:refer</span><span class="w"> </span><span class="no">:all</span><span class="p">])</span><span class="w">
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">(</span><span class="nf">clustered-slackerc</span><span class="w"> </span><span class="n">...</span><span class="p">))</span><span class="w"></span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">defn-remote</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="n">some-function</span><span class="w">
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:grouping</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">ns</span><span class="w"> </span><span class="n">func</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="n">servers</span><span class="p">]</span><span class="w">
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>               </span><span class="c1">;; test :prod? property of server data</span>
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="w">               </span><span class="p">(</span><span class="nf">rand-nth</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="no">:prod?</span><span class="w"> </span><span class="p">(</span><span class="nf">server-data</span><span class="w"> </span><span class="err">@</span><span class="n">sc</span><span class="w"> </span><span class="n">%</span><span class="p">))</span><span class="w"> </span><span class="n">servers</span><span class="p">))))</span></div></div></pre></div></figure>
+
+<p>The grouping function in this snippet filters production servers, and choose one from them to call.</p>
+
+<p>The server side looks pretty simple:</p>
+
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">slacker.server.cluster</span><span class="w"> </span><span class="no">:refer</span><span class="w"> </span><span class="p">[</span><span class="n">start-slacker-server</span><span class="p">]])</span><span class="w">
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">start-slacker-server</span><span class="w"> </span><span class="n">some-port</span><span class="w"> </span><span class="p">[</span><span class="n">some-ns</span><span class="p">]</span><span class="w">
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:server-data</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:prod?</span><span class="w"> </span><span class="n">true</span><span class="p">&#x7d;</span><span class="w">
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="n">...</span><span class="p">)</span></div></div></pre></div></figure>
+
+<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc. </p>
+
+<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016. </p>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Here comes the Sun</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Here comes the Sun</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"></p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+  </body>
+
+</html>
