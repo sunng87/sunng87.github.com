@@ -53,7 +53,7 @@
 
 <h3>Application managed thread pool</h3>
 
-<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue. </p>
+<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.</p>
 
 <p>The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by <code>:threads</code> option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.</p>
 
@@ -61,13 +61,13 @@
 
 <p>0.13 introduces a new low-level API called <code>interrupt</code> and a new option <code>interrupt-on-timeout</code>. This is backend by a new protocol level command, <code>interrupt</code>. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once <code>interrupt</code> received.</p>
 
-<p>Typically you don&#39;t have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it&#39;s timeout. Following the design principle of transparence, the cancellation is synchronized to server-side, just like a local invocation. </p>
+<p>Typically you don&#39;t have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it&#39;s timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.</p>
 
 <h3>Plug-able Serializers</h3>
 
 <p>To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.</p>
 
-<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommanded for Slacker. It&#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
+<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommended for Slacker. It&#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
 
 <p>You can also extend our serializer system by create new implementations for serializer multi-method.</p>
 
@@ -95,9 +95,9 @@
 </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:server-data</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:prod?</span><span class="w"> </span><span class="n">true</span><span class="p">&#x7d;</span><span class="w">
 </div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="n">...</span><span class="p">)</span></div></div></pre></div></figure>
 
-<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc. </p>
+<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.</p>
 
-<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016. </p>
+<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.</p>
 
   </article>
 
