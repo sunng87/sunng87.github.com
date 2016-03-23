@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>"扩展 Linux ephemeral 端口限制"</title>
-        <link rel="stylesheet" href="./theme/css/main.css" />
+        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,16 +13,16 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="./">Here Comes the Sun </a></h1>
+                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="./category/misc.html">misc</a></li>
+                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="./kuo-zhan-linux-ephemeral-duan-kou-xian-zhi.html" rel="bookmark"
+        <a href="https://sunng.info/blog/kuo-zhan-linux-ephemeral-duan-kou-xian-zhi.html" rel="bookmark"
            title="Permalink to "扩展 Linux ephemeral 端口限制"">"扩展 Linux ephemeral 端口限制"</a></h1>
     </header>
 
@@ -33,10 +33,10 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="./author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="./category/misc.html">misc</a>.</p>
-<p>tags: <a href="./tag/linux.html">linux</a> <a href="./tag/programming.html">programming</a> </p>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+<p>tags: <a href="https://sunng.info/blog/tag/linux.html">linux</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
 </footer><!-- /.post-info -->      <p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
 <h3>增加文件打开数</h3>
 <p>第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：</p>
