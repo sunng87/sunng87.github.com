@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>Running Ring web application on HTTP2 with rj9a</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link rel="stylesheet" href="./theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,16 +13,16 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Here Comes the Sun </a></h1>
+                <h1><a href="./">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                    <li class="active"><a href="./category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
+        <a href="./running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
            title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h1>
     </header>
 
@@ -33,10 +33,10 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="./author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
-<p>tags: <a href="/tag/programming.html">&#39;programming&#39;</a> <a href="/tag/clojure.html">&#39;clojure&#39;</a> </p>
+<p>In <a href="./category/misc.html">misc</a>.</p>
+<p>tags: <a href="./tag/programming.html">&#39;programming&#39;</a> <a href="./tag/clojure.html">&#39;clojure&#39;</a> </p>
 </footer><!-- /.post-info -->      <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
 <p>In case you still have no idea about HTTP2, it's the biggest update to HTTP, the protocol we use everyday and everywhere. In short, <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP2</a> introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that's part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.</p>
 <p>The basic part of HTTP2 is fully compatible for 1.1, so you won't have to modify your application code to use it. In rj9a, just add option <code>:h2? true</code> to enable HTTP2. And <code>:h2c? true</code> to enable its variance on plain socket.</p>

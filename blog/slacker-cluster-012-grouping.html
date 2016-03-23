@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>"Slacker Cluster 0.12: Grouping"</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link rel="stylesheet" href="./theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,16 +13,16 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Here Comes the Sun </a></h1>
+                <h1><a href="./">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                    <li class="active"><a href="./category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/slacker-cluster-012-grouping.html" rel="bookmark"
+        <a href="./slacker-cluster-012-grouping.html" rel="bookmark"
            title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
     </header>
 
@@ -33,10 +33,10 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="./author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
-<p>tags: <a href="/tag/clojure.html">clojure</a> <a href="/tag/programming.html">programming</a> </p>
+<p>In <a href="./category/misc.html">misc</a>.</p>
+<p>tags: <a href="./tag/clojure.html">clojure</a> <a href="./tag/programming.html">programming</a> </p>
 </footer><!-- /.post-info -->      <h2>What are Slacker and Slacker Cluster</h2>
 <p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
 <p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>

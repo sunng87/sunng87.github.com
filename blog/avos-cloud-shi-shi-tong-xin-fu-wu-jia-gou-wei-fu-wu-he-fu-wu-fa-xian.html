@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>"AVOS Cloud 实时通信服务架构：微服务和服务发现"</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link rel="stylesheet" href="./theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,16 +13,16 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Here Comes the Sun </a></h1>
+                <h1><a href="./">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                    <li class="active"><a href="./category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark"
+        <a href="./avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark"
            title="Permalink to "AVOS Cloud 实时通信服务架构：微服务和服务发现"">"AVOS Cloud 实时通信服务架构：微服务和服务发现"</a></h1>
     </header>
 
@@ -33,10 +33,10 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="./author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
-<p>tags: <a href="/tag/programming.html">programming</a> </p>
+<p>In <a href="./category/misc.html">misc</a>.</p>
+<p>tags: <a href="./tag/programming.html">programming</a> </p>
 </footer><!-- /.post-info -->      <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
 <p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
 <p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>

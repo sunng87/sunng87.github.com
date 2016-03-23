@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>Here Comes the Sun - docker</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link rel="stylesheet" href="../theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,25 +13,25 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Here Comes the Sun </a></h1>
+                <h1><a href="../">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li><a href="/category/misc.html">misc</a></li>
+                    <li><a href="../category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="/zai-docker-zhong-an-zhuang-he-shi-yong-rust-nightly-ban-ben.html">"在 Docker 中安装和使用 Rust nightly 版本"</a></h1>
+                    <h1 class="entry-title"><a href="../zai-docker-zhong-an-zhuang-he-shi-yong-rust-nightly-ban-ben.html">"在 Docker 中安装和使用 Rust nightly 版本"</a></h1>
 <footer class="post-info">
         <abbr class="published" title="2014-08-02T18:02:12+08:00">
                 Published: Sat 02 August 2014
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="../author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
-<p>tags: <a href="/tag/programming.html">programming</a> <a href="/tag/rust.html">rust</a> <a href="/tag/docker.html">docker</a> </p>
+<p>In <a href="../category/misc.html">misc</a>.</p>
+<p>tags: <a href="../tag/programming.html">programming</a> <a href="../tag/rust.html">rust</a> <a href="../tag/docker.html">docker</a> </p>
 </footer><!-- /.post-info --><p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
 <h2>安装</h2>
 <p>安装 Docker, Arch Linux 仓库里很早就有，非常方便：<code>sudo pacman -S docker</code>。完成之后启动他：<code>sudo systemctl start docker</code>。</p>

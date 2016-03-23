@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8" />
         <title>"Handlebars 的 rust 实现"</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link rel="stylesheet" href="./theme/css/main.css" />
         <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
 
         <!--[if IE]>
@@ -13,16 +13,16 @@
 
 <body id="index" class="home">
         <header id="banner" class="body">
-                <h1><a href="/">Here Comes the Sun </a></h1>
+                <h1><a href="./">Here Comes the Sun </a></h1>
                 <nav><ul>
-                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                    <li class="active"><a href="./category/misc.html">misc</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
 <section id="content" class="body">
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="/handlebars-de-rust-shi-xian.html" rel="bookmark"
+        <a href="./handlebars-de-rust-shi-xian.html" rel="bookmark"
            title="Permalink to "Handlebars 的 rust 实现"">"Handlebars 的 rust 实现"</a></h1>
     </header>
 
@@ -33,10 +33,10 @@
         </abbr>
 
         <address class="vcard author">
-                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+                By                         <a class="url fn" href="./author/ning-sun.html">Ning Sun</a>
         </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
-<p>tags: <a href="/tag/programming.html">&#39;programming&#39;</a> <a href="/tag/rust.html">&#39;rust&#39;</a> </p>
+<p>In <a href="./category/misc.html">misc</a>.</p>
+<p>tags: <a href="./tag/programming.html">&#39;programming&#39;</a> <a href="./tag/rust.html">&#39;rust&#39;</a> </p>
 </footer><!-- /.post-info -->      <p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
 <p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
 <p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
