@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>五月一号</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/wu-yue-yi-hao.html" rel="bookmark"
+           title="Permalink to 五月一号">五月一号</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-01T00:00:00+08:00">
+                Published: Sat 01 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>当时
+tags:</li>
+<li>Life</li>
+<li>ruby
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天值得说的事情挺多的。首先，Ubuntu 10.04发布以后，Sun JDK 被放到了partner 仓库里，要使用Sun JDK，添加这个仓库：
+<em>sudo apt-add-repository "deb http://archive.canonical.com/ lucid partner"</em></p></p>
+<p>这是悲剧的开始，早晨七点四十起床，添加了这个仓库，把机器上的Sun JDK升级到6u20，为此到了八点三十五才出门。现在没有自行车不比从前了，等公交加上下来走到公司最后九点零六分打上卡。进了办公室一看大家整整齐齐地坐着了，这才听到悲剧：三薪工作日不能迟到，否则只算半天。就为了6分钟，一天半的工资没了。这事现在想起来我都郁闷，发自内心的郁闷啊。</p>
+
+<p>在上班的公交车上恰好收到邮件，是rubyforge的更新，昨天提交的patch已经被接受了，放进了svn仓库，会随Alexandria的0.6.6版本发布。项目的负责人修改了代码，把我那些\t都换成了空格。另外，豆瓣的API接口是json格式的，解析需要依赖libjson-ruby1.8这个库，这段代码被负责人修改了，真的很神奇，原来json可以就这样被转换成yaml<br />
+[cc lang="ruby"]<br />
+def json2yaml(json)<br />
+    # insert spaces after : and , except within strings<br />
+    yaml = json.gsub(/(\:|\,)([^A-Za-z\/\\])/) do |match|<br />
+        "#{$1} #{$2}"<br />
+    end<br />
+    yaml.gsub!(/\\\//, '/') # unescape forward slashes<br />
+    yaml<br />
+end<br />
+[/cc]<br />
+震惊了，不过我之前也太了解yaml，也许这个技巧在ruby世界是众所周知的吧。这下json模块的依赖就可以去除了，真没想到会这么简单。</p>
+
+<p>想起来我给另一个开源软件fantasdic提交的google translate的patch，作者已经认可了，但是至今还没有被加进仓库里。这位作者在日本读书不亦乐乎看来心思已经完全不在这个项目上了。</p>
+
+<p>下午下班回家又是坐公交车，越想越忿忿，晚上又去买了一辆新自行车，于是今天基本上就算是白干了。之前的自行车被偷，多半的原因是后来买的锁强度太弱。先前的锁呢又因为生锈最后没法用了，归根结底，还是我保养地不好。其实保养锁很简单的，买个肉包，把里面的肉吃掉之后，那钥匙蘸蘸剩下的油，放到锁眼里捅捅就成。</p>
+
+<p>五一了，世博了。和奥运会一样，还是和我没有什么直接关系。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

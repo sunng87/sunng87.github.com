@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>解决Ubuntu Openbox无法启动的问题</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/jie-jue-ubuntu-openboxwu-fa-qi-dong-de-wen-ti.html" rel="bookmark"
+           title="Permalink to 解决Ubuntu Openbox无法启动的问题">解决Ubuntu Openbox无法启动的问题</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-11T00:00:00+08:00">
+                Published: Thu 11 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>linux</li>
+<li>openbox</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天在工作用的ArchLinux上安装了用Openbox取代了GNOME桌面，感觉良好，回来尝试一下在Ubuntu上也做同样的事情。不料遇到问题，在完成基本的配置之后，Openbox Session无法启动，总是自动跳回gdm。查看.xsession-errors，是gnome-setting-daemon报错：</p></p>
+<p><em>(gnome-settings-daemon:2519): GLib-CRITICAL **: g_propagate_error: assertion `src != NULL' failed</em></p>
+
+<p>既然是gnome-settings-daemon报错，就在.config/openbox/autostart.sh中注视掉和gnome-settings<em>-</em>daemon相关的部分：
+<pre class="brush:bash"># Make GTK apps look and behave how they were set up in the gnome config tools
+#if test -x /usr/libexec/gnome-settings-daemon &gt;/dev/null; then
+#  /usr/libexec/gnome-settings-daemon &amp;
+#elif which gnome-settings-daemon &gt;/dev/null; then
+#  gnome-settings-daemon &amp;
+# Make GTK apps look and behave how they were set up in the XFCE config tools
+#elif which xfce-mcs-manager &gt;/dev/null; then
+#  xfce-mcs-manager n &amp;
+#fi
+</pre>
+进而可以启动Openbox Session了，但是发现Conky仍然无法启动，经过搜索是sleep的时间不够长导致的。而根据launchpad上上的讨论，gnome-settings-daemon也可以在Openbox Session启动后正常运行，于是可以这样设置autostart.sh
+<pre class="brush:bash">(sleep 20 &amp;&amp; conky 1&gt;/dev/null 2&gt;/dev/null) &amp;
+(sleep 2 &amp;&amp; tint) &amp;
+(sleep 5 &amp;&amp; tilda) &amp;
+(sleep 20 &amp;&amp; gnome-settings-daemon 1&gt;/dev/null 2&gt;/dev/null) &amp;
+</pre>
+tint和tilda对启动顺序没有明确的要求，conky和gnome-settings-daemon需要设置一个较长的等待时间。</p>
+
+<p>这是Ubuntu中Openbox的一个bug，可以在此跟踪：<br />
+https://bugs.launchpad.net/ubuntu/+source/openbox/+bug/459005</p>
+
+<p>顺手展示一下我的Openbox桌面
+<a href="http://www.flickr.com/photos/40741608@N08/4346625590/" title="myopenbox by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4067/4346625590_2230b8b3d8.jpg" width="500" height="313" alt="myopenbox" /></a></p>
+
+<p>openbox / tint2 / conky / tilda 还没来得及认真配置，呵呵。</p>
+
+<p>再有，Ubuntu源里的的tint2版本很低，问题不少，不支持宽度的百分数配置，不支持systray等配置。建议安装开发版本：<br />
+http://code.google.com/p/tint2/wiki/Install#For_Ubuntu_9.10_%28Karmic%29</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

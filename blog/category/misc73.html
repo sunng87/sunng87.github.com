@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/jiu-up-and-running-postgresql-and-postgis-on-ubuntu-810-step-by-step.html" rel="bookmark"
+                           title="Permalink to '[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step By Step'">'[旧]Up and Running: PostgreSQL and PostGIS on Ubuntu 8.10, Step By Step'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-10T00:00:00+08:00">
+                Published: Fri 10 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>linux</li>
+<li>postgresql</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>每次安装pgsql的过程都是这么震撼人心。以下在Ubuntu 8.10上安装配置运行pgsql及postgis的简单步骤。和Windows相比，用apt-get安装不会再有服务安装不上的问题，但是可能会有包装不全、缺少配置的问题。</p></p>
+<p>首先用apt-get下载安装pgsql和postgis的需要的包</p>
+
+<p><em>sudo apt-get install postgresql-8.3 postgresql-8.3-postgis postgresql-client-8.3 postgresql-contrib-8.3 pgadmin3</em></p>
+
+<p>安装过程中会提示创建一个默认名为<em>postgres</em>的用户。</p>
+
+<p>安装结束后，启动pgsql服务器</p>
+
+<p><em>sudo /etc/init.d/postgresql-8.3 start</em></p>
+
+<p>在默认情况下pgsql ident的设置为postgres用户用ident sameuser的方式登录，这种方式类似于sqlserver使用windows的用户管理。因此要用postgres用户登录系统。</p>
+
+<p>修改postgres用户的密码</p>
+
+<p><em>sudo passwd ...</em></p>
+                <a class="readmore" href="/jiu-up-and-running-postgresql-and-postgis-on-ubuntu-810-step-by-step.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/opera-mini.html" rel="bookmark"
+                           title="Permalink to Opera-mini">Opera-mini</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-10T00:00:00+08:00">
+                Published: Fri 10 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>internet</li>
+<li>mobile</li>
+<li>opera
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>偌大的互联网，却找不到一个带提交按钮的文本框。</p></p>
+<p>昨天为了能看一眼facebook上的留言（汗，其实我对翻墙的要求也够低的）可谓无所不用其极。首先是用tor+privoxy，结果tor的速度实在是太慢，除了tor的测试页面其它根本就打不开。然后看到了ssh -D的方法，这个速度也是很慢，但是不小心打开了twitter.com，然后又海枯石烂地登录成功，看到没有新的direct msg，也就算达到目的了。</p>
+
+<p>再后来就看到opera-mini的在线<a title="Opera Mini Demo" href="http://demo.opera-mini.net/demo.html" target="_blank">DEMO</a>，一个j2me simulator，借助这个applet可以顺顺利利地打开facebook twiiter之类的网站，但是因为Linux上JRE中文字体的问题，看起来多少还有点吃力。然后我就弱弱地睡下来，片刻之后才反应过来这一切多有意思。看看Opera-mini最大的卖点：<br />
+http://en.wikipedia.org/wiki/Opera_Mini#Functionality</p>
+
+<p>在Server和终端之间有一个Proxy，这个Proxy整好运行在墙外面，也就不奇怪twitter facebook这样的网站可以轻松地访问了 ...</p>
+                <a class="readmore" href="/opera-mini.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/zhang-jiang-shen-chu.html" rel="bookmark"
+                           title="Permalink to 张江深处">张江深处</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-09T00:00:00+08:00">
+                Published: Thu 09 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>fanfou</li>
+<li>Life</li>
+<li>Shanghai
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我都不好意思跟人说我去了上海，因为我很快就要窝在张江这么个村不村镇不镇的地方了。也说不清是好是坏，远离闹市中心倒是求得清静；但是真住在陌生城市最边缘的地方心里倒是一阵失落，还要花着血汗钱养活黑心的房东，我这是干什么来了。以上是例行的牢骚，我也无力阻止它的生成。好在有像WG和Samson这样的好友，讨论一下大家的处境，虽然也不会有什么具体的变化，但是心态总能相对缓和一些。嗨，生活就这个样子了，关键在你怎么看待它。</p></p>
+<p>饭否这下恐怕真是没了，离了饭否，又是极大的空虚和不安以及痛心。不出意外的话，这事的起因又是针对时事的言论传播。我是保守人士，对于很多肆无忌惮地甚至就是具有挑逗性的言论其实非常反感。不怕被骂，我时常感受到这一代粪青内心和大脑的空虚，通过传播一些具有挑逗性（实则极度干瘪老套）的言论获得一些挑战“常规”的隐隐快感。这群人称为“不明真相的群众”实在是恰如其分。</p>
+
+<p>看出来了吧，我确实边缘了，住到边缘的地方也是罪有应得。</p>
+
+<p>我还是希望饭否能恢复，为了让我抢救出一些重要的对话留作纪念。</p>
+                <a class="readmore" href="/zhang-jiang-shen-chu.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/pylons-tips.html" rel="bookmark"
+                           title="Permalink to Pylons Tips">Pylons Tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-02T00:00:00+08:00">
+                Published: Thu 02 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>pylons</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>All scripts created by paster(paster create, paster controller and etc.) uses 4 spaces as indent while many editors(vim) uses tabs automatically. Different indent in one file will cause fatal error.</p></p>
+<p><em>h.url_for</em> is a popular helper function in many ...</p>
+                <a class="readmore" href="/pylons-tips.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/mo-chou-qian-lu-wu-zhi-ji.html" rel="bookmark"
+                           title="Permalink to 莫愁前路无知己">莫愁前路无知己</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-06-25T00:00:00+08:00">
+                Published: Thu 25 June 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>'214'</li>
+<li>friends</li>
+<li>NJU
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>六月见底，我是无暇总结和回顾自己难堪的大学生活了，只是对这越来越近的离愁别绪多少开始有些感慨。</p></p>
+<p>今天三胖在上海签证遭遇了坎坷，后面的日程又发生了变化。这样原本计划的一次聚会怕是随风了。中午老大坐上了回家的火车，虽说是三十号就要回来了，但可能因为带回去的行李比较多，心中的化学反应也强烈了一些。短信收到说火车离站，想哭。老大多愁善感也不是一两天的事情了，不过这次都能体会都有感触。好在他三十号回来，还有一聚，到时在哭天抢地也尚有机会。倒是三胖的短信说“我那份你替我吃了吧”难免遗憾。虽然下次上海还有见面的机会，不过这一屋子四人想要重逢，就不知道是猴年马月了。我们宿舍四个人走全了四个方向，老四继续读研，老大献身国防，三胖外出读书，我就卷进那啥啥的洪流里了。可能有这种情况的还不多吧，料想数载重逢一定是丰富多彩不知所云。</p>
+
+<p>人生啊。</p>
+                <a class="readmore" href="/mo-chou-qian-lu-wu-zhi-ji.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc72.html">&laquo;</a>
+    Page 73 / 77
+        <a href="/category/misc74.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

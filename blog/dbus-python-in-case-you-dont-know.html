@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>dbus-python, in case you don't know</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/dbus-python-in-case-you-dont-know.html" rel="bookmark"
+           title="Permalink to dbus-python, in case you don't know">dbus-python, in case you don't know</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-29T00:00:00+08:00">
+                Published: Mon 29 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>dbus</li>
+<li>linux</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html">tutorials</a>帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you don't know。</p></p>
+<p><h3>DBus Interface Properties</h3>
+对mpris 2.0中定义的properties用dbus-python应该如何实现呢，似乎没有@dbus.service.properties这种decorator啊。<a href="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">这里</a>的文档对Properties进行了简单的说明，对于python程序，只能这样实现了：<br />
+[cc lang="python"]<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature='ss', out_signature='v')<br />
+    def Get(self, interface, prop):<br />
+        ...<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature='ssv')<br />
+    def Set(self, interface, prop, value):<br />
+        ...<br />
+    @dbus.service.method(dbus.PROPERTIES_IFACE, in_signature='s', out_signature='a{sv}')<br />
+    def GetAll(self, interface):<br />
+        ...<br />
+[/cc]<br />
+程序里通过prop判断property名字，返回结果。没办法，就是这样。</p>
+
+<p><h3>指定返回数据的dbus类型</h3>
+对于dbus接口返回的variant类型，dbus-python会guess_signature。可是这部分的功能有的时候并不如我们想象，比如返回一个dict类型，其中的value有字符串有list有int，而out_signature是v。这种情况在Property Get的时候非常常见，如果不能手动指定类型，guess_signature得到的结果，value是统一类型，即，int会报错，如果没有int类型，会将所有字符串转成list（dbus的array）</p>
+
+<p>这种情况需要手动指定返回的类型，用dbus.types模块下的类型对python显示包装，对dict类型，需要用dbus.types.Dictionary()包装，并且在构造函数里传入signature='sv‘及相应的<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html#container-types">variant_level</a>即可显示告知类型。同样，对list对象，需要用dbus.types.Array()包装。</p>
+
+<p>这样即可绕过guest_signature，如果用dbus-monitor查看，就可以看到类型为variant string了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>"Smoothing Your Rust Crates Release With Cargo-release"</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/smoothing-your-rust-crates-release-with-cargo-release.html" rel="bookmark"
+           title="Permalink to "Smoothing Your Rust Crates Release With Cargo-release"">"Smoothing Your Rust Crates Release With Cargo-release"</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2016-03-21T22:28:06+08:00">
+                Published: Mon 21 March 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/rust.html">rust</a> <a href="/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info -->      <p>Cargo-release is a cargo subcommand that automates your libraries
+release process. The idea was inspired by Clojure's leiningen, which
+has a <code>release</code> command does exact same thing.</p>
+<p>Typically, when you decide to release a library to crates.io, you need
+to go through following steps at least:</p>
+<ul>
+<li>bump version in Cargo.toml</li>
+<li>create a git tag for the release</li>
+<li>run <code>cargo publish</code></li>
+<li>push tags/commits to github</li>
+</ul>
+<p>cargo-release command deals these tasks for you. In addition, it
+increases your patch version and add a <code>pre</code> extension after <code>cargo
+publish</code>. The Java/Maven world uses a <code>SNAPSHOT</code> version for
+pre-release. What's sad, no other package manager follows this great
+idea. With this pre-release extension, users are able to tell if your
+master branch is on a released version or not.</p>
+<p>By default, cargo-release removes pre-release extension as the version
+to release. You can override this behavior by a <code>--level</code>. The value
+for <code>--level</code> can be <code>major</code>, <code>minor</code> or <code>patch</code>. As the name
+suggests, it increases different part of a semver version.</p>
+<p>For multi-crates repository, <code>cargo-release</code> reads you sub-directory
+name and use it as prefix of git tag to avoid conflicts.</p>
+<p>Some more features are planned for this tool, for instance:</p>
+<ul>
+<li>Custom tag prefix</li>
+<li>Build docs and push to gh-pages</li>
+</ul>
+<p>I hope this tool can be used as a standard of rust library release
+process. You can install this tool by <code>cargo install
+cargo-release</code>. And the github repo is
+<a href="https://github.com/sunng87/cargo-release">here</a>.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

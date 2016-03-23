@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Websocket Protocol</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/websocket-protocol.html" rel="bookmark"
+           title="Permalink to Websocket Protocol">Websocket Protocol</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-16T00:00:00+08:00">
+                Published: Fri 16 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>html5</li>
+<li>http</li>
+<li>jetty</li>
+<li>websocket
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>下午用jetty的WekSocketServlet写了一个简单的WebIM程序，正好第一次瞥见WebSocket的狰容。</p></p>
+<p>服务器端<br />
+jetty 7.1.5<br />
+客户端<br />
+Chromium 5.0.375.86</p>
+
+<p>通过wireshark抓包获得这样一些数据：
+<em>var _ws = new WebSocket("ws://127.0.0.1:8080/nothing")</em>
+这个环节创建WebSocket，浏览器与服务器端进行handshake，发送请求</p>
+
+<p><blockquote>GET /nothing HTTP/1.1<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+Host: 127.0.0.1:8080<br />
+Origin: http://127.0.0.1:8080</blockquote></p>
+
+<p>客户端发出一个Upgrade头，upgrade头在<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.42">RFC2616 14.42</a>定义</p>
+
+<p><blockquote>The Upgrade general-header allows the client to specify what additional communication protocols it supports and would like to use if the server finds it appropriate to switch protocols. </blockquote></p>
+
+<p>Upgrade必须被放入Connection头中标示这是一个Upgrade请求<br />
+Connection定义在<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.10">RFC2616 14.10</a>中：</p>
+
+<p><blockquote>The Connection general-header field allows the sender to specify options that are desired for that particular connection and MUST NOT be communicated by proxies over further connections. </blockquote></p>
+
+<p>Origin头还没有进入RFC，他的标准草案可以在<a href="http://tools.ietf.org/html/draft-abarth-origin-07">这里</a>找到，W3C的标准草案<a href="http://dev.w3.org/2006/waf/access-control/">Cross-Origin Resource Sharing</a>里<a href="http://dev.w3.org/2006/waf/access-control/#origin-request-header">定义</a>Origin Header：</p>
+
+<p><blockquote>The Origin  header indicates where the cross-origin request or preflight request  originates from. </blockquote></p>
+
+<p>Origin头的提出是为了解决<a href="http://en.wikipedia.org/wiki/Cross_Site_Request_Forgery">CSRF</a>的潜在危险，通过Origin服务器端可以获知请求的来源，进而判断其合法性。也就是说将跨域安全性检查的责任交给了服务器端，浏览器端采取信任的策略，避免了原先对跨域一棍子打死的做法。<br />
+Jetty 7的org.eclipse.jetty.servlets.CrossOriginFilter对这个头进行了处理。</p>
+
+<p>此外，handshake请求的header中还允许一个Sec-WebSocket-Protocol，用于对服务器端指定一个子协议（应用协议）。</p>
+
+<p>服务器端应答</p>
+
+<p><blockquote>HTTP/1.1 101 Web Socket Protocol Handshake<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+WebSocket-Origin: http://127.0.0.1:8080<br />
+WebSocket-Location: ws://127.0.0.1:8080/nothing</blockquote></p>
+
+<p>Websocket连接建立。此后，服务器端和客户端可以实现bidirectional的通信，消息体即websocket.send(msg)中的纯文本。要实现这样的机制，浏览器和服务器间需要建立至少两个连接。目前，<a href="http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-76#4">WebSocket协议</a>中还没有规定客户端对服务器端的连接数限制。不过关于这个限制，RFC2616（HTTP1.1）中<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.1.4">规定</a>：</p>
+
+<p><blockquote>Clients that use persistent connections SHOULD limit the number of simultaneous connections that they maintain to a given server. A single-user client SHOULD NOT maintain more than 2 connections with any server or proxy. </blockquote></p>
+
+<p>对此，另一个Bayeux协议倒是已经有了明确的限制：</p>
+
+<p><blockquote>the Bayeux protocol MUST NOT require any more than 2 HTTP requests to be simultaneously handled by a server in order to handle all application (Bayeux based or otherwise) requests from a client. </blockquote></p>
+
+<p>到此，客户端和服务器端已经可以建立双工的通信，这也是浏览器级别实现WebSocket协议的最大优点。而对于Firefox 3.x， IE x.x等等，只能在现有的HTTP连接机制上实现WebSocket，如通过long polling和callback polling的方式，但终归无法实现真正双工的通信。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

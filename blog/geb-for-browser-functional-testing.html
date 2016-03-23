@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>geb for browser functional testing</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/geb-for-browser-functional-testing.html" rel="bookmark"
+           title="Permalink to geb for browser functional testing">geb for browser functional testing</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-08-17T00:00:00+08:00">
+                Published: Tue 17 August 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>groovy</li>
+<li>Testing</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>虽然现在不做前段了，但是发现好的工具还是很兴奋。今天在twitter上看到Grails in Action的作者 @pledbrook 转了一个geb 0.4的消息，顺带看了一下这个工具<br />
+http://geb.codehaus.org</p></p>
+<p>geb项目旨在创造一套groovy dsl帮助人们进行webapp的functional test。它是对selenium的封装，举例：<br />
+[cc lang="groovy"]<br />
+@Grapes([<br />
+    @Grab('org.seleniumhq.selenium:selenium-firefox-driver:latest.release'),<br />
+    @Grab('org.codehaus.geb:geb-core:latest.release')<br />
+])<br />
+import geb.*</p>
+
+<p>println "Dependencies downloaded, ready for testing"<br />
+Browser.drive('http://sunng.info:8000/Pacajus'){<br />
+    assert title== 'Pacajus'</p>
+
+<p>    assert $("p", 3).text() == 'Population: 41558'<br />
+}
+println "Tested, bye"<br />
+[/cc]</p>
+
+<p>打开页面，执行断言。如果断言失败，driver方法会报null：<br />
+Caught: geb.error.DriveException: null</p>
+
+<p>只要在命令行用groovy执行即可，grapes会搞定依赖关系。</p>
+
+<p>很方便吧，文档上说还可以跟grails / junit等等集成，快去看看吧
+<a href="http://geb.codehaus.org/manual/latest/index.html">http://geb.codehaus.org/manual/latest/index.html</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

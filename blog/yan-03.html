@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Yan 0.3</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/yan-03.html" rel="bookmark"
+           title="Permalink to Yan 0.3">Yan 0.3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-20T00:00:00+08:00">
+                Published: Sun 20 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>captcha</li>
+<li>java</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>经过一周的重构和开发，我的开源项目，验证码服务，打上了0.3的tag，算是一个release吧。</p></p>
+<p>This release has been focusing on support for different types captcha generators. Now Yan is not only able to provide image/jpeg captcha, but also text/plain and any others.
+<h3>Changeset:</h3>
+<ul>
+    <li>Internal API Changes:
+<ul>
+    <li>Cache API improved: new CacheItemIdentity and CacheIdStrategy were introduced in to provide convertion between cache item name and captcha info model;</li>
+    <li>Captcha Generator API improved: Add CaptchaGeneratorInfo to define some meta information on captcha providers (such as mode code, captcha type);</li>
+    <li>Captcha Data Model(CaptchaInfo) and Ticket Data Model improved: configuration parameters are separated from required parameters and has been more generic for different types of generator algorisms;</li>
+</ul>
+</li>
+    <li>External API Changes:
+<ul>
+    <li>Rename /image url to /captcha for better literal accuracy;</li>
+    <li>/ticket now supports multiple types of applicable format (plain text / json / xml / yaml);</li>
+    <li>/ticket now returns the mime type of the captcha generator;</li>
+    <li>Add a Simple-Plain-Text generator as a sample for those whose mime type is other than image/jpeg;</li>
+</ul>
+</li>
+    <li>Other changes:
+<ul>
+    <li>I created a new branch for next version of Yan. So the code in repository now has multiply branches, you can use 'hg update branch-name' to switch between difference branches;</li>
+    <li>The sample test page for the service (index.jsp) has been adopt to the new protocol and totally restyled.</li>
+</ul>
+</li>
+</ul>
+<img class="alignnone" src="http://farm3.static.flickr.com/2503/4200328968_b3dd1fee5f.jpg" alt="" width="500" height="391" /></p>
+
+<p>Again, grab code from the development repository:
+<em>hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
+
+<p>If you don't use mercurial/hg, you can also download the tagged version from the page:
+<a href="http://bitbucket.org/sunng/yan/downloads/" target="_blank"><em>http://bitbucket.org/sunng/yan/downloads/</em></a></p>
+
+<p>Just use maven to resolve dependency, build and run the project:
+<em>mvn jetty:run</em></p>
+
+<p>Feel free to report issue :)</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

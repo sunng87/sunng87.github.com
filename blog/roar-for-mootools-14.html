@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Roar for mootools 1.4</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/roar-for-mootools-14.html" rel="bookmark"
+           title="Permalink to Roar for mootools 1.4">Roar for mootools 1.4</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-24T00:00:00+08:00">
+                Published: Sat 24 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>github</li>
+<li>javascript</li>
+<li>mootools
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>早在天下大势还处在分久必合的时候，那时候mootools还有不少简单实用的小库，比如我今天搜索"mootools notification"就找到这个08年的库叫做<a href="http://digitarald.de/project/roar/" target="_blank">Roar</a>。不过遗憾的是从那以后，这个库就再也没有更新过了。</p></p>
+<p>Mootools本身也沉寂了很久，这个项目恐怕也要思考自己未来的发展方向了。今年9月Mootools迈进了1.4，API上有一些变化。现在的下载页也能看到with/without backward compatibility的版本分开下载。为了用上Roar，我尝试了这两个版本发现都不能使用。最后downgrade到1.2可以确定Roar本身在当时是没有什么问题。</p>
+
+<p>这么多年对mootools痴心不改，所以顺手维护了一下Roar，现在可以在1.4 without compatibility的发布下运行了。主要是几个小修改，大多是一些多年deprecated函数被正式删除：
+<ul>
+    <li>Type常量，原先的String.type，Object.type现在统一到一个Type对象下，变成Type.isString和Type.isObject</li>
+    <li>$empty 常量被删除了，现在直接用function()或Function.from()代替</li>
+    <li>$pick 方法被Array.pick取代，参数现在也必须接受数组类型了</li></ul></p>
+
+<p> <li>$merge 方法被Object.merge取代</li>
+    <li>$type 被typeOf取代</li>
+    <li>函数对象的create方法被删除了，现在可以用函数对象的bind方法替代</li>
+    <li>Browser.Engine 被删除了，需要用其他Browser的API替代</li></p>
+
+<p></p>
+
+<p>修改后的Roar，放在<a href="https://gist.github.com/1516568" target="_blank">这个gist</a>里，测试过可以在firefox和chromium上健康使用。IE没有做测试。这个08年的库，眼看四年过去了，用起来依然不错。</p>
+
+<p>作为mootools的铁杆，我还是会一直专一地坚守下去的。（于是，我也已经变成了多年前那些我眼中为旧事物顽抗到底的老家伙了）</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

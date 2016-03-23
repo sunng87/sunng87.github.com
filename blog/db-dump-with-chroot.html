@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>DB dump with chroot</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/db-dump-with-chroot.html" rel="bookmark"
+           title="Permalink to DB dump with chroot">DB dump with chroot</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-10T00:00:00+08:00">
+                Published: Fri 10 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>database</li>
+<li>linux</li>
+<li>mysql</li>
+<li>postgresql</li>
+<li>shell</li>
+<li>sqlite
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I caught chroot first time when attempting to install gentoo linux. Of course, its a tool of great useful. Two months ago I had my laptop crashed, and all static files were recovery easily by copy while raw db data file seems to be difficult to handle.</p></p>
+<p>The old file system is in a mobile disk, mounted at /media/disk-1/. Now I try to use chroot to rollback to that environment, so that all standard dump tools will be available.</p>
+
+<p>Before you chroot to the system, don't forget to bind /dev to new location. Or you might get error prompt such as "/dev/null Permission Denied" (it's a common error). Just execute command below:
+<em>$ sudo mount --bind /dev /media/disk-1/dev</em></p>
+
+<p>Then change root to my old system:
+<em>$ sudo chroot /media/disk-1</em></p>
+
+<p>Now you become root user automatically.
+<h3>MySQL Dump</h3>
+In a standard ubuntu mysql installation, we should launch mysql db from init.d by:
+<em># /etc/init.d/mysql start</em></p>
+
+<p>But it's no longer available in such environment. Fortunately, there is a direct way:
+<em># mysqld_safe &amp;</em></p>
+
+<p>OK, go on to dump database with mysqldump:
+<em># mysqldump --all-databases &gt; mysql_dump_file</em>
+<h3>Postgresql Dump</h3>
+We cannot use init.d to start pgsql either. Therefore, try to run it by:
+<em># su postgres -c "/usr/lib/postgresql/8.3/bin/pg_ctl start -D /etc/postgresql/8.3/main"</em></p>
+
+<p><em>/etc/postgresql/8.3/main</em> is the default data directory in standard installation(with apt-get). This directory is supposed to contain a file named with "postgesql.conf"</p>
+
+<p>Now pgsql db is also running. As root user we have no privilege to run pgsql utilities. so take following steps:
+<em># touch pgsql_dump_file<br />
+# chmod a+w pgsql_dump_file<br />
+# su postgres -c "pg_dumpall -f pgsql_dump_file"</em>
+<h3>Conclusion</h3>
+Personally, I found it's too complex and low efficiency to backup and restore data with mysql and postgresql. If there is no critical requirement(just like personal data management), file based db(Surely I mean sqlite) is no doubt better choice. Easy management(lots of gui tool now provided), smooth copy and move, standard db interface for programming, and enough functionality.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

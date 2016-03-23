@@ -1,48 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/android/atom.xml"/>
-  <id>http://sunng.info/blog/</id>
-  <updated>2014-07-07T21:17:47+08:00</updated>
-  <generator uri="http://octopress.org/">Octopress</generator>
-  
-  <rights>Copyright © 2015, Sun Ning</rights>
-
-  <entry>
-    <title type="html">Mapzei 和 观察者</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/07/new-android-apps/"/>
-    
-    <id>/blog/2014/07/07/new-android-apps</id>
-    <published>2014-07-07T21:17:47+08:00</published>
-    <updated>2014-07-07T21:17:47+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。</p>
-
-<p>其一是3月份写的 <a href="https://play.google.com/store/apps/details?id=info.sunng.muzei.maps">Mapzei</a>，是<a href="https://plus.google.com/+RomanNurik/posts">Roman Nurik</a>的live wallpaper <a href="https://play.google.com/store/apps/details?id=net.nurik.roman.muzei">Muzei</a>的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。</p>
-
-<p>另一个是<a href="http://guancha.cn">观察者网</a>的<a href="https://play.google.com/store/apps/details?id=info.sunng.guanchazhe">客户端</a>，看新闻用。应用本身倒没有什么，用了一些典型的开源库：</p>
-
-<ul>
-<li>UniversalImageLoader</li>
-<li>SuperListView</li>
-<li>ButterKnife</li>
-<li>Eventbus</li>
-</ul>
-
-<p>另外这个应用还发布在了<a href="http://app.mi.com/detail/65794">小米商店</a>.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-</feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="/" rel="alternate"></link><link href="https://sunng.info/blog/blog/categories/android/atom.xml" rel="self"></link><id>/</id><updated>2014-07-07T21:17:47+08:00</updated><entry><title>"Mapzei 和 观察者"</title><link href="/mapzei-he-guan-cha-zhe.html" rel="alternate"></link><updated>2014-07-07T21:17:47+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2014-07-07:mapzei-he-guan-cha-zhe.html</id><summary type="html">&lt;p&gt;写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。&lt;/p&gt;
+&lt;p&gt;其一是3月份写的 &lt;a href="https://play.google.com/store/apps/details?id=info.sunng.muzei.maps"&gt;Mapzei&lt;/a&gt;，是&lt;a href="https://plus.google.com/+RomanNurik/posts"&gt;Roman Nurik&lt;/a&gt;的live wallpaper &lt;a href="https://play.google.com/store/apps/details?id=net.nurik.roman.muzei"&gt;Muzei&lt;/a&gt;的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。&lt;/p&gt;
+&lt;p&gt;另一个是&lt;a href="http://guancha.cn"&gt;观察者网&lt;/a&gt;的&lt;a href="https://play.google.com/store/apps/details?id=info.sunng.guanchazhe"&gt;客户端&lt;/a&gt;，看新闻用。应用本身倒没有什么，用了一些典型的开源库：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;UniversalImageLoader&lt;/li&gt;
+&lt;li&gt;SuperListView&lt;/li&gt;
+&lt;li&gt;ButterKnife&lt;/li&gt;
+&lt;li&gt;Eventbus&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另外这个应用还发布在了&lt;a href="http://app.mi.com/detail/65794"&gt;小米商店&lt;/a&gt;.&lt;/p&gt;</summary><category term="android"></category></entry></feed>

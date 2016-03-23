@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'Shake: Every Program Can Be a Clojure Function'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shake-every-program-can-be-a-clojure-function.html" rel="bookmark"
+           title="Permalink to 'Shake: Every Program Can Be a Clojure Function'">'Shake: Every Program Can Be a Clojure Function'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-09-21T00:00:00+08:00">
+                Published: Fri 21 September 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>github</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>You might have heard of <a href="http://amoffat.github.com/sh/index.html">sh</a>, which brings python an interface to call subprocesses. The API of sh is pretty cool: Every command can be treated as a python function, and imported from a namespace. Options and arguments are passed in as python string.</p></p>
+<p>But I think in Clojure, things can be even cooler. We dynamically create symbols for every program. We will have a beautiful DSL so you don't have to quote arguments as string. So when you are using this library, it may look like:</p>
+
+<p>[cc lang="clojure"]<br />
+(ls)<br />
+(uname -a)<br />
+(ip -4 addr)<br />
+[/cc]</p>
+
+<p>And actually it's just like that! I create this library called <strong><a href="https://github.com/sunng87/shake/" target="_blank">shake</a></strong>. When you load `shake.core`, it indexes all the executables in your path. Then all programs are available to you in a clojure native way.</p>
+
+<p>[cc lang="clojure"]</p>
+
+<p>(use 'shake.core)<br />
+(uname -a) ;; returns a java.lang.Process, that you can send data, read data and wait for termination.</p>
+
+<p>;; for those just need output<br />
+(alter-var-root *print-outpt* (fn [_] true))<br />
+(uname -a)<br />
+;; it prints ...<br />
+[/cc]</p>
+
+<p>There's a lot of fun in implementing this library. First, to be able to use custom symbol in the DSL, you have to make these executables as macros. Second, find a way to programmably create vars which are named by string. The power of Clojure enables all the ideas and makes it possible. Check out the source code if you are interested in: <a href="https://github.com/sunng87/shake/">https://github.com/sunng87/shake/</a>. </p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

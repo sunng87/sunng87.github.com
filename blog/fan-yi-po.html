@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>翻译po</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/fan-yi-po.html" rel="bookmark"
+           title="Permalink to 翻译po">翻译po</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-31T00:00:00+08:00">
+                Published: Sun 31 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>foss</li>
+<li>gnome</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>翻译一个po文件。确认安装了gettext工具包。</p></p>
+<p>cd到po目录，创建pot
+<em>intltool-update --pot</em></p>
+
+<p>创建相应的语言文件，例如zh_CN
+<em>msginit -l zh_CN.utf8</em></p>
+
+<p>程序会提示选择或输入邮箱，之后就会生成zh_CN.po文件，打开文件，逐条编辑msgstr即可。</p>
+
+<p>手动编辑LINGUAS文件，按顺序将zh_CN添加到其中。</p>
+
+<p>可以通过这个命令查看翻译的进度
+<em>msgfmt -cv zh_CN.po</em></p>
+
+<p>对于更新pot更新的情况，可以使用命令更新po文件
+<em>intltool-update zh_CN</em></p>
+
+<p>参考：
+<ul>
+    <li><a href="http://live.gnome.org/TranslationProject/LocalisationGuidezh">http://live.gnome.org/TranslationProject/LocalisationGuidezh</a></li>
+    <li><a href="http://blog.chinaunix.net/u1/37261/showart_476642.html">http://blog.chinaunix.net/u1/37261/showart_476642.html</a></li>
+</ul></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Grunt for requirejs projects</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/grunt-for-requirejs-projects.html" rel="bookmark"
+           title="Permalink to Grunt for requirejs projects">Grunt for requirejs projects</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2013-07-05T00:00:00+08:00">
+                Published: Fri 05 July 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>Grunt</li>
+<li>javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>the Problem</h3></p></p>
+<p>You have modularize your JavaScript project with requirejs. And you need a build tool for both development and deployment phases, helping you to organize, optimize the source code.</p>
+
+<p><h3>the Solution</h3></p>
+
+<p>Grunt has been the standard tool chain for web development. I used to think the grunt configuration file could be verbose and complicated, because the JavaScript world has never come up with a standard, even common, archetype (until yeoman, but it's after Grunt). The projects are organized manually, or by some custom shell scripts. So grunt cannot take the advantage of 'convention over configuration', which Maven does well in the Java world.</p>
+
+<p>This idea was changed until I use Grunt seriously. Grunt configuration parser has excellent support for expressions of 'path'. You can use wildcards like 'src/*.js', 'src/**/*.js', ['src/**/*.js', 'vendor/lib/*.js'] and even more 'path' to find and match your files. You don't have to write your script name one-by-one. I'm sure Grunt developers have lots of experience on JavaScript development so they know the problem.</p>
+
+<p>So I strongly recommend you to use Grunt to manage your JavaScript project, especially when it's a large project.</p>
+
+<p>Assume you have your JavaScript sources in 'src', and the 'src/main.js' is the entry point of your requirejs modules.</p>
+
+<p>The first step is to create a work directory for publishing your sources, say 'public', and also put your vendor scripts in 'src/libs' Setup your first Grunt task, copy:dev. The <a href="https://github.com/gruntjs/grunt-contrib-copy">copy plugin</a> is one of the most used plugin for copying files. This will copy your source code from src/ to public/, as well as your vendor scripts.<br />
+
+wzxhzdk:0
+
+
+<p>Then move your requirejs.config from html to your main.js. Require.js is able to read configuration after it loaded your entry script. This is of great helpful for optimized code.</p>
+
+<p>In development phase, you can have your static server over 'public'. For deployment, you need to optimize the JavaScript code: concat and uglify. This can be done with r.js, which is developed by requirejs project. Grunt also has a plugin to integrate r.js, <a href="https://github.com/gruntjs/grunt-contrib-requirejs">grunt-contrib-requirejs</a>. r.js could concat all requirejs modules by analyzing their dependency tree. You need a simple config for that:<br />
+
+wzxhzdk:1
+
+</p>
+
+<p>The mainConfigFile is the JavaScript file contains requirejs.config. r.js can also parse it from a requirejs module. r.js will concat and uglify all your scripts, include vendor scripts in one file, output as 'public/js/main.js'. With the same name of your entry point.</p>
+
+<p>With that, you don't have to change any single line of js/html for switching between deployment and development. During development, requirejs loads JavaScript files on demand. While on the production, it loads main.js with all dependencies combined in.
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

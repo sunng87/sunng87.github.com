@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>GPS数据采集与OpenStreetMap编辑</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gpsshu-ju-cai-ji-yu-openstreetmapbian-ji.html" rel="bookmark"
+           title="Permalink to GPS数据采集与OpenStreetMap编辑">GPS数据采集与OpenStreetMap编辑</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-10-05T00:00:00+08:00">
+                Published: Wed 05 October 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>gps</li>
+<li>OpenStreetMap
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>简单介绍一下通过GPS采集道路数据并上传到OpenStreetMap的流程。</p></p>
+<p><h3>采集</h3>
+首先你需要一个GPS数据记录器，或者叫做GPS Logger。这类产品在淘宝上可以找到很多，台湾的长天(HOLUX)是相对价廉物美的品牌。我的设备是HOLUX m1000c，下文以此为例。</p>
+
+<p>m1000c的使用非常简单。开机之后，指示GPS的黄灯点亮，设备开始搜索GPS卫星。根据你所出的位置、遮挡情况以及天气情况，搜星的时间略有不同。当GPS黄灯开始闪烁时Logger即开始记录数据，默认情况下m1000c每隔5秒记录一次数据。每次重启后，Logger都会新开一条记录。</p>
+
+<p><h3>导入</h3>
+对Windows用户，将Logger通过USB线与电脑连接后，可以利用随机附带的软件将数据导入为GPX格式。对Linux用户，可以利用<a href="http://www.gpsbabel.org/" target="_blank">gpsbabel</a>导入数据：
+<em>gpsbabel -t -i m241 -f /dev/ttyACM0 -o gpx -F myfile.gpx</em></p>
+
+<p>其中：
+<ul>
+    <li>-t 表示数据为track类型</li>
+    <li>-i m241 输入格式为HOLUX m241，m1000c使用的是这种格式</li>
+    <li>-f /dev/ttyACM0 输入设备是/dev/ttyACM0</li>
+    <li>-o gpx 输出格式是gpx</li>
+    <li>-F 输出文件myfile.gpx</li>
+</ul></p>
+
+<p>在一些发行版上，需要root权限访问/dev/ttyACM0，所以不要忘记将输出的文件chown给普通用户。</p>
+
+<p>导入完成后可以利用下面的命令清空Logger
+<em>gpsbabel -i m241,erase_only=1 -f /dev/ttyACM0</em></p>
+
+<p>在Windows和Linux上都可以使用<a href="http://sourceforge.net/apps/mediawiki/viking/index.php?title=Main_Page" target="_blank">Viking</a>查看导入的数据：
+<ul>
+    <li>启动viking</li>
+    <li>添加一个OSM地图图层： Layers->New Map Layer</li>
+    <li>导入GPX数据： File->Append File...</li>
+    <li>下载OSM地图，右键点击左侧的Map图层，Download Missing Onscreen Maps</li>
+</ul></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6213079184/" title="Screenshot at 2011-10-05 09:45:20 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6103/6213079184_f653ca2ca6.jpg" width="500" height="387" alt="Screenshot at 2011-10-05 09:45:20" /></a></p>
+
+<p><h3>编辑</h3>
+Windows和Linux用户都可以通过<a href="http://merkaartor.be/" target="_blank">Merkaartor</a>编辑OSM数据。</p>
+
+<p>启动Merkaartor，导入GPS数据： File->Import。<br />
+选择左侧的GPS图层，对需要导入的数据，右键点击Extract Drawing Layer将GPS转换为可编辑数据。
+<a href="http://www.flickr.com/photos/40741608@N08/6213247680/" title="Screenshot at 2011-10-05 10:57:17 by 贝小塔, on Flickr"><img src="http://farm7.static.flickr.com/6167/6213247680_046e360c63.jpg" width="500" height="303" alt="Screenshot at 2011-10-05 10:57:17" /></a></p>
+
+<p>根据实际情况编辑道路数据的属性。对GPS转换的数据，选择菜单Feature->Force Upload，将其加入dirty set准备上传。点击Upload即可将数据上传到OpenStreetMap。</p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,153 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/docker/atom.xml"/>
-  <id>http://sunng.info/blog/</id>
-  <updated>2014-08-02T18:02:12+08:00</updated>
-  <generator uri="http://octopress.org/">Octopress</generator>
-  
-  <rights>Copyright © 2015, Sun Ning</rights>
-
-  <entry>
-    <title type="html">在 Docker 中安装和使用 Rust Nightly 版本</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/02/rust-with-docker/"/>
-    
-    <id>/blog/2014/08/02/rust-with-docker</id>
-    <published>2014-08-02T18:02:12+08:00</published>
-    <updated>2014-08-02T18:02:12+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
-
-<h2>安装</h2>
-
-<p>安装 Docker, Arch Linux 仓库里很早就有，非常方便：<code>sudo pacman -S docker</code>。完成之后启动他：<code>sudo systemctl start docker</code>。</p>
-
-<p>之后我们拉一个 ubuntu 的镜像下来：<code>docker pull ubuntu</code>。</p>
-
-<p>完成之后，我们启动一个 container，做一些基本的 setup：<code>docker run -i -t ubuntu:14.04 /bin/bash</code></p>
-
-<p>这相当与运行在 ubuntu:14.04 这个镜像上运行一个 shell，接下来就进入了这个 shell 环境，和 ubuntu 安装版本完全一致，我们做一些基础的准备，安装一些必要的工具：<code>apt-get install build-essentials git curl libssl-dev</code></p>
-
-<p>之后，就可以下载 Rust 提供的脚本来安装 nightly 版本了：<code>curl -s http://www.rust-lang.org/rustup.sh &gt; rustup</code></p>
-
-<p>这里有个问题，rustup 脚本判断64位系统时会出错导致安装失败：
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c"># Detect 64 bit linux systems with 32 bit userland and force 32 bit compilation</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG<em>OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG</em>CPUTYPE</span> <span class="o">=</span> x86<em>64 <span class="o">]</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">then
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span>file -L <span class="s2">&quot;</span><span class="nv">$SHELL</span><span class="s2">&quot;</span> | grep -q <span class="s2">&quot;x86[</em>-]64&quot;</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> !<span class="o">=</span> 0 <span class="o">]</span>; <span class="k">then
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">fi
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>fi</span></div></div></pre></div></figure></p>
-
-<p>因为在我的机器上已知系统是64位，就强行绕过了他的判断。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG_OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG_CPUTYPE</span> <span class="o">=</span> x86_64 <span class="o">]</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">then
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span>file -L <span class="s2">"</span><span class="nv">$SHELL</span><span class="s2">"</span> | grep -q <span class="s2">"x86[_-]64"</span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> 0 <span class="o">]</span>; <span class="k">then
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">fi
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>fi</span></div></div></pre></div></figure>
-
-<p>之后执行 rustup 就可以直接安装最近的 rustc 和 cargo 了。安装完成执行 <code>rustc -v</code> 和 <code>cargo --version</code> （两个工具还不统一！）可以了解安装情况。</p>
-
-<p>exit 退出 shell，commit 你的镜像，这样一个干净的镜像要好好保存：<code>docker commit IMAGE_ID sunng/rust-nightly</code></p>
-
-<h2>Hello World</h2>
-
-<p>之后可以写点代码了，我们不在 docker 里写，我们在 host 机器上写，然后挂载到 docker 上，因此 emacs 什么的也不用配置了。</p>
-
-<p>创建一个目录，比如在 <code>$HOME/var/docker/helloworld</code>下，最简单的 rust 项目只要两个文件： <code>Cargo.toml</code> 和 <code>src/main.rs</code>。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>#Cargo.toml
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>[package]
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>name = "hello-world"
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>version = "0.1.0"
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>authors = [ "sunng@about.me" ]</div></div></pre></div></figure>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c">//main.rs</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="nd">println!</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div></pre></div></figure>
-
-<p>构建项目不需要手动 rustc 了，那是上个世纪的东西，我们直接 <code>cargo build</code> 就可以：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>其中 <code>-v</code> 参数用于挂载目录，<code>-w</code> 参数指定执行的 pwd。</p>
-
-<p>如果构建成功，就可以执行了，在 docker 中执行：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly target/hello-world</code></p>
-
-<p>其实可以直接在 host 系统里执行也是完全可以的：<code>$HOME/var/docker/helloworld/target/hello-world</code>。</p>
-
-<h2>Web Hello World</h2>
-
-<p>前面说了 Rust 都有 web 框架了，我们就写一个 Web 版本的 Hello World 吧。这次用 Iron 框架，首先添加依赖到 Cargo 文件：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>[package]
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>name = "hello-world"
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>version = "0.1.0"
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>authors = [ "sunng@about.me" ]
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>[dependencies.iron]
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>git = "https://github.com/iron/iron.git"
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>[dependencies.core]
-</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>git = "https://github.com/iron/core.git"</div></div></pre></div></figure>
-
-<p>Cargo 目前还没有中央仓库，但是<a href="http://crates.io/faq.html#github">据说将来会有</a>。目前还都是用 git 仓库来直接添加，所以构建环境里必须要有 git。</p>
-
-<p>照着 <a href="https://github.com/iron/iron/blob/master/examples/hello.rs">Iron 的例子</a>写一个最简单的 hello world 程序。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">extern</span> <span class="n">crate</span> <span class="n">iron</span><span class="p">;</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">extern</span> <span class="n">crate</span> <span class="n">http</span><span class="p">;</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="nn">net</span><span class="p">::</span><span class="nn">ip</span><span class="p">::</span><span class="n">Ipv4Addr</span><span class="p">;</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">iron</span><span class="p">::&#x7b;</span><span class="n">Iron</span><span class="p">,</span> <span class="n">Server</span><span class="p">,</span> <span class="n">Chain</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">Alloy</span><span class="p">,</span> <span class="n">Status</span><span class="p">,</span> <span class="n">Unwind</span><span class="p">,</span> <span class="n">FromFn</span><span class="p">&#x7d;;</span>
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">http</span><span class="p">::</span><span class="n">status</span><span class="p">;</span>
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">hello_world</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Request</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Response</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Alloy</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Status</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">res</span><span class="nf">.serve</span><span class="p">(</span><span class="nn">status</span><span class="p">::</span><span class="nb">Ok</span><span class="p">,</span> <span class="s">"Hello, world!"</span><span class="p">);</span>
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">Unwind</span>
-</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">let</span> <span class="k">mut</span> <span class="n">server</span><span class="p">:</span> <span class="n">Server</span> <span class="o">=</span> <span class="nn">Iron</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
-</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="py">.chain</span><span class="nf">.link</span><span class="p">(</span><span class="nn">FromFn</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">hello_world</span><span class="p">));</span>
-</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="nf">.listen</span><span class="p">(</span><span class="nf">Ipv4Addr</span><span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3000</span><span class="p">);</span>
-</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div></pre></div></figure>
-
-<p>编译 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>运行 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld -p 3000:3000 sunng/nightly target/hello-world</code></p>
-
-<p>新增的参数<code>-p</code>是把 docker 环境里的端口3000映射到 host 上的3000，这样我们才能在外面访问。</p>
-
-<p>最后还有一个问题，因为程序听的是127.0.0.1，所以在 host 上是无法访问这个端口的，修改代码：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="nf">.listen</span><span class="p">(</span><span class="nf">Ipv4Addr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">3000</span><span class="p">);</span></div></div></pre></div></figure>
-
-<p>就可以正常工作了。</p>
-
-<h2>Wrap up</h2>
-
-<p>总结一下上面用 docker 比虚拟机的好处：</p>
-
-<ul>
-<li>占用资源少，启动快</li>
-<li>与 host 共享网络、硬盘都非常方便，满足开发需要不成问题</li>
-<li>所有都是命令，与 host 系统上的进程集成也非常方便</li>
-<li>支持镜像的版本控制和仓库</li>
-</ul>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="/" rel="alternate"></link><link href="https://sunng.info/blog/blog/categories/docker/atom.xml" rel="self"></link><id>/</id><updated>2014-08-02T18:02:12+08:00</updated><entry><title>"在 Docker 中安装和使用 Rust nightly 版本"</title><link href="/zai-docker-zhong-an-zhuang-he-shi-yong-rust-nightly-ban-ben.html" rel="alternate"></link><updated>2014-08-02T18:02:12+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2014-08-02:zai-docker-zhong-an-zhuang-he-shi-yong-rust-nightly-ban-ben.html</id><summary type="html">&lt;p&gt;一直关注 Rust 语言，最近一下发现了两个 web 框架，&lt;a href="http://ironframework.org"&gt;Iron&lt;/a&gt; 和 &lt;a href="http://nickel.rs"&gt;Nickel.rs&lt;/a&gt;。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 &lt;a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html"&gt;Yehuda Katz 的构建工具 Cargo&lt;/a&gt;。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年&lt;a href="https://twitter.com/jessenoller/status/495037475421954048"&gt;最火的 Docker&lt;/a&gt;，可以轻松的创建多个环境，正是一个非常好的场景。&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;安装 Docker, Arch Linux 仓库里很早就有，非常方便：&lt;code&gt;sudo pacman -S docker&lt;/code&gt;。完成之后启动他：&lt;code&gt;sudo systemctl start docker&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;之后我们拉一个 ubuntu 的镜像下来：&lt;code&gt;docker pull ubuntu&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;完成之后，我们启动一个 container，做一些基本的 setup：&lt;code&gt;docker run -i -t ubuntu:14.04 /bin/bash&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这相当与运行在 ubuntu:14.04 这个镜像上运行一个 shell，接下来就进入了这个 shell 环境，和 ubuntu 安装版本完全一致，我们做一些基础的准备，安装一些必要的工具：&lt;code&gt;apt-get install build-essentials git curl libssl-dev&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;之后，就可以下载 Rust 提供的脚本来安装 nightly 版本了：&lt;code&gt;curl -s http://www.rust-lang.org/rustup.sh &amp;gt; rustup&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这里有个问题，rustup 脚本判断64位系统时会出错导致安装失败：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Detect 64 bit linux systems with 32 bit userland and force 32 bit compilation&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$CFG_OSTYPE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; unknown-linux-gnu -a &lt;span class="nv"&gt;$CFG_CPUTYPE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; x86_64 &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+    file -L &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SHELL&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -q &lt;span class="s2"&gt;&amp;quot;x86[_-]64&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nv"&gt;CFG_CPUTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;i686
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;因为在我的机器上已知系统是64位，就强行绕过了他的判断。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$CFG_OSTYPE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; unknown-linux-gnu -a &lt;span class="nv"&gt;$CFG_CPUTYPE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; x86_64 &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+    file -L &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SHELL&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -q &lt;span class="s2"&gt;&amp;quot;x86[_-]64&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nv"&gt;CFG_CPUTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;i686
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-]]>
-    </content>
-  </entry>
 
-</feed>
+&lt;p&gt;之后执行 rustup 就可以直接安装最近的 rustc 和 cargo 了。安装完成执行 &lt;code&gt;rustc -v&lt;/code&gt; 和 &lt;code&gt;cargo --version&lt;/code&gt; （两个工具还不统一！）可以了解安装情况。&lt;/p&gt;
+&lt;p&gt;exit 退出 shell，commit 你的镜像，这样一个干净的镜像要好好保存：&lt;code&gt;docker commit IMAGE_ID sunng/rust-nightly&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;Hello World&lt;/h2&gt;
+&lt;p&gt;之后可以写点代码了，我们不在 docker 里写，我们在 host 机器上写，然后挂载到 docker 上，因此 emacs 什么的也不用配置了。&lt;/p&gt;
+&lt;p&gt;创建一个目录，比如在 &lt;code&gt;$HOME/var/docker/helloworld&lt;/code&gt;下，最简单的 rust 项目只要两个文件： &lt;code&gt;Cargo.toml&lt;/code&gt; 和 &lt;code&gt;src/main.rs&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#Cargo.toml
+[package]
+
+name = &amp;quot;hello-world&amp;quot;
+version = &amp;quot;0.1.0&amp;quot;
+authors = [ &amp;quot;sunng@about.me&amp;quot; ]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;//main.rs&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;构建项目不需要手动 rustc 了，那是上个世纪的东西，我们直接 &lt;code&gt;cargo build&lt;/code&gt; 就可以：&lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其中 &lt;code&gt;-v&lt;/code&gt; 参数用于挂载目录，&lt;code&gt;-w&lt;/code&gt; 参数指定执行的 pwd。&lt;/p&gt;
+&lt;p&gt;如果构建成功，就可以执行了，在 docker 中执行：&lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly target/hello-world&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其实可以直接在 host 系统里执行也是完全可以的：&lt;code&gt;$HOME/var/docker/helloworld/target/hello-world&lt;/code&gt;。&lt;/p&gt;
+&lt;h2&gt;Web Hello World&lt;/h2&gt;
+&lt;p&gt;前面说了 Rust 都有 web 框架了，我们就写一个 Web 版本的 Hello World 吧。这次用 Iron 框架，首先添加依赖到 Cargo 文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[package]&lt;/span&gt;
+
+&lt;span class="na"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello-world&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;0.1.0&amp;quot;&lt;/span&gt;
+&lt;span class="na"&gt;authors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;[ &amp;quot;sunng@about.me&amp;quot; ]&lt;/span&gt;
+
+&lt;span class="k"&gt;[dependencies.iron]&lt;/span&gt;
+
+&lt;span class="na"&gt;git&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;https://github.com/iron/iron.git&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;[dependencies.core]&lt;/span&gt;
+
+&lt;span class="na"&gt;git&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;https://github.com/iron/core.git&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Cargo 目前还没有中央仓库，但是&lt;a href="http://crates.io/faq.html#github"&gt;据说将来会有&lt;/a&gt;。目前还都是用 git 仓库来直接添加，所以构建环境里必须要有 git。&lt;/p&gt;
+&lt;p&gt;照着 &lt;a href="https://github.com/iron/iron/blob/master/examples/hello.rs"&gt;Iron 的例子&lt;/a&gt;写一个最简单的 hello world 程序。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;crate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;iron&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;crate&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="kn"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;Ipv4Addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kn"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;iron&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Iron&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Chain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Alloy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Status&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Unwind&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;FromFn&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="kn"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Alloy&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Status&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;serve&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;Unwind&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Server&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Iron&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;chain&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;link&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FromFn&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hello_world&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Ipv4Addr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;127&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编译 &lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;运行 &lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld -p 3000:3000 sunng/nightly target/hello-world&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;新增的参数&lt;code&gt;-p&lt;/code&gt;是把 docker 环境里的端口3000映射到 host 上的3000，这样我们才能在外面访问。&lt;/p&gt;
+&lt;p&gt;最后还有一个问题，因为程序听的是127.0.0.1，所以在 host 上是无法访问这个端口的，修改代码：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;listen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Ipv4Addr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3000&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;就可以正常工作了。&lt;/p&gt;
+&lt;h2&gt;Wrap up&lt;/h2&gt;
+&lt;p&gt;总结一下上面用 docker 比虚拟机的好处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;占用资源少，启动快&lt;/li&gt;
+&lt;li&gt;与 host 共享网络、硬盘都非常方便，满足开发需要不成问题&lt;/li&gt;
+&lt;li&gt;所有都是命令，与 host 系统上的进程集成也非常方便&lt;/li&gt;
+&lt;li&gt;支持镜像的版本控制和仓库&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="programming"></category><category term="rust"></category><category term="docker"></category></entry></feed>

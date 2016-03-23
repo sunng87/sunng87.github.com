@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Python3 script to query free TOEFL seats</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/python3-script-to-query-free-toefl-seats.html" rel="bookmark"
+           title="Permalink to Python3 script to query free TOEFL seats">Python3 script to query free TOEFL seats</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-28T00:00:00+08:00">
+                Published: Mon 28 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>应同学要求，写了一个爬托福考试空闲考位的脚本。这是第一次真正用Python3写。</p></p>
+<p><script src="https://gist.github.com/846150.js?file=gistfile1.py"></script></p>
+
+<p>通过调用get_seat_status，传入省名（如'Jiangsu'），时间（如'201104'），您可以得到这样的数据结构：<br />
+[cc lang="python"]<br />
+[ [datetime.datetime(2011, 4, 23, 10, 0),  'STN80085B',  '南通市教育装备与勤工俭学管理中心',  '1415',  True],<br />
+ [datetime.datetime(2011, 4, 23, 10, 0), 'STN80086A', '扬州大学', '1415', True]]<br />
+[/cc]</p>
+
+<p>下面是一个多线程调用的例子：<br />
+[cc lang="python"]<br />
+#! /usr/bin/python3</p>
+
+<p>import threading<br />
+import pprint<br />
+from toeflgraber import get_seat_status</p>
+
+<p># 查询江浙沪 2011年3月和4月的考位<br />
+locations = ['Jiangsu', 'Shanghai', 'Zhejiang']<br />
+months = ['201103', '201104']</p>
+
+<p>def descartes(x, y):<br />
+    for i in x:<br />
+        for j in y:<br />
+            yield (i, j)</p>
+
+<p>lock = threading.RLock()<br />
+tasks = len(locations) * len(months)<br />
+e = threading.Event()<br />
+results = []</p>
+
+<p>def task(location, month):<br />
+    global results, tasks<br />
+    all_seats = get_seat_status(location, month)<br />
+    available_seats = filter(lambda x: x[4], all_seats)<br />
+    with lock:<br />
+        results.extend(available_seats)<br />
+        tasks -= 1<br />
+        if tasks == 0:<br />
+            e.set()</p>
+
+<p>for t in descartes(locations, months):<br />
+    t = threading.Thread(target=task, args=t)<br />
+    t.daemon = True<br />
+    t.start()</p>
+
+<p>e.wait()<br />
+pprint.pprint(results)<br />
+[/cc]</p>
+
+<p>Enjoy it.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

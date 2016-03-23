@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Slacker performance enhanced</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-performance-enhanced.html" rel="bookmark"
+           title="Permalink to Slacker performance enhanced">Slacker performance enhanced</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-04-02T00:00:00+08:00">
+                Published: Mon 02 April 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>github</li>
+<li>netty</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure meetup, I will focus on the performance enhancement in next release. </p></p>
+<p>Now I have worked out a testable version. The new slacker core has been moved to a new NIO library, <a href="https://github.com/sunng87/link" target="_blank">link</a>. Compared with aleph, link is a thin wrapper of Netty. It takes some nice features from aleph (gloss codec dsl, elegant API), and drops the heavy abstraction, lamina. The new slacker client runs on a real nonblocking connection. Connection pooling is no longer needed.</p>
+
+<p>I have some performance benchmark to visualize the improvement. The test was made on my laptop (Intel(R) Core(TM)2 Duo CPU     T5870  @ 2.00GHz). It ran 400,000 calls with 40 threads on a local slacker server.</p>
+
+<p>slacker 0.7.0 (clojure 1.2, aleph 0.2.0): <strong>614005.059259msecs</strong>
+slacker 0.7.1-SNAPSHOT (clojure 1.3, aleph 0.2.1-beta2): <strong>409110.909142msecs</strong>
+slacker 0.8.0-SNAPSHOT (clojure 1.3, link 0.2.0-SNAPSHOT): <strong>42468.401522msecs</strong></p>
+
+<p><img src="http://i.imgur.com/gMtdo.jpg" alt="tps chart" /></p>
+
+<p>Check out the new slacker on the <a href="https://github.com/sunng87/slacker/tree/0.8-dev" target="_blank">0.8-dev</a> branch. </p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

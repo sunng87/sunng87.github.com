@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/yong-coffeescriptzhong-xie-liao-shou-ye.html" rel="bookmark"
+                           title="Permalink to 用coffeescript重写了首页">用coffeescript重写了首页</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-13T00:00:00+08:00">
+                Published: Fri 13 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>coffeescript</li>
+<li>javascript</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>下午有时间看了一下<a href="http://jashkenas.github.com/coffee-script/">coffeescript</a>，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/apple几家坐下来慢慢聊了，民间的力量就可以实现。</p></p>
+<p>coffeescript的几个特点也属于博采众长：
+<ul>
+<li>类似python的，以缩进取代代码块</li>
+<li>类似ruby/perl，方法调用括号可选</li>
+<li>类似ruby，无须return</li>
+<li>正常的类声明语法</li>
+</ul></p>
+
+<p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
+
+<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
+                <a class="readmore" href="/yong-coffeescriptzhong-xie-liao-shou-ye.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/an-zhuang-exailedou-ban-dian-tai-cha-jian-ji-gnome-shellkuo-zhan.html" rel="bookmark"
+                           title="Permalink to 安装Exaile豆瓣电台插件及Gnome-Shell扩展">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-09T00:00:00+08:00">
+                Published: Mon 09 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>exaile</li>
+<li>gnome-shell
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>介绍一下新版本的Exaile豆瓣电台插件和新的GNOME-Shell扩展的安装。</p></p>
+<p><h3>下载</h3>
+从github上下载相应的版本：
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-plugin/zipball/0.0.10-dbus</pre>
+<pre>$ wget --no-check-certificate https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension/zipball/0.0.1</pre>
+<pre>$ ls
+sunng87-exaile-doubanfm-gnome-shell-extension-0.0.1-0-g5cc29c6.zip
+sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
+</pre></p>
+
+<p><h3>解压安装</h3>
+如果你已经安装过exaile豆瓣电台插件，可以先删除旧版本：
+<pre>$ rm -rf ~/.local/share/exaile ...</pre></p>
+                <a class="readmore" href="/an-zhuang-exailedou-ban-dian-tai-cha-jian-ji-gnome-shellkuo-zhan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gnome-shell-extension-for-exaile-doubanfm-plugin.html" rel="bookmark"
+                           title="Permalink to GNOME-Shell Extension for Exaile DoubanFM Plugin">GNOME-Shell Extension for Exaile DoubanFM Plugin</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-07T00:00:00+08:00">
+                Published: Sat 07 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>dbus</li>
+<li>Douban</li>
+<li>exaile</li>
+<li>foss</li>
+<li>gnome-shell</li>
+<li>javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>从有这个动机到基本可用，花了整整一天的时间。现在可以通过GNOME-Shell的一个小菜单从外部控制Exaile豆瓣电台了。它的意思就是说如果你使用Gnome-Shell，你可以把Exaile界面扔到一个你不想看到的地方去，比如第n+1个workspace。然后通过左上角的菜单来控制豆瓣电台的播放。见多识广的你不会对此感到太惊奇，其实它和Ubuntu上的Sound Menu Indicator类似，不过是专门给豆瓣电台设计的。
+<a href="http://www.flickr.com/photos/40741608@N08/5696429062/" title="Exaile with doubanfm plugin by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5104/5696429062_7f62a4d7f2.jpg" alt="Exaile with doubanfm plugin" height="313" width="500" /></a></p></p>
+<p>要实现这个功能，需要播放器通过dbus来expose一些接口供外部程序调用，它和Sound Menu是一样的，通过dbus来解耦。开发起来比较困难的是目前GNOME-Shell的API还不成熟，还没有文档，传统的javascript object inspect方法似乎在这个mozjs的环境里也不能用，所以实在是无从知道一些API。更不要提通过gjs来调用dbus了。网上有一些文档起了很大的作用，如果你也感兴趣，这些文章是：
+<ul><li>开发GNOME-Shell Extension：<a href="http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html">http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html ...</a></li></ul></p>
+                <a class="readmore" href="/gnome-shell-extension-for-exaile-doubanfm-plugin.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/qu-xi-an.html" rel="bookmark"
+                           title="Permalink to 去西安">去西安</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-03T00:00:00+08:00">
+                Published: Tue 03 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时</li>
+<li>留影
+tags:</li>
+<li>vocation</li>
+<li>Xi'an
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>除了02年在北京打了几天酱油，我还没有因为打着去玩的旗号出过远门（到镇江这里就不算远门了）。今年五一痛下决心，卷入五一滚滚洪流，抱着轻度腹胀不下火线的精神，突破了我所到达的经度下限。
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=108.378,33.958,109.39,34.539&amp;layer=mapnik" style="border: 1px solid black"></iframe><br /><small><a href="http://www.openstreetmap.org/?lat=34.2485&amp;lon=108.884&amp;zoom=10&amp;layers=M">View Larger Map</a></small></p></p>
+<p>我坐的K560是一趟开到延安老区的车，老区人民伤不起，一路上尽给到乌鲁木齐到拉萨的车让道了。晚上在上铺作原地翻滚，发现铁皮太厚根本没有信号，为了不虚此行，早晨7点就从上面跳下来，在窗边占个座位打开GPS。抬头一看已经到了开封，不对，才到开封。
+<a href="http://www.openstreetmap.org/user/Sunng/traces/1001751">http://www.openstreetmap.org/user/Sunng/traces/1001751</a></p>
+
+<p>到了西安已经是下午三点半，找到<a href="http://torrge.me/">老支书</a>，见到身强体壮的新版寇巨头。晚上我们就在曲江新区迷了路，冥冥之中深夜里摸到了我国第一个官二代并富二代，胡亥长眠的地方。最后还好老支书迷途知返，及时拿出诺基亚表明自己身份，与二代们划清界限，我们才又绕道大雁塔回了住处 ...</p>
+                <a class="readmore" href="/qu-xi-an.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/convert-a-python-function-to-java-anonymous-class.html" rel="bookmark"
+                           title="Permalink to Convert a Python function to Java anonymous class">Convert a Python function to Java anonymous class</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-04-29T00:00:00+08:00">
+                Published: Fri 29 April 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>java</li>
+<li>jython</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>When calling Java with Jython, anonymous inner class might be an issue because there is no such equivalent in Python.</p></p>
+<p>In GUI programming, jython made additional effort on AWT event processing. You can pass a python function as some types of ...</p>
+                <a class="readmore" href="/convert-a-python-function-to-java-anonymous-class.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun26.html">&laquo;</a>
+    Page 27 / 77
+        <a href="/author/ning-sun28.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

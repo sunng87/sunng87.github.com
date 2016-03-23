@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>"Papaline: Concurrent pipeline with core.async"</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/papaline-concurrent-pipeline-with-coreasync.html" rel="bookmark"
+           title="Permalink to "Papaline: Concurrent pipeline with core.async"">"Papaline: Concurrent pipeline with core.async"</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-04-20T17:21:44+08:00">
+                Published: Sun 20 April 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/clojure.html">clojure</a> <a href="/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info -->      <p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It's <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
+<p>The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don't have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it's a fixed thread pool with <em>(processors * 4) + 42</em> threads. That's much flexible and efficient.</p>
+<p>Papaline takes advantages of this feature. The base concept in papaline is <strong>stage</strong> and <strong>pipeline</strong>. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels. </p>
+<p>When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage's inbound channel. The user-visible behavior is much like <code>comp</code>, but in concurrent.</p>
+<p>Also core.async offers different type of channel buffers: fixed <code>buffer</code>, <code>sliding-buffer</code> and <code>dropping-buffer</code>. They are channels equivalent to j.u.c thread pool's <code>RejectedExecutionHandler</code>. </p>
+<p>We have already deployed papaline in our asynchronous system and it works great by far. Find the project on <a href="https://github.com/sunng87/papaline">github</a> if you are interested in.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

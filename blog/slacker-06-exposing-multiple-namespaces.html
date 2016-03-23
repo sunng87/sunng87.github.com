@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'Slacker 0.6: Exposing multiple namespaces'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-06-exposing-multiple-namespaces.html" rel="bookmark"
+           title="Permalink to 'Slacker 0.6: Exposing multiple namespaces'">'Slacker 0.6: Exposing multiple namespaces'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-03T00:00:00+08:00">
+                Published: Fri 03 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I'm glad to announce [slacker "0.6.1"].</p></p>
+<p>One thing in slacker 0.6.x is you can expose multiple namespaces from a single server.</p>
+
+<p>Suppose you have two namespaces `redday.stats` and `redday.api`, both contains functions you want to expose.</p>
+
+<p>[cc lang="clojure"]<br />
+  (start-slacker-server [(the-ns 'redday.stats)<br />
+                         (the-ns 'redday.api)]<br />
+                        6565)<br />
+[/cc]</p>
+
+<p>This will expose `redday.stats` and `redday.api` on port 6565.</p>
+
+<p>On the client side, we have a new `use-remote` behaviors like clojure's use. Instead of local one, it imports functions from a remote namespace to your current namespace. </p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.client)<br />
+;; create a slacker client<br />
+(def scp (slackerc "127.0.0.1:6565")) </p>
+
+<p>(use-remote 'scp 'redday.api) ;; caution, use the symbol of 'scp here <br />
+(use-remote 'scp 'redday.stats)</p>
+
+<p>;;top-titles is a function in redday.api<br />
+;;now you can use the remote function transparently<br />
+(top-titles "programming") </p>
+
+<p>;;check function metadata you can find more slacker properties<br />
+(meta top-titles)<br />
+[/cc]</p>
+
+<p>If you need to configure callback to a particular function, you can still use `defn-remote` to specify the callback function. In slacker 0.6.0, a `:remote-ns` is required when you define such a remote function.<br />
+[cc lang="clojure"]<br />
+(defn-remote top-titles :remote-ns "redday.api" :callback #(println %))<br />
+[/cc]</p>
+
+<p>The complete code example (both server and client) can be found <a href="https://bitbucket.org/sunng/slacker-demo/overview">here</a>. </p>
+
+<p>In next post, I will explain another big new feature of 0.6.x, cluster support.</p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

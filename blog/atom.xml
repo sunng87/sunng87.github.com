@@ -1,212 +1,159 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Here comes the Sun</title>
-    <description></description>
-    <link>http://sunng.info//blog/</link>
-    <atom:link href="http://sunng.info//blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 18 Oct 2015 16:54:14 +0800</pubDate>
-    <lastBuildDate>Sun, 18 Oct 2015 16:54:14 +0800</lastBuildDate>
-    <generator>Jekyll v2.5.3</generator>
-    
-      <item>
-        <title>Summarizing Changes in Slacker 0.13</title>
-        <description>&lt;p&gt;After a year of feature development and minor fixes, &lt;a href=&quot;https://github.com/sunng87/slacker&quot;&gt;Slacker&lt;/a&gt; and &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster&lt;/a&gt; version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.&lt;/p&gt;
-
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="/" rel="alternate"></link><link href="https://sunng.info/blog/atom.xml" rel="self"></link><id>/</id><updated>2016-03-21T22:28:06+08:00</updated><entry><title>"Smoothing Your Rust Crates Release With Cargo-release"</title><link href="/smoothing-your-rust-crates-release-with-cargo-release.html" rel="alternate"></link><updated>2016-03-21T22:28:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2016-03-21:smoothing-your-rust-crates-release-with-cargo-release.html</id><summary type="html">&lt;p&gt;Cargo-release is a cargo subcommand that automates your libraries
+release process. The idea was inspired by Clojure's leiningen, which
+has a &lt;code&gt;release&lt;/code&gt; command does exact same thing.&lt;/p&gt;
+&lt;p&gt;Typically, when you decide to release a library to crates.io, you need
+to go through following steps at least:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bump version in Cargo.toml&lt;/li&gt;
+&lt;li&gt;create a git tag for the release&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;cargo publish&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;push tags/commits to github&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cargo-release command deals these tasks for you. In addition, it
+increases your patch version and add a &lt;code&gt;pre&lt;/code&gt; extension after &lt;code&gt;cargo
+publish&lt;/code&gt;. The Java/Maven world uses a &lt;code&gt;SNAPSHOT&lt;/code&gt; version for
+pre-release. What's sad, no other package manager follows this great
+idea. With this pre-release extension, users are able to tell if your
+master branch is on a released version or not.&lt;/p&gt;
+&lt;p&gt;By default, cargo-release removes pre-release extension as the version
+to release. You can override this behavior by a &lt;code&gt;--level&lt;/code&gt;. The value
+for &lt;code&gt;--level&lt;/code&gt; can be &lt;code&gt;major&lt;/code&gt;, &lt;code&gt;minor&lt;/code&gt; or &lt;code&gt;patch&lt;/code&gt;. As the name
+suggests, it increases different part of a semver version.&lt;/p&gt;
+&lt;p&gt;For multi-crates repository, &lt;code&gt;cargo-release&lt;/code&gt; reads you sub-directory
+name and use it as prefix of git tag to avoid conflicts.&lt;/p&gt;
+&lt;p&gt;Some more features are planned for this tool, for instance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Custom tag prefix&lt;/li&gt;
+&lt;li&gt;Build docs and push to gh-pages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope this tool can be used as a standard of rust library release
+process. You can install this tool by &lt;code&gt;cargo install
+cargo-release&lt;/code&gt;. And the github repo is
+&lt;a href="https://github.com/sunng87/cargo-release"&gt;here&lt;/a&gt;.&lt;/p&gt;</summary><category term="rust"></category><category term="programming"></category></entry><entry><title>"Summarizing Changes in Slacker 0.13"</title><link href="/summarizing-changes-in-slacker-013.html" rel="alternate"></link><updated>2015-10-18T13:45:37+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-10-18:summarizing-changes-in-slacker-013.html</id><summary type="html">&lt;p&gt;After a year of feature development and minor fixes, &lt;a href="https://github.com/sunng87/slacker"&gt;Slacker&lt;/a&gt; and &lt;a href="https://github.com/sunng87/slacker-cluster"&gt;Slacker Cluster&lt;/a&gt; version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.&lt;/p&gt;
 &lt;p&gt;Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.&lt;/p&gt;
-
 &lt;h3&gt;Application managed thread pool&lt;/h3&gt;
-
 &lt;p&gt;During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.&lt;/p&gt;
-
 &lt;p&gt;The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by &lt;code&gt;:threads&lt;/code&gt; option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.&lt;/p&gt;
-
 &lt;h3&gt;Interrupt&lt;/h3&gt;
-
 &lt;p&gt;0.13 introduces a new low-level API called &lt;code&gt;interrupt&lt;/code&gt; and a new option &lt;code&gt;interrupt-on-timeout&lt;/code&gt;. This is backend by a new protocol level command, &lt;code&gt;interrupt&lt;/code&gt;. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once &lt;code&gt;interrupt&lt;/code&gt; received.&lt;/p&gt;
-
-&lt;p&gt;Typically you don&amp;#39;t have to call &lt;code&gt;interrupt&lt;/code&gt; on slacker client. The &lt;code&gt;interrupt-on-timeout&lt;/code&gt; option allows you to cancel a tasks on both client and server when it&amp;#39;s timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.&lt;/p&gt;
-
+&lt;p&gt;Typically you don't have to call &lt;code&gt;interrupt&lt;/code&gt; on slacker client. The &lt;code&gt;interrupt-on-timeout&lt;/code&gt; option allows you to cancel a tasks on both client and server when it's timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.&lt;/p&gt;
 &lt;h3&gt;Plug-able Serializers&lt;/h3&gt;
-
 &lt;p&gt;To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.&lt;/p&gt;
-
-&lt;p&gt;The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(&lt;code&gt;:json&lt;/code&gt;) and nippy(&lt;code&gt;:nippy&lt;/code&gt;). &lt;a href=&quot;https://github.com/ptaoussanis/nippy&quot;&gt;Nippy&lt;/a&gt; is high recommended for Slacker. It&amp;#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.&lt;/p&gt;
-
+&lt;p&gt;The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(&lt;code&gt;:json&lt;/code&gt;) and nippy(&lt;code&gt;:nippy&lt;/code&gt;). &lt;a href="https://github.com/ptaoussanis/nippy"&gt;Nippy&lt;/a&gt; is high recommended for Slacker. It's a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.&lt;/p&gt;
 &lt;p&gt;You can also extend our serializer system by create new implementations for serializer multi-method.&lt;/p&gt;
-
 &lt;h3&gt;Server data for Slacker Cluster&lt;/h3&gt;
-
 &lt;p&gt;The new Slacker Cluster &lt;code&gt;start-slacker-server&lt;/code&gt; offers a new option &lt;code&gt;:server-data&lt;/code&gt;. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.&lt;/p&gt;
-
 &lt;p&gt;In the client grouping function, you can use the data to filter servers:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;require&lt;/span&gt; &lt;span class="o"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;slacker.client.cluster&lt;/span&gt; &lt;span class="ss"&gt;:refer&lt;/span&gt; &lt;span class="ss"&gt;:all&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slacker.client.cluster&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:refer&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:all&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clustered-slackerc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;defn-remote&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-function&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:grouping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ns&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;               &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;;; test :prod? property of server data&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;w&quot;&gt;               &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rand-nth&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:prod?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;server-data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;clustered-slackerc&lt;/span&gt; &lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;defn-remote&lt;/span&gt; &lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="nv"&gt;some-function&lt;/span&gt;
+  &lt;span class="ss"&gt;:grouping&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;fn &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="kd"&gt;ns &lt;/span&gt;&lt;span class="nv"&gt;func&lt;/span&gt; &lt;span class="nv"&gt;params&lt;/span&gt; &lt;span class="nv"&gt;servers&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+               &lt;span class="c1"&gt;;; test :prod? property of server data&lt;/span&gt;
+               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;rand-nth&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;filter &lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:prod?&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;server-data&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="nv"&gt;%&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="nv"&gt;servers&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;The grouping function in this snippet filters production servers, and choose one from them to call.&lt;/p&gt;
-
 &lt;p&gt;The server side looks pretty simple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;require&lt;/span&gt; &lt;span class="o"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;slacker.server.cluster&lt;/span&gt; &lt;span class="ss"&gt;:refer&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;start-slacker-server&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
 
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slacker.server.cluster&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:refer&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start-slacker-server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;start-slacker-server&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-port&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;some-ns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:server-data&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:prod?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;start-slacker-server&lt;/span&gt; &lt;span class="nv"&gt;some-port&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;some-ns&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="ss"&gt;:server-data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:prod?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.&lt;/p&gt;
+&lt;p&gt;After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.&lt;/p&gt;</summary><category term="'programming'"></category><category term="'clojure'"></category></entry><entry><title>Running Ring web application on HTTP2 with rj9a</title><link href="/running-ring-web-application-on-http2-with-rj9a.html" rel="alternate"></link><updated>2015-07-25T14:54:54+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-07-25:running-ring-web-application-on-http2-with-rj9a.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/sunng87/ring-jetty9-adapter"&gt;Ring-jetty9-adapter(rj9a)&lt;/a&gt; just received an update, the &lt;a href="https://clojars.org/info.sunng/ring-jetty9-adapter"&gt;0.9&lt;/a&gt;, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.&lt;/p&gt;
+&lt;p&gt;In case you still have no idea about HTTP2, it's the biggest update to HTTP, the protocol we use everyday and everywhere. In short, &lt;a href="https://en.wikipedia.org/wiki/HTTP/2"&gt;HTTP2&lt;/a&gt; introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that's part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.&lt;/p&gt;
+&lt;p&gt;The basic part of HTTP2 is fully compatible for 1.1, so you won't have to modify your application code to use it. In rj9a, just add option &lt;code&gt;:h2? true&lt;/code&gt; to enable HTTP2. And &lt;code&gt;:h2c? true&lt;/code&gt; to enable its variance on plain socket.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;dummy-app&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:body&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;It works&amp;quot;&lt;/span&gt; &lt;span class="ss"&gt;:status&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;jetty/run-jetty&lt;/span&gt; &lt;span class="nv"&gt;dummy-app&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:port&lt;/span&gt; &lt;span class="mi"&gt;5000&lt;/span&gt;
+                            &lt;span class="ss"&gt;:h2c?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:h2?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:ssl?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:ssl-port&lt;/span&gt; &lt;span class="mi"&gt;5443&lt;/span&gt;
+                            &lt;span class="ss"&gt;:keystore&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;...&amp;quot;&lt;/span&gt;
+                            &lt;span class="ss"&gt;:key-password&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 18 Oct 2015 13:45:37 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/</guid>
-        
-        
-        <category>programming</category>
-        
-        <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Running Ring Web Application on HTTP2 With Rj9a</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/ring-jetty9-adapter&quot;&gt;Ring-jetty9-adapter(rj9a)&lt;/a&gt; just received an update, the &lt;a href=&quot;https://clojars.org/info.sunng/ring-jetty9-adapter&quot;&gt;0.9&lt;/a&gt;, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.&lt;/p&gt;
 
-&lt;p&gt;In case you still have no idea about HTTP2, it&amp;#39;s the biggest update to HTTP, the protocol we use everyday and everywhere. In short, &lt;a href=&quot;https://en.wikipedia.org/wiki/HTTP/2&quot;&gt;HTTP2&lt;/a&gt; introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that&amp;#39;s part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.&lt;/p&gt;
+&lt;p&gt;To test HTTP2 interface, you will need to install &lt;a href="https://nghttp2.org"&gt;nghttp&lt;/a&gt;. It's pretty similar to curl:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ nghttp -v https://localhost:5443
+&lt;span class="o"&gt;[&lt;/span&gt;  0.000&lt;span class="o"&gt;]&lt;/span&gt; Connected
+The negotiated protocol: h2-14
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;12, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_MAX_CONCURRENT_STREAMS&lt;span class="o"&gt;(&lt;/span&gt;0x03&lt;span class="o"&gt;)&lt;/span&gt;:100&lt;span class="o"&gt;]&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x04&lt;span class="o"&gt;)&lt;/span&gt;:65535&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;201, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;101, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;7&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;9&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;7, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;11&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send HEADERS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;37, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x25, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_STREAM &lt;span class="p"&gt;|&lt;/span&gt; END_HEADERS &lt;span class="p"&gt;|&lt;/span&gt; PRIORITY
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;padlen&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;11, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;16, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; Open new stream
+         :method: GET
+         :path: /
+         :scheme: https
+         :authority: localhost:5443
+         accept: */*
+         accept-encoding: gzip, deflate
+         user-agent: nghttp2/1.0.1
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; recv SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;12, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_HEADER_TABLE_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x01&lt;span class="o"&gt;)&lt;/span&gt;:4096&lt;span class="o"&gt;]&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x04&lt;span class="o"&gt;)&lt;/span&gt;:65535&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; send SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; ACK
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; recv SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; ACK
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&lt;span class="o"&gt;)&lt;/span&gt; :status: 200
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&lt;span class="o"&gt;)&lt;/span&gt; server: Jetty&lt;span class="o"&gt;(&lt;/span&gt;9.3.1.v20150714&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv HEADERS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;20, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x04, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_HEADERS
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;padlen&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; First response header
+It works&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv DATA frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_STREAM
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; send GOAWAY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;last_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;error_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;NO_ERROR&lt;span class="o"&gt;(&lt;/span&gt;0x00&lt;span class="o"&gt;)&lt;/span&gt;, opaque_data&lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)=[])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;The basic part of HTTP2 is fully compatible for 1.1, so you won&amp;#39;t have to modify your application code to use it. In rj9a, just add option &lt;code&gt;:h2? true&lt;/code&gt; to enable HTTP2. And &lt;code&gt;:h2c? true&lt;/code&gt; to enable its variance on plain socket.&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;defn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dummy-app&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:body&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;It works&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:status&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;jetty/run-jetty&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dummy-app&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:port&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:h2c?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:h2?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:ssl?&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:ssl-port&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5443&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:keystore&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;8&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;                            &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:key-password&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;To test HTTP2 interface, you will need to install &lt;a href=&quot;https://nghttp2.org&quot;&gt;nghttp&lt;/a&gt;. It&amp;#39;s pretty similar to curl:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;nghttp -v https://localhost:5443
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.000] Connected
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;The negotiated protocol: h2-14
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send SETTINGS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;niv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SETTINGS_MAX_CONCURRENT_STREAMS&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x03&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:100]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x04&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:65535]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;8&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send PRIORITY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;9&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;201, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;10&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send PRIORITY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;11&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;101, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;12&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send PRIORITY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;7&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;13&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;14&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send PRIORITY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;9&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;15&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;7, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;16&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send PRIORITY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;5, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;11&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;17&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;18&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.031] send HEADERS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;37, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x25, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;13&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;19&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; END_STREAM | END_HEADERS | PRIORITY
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;20&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;padlen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;dep_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;11, &lt;span class=&quot;nv&quot;&gt;weight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;16, &lt;span class=&quot;nv&quot;&gt;exclusive&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;21&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; Open new stream
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;22&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         :method: GET
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;23&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         :path: /
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;24&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         :scheme: https
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;25&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         :authority: localhost:5443
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;26&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         accept: &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;27&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         accept-encoding: gzip, deflate
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;28&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         user-agent: nghttp2/1.0.1
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;29&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.032] recv SETTINGS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;12, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;30&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;niv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;31&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SETTINGS_HEADER_TABLE_SIZE&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x01&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:4096]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;32&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x04&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:65535]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;33&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.032] send SETTINGS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x01, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;34&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; ACK
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;35&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;niv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;36&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.032] recv SETTINGS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x01, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;37&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; ACK
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;38&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;niv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;39&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.033] recv &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;13&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; :status: 200
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;40&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.033] recv &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;13&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; server: Jetty&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;9.3.1.v20150714&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;41&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.033] recv HEADERS frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;20, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x04, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;13&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;42&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; END_HEADERS
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;43&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;padlen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;44&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; First response header
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;45&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;It works[  0.033] recv DATA frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x01, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;13&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;46&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         ; END_STREAM
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;47&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;  0.033] send GOAWAY frame &amp;lt;&lt;span class=&quot;nv&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8, &lt;span class=&quot;nv&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0x00, &lt;span class=&quot;nv&quot;&gt;stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0&amp;gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;48&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;         &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;last_stream_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0, &lt;span class=&quot;nv&quot;&gt;error_code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;NO_ERROR&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x00&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, opaque_data&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)=[])&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
 
 &lt;p&gt;The verbose output shows us every detail about request and response in HTTP2.&lt;/p&gt;
-
-&lt;p&gt;Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and &lt;a href=&quot;http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting&quot;&gt;put alpn-boot jar in your bootclasspath&lt;/a&gt;.  I have created &lt;a href=&quot;https://github.com/sunng87/lein-bootclasspath-deps&quot;&gt;a leiningen plugin&lt;/a&gt; to manage bootclasspath in clojure project.&lt;/p&gt;
-
-&lt;p&gt;The complete example is available in &lt;a href=&quot;https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj&quot;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Sat, 25 Jul 2015 14:54:54 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2015/07/25/ring-on-http2/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/07/25/ring-on-http2/</guid>
-        
-        
-        <category>programming</category>
-        
-        <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Handlebars 的 Rust 实现</title>
-        <description>&lt;p&gt;本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给&lt;a href=&quot;http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/&quot;&gt;程序员杂志写了一篇 Rust 的文章&lt;/a&gt;，结果导致现在程序员杂志停刊了。&lt;/p&gt;
-
+&lt;p&gt;Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and &lt;a href="http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting"&gt;put alpn-boot jar in your bootclasspath&lt;/a&gt;.  I have created &lt;a href="https://github.com/sunng87/lein-bootclasspath-deps"&gt;a leiningen plugin&lt;/a&gt; to manage bootclasspath in clojure project.&lt;/p&gt;
+&lt;p&gt;The complete example is available in &lt;a href="https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj"&gt;github repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="'programming'"></category><category term="'clojure'"></category></entry><entry><title>"Handlebars 的 rust 实现"</title><link href="/handlebars-de-rust-shi-xian.html" rel="alternate"></link><updated>2015-01-25T16:22:50+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-01-25:handlebars-de-rust-shi-xian.html</id><summary type="html">&lt;p&gt;本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给&lt;a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/"&gt;程序员杂志写了一篇 Rust 的文章&lt;/a&gt;，结果导致现在程序员杂志停刊了。&lt;/p&gt;
 &lt;p&gt;扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。&lt;/p&gt;
-
 &lt;p&gt;这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;不要把 rust 代码写进 html 模版里，反例： jsp, ejs&lt;/li&gt;
 &lt;li&gt;不要把 html 代码写进 rust 里，反例： hiccup&lt;/li&gt;
 &lt;li&gt;能够复用，基于“继承”而不是 include&lt;/li&gt;
 &lt;li&gt;能够简单地自定义标签，反例：mustach&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;基于以上的原则，&lt;a href=&quot;https://github.com/sunng87/handlebars-rust&quot;&gt;handlebars-rust&lt;/a&gt; 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 &lt;a href=&quot;https://github.com/sunng87/handlebars-iron&quot;&gt;handlebars-iron&lt;/a&gt; 项目，作为一个 &lt;a href=&quot;http://ironframework.io&quot;&gt;Iron 框架&lt;/a&gt;的 middlaware。&lt;/p&gt;
-
+&lt;p&gt;基于以上的原则，&lt;a href="https://github.com/sunng87/handlebars-rust"&gt;handlebars-rust&lt;/a&gt; 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 &lt;a href="https://github.com/sunng87/handlebars-iron"&gt;handlebars-iron&lt;/a&gt; 项目，作为一个 &lt;a href="http://ironframework.io"&gt;Iron 框架&lt;/a&gt;的 middlaware。&lt;/p&gt;
 &lt;p&gt;简单总结几点收获：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型&lt;/li&gt;
-&lt;li&gt;静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 &lt;code&gt;false&lt;/code&gt;/&lt;code&gt;0&lt;/code&gt;/&lt;code&gt;&amp;quot;&amp;quot;&lt;/code&gt;/&lt;code&gt;[]&lt;/code&gt; 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 &lt;code&gt;Json&lt;/code&gt; 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 &lt;code&gt;ToJson&lt;/code&gt;，算是设计上的一个取舍。&lt;/li&gt;
+&lt;li&gt;静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 &lt;code&gt;false&lt;/code&gt;/&lt;code&gt;0&lt;/code&gt;/&lt;code&gt;""&lt;/code&gt;/&lt;code&gt;[]&lt;/code&gt; 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 &lt;code&gt;Json&lt;/code&gt; 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 &lt;code&gt;ToJson&lt;/code&gt;，算是设计上的一个取舍。&lt;/li&gt;
 &lt;li&gt;Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的&lt;/li&gt;
-&lt;li&gt;关于 Rust 的 ownership 看&lt;a href=&quot;http://nercury.github.io/rust/guide/2015/01/19/ownership.html&quot;&gt;这篇文章&lt;/a&gt;，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错&lt;/li&gt;
+&lt;li&gt;关于 Rust 的 ownership 看&lt;a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html"&gt;这篇文章&lt;/a&gt;，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错&lt;/li&gt;
 &lt;li&gt;有任何问题都可以在 stackoverflow 上问，有几个人会很快回复&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 25 Jan 2015 16:22:50 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2015/01/25/ann-handlebars-rust/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2015/01/25/ann-handlebars-rust/</guid>
-        
-        
-        <category>programming</category>
-        
-        <category>rust</category>
-        
-      </item>
-    
-      <item>
-        <title>AVOS Cloud 实时通信服务架构：微服务和服务发现</title>
-        <description>&lt;p&gt;“微服务” (Microservice) 是今年特别热的一个概念，&lt;a href=&quot;http://martinfowler.com/articles/microservices.html&quot;&gt;Martin Fowler 的文章&lt;/a&gt;对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。&lt;/p&gt;
-
+&lt;/ul&gt;</summary><category term="'programming'"></category><category term="'rust'"></category></entry><entry><title>"AVOS Cloud 实时通信服务架构：微服务和服务发现"</title><link href="/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="alternate"></link><updated>2014-08-19T16:46:20+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2014-08-19:avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html</id><summary type="html">&lt;p&gt;“微服务” (Microservice) 是今年特别热的一个概念，&lt;a href="http://martinfowler.com/articles/microservices.html"&gt;Martin Fowler 的文章&lt;/a&gt;对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。&lt;/p&gt;
 &lt;p&gt;在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.&lt;/p&gt;
-
 &lt;p&gt;以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：&lt;/p&gt;
-
 &lt;ul&gt;
 &lt;li&gt;Push 服务：处理推送的订阅关系，触发推送&lt;/li&gt;
 &lt;li&gt;长连接服务器：维持设备与服务的长连接&lt;/li&gt;
@@ -215,458 +162,24 @@
 &lt;li&gt;数据存储：群组数据，用户可以通过API访问&lt;/li&gt;
 &lt;li&gt;HBase：消息记录存储&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;模块间的集成，根据业务的特性分别使用 &lt;a href=&quot;https://github.com/sunng87/slacker&quot;&gt;Slacker&lt;/a&gt; 远程调用框架和 &lt;a href=&quot;http://twitter.github.io/kestrel/&quot;&gt;Kestrel&lt;/a&gt; 消息队列。
+&lt;p&gt;模块间的集成，根据业务的特性分别使用 &lt;a href="https://github.com/sunng87/slacker"&gt;Slacker&lt;/a&gt; 远程调用框架和 &lt;a href="http://twitter.github.io/kestrel/"&gt;Kestrel&lt;/a&gt; 消息队列。
 对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。&lt;/p&gt;
-
-&lt;p&gt;Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 &lt;a href=&quot;http://clojure.org/macros&quot;&gt;Clojure 宏&lt;/a&gt;的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 &lt;code&gt;(require)&lt;/code&gt; 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 &lt;a href=&quot;https://github.com/ptaoussanis/nippy&quot;&gt;nippy&lt;/a&gt;，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。&lt;/p&gt;
-
+&lt;p&gt;Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 &lt;a href="http://clojure.org/macros"&gt;Clojure 宏&lt;/a&gt;的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 &lt;code&gt;(require)&lt;/code&gt; 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 &lt;a href="https://github.com/ptaoussanis/nippy"&gt;nippy&lt;/a&gt;，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。&lt;/p&gt;
 &lt;p&gt;以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。&lt;/p&gt;
-
 &lt;h3&gt;服务发现&lt;/h3&gt;
+&lt;p&gt;长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 &lt;a href="https://en.wikipedia.org/wiki/Publish/subscribe"&gt;Pub/Sub 抽象&lt;/a&gt;的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。&lt;/p&gt;
+&lt;p&gt;在这方面，我们利用了 &lt;a href="https://github.com/sunng87/slacker-cluster"&gt;Slacker Cluster 框架&lt;/a&gt;。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。&lt;/p&gt;
+&lt;p&gt;所有的服务提供者将自己能够提供的服务注册在 &lt;a href="https://zookeeper.apache.org/"&gt;Zookeeper&lt;/a&gt; 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Zookeeper 目录结构&lt;/span&gt;
+ls /slacker/example-cluster/namespaces/
+&lt;span class="o"&gt;[&lt;/span&gt;my.serviceA, my.serviceB&lt;span class="o"&gt;]&lt;/span&gt;
 
-&lt;p&gt;长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 &lt;a href=&quot;https://en.wikipedia.org/wiki/Publish/subscribe&quot;&gt;Pub/Sub 抽象&lt;/a&gt;的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。&lt;/p&gt;
+ls /slacker/example-cluster/namespaces/my.serviceA
+&lt;span class="o"&gt;[&lt;/span&gt;192.168.1.100:2104, 192.168.1.101:2014...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;在这方面，我们利用了 &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster 框架&lt;/a&gt;。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。&lt;/p&gt;
-
-&lt;p&gt;所有的服务提供者将自己能够提供的服务注册在 &lt;a href=&quot;https://zookeeper.apache.org/&quot;&gt;Zookeeper&lt;/a&gt; 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;c&quot;&gt;# Zookeeper 目录结构&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;ls /slacker/example-cluster/namespaces/
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;my.serviceA, my.serviceB]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;ls /slacker/example-cluster/namespaces/my.serviceA
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;192.168.1.100:2104, 192.168.1.101:2014...]&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
 
 &lt;p&gt;所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。&lt;/p&gt;
-
 &lt;p&gt;在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。&lt;/p&gt;
-
 &lt;p&gt;有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。&lt;/p&gt;
-
-&lt;p&gt;原载 &lt;a href=&quot;https://blog.avoscloud.com/1927/&quot;&gt;AVOSCloud Blog&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 19 Aug 2014 16:46:20 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/</guid>
-        
-        
-        <category>programming</category>
-        
-      </item>
-    
-      <item>
-        <title>在 Docker 中安装和使用 Rust Nightly 版本</title>
-        <description>&lt;p&gt;一直关注 Rust 语言，最近一下发现了两个 web 框架，&lt;a href=&quot;http://ironframework.org&quot;&gt;Iron&lt;/a&gt; 和 &lt;a href=&quot;http://nickel.rs&quot;&gt;Nickel.rs&lt;/a&gt;。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 &lt;a href=&quot;https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html&quot;&gt;Yehuda Katz 的构建工具 Cargo&lt;/a&gt;。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年&lt;a href=&quot;https://twitter.com/jessenoller/status/495037475421954048&quot;&gt;最火的 Docker&lt;/a&gt;，可以轻松的创建多个环境，正是一个非常好的场景。&lt;/p&gt;
-
-&lt;h2&gt;安装&lt;/h2&gt;
-
-&lt;p&gt;安装 Docker, Arch Linux 仓库里很早就有，非常方便：&lt;code&gt;sudo pacman -S docker&lt;/code&gt;。完成之后启动他：&lt;code&gt;sudo systemctl start docker&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;之后我们拉一个 ubuntu 的镜像下来：&lt;code&gt;docker pull ubuntu&lt;/code&gt;。&lt;/p&gt;
-
-&lt;p&gt;完成之后，我们启动一个 container，做一些基本的 setup：&lt;code&gt;docker run -i -t ubuntu:14.04 /bin/bash&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;这相当与运行在 ubuntu:14.04 这个镜像上运行一个 shell，接下来就进入了这个 shell 环境，和 ubuntu 安装版本完全一致，我们做一些基础的准备，安装一些必要的工具：&lt;code&gt;apt-get install build-essentials git curl libssl-dev&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;之后，就可以下载 Rust 提供的脚本来安装 nightly 版本了：&lt;code&gt;curl -s http://www.rust-lang.org/rustup.sh &amp;gt; rustup&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;这里有个问题，rustup 脚本判断64位系统时会出错导致安装失败：
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;c&quot;&gt;# Detect 64 bit linux systems with 32 bit userland and force 32 bit compilation&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CFG&lt;em&gt;OSTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; unknown-linux-gnu -a &lt;span class=&quot;nv&quot;&gt;$CFG&lt;/em&gt;CPUTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; x86&lt;em&gt;64 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;then
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;/span&gt;file -L &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SHELL&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt; | grep -q &lt;span class=&quot;s2&quot;&gt;&amp;quot;x86[&lt;/em&gt;-]64&amp;quot;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CFG_CPUTYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;i686
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;k&quot;&gt;fi
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;8&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;fi&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/p&gt;
-
-&lt;p&gt;因为在我的机器上已知系统是64位，就强行绕过了他的判断。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$CFG_OSTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; unknown-linux-gnu -a &lt;span class=&quot;nv&quot;&gt;$CFG_CPUTYPE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; x86_64 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;then
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;/span&gt;file -L &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$SHELL&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | grep -q &lt;span class=&quot;s2&quot;&gt;&quot;x86[_-]64&quot;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$?&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;        &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CFG_CPUTYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;i686
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;k&quot;&gt;fi
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;fi&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;之后执行 rustup 就可以直接安装最近的 rustc 和 cargo 了。安装完成执行 &lt;code&gt;rustc -v&lt;/code&gt; 和 &lt;code&gt;cargo --version&lt;/code&gt; （两个工具还不统一！）可以了解安装情况。&lt;/p&gt;
-
-&lt;p&gt;exit 退出 shell，commit 你的镜像，这样一个干净的镜像要好好保存：&lt;code&gt;docker commit IMAGE_ID sunng/rust-nightly&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2&gt;Hello World&lt;/h2&gt;
-
-&lt;p&gt;之后可以写点代码了，我们不在 docker 里写，我们在 host 机器上写，然后挂载到 docker 上，因此 emacs 什么的也不用配置了。&lt;/p&gt;
-
-&lt;p&gt;创建一个目录，比如在 &lt;code&gt;$HOME/var/docker/helloworld&lt;/code&gt;下，最简单的 rust 项目只要两个文件： &lt;code&gt;Cargo.toml&lt;/code&gt; 和 &lt;code&gt;src/main.rs&lt;/code&gt;。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;#Cargo.toml
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[package]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;name = &quot;hello-world&quot;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;version = &quot;0.1.0&quot;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;authors = [ &quot;sunng@about.me&quot; ]&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;c&quot;&gt;//main.rs&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;span class=&quot;nd&quot;&gt;println!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hello world&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;构建项目不需要手动 rustc 了，那是上个世纪的东西，我们直接 &lt;code&gt;cargo build&lt;/code&gt; 就可以：&lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;其中 &lt;code&gt;-v&lt;/code&gt; 参数用于挂载目录，&lt;code&gt;-w&lt;/code&gt; 参数指定执行的 pwd。&lt;/p&gt;
-
-&lt;p&gt;如果构建成功，就可以执行了，在 docker 中执行：&lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly target/hello-world&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;其实可以直接在 host 系统里执行也是完全可以的：&lt;code&gt;$HOME/var/docker/helloworld/target/hello-world&lt;/code&gt;。&lt;/p&gt;
-
-&lt;h2&gt;Web Hello World&lt;/h2&gt;
-
-&lt;p&gt;前面说了 Rust 都有 web 框架了，我们就写一个 Web 版本的 Hello World 吧。这次用 Iron 框架，首先添加依赖到 Cargo 文件：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[package]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;name = &quot;hello-world&quot;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;version = &quot;0.1.0&quot;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;authors = [ &quot;sunng@about.me&quot; ]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[dependencies.iron]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;8&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;9&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;git = &quot;https://github.com/iron/iron.git&quot;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;10&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;11&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[dependencies.core]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;12&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;13&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;git = &quot;https://github.com/iron/core.git&quot;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;Cargo 目前还没有中央仓库，但是&lt;a href=&quot;http://crates.io/faq.html#github&quot;&gt;据说将来会有&lt;/a&gt;。目前还都是用 git 仓库来直接添加，所以构建环境里必须要有 git。&lt;/p&gt;
-
-&lt;p&gt;照着 &lt;a href=&quot;https://github.com/iron/iron/blob/master/examples/hello.rs&quot;&gt;Iron 的例子&lt;/a&gt;写一个最简单的 hello world 程序。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;crate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iron&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;extern&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;crate&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;net&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;ip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Ipv4Addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;iron&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&amp;#x7b;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Iron&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Chain&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Alloy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Unwind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FromFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;8&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Alloy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Status&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;9&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.serve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Ok&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Hello, world!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;10&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;span class=&quot;n&quot;&gt;Unwind&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;11&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;12&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;13&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;&amp;#x7b;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;14&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;mut&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;Iron&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;15&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;py&quot;&gt;.chain&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nn&quot;&gt;FromFn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hello_world&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;16&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Ipv4Addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;17&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;&amp;#x7d;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;编译 &lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;运行 &lt;code&gt;docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld -p 3000:3000 sunng/nightly target/hello-world&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;新增的参数&lt;code&gt;-p&lt;/code&gt;是把 docker 环境里的端口3000映射到 host 上的3000，这样我们才能在外面访问。&lt;/p&gt;
-
-&lt;p&gt;最后还有一个问题，因为程序听的是127.0.0.1，所以在 host 上是无法访问这个端口的，修改代码：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Ipv4Addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;就可以正常工作了。&lt;/p&gt;
-
-&lt;h2&gt;Wrap up&lt;/h2&gt;
-
-&lt;p&gt;总结一下上面用 docker 比虚拟机的好处：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;占用资源少，启动快&lt;/li&gt;
-&lt;li&gt;与 host 共享网络、硬盘都非常方便，满足开发需要不成问题&lt;/li&gt;
-&lt;li&gt;所有都是命令，与 host 系统上的进程集成也非常方便&lt;/li&gt;
-&lt;li&gt;支持镜像的版本控制和仓库&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sat, 02 Aug 2014 18:02:12 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/08/02/rust-with-docker/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/08/02/rust-with-docker/</guid>
-        
-        
-        <category>programming</category>
-        
-        <category>rust</category>
-        
-        <category>docker</category>
-        
-      </item>
-    
-      <item>
-        <title>Clojure Microservice Architecture With Slacker Cluster</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://www.infoq.com/presentations/Micro-Services&quot;&gt;Microservice&lt;/a&gt; has been a hot new concept in these days. Martin Fowler explained microservice &lt;a href=&quot;http://martinfowler.com/articles/microservices.html&quot;&gt;in this article&lt;/a&gt;. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.&lt;/p&gt;
-
-&lt;p&gt;It&amp;#39;s a new concept in enterprise architecture, since the last movement in the field promotes SOA architecture. SOA encourages architects to componentize their business logic in service, and deploy service bus(ESB) for integration. Microservice can be more concrete and light-weighted. The service units in Microservice can be any standalone function, or just a tier in traditional tier based development. These units can be deployed on dedicate process or grouped into a process.&lt;/p&gt;
-
-&lt;p&gt;In clojure development at &lt;a href=&quot;https://avoscloud.com&quot;&gt;avoscloud&lt;/a&gt;, we are using the &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;slacker cluster framework&lt;/a&gt; for our microsrvice architecture.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/slacker&quot;&gt;Slacker RPC&lt;/a&gt; exposes services as  clojure namespace (pretty light-weighted) All functions in the namespace can be called from remote. A slacker server can expose any number of namespaces:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;start-slacker-server&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2014&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my.serviceA&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my.serviceB&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;Slacker uses a binary protocol on TCP and configurable serialization (json/edn/&lt;a href=&quot;https://github.com/ptaoussanis/nippy&quot;&gt;nippy&lt;/a&gt;) for communication, which is fast and compact.&lt;/p&gt;
-
-&lt;p&gt;And in slacker cluster, exposed namespaces are registered on zookeeper as ephemeral nodes. The client doesn&amp;#39;t have to know which service is deployed on which process. Instead, it connects to zookeeper and look up all process address for service it interests in. &lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clustered-slacker-client&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zk-addr&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;...&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;defn-remote&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;&#39;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my.serviceA/fn-abc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;c1&quot;&gt;;;when calling remote function for the first time, the client will look up zookeeper for remote processes and cache the results&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fn-abc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;If there are more than one process available, the client library will balance the load on each process. And for stateful service, slacker cluster also elects master node to ensure all requests go to single process. (&lt;a href=&quot;http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/&quot;&gt;Slacker cluster grouping&lt;/a&gt;)&lt;/p&gt;
-
-&lt;p&gt;Zookeeper directory structure:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;ls /slacker/example-cluster/namespaces/
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[my.serviceA, my.serviceB]
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; &lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;ls /slacker/example-cluster/namespaces/my.serviceA
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;[192.168.1.100:2104, 192.168.1.101:2014...]&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;Decoupling processes and services made microservice deployment quite flexible. Functional namespaces can be deployed on any process, standalone or grouped together, like Martin Fowler&amp;#39;s chart &lt;a href=&quot;http://martinfowler.com/articles/microservices/images/sketch.png&quot;&gt;shows&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;All these nodes are also watched by clients. If a process crashed or put offline, the clients will get notified by zookeeper, then no requests will be made on that process. Also, when you exhausted service capacity, just simply put on another process, the client will soon balance load to the new node. Scaling services is easy like that.&lt;/p&gt;
-
-&lt;p&gt;Thanks to zookeeper&amp;#39;s watch mechanism, there&amp;#39;s no need to configure service static and update while you add/remove nodes. This is especially important in large-scale deployment. (Since microservices are often find-grained, you will always have a lot of process to update/restart.)&lt;/p&gt;
-
-&lt;p&gt;For more about Slacker Cluster, &lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;check my code repository&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 08 Jul 2014 22:12:52 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/07/08/microservice-and-slacker-cluster/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/08/microservice-and-slacker-cluster/</guid>
-        
-        
-        <category>programming</category>
-        
-        <category>clojure</category>
-        
-      </item>
-    
-      <item>
-        <title>Mapzei 和 观察者</title>
-        <description>&lt;p&gt;写了两个 Android 应用一致没有在博客上提，那么就一起提一下吧。&lt;/p&gt;
-
-&lt;p&gt;其一是3月份写的 &lt;a href=&quot;https://play.google.com/store/apps/details?id=info.sunng.muzei.maps&quot;&gt;Mapzei&lt;/a&gt;，是&lt;a href=&quot;https://plus.google.com/+RomanNurik/posts&quot;&gt;Roman Nurik&lt;/a&gt;的live wallpaper &lt;a href=&quot;https://play.google.com/store/apps/details?id=net.nurik.roman.muzei&quot;&gt;Muzei&lt;/a&gt;的扩展。 Roman Nurik 之前做过 Dash Clock，本身也是个开放架构，允许第三方增加扩展。 Mapzei是Muzei的扩展，每天取一张随机城市的地图作为桌面。用户可以配置地图的数据源：Google,OpenStreetMap或者Mapbox。&lt;/p&gt;
-
-&lt;p&gt;另一个是&lt;a href=&quot;http://guancha.cn&quot;&gt;观察者网&lt;/a&gt;的&lt;a href=&quot;https://play.google.com/store/apps/details?id=info.sunng.guanchazhe&quot;&gt;客户端&lt;/a&gt;，看新闻用。应用本身倒没有什么，用了一些典型的开源库：&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;UniversalImageLoader&lt;/li&gt;
-&lt;li&gt;SuperListView&lt;/li&gt;
-&lt;li&gt;ButterKnife&lt;/li&gt;
-&lt;li&gt;Eventbus&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;另外这个应用还发布在了&lt;a href=&quot;http://app.mi.com/detail/65794&quot;&gt;小米商店&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 07 Jul 2014 21:17:47 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/07/07/new-android-apps/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/07/new-android-apps/</guid>
-        
-        
-        <category>android</category>
-        
-      </item>
-    
-      <item>
-        <title>扩展 Linux Ephemeral 端口限制</title>
-        <description>&lt;p&gt;默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。&lt;/p&gt;
-
-&lt;h3&gt;增加文件打开数&lt;/h3&gt;
-
-&lt;p&gt;第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ sudo ulimit -n 999999&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;持久化这个配置，可以在&lt;code&gt;/etc/security/&lt;/code&gt;（或&lt;code&gt;/etc/security.d/&lt;/code&gt;，取决于你的发行版）下建立文件，增加&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;*     hard    nofile      999999
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;*       soft    nofile      999999&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;这将对所有用户起效。&lt;/p&gt;
-
-&lt;h3&gt;增加客户端端口数&lt;/h3&gt;
-
-&lt;p&gt;当Linux发起客户端连接时，如果没有显式指定，会给客户端socket绑定一个 ephemeral 端口。这个端口的范围是从这个区间选取的：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt; $ cat /proc/sys/net/ipv4/ip_local_port_range
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;32768   61000
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;如果这个区间的端口耗尽，socket就会产生&lt;code&gt;cannot assign requested address&lt;/code&gt;的错误。要增加端口范围，我们需要把他设置得更大：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ sudo echo &quot;1025 65535&quot; &gt; /proc/sys/net/ipv4/ip_local_port_range&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;这样，单台机器就可以发出六万多个连接。&lt;/p&gt;
-
-&lt;h3&gt;增加虚拟网卡&lt;/h3&gt;
-
-&lt;p&gt;对于内存大一点的客户端机器，六万多个连接远不是其性能极限。由于IP消息中，一条消息是由 &lt;code&gt;src_addr&lt;/code&gt;, &lt;code&gt;src_port&lt;/code&gt;, &lt;code&gt;dst_addr&lt;/code&gt;, &lt;code&gt;dst_port&lt;/code&gt; 四元组标识，所以要增加连接，我们需要更多IP。在Linux上，我们可以启动虚拟网卡绑定额外的IP。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ sudo ifconfig eth0:0 192.168.1.100
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ sudo ifconfig eth0:1 192.168.1.101
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;...&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;要关闭这些虚拟网卡&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ sudo ifconfig eth0:0 down&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;h3&gt;使用虚拟网卡连接&lt;/h3&gt;
-
-&lt;p&gt;拥有多个IP之后，客户端socket需要显示绑定这些IP才行，以python为例，在connect前调用：&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;n&quot;&gt;sock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;local_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local_port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;可以指定连接的源地址和端口。在普通的Linux编程里，当你指定&lt;code&gt;local_port&lt;/code&gt;为&lt;code&gt;0&lt;/code&gt;时，Linux会分配一个之前提到的 ephemeral 端口。但是当使用虚拟IP时，如果仍然指定0，系统并不会因为IP不同而重用端口号，达到六万多的限制后，仍然会抛出不能获得地址的异常。&lt;/p&gt;
-
-&lt;p&gt;实际上是可以获得的，这里需要用户显式地指定端口好。如果需要大规模的连接，那就一个一个绑定好了。&lt;/p&gt;
-
-&lt;h3&gt;启用time_wait reuse和recycle&lt;/h3&gt;
-
-&lt;p&gt;Linux的socket进入&lt;code&gt;time_wait&lt;/code&gt;后需要有一定的时间回收，之后端口才能重新使用。这在大规模测试的时候就比较麻烦，为了免去等待，可以打开&lt;code&gt;tw_reuse&lt;/code&gt;和&lt;code&gt;tw_recycle&lt;/code&gt;这两个选项。&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_recycle
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;$ echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_reuse&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;注意这两个选项都比较激进，最好仅在测试机上使用。&lt;/p&gt;
-</description>
-        <pubDate>Tue, 01 Jul 2014 17:11:58 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/07/01/extend-linux-ephemeral-ports/</guid>
-        
-        
-        <category>linux</category>
-        
-        <category>programming</category>
-        
-      </item>
-    
-      <item>
-        <title>Slacker Cluster 0.12: Grouping</title>
-        <description>&lt;h2&gt;What are Slacker and Slacker Cluster&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/slacker&quot;&gt;Slacker&lt;/a&gt; is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&amp;#39;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster&lt;/a&gt; is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.&lt;/p&gt;
-
-&lt;h2&gt;Grouping in Slacker Cluster&lt;/h2&gt;
-
-&lt;p&gt;Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible &lt;strong&gt;grouping&lt;/strong&gt; choices for your scenario. In Slacker Cluster, &lt;strong&gt;grouping&lt;/strong&gt; means which server(s) to call on a particular invocation.&lt;/p&gt;
-
-&lt;p&gt;There and four kinds of grouping for you: &lt;code&gt;:random&lt;/code&gt;, &lt;code&gt;:leader&lt;/code&gt;, &lt;code&gt;:all&lt;/code&gt; and custom.&lt;/p&gt;
-
-&lt;h3&gt;:random&lt;/h3&gt;
-
-&lt;p&gt;By default, Slacker cluster clients use &lt;code&gt;:random&lt;/code&gt; grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.&lt;/p&gt;
-
-&lt;h3&gt;:leader&lt;/h3&gt;
-
-&lt;p&gt;Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The &lt;code&gt;:leader&lt;/code&gt; grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.&lt;/p&gt;
-
-&lt;h3&gt;:all&lt;/h3&gt;
-
-&lt;p&gt;As the name suggests, &lt;code&gt;:all&lt;/code&gt; grouping routes invocations on every node at same time. In other words, it&amp;#39;s broadcast. Note that this grouping might change your function return values. In &lt;code&gt;:random&lt;/code&gt; and &lt;code&gt;:leader&lt;/code&gt; mode, there&amp;#39;s only one server called, just like local invocation. In &lt;code&gt;:all&lt;/code&gt;, there&amp;#39;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.&lt;/p&gt;
-
-&lt;h3&gt;Custom&lt;/h3&gt;
-
-&lt;p&gt;You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.&lt;/p&gt;
-
-&lt;h2&gt;Grouping results&lt;/h2&gt;
-
-&lt;p&gt;Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: &lt;code&gt;:single&lt;/code&gt;, &lt;code&gt;:vector&lt;/code&gt;, &lt;code&gt;:map&lt;/code&gt; and custom function.&lt;/p&gt;
-
-&lt;p&gt;In short words:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;:single&lt;/code&gt; returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;:vector&lt;/code&gt; returns  a vector of all results.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;:map&lt;/code&gt; returns a map of all results, indexed by server addresses.&lt;/li&gt;
-&lt;li&gt;Custom aggregation function accepts the results and allows you to merge the values.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;Grouping exceptions&lt;/h2&gt;
-
-&lt;p&gt;What happens when remote function threw exceptions? The grouping exception option defines that. When set to &lt;code&gt;:all&lt;/code&gt;, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply &lt;code&gt;grouping-results&lt;/code&gt; rules. The opposite option is &lt;code&gt;:any&lt;/code&gt;, which mean client will raise error when any of calls is broken.&lt;/p&gt;
-
-&lt;h2&gt;Granularity&lt;/h2&gt;
-
-&lt;p&gt;The grouping options can be set to client level:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;clustered-slackerc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cluster-name&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;127.0.0.1:2181&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:grouping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:leader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;or function level:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;defn-remote&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sc&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;slacker.example.api/timestamp&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:grouping&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:all&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:grouping-results&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;:single&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/sunng87/slacker-cluster&quot;&gt;Slacker Cluster&lt;/a&gt; has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 09 Jun 2014 21:06:39 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/</guid>
-        
-        
-        <category>clojure</category>
-        
-        <category>programming</category>
-        
-      </item>
-    
-      <item>
-        <title>Fork-Join in Papaline</title>
-        <description>&lt;p&gt;&lt;a href=&quot;http://github.com/sunng87/papaline&quot;&gt;Papaline&lt;/a&gt; 0.3 introduced a new model &amp;quot;fork-join&amp;quot; for task execution. It allows you to split a task into smaller units, and execute them in parallel.&lt;/p&gt;
-
-&lt;p&gt;Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/w6RlNZo.png&quot; alt=&quot;linear execution&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it&amp;#39;s always better to run them in parallel. Here we have &lt;code&gt;(fork)&lt;/code&gt; command for the situation.&lt;/p&gt;
-
-&lt;p&gt;For example, you are using the &lt;em&gt;fanout-on-write&lt;/em&gt; model to build an activity stream. Once a user posted a new status, you need to find all followers(stage 1) of that user and append the status to their timeline(stage 2).&lt;/p&gt;
-
-&lt;p&gt;In previous version of papaline, these two stages are:&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;defn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find-followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;query-db-for-followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;defn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fanout-to-user-timeline&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-ids&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;doseq&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-ids&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;7&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;write-redis-list&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;In the second task, the msg is appended to user&amp;#39;s timeline one by one.&lt;/p&gt;
-
-&lt;p&gt;Using &lt;code&gt;(fork)&lt;/code&gt;, the &lt;code&gt;fanout-to-user-timeline&lt;/code&gt; can be executed in parallel.&lt;/p&gt;
-
-&lt;figure class=&#39;code-highlight-figure&#39;&gt;&lt;div class=&#39;code-highlight&#39;&gt;&lt;pre class=&#39;code-highlight-pre&#39;&gt;&lt;div data-line=&#39;1&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;defn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find-followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;2&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;query-db-for-followers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;3&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;fork&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;followers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;4&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;5&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;defn&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fanout-to-user-timeline&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-ids&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;div data-line=&#39;6&#39; class=&#39;code-highlight-row numbered&#39;&gt;&lt;div class=&#39;code-highlight-line&#39;&gt;  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;write-redis-list&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user-id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;&lt;/span&gt;
-&lt;/div&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/figure&gt;
-
-&lt;p&gt;After the &lt;code&gt;find-followers&lt;/code&gt; function, the result will be splitted into &lt;code&gt;(count followers)&lt;/code&gt; parts and sent into input channel of stage 2. So the tasks execution will be like:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/MLhZ0Pm.png&quot; alt=&quot;forked execution&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;To collect the results of all forked sub-tasks, you can use &lt;code&gt;(join)&lt;/code&gt;. If the return value is wrapped with join, it won&amp;#39;t trigger next stage immediately but to wait all forked tasks to finish.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/BVDEH9Q.png&quot; alt=&quot;join&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;So with &lt;code&gt;(fork)&lt;/code&gt; and &lt;code&gt;(join)&lt;/code&gt;, it&amp;#39;s very flexible to change execution model in Papaline.  Internally, I use clojure&amp;#39;s &lt;a href=&quot;http://clojure.org/metadata&quot;&gt;metadata&lt;/a&gt; to add flags for the return value, without ruining the non-invasive design of &lt;a href=&quot;http://github.com/sunng87/papaline&quot;&gt;Papaline&lt;/a&gt;.&lt;/p&gt;
-</description>
-        <pubDate>Tue, 27 May 2014 21:47:45 +0800</pubDate>
-        <link>http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</link>
-        <guid isPermaLink="true">http://sunng.info//blog/blog/2014/05/27/fork-join-in-papaline/</guid>
-        
-        
-        <category>clojure</category>
-        
-        <category>programming</category>
-        
-      </item>
-    
-  </channel>
-</rss>
+&lt;p&gt;原载 &lt;a href="https://blog.avoscloud.com/1927/"&gt;AVOSCloud Blog&lt;/a&gt;&lt;/p&gt;</summary><category term="programming"></category></entry></feed>

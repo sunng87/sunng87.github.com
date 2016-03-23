@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>"Summarizing Changes in Slacker 0.13"</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/summarizing-changes-in-slacker-013.html" rel="bookmark"
+           title="Permalink to "Summarizing Changes in Slacker 0.13"">"Summarizing Changes in Slacker 0.13"</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2015-10-18T13:45:37+08:00">
+                Published: Sun 18 October 2015
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/programming.html">&#39;programming&#39;</a> <a href="/tag/clojure.html">&#39;clojure&#39;</a> </p>
+</footer><!-- /.post-info -->      <p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
+<p>Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.</p>
+<h3>Application managed thread pool</h3>
+<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.</p>
+<p>The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by <code>:threads</code> option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.</p>
+<h3>Interrupt</h3>
+<p>0.13 introduces a new low-level API called <code>interrupt</code> and a new option <code>interrupt-on-timeout</code>. This is backend by a new protocol level command, <code>interrupt</code>. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once <code>interrupt</code> received.</p>
+<p>Typically you don't have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it's timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.</p>
+<h3>Plug-able Serializers</h3>
+<p>To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.</p>
+<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommended for Slacker. It's a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
+<p>You can also extend our serializer system by create new implementations for serializer multi-method.</p>
+<h3>Server data for Slacker Cluster</h3>
+<p>The new Slacker Cluster <code>start-slacker-server</code> offers a new option <code>:server-data</code>. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.</p>
+<p>In the client grouping function, you can use the data to filter servers:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">slacker.client.cluster</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">])</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">sc</span> <span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="nv">...</span><span class="p">))</span>
+<span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">some-function</span>
+  <span class="ss">:grouping</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="kd">ns </span><span class="nv">func</span> <span class="nv">params</span> <span class="nv">servers</span><span class="p">]</span>
+               <span class="c1">;; test :prod? property of server data</span>
+               <span class="p">(</span><span class="nf">rand-nth</span> <span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="ss">:prod?</span> <span class="p">(</span><span class="nf">server-data</span> <span class="o">@</span><span class="nv">sc</span> <span class="nv">%</span><span class="p">))</span> <span class="nv">servers</span><span class="p">))))</span>
+</pre></div>
+
+
+<p>The grouping function in this snippet filters production servers, and choose one from them to call.</p>
+<p>The server side looks pretty simple:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">slacker.server.cluster</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">start-slacker-server</span><span class="p">]])</span>
+
+<span class="p">(</span><span class="nf">start-slacker-server</span> <span class="nv">some-port</span> <span class="p">[</span><span class="nv">some-ns</span><span class="p">]</span>
+  <span class="ss">:server-data</span> <span class="p">{</span><span class="ss">:prod?</span> <span class="nv">true</span><span class="p">}</span>
+  <span class="nv">...</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.</p>
+<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

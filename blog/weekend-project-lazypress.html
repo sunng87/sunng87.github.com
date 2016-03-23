@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'Weekend Project: LazyPress'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/weekend-project-lazypress.html" rel="bookmark"
+           title="Permalink to 'Weekend Project: LazyPress'">'Weekend Project: LazyPress'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-01-08T00:00:00+08:00">
+                Published: Sun 08 January 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>cloudfoundry</li>
+<li>project</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>发布一个典型的weekend project, 名字叫做<a href="http://lazypress.cloundfoundry.com">LazyPress</a>.顾名思义,这是一个在线的写作系统. 取名Lazy, 除了因为它用Clojure写成,更因为他的简单: 没有繁琐的注册,没有繁琐的分类tag,没有繁琐的格式化,无论是使用还是开发都力求做到最简单.<br />
+LazyPress采用Mozilla刚刚发布的<a href="http://browserid.org/">BrowserID</a>. 技术作为账号系统, 用户只需要在首次登录后提供一个ID即可(原本这一步也可以省略, 但是为了保护您的邮箱隐私, 现在需要一个LazyPress专用的ID). 这样LazyPress本身不存储用户的密码,也简化了用户账号管理的代价. BrowserID的登录流程非常简单, 速度也比传统的OpenID和OAuth要快, 用户体验要比多次跳转好很多.<br />
+LazyPress使用Markdown进行文本格式化, 简单的编辑器可以支持绝大多数格式的要求. 另外,在浏览器后台LazyPress使用HTML5 LocalStorage技术自动保存用户的文本草稿, 如果用户没有成功发布, 可以在下次浏览器打开时进行恢复.</p></p>
+<p>LazyPress后台存储采用mongodb. 正是mongodb的schema free特性降低了项目功能重构的成本, 促进了人们更快更频繁地优化产品的模型. 这应该是文档型数据库之于传统关系型数据库最大的优势. (犹如git之于svn, 开分支的成本要低得多, 看似是一个普通的功能改进, 实则鼓励促进了开发人员通过开分支实现自己的修改)<br />
+LazyPress运行在最近发布的compojure 1.0.0和ring 1.0.0上, 打包为标准的Java web应用直接部署在cloudfoundry上. 前端继续使用的是我偏爱的Mootools库, 因为使用了很多新的浏览器技术, 所以目前只能保证在最新的Firefox和Chromium/Chrome上正常使用.</p>
+
+<p>Fork me on github: <a href="http://github.com/sunng87/lazypress">http://github.com/sunng87/lazypress</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

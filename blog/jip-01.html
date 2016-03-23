@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>jip 0.1</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/jip-01.html" rel="bookmark"
+           title="Permalink to jip 0.1">jip 0.1</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-01-04T00:00:00+08:00">
+                Published: Tue 04 January 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>java</li>
+<li>jip</li>
+<li>project</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>The original idea is to create a standalone jython environment, I took <a href="http://sunng.info/blog/2010/12/setup-a-jython-development-environment/">traditional Java tools, ant and ivy</a>, to resolve Java dependencies. But  the XMLs seem to be verbose and not pythonic. So I decide to create something like pip, that is, resolves and installs dependencies in a pythonic way.  It is jip.</p></p>
+<p>jip will automatically download jars and its <strong>non-optional</strong> <strong>runtime</strong> dependencies from Maven repositories. By default, jip will search your local repository and maven central repository for the requested artifact. Also, you can create a configuration file to overwrite this.</p>
+
+<p>Virtualenv is required by jip. You must run jip within a standalone environment, created by virtualenv:
+<i>virtualenv -p /usr/local/bin/jython jython-env</i>
+<i>cd jython-env</i>
+<i>source bin/activate</i></p>
+
+<p>Don't forget to activate it.</p>
+
+<p>Then download jip with pip:
+<i>pip install jip</i></p>
+
+<p>Now you have pip for python and jip for java. To install a Java package, just type:<br />
+jip install &lt;groupId&gt;:&lt;artifactId&gt;:&lt;version&gt;</p>
+
+<p>groupId+artifactId+version is known as the coordinate of a maven artifact. For example, you need spring-core in your jython development:
+<i>jip install org.springframework:spring-core:3.0.5.RELEASE</i></p>
+
+<p>The jars will be stored in <i>javalib</i> directory:
+<i>ls javalib</i>
+<pre>
+commons-logging-1.1.1.jar     spring-core-3.0.5.RELEASE.jar
+spring-asm-3.0.5.RELEASE.jar
+</pre></p>
+
+<p>And When you installed jip, I will provide you a <i>jython-all</i> command to include dependencies by default. So use <i>jython-all</i> instead of <i>jython</i> to run your program and the shell.</p>
+
+<p>For traditional Java user, there is a <i>resolve</i> subcommand to download dependencies defined in a pom file. This is more maintainable, some of you may prefer this way to typing it one by one.
+<i>jip resolve pom.xml</i></p>
+
+<p>To define custom repositories, place a dot file <i>.jip</i> in your home directory:<br />
+[cc lang='ini']<br />
+[jboss]<br />
+uri=http://repository.jboss.org/maven2/<br />
+type=remote</p>
+
+<p>[local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local</p>
+
+<p>[central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote<br />
+[/cc]<br />
+You may have internal Nexus, just append to this file following the pattern.</p>
+
+<p>Finally, a clean subcommand to remove everything you downloaded.</p>
+
+<p>That's all. You can find the project at:
+<ul><li><a href="http://pypi.python.org/pypi/jip">http://pypi.python.org/pypi/jip</a></li>
+<li><a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></li></ul></p>
+
+<p>Your feedback is appreciate. Fire an issue in github if you find any bugs or new ideas about this tool.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

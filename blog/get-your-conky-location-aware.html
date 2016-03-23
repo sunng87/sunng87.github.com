@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Get your conky location aware</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/get-your-conky-location-aware.html" rel="bookmark"
+           title="Permalink to Get your conky location aware">Get your conky location aware</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-19T00:00:00+08:00">
+                Published: Fri 19 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>conky</li>
+<li>GIS</li>
+<li>linux</li>
+<li>location
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://www.flickr.com/photos/40741608@N08/4370628754/" title="2010-02-19-225826_188x44_scrot by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4014/4370628754_5a22522b80_o.png" width="188" height="44" alt="2010-02-19-225826_188x44_scrot" /></a></p></p>
+<p>Add this in your conkyrc<br />
+[cc lang="text" nowrap="0"]<br />
+${exec curl -s "http://api.hostip.info" | xpath -e "//gml:featureMember/Hostip/gml:name/text()" -q} ${exec curl -s "http://api.hostip.info" | xpath -e "//gml:featureMember/Hostip//gml:coordinates/text()" -q}<br />
+[/cc]</p>
+
+<p>Hostip is well known as a service provider of the geoclue framework. It translates IP address to geolocation information. The API we use will return a GML document like<br />
+[cc lang="xml" nowrap="0"]
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<hostiplookupresultset version="1.0.1" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nonamespaceschemalocation="http://www.hostip.info/api/hostip-1.0.1.xsd">
+ <gml:description>This is the Hostip Lookup Service</gml:description>
+ <gml:name>hostip</gml:name>
+ <gml:boundedby>
+  <gml:null>inapplicable</gml:null>
+ </gml:boundedby>
+ <gml:featuremember>
+  <hostip>
+   <ip>58.212.88.212</ip>
+   <gml:name>Nanjing</gml:name>
+   <countryname>CHINA</countryname>
+   <countryabbrev>CN</countryabbrev>
+   <!-- Co-ordinates are available as lng,lat -->
+   <iplocation>
+    <gml:pointproperty>
+     <gml:point srsname="http://www.opengis.net/gml/srs/epsg.xml#4326">
+      <gml:coordinates>118.883,32.05</gml:coordinates>
+     </gml:point>
+    </gml:pointproperty>
+   </iplocation>
+  </hostip>
+ </gml:featuremember>
+</hostiplookupresultset>
+[/cc]</p>
+
+<p>Because it uses ip to lookup your address, you cannot expect higher resolution and precision currently.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

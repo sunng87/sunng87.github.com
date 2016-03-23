@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Lighttpd通过FastCGI运行web.py程序</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/lighttpdtong-guo-fastcgiyun-xing-webpycheng-xu.html" rel="bookmark"
+           title="Permalink to Lighttpd通过FastCGI运行web.py程序">Lighttpd通过FastCGI运行web.py程序</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-02T00:00:00+08:00">
+                Published: Mon 02 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>fastcgi</li>
+<li>lighttpd</li>
+<li>python</li>
+<li>web.py
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://webpy.org/" target="_blank">web.py</a>是个很小的python框架，特点就是小，连session都没有实现人家就发布了。前几天KungfuRails大会上他们吹牛说<a href="http://www.sinatrarb.com" target="_blank">Sinatra</a>可以写出世界上最小的Webapp，但是有web.py的化，那个最小至少要加上个“之一”。</p></p>
+<p>Web.py在Lighttpd上通过fastcgi运行的配置，可以在web.py的网站上找到文档：
+<a href="http://webpy.org/cookbook/fastcgi-lighttpd">http://webpy.org/cookbook/fastcgi-lighttpd</a></p>
+
+<p>实际我用的时候把静态的index.html用作首页，稍改动一下：
+<pre class="brush:plain">server.document-root = "/home/sun/projects/sdostatweb"</pre></p>
+
+<p>server.modules   += ( "mod_fastcgi" )<br />
+server.modules   += ( "mod_rewrite" )</p>
+
+<p>server.port = 4000</p>
+
+<p>mimetype.assign = (<br />
+    ".html" =&gt; "text/html"<br />
+)</p>
+
+<p>index-file.names = ( "index.html" )</p>
+
+<p>fastcgi.server = ( "/sdostatweb.py" =&gt;<br />
+(( "socket" =&gt; "/tmp/fastcgi.socket",<br />
+        "bin-path" =&gt; "/home/sun/projects/sdostatweb/sdostatweb.py",<br />
+        "max-procs" =&gt; 5,<br />
+        "bin-environment" =&gt; (<br />
+        "REAL_SCRIPT_NAME" =&gt; ""<br />
+    ),<br />
+        "check-local" =&gt; "disable"<br />
+    ))<br />
+)</p>
+
+<p>url.rewrite-once = (<br />
+    "^/$" =&gt; "/static/index.html",<br />
+    "^/flotr/(.*)$" =&gt; "/static/flotr/$1",<br />
+    "^/static/(.*)$" =&gt; "/static/$1",<br />
+    "^/(.*)$" =&gt; "/sdostatweb.py/$1",</p>
+
+<p>)
+另外用fastcgi的方式使用web.py，需要安装flup。</p>
+
+<p>详细的事，可以看看新浪的Tim Yang的优化：
+<a href="http://timyang.net/python/python-webpy-lighttpd/">http://timyang.net/python/python-webpy-lighttpd/</a></p>
+
+<p>我之前真不敢相信搜狐Mail是跑在web.py上。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

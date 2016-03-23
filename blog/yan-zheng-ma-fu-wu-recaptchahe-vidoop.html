@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>验证码服务recaptcha和vidoop</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html" rel="bookmark"
+           title="Permalink to 验证码服务recaptcha和vidoop">验证码服务recaptcha和vidoop</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-13T00:00:00+08:00">
+                Published: Tue 13 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>captcha</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>某人已经发展到上班时间写blog了。</p></p>
+<p>继续说验证码服务，找到两个比较典型的。<a href="http://recaptcha.net/" target="_blank">recaptcha</a>非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），<a href="http://vidoop.com/" target="_blank">vidoop</a>提供了一种很有特点的验证码机制。</p>
+
+<p>两个服务都提供了python的接口封装便于接入，通过api接口可以管中窥豹，大致了解这两个验证服务的机制。
+<h3>recaptcha</h3>
+下面是一段结合了web.py的简单调用
+<pre class="brush:python">public_key = "******"
+private_key = "********"
+class Recaptcha(object):
+    def GET(self):
+        r = recaptcha.displayhtml(public_key)
+        return render.recapt(r)</pre></p>
+
+<p>    def POST(self):<br />
+        params = web.input()<br />
+        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field, params.recaptcha_response_field<br />
+        remote_ip = web.ctx.ip<br />
+        result = recaptcha.submit(recaptcha_challenge_field, recaptcha_response_field, private_key, remote_ip)<br />
+        return result.is_valid
+我在GET请求中获取验证码，在POST请求中提交验证码。</p>
+
+<p>recaptcha返回的是一段recaptcha自己风格的html片段，效果大家参考twitter的验证码，实际上是一个iframe，iframe的url中包含了哈希串。其中的字段名也自然被写死成recaptcha_challenge_field和recaptcha_response_field，考虑到应用服务器无需验证这两个field的输入，所以也无可厚非。recaptcha_response_field用于输入字符，recaptcha_challenge_field在载入时被修改为一个唯一key。</p>
+
+<p>提交验证时，recaptcha需要提供以上两个用户输入和应用的privatekey以及浏览器ip。recaptcha通过recaptcha_challenge_field 应用的private key以及用户出口ip可以唯一标示用户，并包含一些冗余实现安全相关策略。
+<h3>Vidoop</h3>
+Vidoop提供的服务机制与recaptcha大同小异
+<pre class="brush:python">
+customer_id = "***"
+site_id = "localtest"
+api_username = "******"
+api_password = "******"
+vdp = VidoopSecure(api_username, api_password, customer_id, site_id)</pre></p>
+
+<p>class Vidoop(object):<br />
+    def GET(self):<br />
+        captcha_id, captcha_url, captcha_categories, captcha_text = vdp.create_captcha()<br />
+        return render.vidoop(captcha_id, captcha_url, captcha_categories, captcha_text)</p>
+
+<p>    def POST(self):<br />
+        params =web.input()<br />
+        captcha_id, captcha_code = params.id, params.code<br />
+        try:<br />
+            vdp.submit_captcha(captcha_id, captcha_code)<br />
+            return True<br />
+        except:<br />
+            return False
+</p>
+
+<p>提交验证时只需要要captcha_id和用户输入，这里相对recaptcha做了简化，但已经足够验证需要了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

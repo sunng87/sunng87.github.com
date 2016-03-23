@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Performance Visualization with Gnuplot</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/performance-visualization-with-gnuplot.html" rel="bookmark"
+           title="Permalink to Performance Visualization with Gnuplot">Performance Visualization with Gnuplot</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-23T00:00:00+08:00">
+                Published: Wed 23 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>awk</li>
+<li>foss</li>
+<li>gnuplot</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Gnuplot is considered to be one of the most famous plotting tools on both linux and windows. With Gnuplot, generation of charts becomes agile and easy. Gnuplot supports sorts of terminals range from gui, image to printer. To enable png terminal support, we will build gnuplot with following steps. (However, on most linux distributions you don't have to do these manually, install gnuplot with package manager is doubtlessly the best choice for most cases.)</p></p>
+<p>Well, for a naked machine, it won't be too long to type commands in gnuplot.
+<h3>Installing libpng</h3>
+linpng provides functionality to write png images.<br />
+Grab source form libpng's website:
+<em>wget http://downloads.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz?use_mirror=ncu</em></p>
+
+<p>Uncompress the package:
+<em>tar xfz libpng-1.2.39.tar.gz</em></p>
+
+<p>cd to result directory and build it:
+<em>cd libpng-1.2.39<br />
+./configure<br />
+make<br />
+make install</em>
+<h3>Installing libgd</h3>
+gd provides api for programmer to draw images like Graphics2d in java. Gnuplot uses gd to draw charts on images.<br />
+Grab source from gd's website:
+<em>wget http://www.libgd.org/releases/gd-2.0.35.tar.gz</em></p>
+
+<p>Uncompress it:
+<em>tar xfz gd-2.0.35.tar.gz</em></p>
+
+<p>build it:
+<em>cd gd-2.0.35<br />
+./configure<br />
+make<br />
+make install</em>
+<h3>Compiling and building Gnuplot</h3>
+Grab source from sourceforge:
+<em>wget http://downloads.sourceforge.net/project/gnuplot/gnuplot/4.2.6/gnuplot-4.2.6.tar.gz?use_mirror=ncu</em></p>
+
+<p>Uncompress and compile:
+<em>tar xfz gnuplot-4.2.6.tar.gz<br />
+cd gnuplot<br />
+./configure<br />
+make<br />
+make install</em></p>
+
+<p>if "<em>'@LIBICONV@' not found</em>" encountered during make, just edit <em>src/Makefile</em> to replace <em>-l@LIBICONV@</em> to <em>-liconv</em>, and make again.<br />
+Try to start gnuplot simply with:
+<em>gnuplot</em></p>
+
+<p>Now you may be stopped by error message like<em> libiconv.so.2</em> not found, then you have to copy it from somewhere(such as<em> /usr/local/lib</em>) to<em> /usr/lib</em>, the it will work.
+<h3>Using Gnuplot</h3>
+As the installation completed, we start to use it.</p>
+
+<p>vmstat is a great utility shows you the status of your process queue, memory, swap, io rates, interrupts and cpu usage. With command-line arguments, we can dump these data in a fixed interval and fixed count:
+<em>vmstat 5 10</em></p>
+
+<p>awk is a well-known editor to analyze and extract text from input, we can filter specified fields with awk like this:
+<em>vmstat 5 10 | awk 'NR &gt; 2 {print NR-2, $13}'</em>
+The header was ignored by the conditional expression NR&gt;2 which NR stands for Number-of-Row</p>
+
+<p>The output is just enough for gnuplot, now use pipe to connect them together:
+<em>vmstat 5 10 | awk 'NR &gt; 2 {print NR, $13}' | gnuplot -e "set terminal png; set output 'v.png'; plot '-' u 1:2 t 'cpu' w linespoints;"</em></p>
+
+<p>To gather more information at one time, a more complex command is needed:
+<em>vmstat 10 360 | awk 'NR &gt; 2 {print NR, $4, $9, $10, $13}' &gt; vmstat.dat ; gnuplot -e "set terminal png;set output 'vmstat.png';set grid; set multiplot;set size 0.5, 0.5;set origin 0, 0;plot 'vmstat.dat' u 1:2 t 'freemem' w linespoints;set size 0.5, 0.5;set origin 0.5, 0;plot 'vmstat.dat' u 1:3 t 'bi' w linespoints;set size 0.5, 0.5;set origin 0, 0.5;plot 'vmstat.dat' u 1:4 t 'bo' w linespoints;set size 0.5, 0.5;set origin 0.5, 0.5;plot 'vmstat.dat' u 1:5 t 'cpu' w linespoints;unset multiplot;"</em></p>
+
+<p>Unfortunately, gnuplot in Ubuntu jaunty is at version of 4.2.4, which doesn't support -e option. So you cannot send gnuplot commands directly in command-line. The solution is split it to several steps:
+<em>vmstat 10 360 | awk 'NR &gt; 2 {print NR, $4, $9, $10, $13}' &gt; vmstat.dat<br />
+gnuplot<br />
+&gt;set terminal png;<br />
+&gt;set output 'vmstat.png';<br />
+&gt;set grid;<br />
+&gt;set multiplot;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0, 0;<br />
+&gt;plot 'vmstat.dat' u 1:2 t 'freemem' w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0.5, 0;<br />
+&gt;plot 'vmstat.dat' u 1:3 t 'bi' w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0, 0.5;plot 'vmstat.dat' u 1:4 t 'bo' w linespoints;<br />
+&gt;set size 0.5, 0.5;<br />
+&gt;set origin 0.5, 0.5;<br />
+&gt;plot 'vmstat.dat' u 1:5 t 'cpu' w linespoints;<br />
+&gt;unset multiplot;</em></p>
+
+<p>This picture is a stat result of performance test this afternoon</p>
+
+<p><img class="alignnone" src="http://pic.yupoo.com/classicning/3794181d957c/medium.jpg" alt="" width="500" height="375" /></p>
+
+<p>For more detailed tutorials, check the article on ibm dw:
+<a href="http://www.ibm.com/developerworks/library/l-gnuplot/" target="_blank">http://www.ibm.com/developerworks/library/l-gnuplot/</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

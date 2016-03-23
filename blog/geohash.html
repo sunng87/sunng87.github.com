@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>GeoHash</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/geohash.html" rel="bookmark"
+           title="Permalink to GeoHash">GeoHash</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-19T00:00:00+08:00">
+                Published: Sat 19 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>ruby
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天偶然看到一个Ruby的GeoHash库，功能非常简单，就是将经纬度坐标哈希成字符串，并且，利用这个字符串可以粗略地比较两点的距离。这个库的代码host在GitHub上，要安装，需要将github加入gem：
+<em>sudo gem sources -a http://gems.github.com<br />
+sudo gem install davotroy-geohash</em></p></p>
+<p>用法，irb：
+<em>irb(main):001:0&gt; require 'rubygems'<br />
+=&gt; true<br />
+irb(main):002:0&gt; require 'geohash'<br />
+=&gt; true<br />
+irb(main):003:0&gt; GeoHash.encode(32.168, 118.54)<br />
+=&gt; "wtsr12n0nj"<br />
+irb(main):004:0&gt; GeoHash.decode('wtsr12n0nj')<br />
+=&gt; [32.168, 118.54]</em></p>
+
+<p>代码可以从github上获得
+<em>git clone git://github.com/davetroy/geohash.git</em></p>
+
+<p>GeoHash的核心部分用C实现，仔细看一下可以发现是一个四叉树的结构：
+<pre>[codesyntax lang="c"]
+#define BASE32  "0123456789bcdefghjkmnpqrstuvwxyz"
+static void encode_geohash(double latitude, double longitude, int precision, char *geohash) {
+    int is_even=1, i=0;
+    double lat[2], lon[2], mid;
+    char bits[] = {16,8,4,2,1};
+    int bit=0, ch=0;</pre></p>
+
+<p> lat[0] = -90.0;  lat[1] = 90.0;<br />
+    lon[0] = -180.0; lon[1] = 180.0;</p>
+
+<p> while (i &lt; precision) {<br />
+        if (is_even) {<br />
+            mid = (lon[0] + lon[1]) / 2;<br />
+            if (longitude &gt; mid) {<br />
+                ch |= bits[bit];<br />
+                lon[0] = mid;<br />
+            } else<br />
+                lon[1] = mid;<br />
+        } else {<br />
+            mid = (lat[0] + lat[1]) / 2;<br />
+            if (latitude &gt; mid) {<br />
+                ch |= bits[bit];<br />
+                lat[0] = mid;<br />
+            } else<br />
+                lat[1] = mid;<br />
+        }</p>
+
+<p>     is_even = !is_even;<br />
+        if (bit &lt; 4)<br />
+            bit++;<br />
+        else {<br />
+            geohash[i++] = BASE32[ch];<br />
+            bit = 0;<br />
+            ch = 0;<br />
+        }<br />
+    }<br />
+    geohash[i] = 0;<br />
+}</p>
+
+<p>[/codesyntax]
+
+可惜在学校的时候没有看到这么精致的代码。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>使用Enlive作为模板引擎</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shi-yong-enlivezuo-wei-mo-ban-yin-qing.html" rel="bookmark"
+           title="Permalink to 使用Enlive作为模板引擎">使用Enlive作为模板引擎</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-29T00:00:00+08:00">
+                Published: Thu 29 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>在所有的clojure web开发例子里，对模板的介绍都很少。很多的简单例子都是以hiccup作为页面生成的手段。hiccup是个clojure的html DSL，例子里用这样的DSL生成页面确实很酷，可是他是real world吗，当然不是。</p></p>
+<p>好在clojure世界里早就有了enlive，它不仅是一个通过css selector解析html的库，本身也可以作为模板引擎应用在web开发中。我不知道这种通过css selector的方式是否是enlive首创，不过他实在是非常新颖独特，而且平滑了页面设计和程序的集成。</p>
+
+<p>例如这样一个模板 index.html：<br />
+[cc lang="html"]
+<div id="cc">Sample Text</div>
+[/cc]</p>
+
+<p>在clojure程序中，使用enlive的deftemplate<br />
+[cc lang="clojure"]<br />
+(deftemplate index "index.html"<br />
+  [ctx]<br />
+  [:div#cc] (content (:data ctx)))<br />
+[/cc]</p>
+
+<p>在控制器里，可以很MVC地渲染页面<br />
+[cc lang="clojure"]<br />
+(index {:data "rendered text"})<br />
+[/cc]</p>
+
+<p>除了content用于渲染文本，还有html-content可以渲染含html标签的内容，以及set-attr用来修改页面元素的属性。</p>
+
+<p>和传统的模板引擎相比，最大的不同是enlive里没有嵌入模板的直观的控制流，没有循环和条件判断，但是并非不可实现。</p>
+
+<p>循环输出一组list</p>
+
+<p>页面 list.html<br />
+[cc lang="html"]
+<ul id="the-list">
+<li class="list-item"></li>
+</ul>
+[/cc]</p>
+
+<p>定义一个enlive的snippet<br />
+[cc lang="clojure"]<br />
+(defsnippet item-model "page.html" [:.list-item]<br />
+  [ctx]<br />
+  [:.list-item] (content (:data ctx)))<br />
+[/cc]</p>
+
+<p>在页面模板里<br />
+[cc lang="clojure"]<br />
+(deftemplate list-page "list.html"<br />
+  [ctx]<br />
+  [:ul#the-list] (content (map item-model (:some-list ctx))))<br />
+[/cc]</p>
+
+<p>这样在页面里列表项会被循环输出，而在页面设计时这里可以放任意个li，并且直接交给后台作为模板。</p>
+
+<p>条件判断</p>
+
+<p>页面，设计时显示所有的内容 msg.html<br />
+[cc lang="html"]
+<span id="msg">只在一定条件下显示</span>
+[/cc]</p>
+
+<p>在模板中通过clojure的if进行判断<br />
+[cc lang="clojure"]<br />
+(deftemplate msg "msg.html"<br />
+  [ctx]<br />
+  [:span#msg] (if (:show ctx) identity (html-content "")))<br />
+[/cc]</p>
+
+<p>解决了这两个问题，基本上用enlive作为模板引擎就没有障碍了。不过enlive也有一点小问题，其一可能是性能的问题，方便的selector显然要比传统的模板语言消耗更多的CPU。另外，在开发过程里，页面文件在服务器启动后不能热加载，修改页面必须重启ring才能看到。也许有时间的话，可以给它加一个reload选项。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

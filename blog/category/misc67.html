@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/mapping-geometry-in-grails-and-mysql.html" rel="bookmark"
+                           title="Permalink to Mapping Geometry in Grails and MySQL">Mapping Geometry in Grails and MySQL</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-06T00:00:00+08:00">
+                Published: Tue 06 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>Grails</li>
+<li>groovy</li>
+<li>jts</li>
+<li>mysql
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>针对地理数据的ORM，有一个Hibernate的扩展<a href="http://www.hibernatespatial.org/" target="_blank">HibernateSpatial</a>项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
+<a href="http://www.grails.org/MySQL+GIS-Geometry+with+Grails" target="_blank">http://www.grails.org/MySQL+GIS-Geometry+with+Grails</a></p></p>
+<p>不过按照这个文章里介绍的方法用，很可能会遭遇这样的报错：
+<blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
+这个问题最终在这里得到了解答：
+<a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
+按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition ...</p>
+                <a class="readmore" href="/mapping-geometry-in-grails-and-mysql.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/reading-gps-data-from-exif-using-groovy.html" rel="bookmark"
+                           title="Permalink to Reading GPS Data From EXIF Using Groovy">Reading GPS Data From EXIF Using Groovy</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-05T00:00:00+08:00">
+                Published: Mon 05 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>groovy</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>废话不说了，直接上code吧：</p></p>
+<p><pre class="brush:groovy">
+import com.drew.imaging.jpeg.*;
+import com.drew.metadata.*;
+import com.drew.metadata.exif.*;</pre></p>
+
+<p>file = new File("sample.jpg");<br />
+meta = JpegMetadataReader.readMetadata(file);</p>
+
+<p>gpsdir = meta.getDirectory(GpsDirectory.class);<br />
+lat = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LATITUDE);<br />
+lon = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LONGITUDE);<br />
+lats ...</p>
+                <a class="readmore" href="/reading-gps-data-from-exif-using-groovy.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gnome-shell.html" rel="bookmark"
+                           title="Permalink to Gnome Shell">Gnome Shell</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-04T00:00:00+08:00">
+                Published: Sun 04 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>gnome</li>
+<li>linux</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>续昨，好吧，这个无聊的国庆假期就献给karmic了。gnome-shell已经可以在软件仓库里找到了，apt-get安装即可。要使用gnome-shell可以执行
+<em>gnome-shell --replace</em></p></p>
+<p>要把gnome-shell作为默认的窗口管理器，打开gnome的配置编辑器，找到/desktop/gnome/session/required_components，把panel和windown-manager全部改成gnome-shell，重新登录即可。</p>
+
+<p>上个图：
+<img class="alignnone" src="http://pic.yupoo.com/classicning/0026182bb7d6/medium.jpg" alt="" width="500" height="313" /></p>
+
+<p>当然了，还没有正式release，大家试用尝鲜注意安全第一。</p>
+                <a class="readmore" href="/gnome-shell.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/libchamplain-map-widget-of-gnome-desktop.html" rel="bookmark"
+                           title="Permalink to 'libchamplain: Map Widget of Gnome Desktop'">'libchamplain: Map Widget of Gnome Desktop'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-03T00:00:00+08:00">
+                Published: Sat 03 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>foss</li>
+<li>GIS</li>
+<li>gnome</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>续昨，虽然昨天升级到了gnome2.28，也安装了libchamplain，但是却没有发现这个库应用。Ubuntu上的Empathy似乎是没有把location support编译进去。看不到效果怎么办，好在<a href="http://www.pierlux.com/" target="_blank">libchamplain的作者</a>还提供了另一个应用。这是一个eog的插件，用于读取照片的exif信息中的gps latitude和longitude，进而将他显示在libchamplain的地图里。</p></p>
+<p><img class="alignnone" src="http://pic.yupoo.com/classicning/2698882a6ac0/medium.jpg" alt="" width="500" height="343" /></p>
+
+<p>安装这个插件可以follow<a href="http://live.gnome.org/EyeOfGnome/Plugins" target="_blank">官方网站上的做法</a>，当然开发包、头文件之类的东西要齐备。</p>
+
+<p>libchamplain使用了<a href="http://www.clutter-project.org/" target="_blank">clutter</a>，在载入地图的时候还有fadein的效果。clutter是将要应用在下一代桌面gnome shell中的图形特效库。</p>
+
+<p>插件是用C写的，可以看成是libchamplain的一个例子，作者说已经有了其他语言的binding，如此未来在gnome桌面上开发tile地图程序会变得简单。</p>
+                <a class="readmore" href="/libchamplain-map-widget-of-gnome-desktop.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/upgrade-to-karmic.html" rel="bookmark"
+                           title="Permalink to Upgrade to Karmic">Upgrade to Karmic</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-02T00:00:00+08:00">
+                Published: Fri 02 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>foss</li>
+<li>gnome</li>
+<li>linux</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天凌晨Ubuntu 9.10 Karmic的beta发布了，实在忍耐不到月底了，上午就update-manager -d升级了发行版。从下在到安装完成用了大约三个小时，当然升级不用花什么精力，只要让程序自动去处理就好了，现在跨版本升级越来越轻松了。</p></p>
+<p>配好以后感觉还是很值得升级的，大概多半是因为Kernel 2.6.31，这次桌面性能的提升真的非常大，之前从来没有这么明显的感受。举个例子，很惭愧，我这机器在上一个9.04版本里alt-table的Application Switcher都还会卡，现在已经一如之前不开compositing时的性能了。</p>
+
+<p>既然是ubuntu，还是要提一下面子上的事情。GDM有变化，按照release notes上说的是全部重写了。在从gdm登录到桌面载入之间有了一个loading效果，体验很不错。然后是Ubuntu主题变了，human不再是黄的了，变成了深褐色，有了新的图标主题humanity，尤其是在桌面的右上角区域很有特点。</p>
+
+<p>再有就是Gnome2.28的变化还有Ubuntu对gnome相关的增强了，这次激进了一些，居然赶在arch更新之前在ubuntu上体验了gnome的新版本 ...</p>
+                <a class="readmore" href="/upgrade-to-karmic.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc66.html">&laquo;</a>
+    Page 67 / 77
+        <a href="/category/misc68.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

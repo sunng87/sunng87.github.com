@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>终于能用Unity和Gnome-shell了</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/zhong-yu-neng-yong-unityhe-gnome-shellliao.html" rel="bookmark"
+           title="Permalink to 终于能用Unity和Gnome-shell了">终于能用Unity和Gnome-shell了</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-14T00:00:00+08:00">
+                Published: Sun 14 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>自从升级到Maverick之后，有两个问题就一直如鲠在喉，GNOME3会话和Ubuntu Netbook(Unity)会话能不能用。前者启动之后出现Panel后全部僵死，鼠标可以移动但是任何操作都没有响应；后者桌面背景图片一闪就黑屏，没有任何响应。</p></p>
+<p>查看unity的xsession-error日志，其中的报错比较含糊，搜索也没有找到相似的问题。查看GNOME-Shell的xsession-error之后发现很多JS报错，搜索了一下，终于找到了一个bug报告：
+<a href="https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907">https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907</a></p>
+
+<p>情况和我一样，都是之前曾经安装过PPA版本的GNOME-Shell尝鲜，升级之后出现了JS报错。按照说明打开synaptic，果然有两个包使用的是git版本，尽管PPA已经删除，但是已安装的软件包只会被标记为Local or Obsolete，恰好这个git版本是0.9.4比Maverick里的0.9.3还要高，这样更新的时候又不会提示。如果不细看还真的不容易发现。按下Ctrl+E， synaptic会提示Force Version对话框，选择仓库的旧版本，安装、重启。这下不仅GNOME-Shell正常工作了，同样依赖Mutter的Unity也正常了。</p>
+
+<p>这次悲剧，说明使用PPA还是要慎重，尤其是跨版本升级之后，要小心PPA被禁用但软件包没有被升级的情况。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

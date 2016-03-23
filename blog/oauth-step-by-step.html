@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>OAuth Step by Step</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/oauth-step-by-step.html" rel="bookmark"
+           title="Permalink to OAuth Step by Step">OAuth Step by Step</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-04T00:00:00+08:00">
+                Published: Mon 04 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>mashup</li>
+<li>oauth</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>最近琢磨OAuth认证方式。OAuth的优点主要在于﻿
+<ul>
+    <li>用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源；</li>
+    <li>资源提供方对第三方应用有更细粒度的控制。</li>
+</ul>
+在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、URL编码的请求路径和请求的参数表组成。<br />
+请求的参数表是除去oauth_signature以外的所有参数，按参数名排序，并进行url转义
+<pre class="brush:python">def to_signature_key(method, url, data):
+    keys = list(data.keys())
+    keys.sort()
+    encoded = urllib.quote("&amp;".join([key+"="+data[key] for key in keys]))
+    return "&amp;".join([method, urllib.quote(url, safe="~"), encoded])
+</pre>
+有了这个通用的生成signature base string的方法，以后就可以根据OAuth协议规范按步骤进行。</p></p>
+<p>首先获取Request Token。这一步通常使用资源提供方注册的API Key和API Key Secret
+<pre class="brush:python">def request_token_params(consumer_key, consumer_secret, path, method='GET'):
+    data={}
+    data['oauth_consumer_key']=consumer_key
+    data['oauth_signature_method']='HMAC-SHA1'
+    data['oauth_timestamp']=str(int(time.time()))
+    data['oauth_nonce']=''.join([str(random.randint(0,9)) for i in range(10)])
+    print data</pre></p>
+
+<p> msg = to_signature_key(method, path, data)<br />
+    print msg</p>
+
+<p> signed = base64.b64encode(hmac.new(consumer_secret+"&amp;", msg, hashlib.sha1).digest())<br />
+    print signed<br />
+    data['oauth_signature']=signed<br />
+    return data</p>
+
+<p>def result2dict(result_string):<br />
+    d = {}<br />
+    params = res.split('&amp;')<br />
+    for p in params:<br />
+        d[p.split('=')[0]] = p.split('=')[1]<br />
+    return d</p>
+
+<p>conn = httplib.HTTPConnection("www.douban.com", 80)</p>
+
+<p>params = request_token_params(consumer_key, consumer_secret, request_token_path)<br />
+conn.request('GET', request_token_path+"?"+urllib.urlencode(params))<br />
+res = conn.getresponse().read()<br />
+print res<br />
+request_token = result2dict(res)
+
+这一步可以获得未经认证的Request Token和Request Token Secret。需要注意的细节是在计算hmac签名的时候，即使只有一个Token Secret，仍然需要加上"&amp;"</p>
+
+<p>第二步要求用户授权该Request Token，打开浏览器，将用户定向到相应的授权页面，参数为上一步获得的Request Token</p>
+
+<p>第三步，用授权过的Request Token换取Access Token。这一步类似第一步，只是用于签名的token包括API Key Secret和Request Token
+<pre class="brush:python">def access_token_params(consumer_key, consumer_secret, oauth_token, oauth_secret, path, method='GET'):
+    data={}
+    data['oauth_consumer_key']=consumer_key
+    data['oauth_signature_method']='HMAC-SHA1'
+    data['oauth_timestamp']=str(int(time.time()))
+    data['oauth_nonce']=''.join([str(random.randint(0,9)) for i in range(10)])
+    data['oauth_token'] = oauth_token</pre></p>
+
+<p> msg = to_signature_key(method, path, data)<br />
+    print msg</p>
+
+<p> signed = base64.b64encode(hmac.new(consumer_secret+"&amp;"+oauth_secret, msg, hashlib.sha1).digest())<br />
+    print signed<br />
+    data['oauth_signature']=signed<br />
+    return data</p>
+
+<p>params = access_token_params(consumer_key, consumer_secret, request_token['oauth_token'],<br />
+    request_token['oauth_token_secret'], access_token_path)<br />
+conn.request('GET', access_token_path+"?"+urllib.urlencode(params))<br />
+res = conn.getresponse().read()<br />
+print res<br />
+access_token = result2dict(res)
+
+这一步将至少返回Access Token和Access Token Secret，是最终用于访问受限资源的Token。以豆瓣的实现为例，OAuth的相关参数应放在HTTP头里随请求进行发送。
+<pre class="brush:python">def oauth_header(consumer_key, consumer_secret, oauth_token, oauth_secret, path, realm):
+    data = access_token_params(consumer_key, consumer_secret, oauth_token, oauth_secret, path, method="POST")
+    header_string = ','.join([key+'="'+data[key]+'"' for key in data.keys()])
+    return 'OAuth realm="'+realm+'",'+header_string</pre></p>
+
+<p>posturl = 'http://api.douban.com/miniblog/saying'</p>
+
+<p>content = """&lt;?xml version='1.0' encoding='UTF-8'?&gt;<br />
+&lt;entry xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:db="http://www.douban.com/xmlns/"&gt;<br />
+&lt;content&gt;li lei ju le han mei mei&lt;/content&gt;<br />
+&lt;/entry&gt;<br />
+"""</p>
+
+<p>header = {}<br />
+header['Authorization'] = oauth_header(consumer_key, consumer_secret,<br />
+        access_token['oauth_token'], access_token['oauth_token_secret'],<br />
+        posturl, "http://api.douban.com")<br />
+header['Content-Type'] = 'application/atom+xml'<br />
+print header</p>
+
+<p>conn.request('POST', posturl, content, header)<br />
+res = conn.getresponse().read()</p>
+
+<p>print res</p>
+
+<p>conn.close()
+
+在这一步中，用于生成signature base string的url是要访问的受限资源地址，而签名的参数表依然是oauth相关的参数。<br />
+生成的Authorization头如下
+<pre class="brush:text">Authorization: OAuth realm="http://api.douban.com",
+    oauth_nonce="8735717688",
+    oauth_timestamp="1262613619",
+    oauth_consumer_key="0bc081a01168b263234184e0343a1729",
+    oauth_signature_method="HMAC-SHA1",
+    oauth_token="5fb836c37543ad691f28a44a5fcb083b",
+    oauth_signature="jk6p5qaXVPrGQctSzpO5jjYHfDk="
+</pre>
+用这个头就可以在一定的时间内访问所有授权范围内的受限资源。</p>
+
+<p>代码是ugly了一些，不过应该相对易于理解吧。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

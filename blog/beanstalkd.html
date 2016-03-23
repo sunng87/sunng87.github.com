@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>beanstalkd</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/beanstalkd.html" rel="bookmark"
+           title="Permalink to beanstalkd">beanstalkd</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-08-11T00:00:00+08:00">
+                Published: Wed 11 August 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>foss</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://kr.github.com/beanstalkd/">beanstalkd</a>是一个极轻量级的消息队列服务，作者的说法叫做Work Queue。</p></p>
+<p><h3>概念</h3></p>
+
+<p>Beanstalkd里包含以下几个概念：
+<ul>
+<li>Producer</li>
+<li>Worker</li>
+<li>Job</li>
+<li>Tube</li>
+</ul></p>
+
+<p>Producer 与传统的消息队列服务中的概念类似，是Job的生产者。这个角色通过put命令来创建Job。</p>
+
+<p>Worker 即消费者，worker通过reserve / release / bury / delete 等命令操作job的生命周期。</p>
+
+<p>Job 是beanstalkd中的基本单元，一个job包含id和body，从属于一个tube。Job的生命周期是beanstalkd中的核心概念，它包含DELAYED / READY / RESERVED / BURIED / DELETED等状态。beanstalkd文档中的这个图对Job的声明周期进行了说明：
+<a href="http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81">http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81</a></p>
+
+<p>Tube 是类似namespace的概念，Producer在生产Job前通过use指定相应的Tube。而Worker通过watch / Ignore命令来决定从哪些Tube中获得Job。</p>
+
+<p><h3>安装</h3></p>
+
+<p>Beanstalkd 可以通过很多Linux发行版的包管理器直接安装。依赖libevent 1.4.1 以上版本。<br />
+通过以下命令启动即可</p>
+
+<p><i>beanstalkd -d -p &lt;PORT&gt;</i></p>
+
+<p><h3>协议</h3>
+Beanstalkd在各方面都继承memcached的风格，协议也与memcached类似，同样是基于文本的：</p>
+
+<p>命令 参数 [参数...] [命令体字节数]\r\n<br />
+[命令体]\r\n</p>
+
+<p>beanstalkd很多命令的返回是yaml格式，但是系统对命令体的格式并没有限制。</p>
+
+<p><h3>客户端</h3></p>
+
+<p>Beanstalkd协议见简单，有各种语言的客户端实现。python有一个非常简单的beanstalkc，可以通过easy_install安装。不过，这个客户端缺少断线重连机制，正式发布的0.2.0版本也有一些严重的bug。可以从github上下载源代码安装，并在使用时控制重连。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

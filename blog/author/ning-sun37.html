@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/zhong-yu-neng-yong-unityhe-gnome-shellliao.html" rel="bookmark"
+                           title="Permalink to 终于能用Unity和Gnome-shell了">终于能用Unity和Gnome-shell了</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-14T00:00:00+08:00">
+                Published: Sun 14 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>自从升级到Maverick之后，有两个问题就一直如鲠在喉，GNOME3会话和Ubuntu Netbook(Unity)会话能不能用。前者启动之后出现Panel后全部僵死，鼠标可以移动但是任何操作都没有响应；后者桌面背景图片一闪就黑屏，没有任何响应。</p></p>
+<p>查看unity的xsession-error日志，其中的报错比较含糊，搜索也没有找到相似的问题。查看GNOME-Shell的xsession-error之后发现很多JS报错，搜索了一下，终于找到了一个bug报告：
+<a href="https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907">https://bugs.launchpad.net/ubuntu/+source/mutter/+bug/618907</a></p>
+
+<p>情况和我一样，都是之前曾经安装过PPA版本的GNOME-Shell尝鲜，升级之后出现了JS报错。按照说明打开synaptic，果然有两个包使用的是git版本，尽管PPA已经删除，但是已安装的软件包只会被标记为Local or Obsolete，恰好这个git版本是0.9.4比Maverick里的0.9.3还要高，这样更新的时候又不会提示。如果不细看还真的不容易发现。按下Ctrl+E ...</p>
+                <a class="readmore" href="/zhong-yu-neng-yong-unityhe-gnome-shellliao.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/awesome-autostart.html" rel="bookmark"
+                           title="Permalink to Awesome autostart">Awesome autostart</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-09T00:00:00+08:00">
+                Published: Tue 09 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>awesome</li>
+<li>linux</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>Problem</h3>
+让Awesome环境像Openbox一样在启动时，在根上下文中执行一个autostart脚本（启动程序、声明环境变量）。</p></p>
+<p><h3>Solution</h3>
+Ubuntu中GDM启动后会执行<i> /etc/gdm/Xsession</i> 这个脚本，如果是custom会话（启动参数custom），会执行用户目录下的.xsession脚本，否则会执行 <i>/etc/X11/Xsession.d/</i> 目录下的所有脚本。</p>
+
+<p>为了支持autostart脚本，可以在 <i>/etc/X11/Xsession.d/</i> 里创建一个新的脚本 55awesome-autostart<br />
+[cc lang="bash"]<br />
+BASESTARTUP=$(basename "$STARTUP" | cut -d\  -f1)<br />
+if [ "$BASESTARTUP" = x-session-manager ...</p>
+                <a class="readmore" href="/awesome-autostart.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/zhen-jiang-he-qi-xia-shan.html" rel="bookmark"
+                           title="Permalink to 镇江和栖霞山">镇江和栖霞山</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-08T00:00:00+08:00">
+                Published: Mon 08 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>留影
+tags:</li>
+<li>Nanjing</li>
+<li>photo</li>
+<li>Tourism
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>放假在家，不甘寂寞，去了南京周边一些地方。回来才发现，去的居然都是寺庙！</p></p>
+<p>镇江的金山寺
+<a href="http://www.flickr.com/photos/40741608@N08/5145943014/" title="zhenjiang_01 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1183/5145943014_8ddabc06b8.jpg" width="375" height="500" alt="zhenjiang_01" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5145950226/" title="zhenjiang_03 by 贝小塔, on Flickr"><img src="http://farm2.static.flickr.com/1405/5145950226_a36c1626ef.jpg" width="375" height="500" alt="zhenjiang_03" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5145952242/" title="zhenjiang_04 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4006/5145952242_8cd454dd90.jpg" width="500" height="375" alt="zhenjiang_04" /></a></p>
+
+<p>从南京到镇江，坐火车大约30分钟。从火车站出来坐2路车，可以在去金山公园之前了解一下镇江的全貌。</p>
+
+<p>南京的栖霞山，山顶上有个老人放羊。下面这只大概是羊王一样的角色，那眼神
+<a href="http://www.flickr.com/photos/40741608@N08/5157032882/" title="IMG_0164 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4063/5157032882_8229c38243.jpg" width="500" height="375" alt="IMG_0164" /></a></p>
+
+<p>下山蜿蜒的路
+<a href="http://www.flickr.com/photos/40741608@N08/5156435095/" title="IMG_0173 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4016/5156435095_76031f6ae9.jpg" width="375" height="500" alt="IMG_0173" /></a></p>
+
+<p>在栖霞山可以看到整个仙林地区，随着地铁的开通，看来这里是未来发展的重心了。而我们曾经被圈养的江北浦口，恐怕是被彻彻底底的遗忘了。</p>
+                <a class="readmore" href="/zhen-jiang-he-qi-xia-shan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/qq360.html" rel="bookmark"
+                           title="Permalink to QQ360">QQ360</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-04T00:00:00+08:00">
+                Published: Thu 04 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>cnweb
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>作为一个Linux桌面用户，若不是早些时候幡然悔悟投靠了自由软件，今天怕是也难以有隔岸观狗，苟全性命于乱世的心境。其实我是有两个想法的，一个是新浪的UC，一个是360自己。</p></p>
+<p>我是在twitter上看到有同事说怎么UC没有动静。一说UC能想起来的人都应该想起来的。我不幸作为了见证UC历史的那一拨人，不幸就不幸在事隔多年我几乎都忘记自己这个身份了。2004年初，腾讯推出了一个2块钱注册QQ号的业务，从那个时候起的一段时间里，QQ号不再是像后来和先前这样免费注册。于是骂声一片，在深圳就冒出一个叫做朗玛UC的产品，就在那半年里人气飙升，虽然不及QQ，但是在国内也算是对QQ空前绝后的挑战了。那个时候的各种程序功能、营销手段也都是纯拷贝，我印象最深的是一个挂机时间换靓号的。因为这事我参与过，正好有高中同学弄到了学校服务器的权限，于是就替我就用金陵中学的Windows2000服务器，挂满了要求的时长，得到了6位UC号。</p>
+
+<p>后来腾讯意识到问题，放弃了2块钱的业务，这以后UC很快就走了下坡路，最终卖给了新浪，取代了新浪自家那个更烂的IM产品（连名字都想不起来了）。神奇的是，尽管不景气，但是新浪UC这么些年一直尴尬地活着，还在不断更新。</p>
+
+<p>如今机会来了，360跳出来，腾讯又受到了几年都没有过的挑战。不过有趣的是，这次大战一直是1v1 ...</p>
+                <a class="readmore" href="/qq360.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/bash-color-support-for-bti.html" rel="bookmark"
+                           title="Permalink to Bash Color Support for Bti">Bash Color Support for Bti</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-10-31T00:00:00+08:00">
+                Published: Sun 31 October 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>c</li>
+<li>foss</li>
+<li>linux</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://github.com/gregkh/bti">Bti</a> is well known as a command line twitter/identica/statusnet client, by <a href="http://github.com/gregkh">Greg Kroah-Hartman</a>.</p></p>
+<p>I have been using this tool in CLI environment for a long time, found it difficult for human to parse output by eyes. So I ...</p>
+                <a class="readmore" href="/bash-color-support-for-bti.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun36.html">&laquo;</a>
+    Page 37 / 77
+        <a href="/author/ning-sun38.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

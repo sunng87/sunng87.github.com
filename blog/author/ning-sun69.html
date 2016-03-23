@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/some-python-segments.html" rel="bookmark"
+                           title="Permalink to Some python segments">Some python segments</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-22T00:00:00+08:00">
+                Published: Tue 22 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><pre class="brush:python">
+import MySQLdb
+import subprocess
+from smtplib import *
+from datetime import date, timedelta</pre></p></p>
+<p>class StatEntry(object):<br />
+    def __init__(self, name, count):<br />
+        self.name = name<br />
+        self.count = count<br />
+    def __str__(self):<br />
+        return "%s\t%d" % (self.name, self.count)</p>
+
+<p>def fetchdb(date):<br />
+    conn = MySQLdb.connect ...</p>
+                <a class="readmore" href="/some-python-segments.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shao-fan-zai.html" rel="bookmark"
+                           title="Permalink to 烧饭再">烧饭再</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-20T00:00:00+08:00">
+                Published: Sun 20 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>food</li>
+<li>Life</li>
+<li>shaofan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://blog.samsonis.me/2009/09/update-20/" target="_blank">看了烧饭1，就想看烧饭2</a>.可是我思前想后，烧饭2这个标题总有那么一点不太对劲（大家自己体会），于是还是叫烧饭再吧。</p></p>
+<p>今天介绍酱爆鸡丁，娘的，在北京的夏天吃这个吃得都快吐了，时隔一年本人亲自操刀上阵，不为别的，只为再吐一次。</p>
+
+<p>用料：鸡胸肉一块，黄瓜一根，甜面酱，葱，料酒，酱油，盐，味精，淀粉，糖，自来水，菜刀，案板，锅，电磁炉，油烟机，自行车。。。</p>
+
+<p>主要步骤如下：
+<ol>
+    <li>鸡肉化冻，黄瓜大葱洗干净；</li>
+    <li>鸡肉切丁，大小以大块熟了小块还没有糊为宜，放碗里加淀粉、盐，抓之；</li>
+    <li>黄瓜切丁，大小自便，装盘 ...</li></ol></p>
+                <a class="readmore" href="/shao-fan-zai.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/geohash.html" rel="bookmark"
+                           title="Permalink to GeoHash">GeoHash</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-19T00:00:00+08:00">
+                Published: Sat 19 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>ruby
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天偶然看到一个Ruby的GeoHash库，功能非常简单，就是将经纬度坐标哈希成字符串，并且，利用这个字符串可以粗略地比较两点的距离。这个库的代码host在GitHub上，要安装，需要将github加入gem：
+<em>sudo gem sources -a http://gems.github.com<br />
+sudo gem install davotroy-geohash</em></p></p>
+<p>用法，irb：
+<em>irb(main):001:0&gt; require 'rubygems'<br />
+=&gt; true<br />
+irb(main):002:0&gt; require 'geohash'<br />
+=&gt; true<br />
+irb(main):003:0&gt; GeoHash.encode ...</em></p>
+                <a class="readmore" href="/geohash.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/rdf-sparql-query-with-python.html" rel="bookmark"
+                           title="Permalink to RDF, Sparql query with python">RDF, Sparql query with python</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-13T00:00:00+08:00">
+                Published: Sun 13 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>python</li>
+<li>rdf
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>A simple query to test <a href="http://en.wikipedia.org/wiki/Resource_Description_Framework">rdf</a> and <a href="http://en.wikipedia.org/wiki/Sparql">sparql</a>.
+<pre>[codesyntax lang="python"]
+import sys
+import rdflib
+from rdflib.Graph import ConjunctiveGraph</pre></p></p>
+<p>g = ConjunctiveGraph()</p>
+
+<p>g.parse(sys.argv[1], format="xml")</p>
+
+<p>fbns = rdflib.Namespace("http://rdf.freebase.com/ns/")</p>
+
+<p>player_refs = g.query("""SELECT ?player ...</p>
+                <a class="readmore" href="/rdf-sparql-query-with-python.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shao-fan.html" rel="bookmark"
+                           title="Permalink to 烧饭">烧饭</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-13T00:00:00+08:00">
+                Published: Sun 13 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>留影</li>
+<li>自话
+tags:</li>
+<li>food</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>首先再祝<a href="http://blog.nulltao.net/">标题中的人</a>生日快乐。</p></p>
+<p>虽说daf同学做菜好看好吃（看出奉承意思的读者请可以买棒棒糖奖励自己），但是这不能成为本人自甘堕落自甘刷碗停滞不前的理由。况且，作为一个口味疑似诡异的人，如果不练好技术，掌握一技之长，将来很难在厨房立足，更不要提取得话语权。甚至没有在饭前进厨房的机会，下场会很惨。</p>
+
+<p>以上是关于烧饭必要性的论述。入正题，今天迎着正午的朝阳，从超市买回了青椒芹菜牛肉鸡肉，为了能让才华体现得淋漓尽致，做了两个菜。简述过程的话大抵是以下<a href="http://blog.samsonis.me/tag/update/">update体</a>流程：
+<ol>
+    <li>洗菜；</li>
+    <li>牛肉切丝（个中坎坷不作赘述），加料酒、淀粉、盐；</li>
+    <li>鸡肉切片（个中曲折不必了解），加蛋清、盐、淀粉；</li>
+    <li>芹菜切段；</li>
+    <li>小碗调酱油、醋、糖、料酒，备用；</li>
+    <li>葱姜切末备用 ...</li></ol></p>
+                <a class="readmore" href="/shao-fan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun68.html">&laquo;</a>
+    Page 69 / 77
+        <a href="/author/ning-sun70.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

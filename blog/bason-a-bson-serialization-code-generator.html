@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'Bason: A BSON Serialization Code Generator'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/bason-a-bson-serialization-code-generator.html" rel="bookmark"
+           title="Permalink to 'Bason: A BSON Serialization Code Generator'">'Bason: A BSON Serialization Code Generator'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-08-23T00:00:00+08:00">
+                Published: Mon 23 August 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>java</li>
+<li>maven</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Bason is a code generator for object to bson serialization and deserialization. Different from tranditional reflection way, bason uses an annotation processor to generate serialization manager at compile time. You just add Bason as compilation dependency and drop it in the runtime.</p></p>
+<p>To use Bason, you simply add annotation to JavaBeans:<br />
+[cc lang="java"]<br />
+/**<br />
+ *<br />
+ */<br />
+package info.sunng.bason.example;</p>
+
+<p>import java.util.Date;</p>
+
+<p>import info.sunng.bason.annotations.BsonAlias;<br />
+import info.sunng.bason.annotations.BsonDocument;<br />
+import info.sunng.bason.annotations.BsonIgnore;</p>
+
+<p>/**<br />
+ * @author SunNing<br />
+ *<br />
+ * @since Aug 18, 2010<br />
+ */<br />
+@BsonDocument<br />
+public class Passenger {</p>
+
+<p> private double packageWeight;</p>
+
+<p> private long ticketId;</p>
+
+<p> private String name;</p>
+
+<p> private Date createdDate;</p>
+
+<p> private Flight flight;</p>
+
+<p> /**<br />
+     * @return the packageWeight<br />
+     */<br />
+    @BsonIgnore<br />
+    public double getPackageWeight() {<br />
+        return packageWeight;<br />
+    }</p>
+
+<p> /**<br />
+     * @param packageWeight the packageWeight to set<br />
+     */<br />
+    public void setPackageWeight(double packageWeight) {<br />
+        this.packageWeight = packageWeight;<br />
+    }</p>
+
+<p> /**<br />
+     * @return the ticketId<br />
+     */<br />
+    @BsonAlias("ticket")<br />
+    public long getTicketId() {<br />
+        return ticketId;<br />
+    }</p>
+
+<p> /**<br />
+     * @param ticketId the ticketId to set<br />
+     */<br />
+    public void setTicketId(long ticketId) {<br />
+        this.ticketId = ticketId;<br />
+    }</p>
+
+<p> /**<br />
+     * @return the name<br />
+     */<br />
+    public String getName() {<br />
+        return name;<br />
+    }</p>
+
+<p> /**<br />
+     * @param name the name to set<br />
+     */<br />
+    public void setName(String name) {<br />
+        this.name = name;<br />
+    }</p>
+
+<p> /**<br />
+     * @param createdDate the createdDate to set<br />
+     */<br />
+    public void setCreatedDate(Date createdDate) {<br />
+        this.createdDate = createdDate;<br />
+    }</p>
+
+<p> /**<br />
+     * @return the createdDate<br />
+     */<br />
+    public Date getCreatedDate() {<br />
+        return createdDate;<br />
+    }</p>
+
+<p> /**<br />
+     * @param flight the flight to set<br />
+     */<br />
+    public void setFlight(Flight flight) {<br />
+        this.flight = flight;<br />
+    }</p>
+
+<p> /**<br />
+     * @return the flight<br />
+     */<br />
+    public Flight getFlight() {<br />
+        return flight;<br />
+    }</p>
+
+<p>}</p>
+
+<p>[/cc]
+<ul>
+<li>@BsonDocument marks this bean to be processed by bason processor. Serialization and deserialization support for this bean will be added to the manager. The bean must follow the Java Bean specification that has a getter and a setter for each property.</li>
+<li>@BsonAlias on the getter allows user the specify a name for bson document instead of the default java bean property name.</li>
+<li>@BsonIgnore on the getter marks a property to be transient when serialization and deserialization.</li>
+</ul></p>
+
+<p>Then you need a <i>bason.properties</i> at the root of classpath which looks like<br />
+[cc lang="properties"]<br />
+bason.managerClassName=info.sunng.bason.BasonManager<br />
+[/cc]<br />
+You specify the manager class name here. This name can not be duplicated if you use Bason in multiple modules.</p>
+
+<p>Take maven configuration as an example:<br />
+[cc lang="xml"]<br />
+    <dependencies>
+        <dependency>
+            <groupid>info.sunng.bason</groupid>
+            <artifactid>bason-annotation</artifactid>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupid>info.sunng.bason</groupid>
+            <artifactid>bason-internal</artifactid>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupid>org.mongodb</groupid>
+            <artifactid>mongo-java-driver</artifactid>
+        </dependency>
+    </dependencies></p>
+
+<p> <build>
+        <finalname>${project.artifactId}</finalname></build></p>
+
+<p>     <plugins>
+            <plugin>
+                <groupid>org.apache.maven.plugins</groupid>
+                <artifactid>maven-compiler-plugin</artifactid></plugin></plugins></p>
+
+<p>             <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target></configuration></p>
+
+<p>                 <compilerarguments>
+                        <processor>info.sunng.bason.internal.BasonProcessor</processor>
+                    </compilerarguments>
+
+
+
+[/cc]</p>
+
+<p> when everything is ready, run <i>mvn compile</i> to generate the manager source file. By default, in a standard maven project, the generated file will be placed at:
+<i>/bason-example/target/generated-sources/annotations/</i>
+[cc lang="java"]<br />
+package info.sunng.bason;<br />
+import org.bson.*;<br />
+import javax.annotation.Generated;<br />
+@Generated({"info.sunng.bason.BasonManager"})<br />
+public final class BasonManager{<br />
+    public static final BSONObject toBson(info.sunng.bason.example.Passenger o){<br />
+        if (o == null) {<br />
+            throw new NullPointerException();<br />
+        }<br />
+        BSONObject bson = new BasicBSONObject();<br />
+        bson.put("ticket",o.getTicketId());<br />
+        bson.put("name",o.getName());<br />
+        bson.put("createdDate",o.getCreatedDate());<br />
+        bson.put("flight",toBson(o.getFlight()));<br />
+        return bson;<br />
+    }<br />
+    public static final info.sunng.bason.example.Passenger fromBson(info.sunng.bason.example.Passenger o, BSONObject bson){<br />
+        if (o == null || bson == null) {<br />
+            throw new NullPointerException();<br />
+        }<br />
+        o.setTicketId((java.lang.Long)bson.get("ticket"));<br />
+        o.setName((java.lang.String)bson.get("name"));<br />
+        o.setCreatedDate((java.util.Date)bson.get("createdDate"));<br />
+        o.setFlight(fromBson(new info.sunng.bason.example.Flight(), (BSONObject)bson.get("flight")));<br />
+        return o;<br />
+    }<br />
+    public static final BSONObject toBson(info.sunng.bason.example.Flight o){<br />
+        if (o == null) {<br />
+            throw new NullPointerException();<br />
+        }<br />
+        BSONObject bson = new BasicBSONObject();<br />
+        bson.put("company",o.getCompany());<br />
+        bson.put("flightId",o.getFlightId());<br />
+        return bson;<br />
+    }<br />
+    public static final info.sunng.bason.example.Flight fromBson(info.sunng.bason.example.Flight o, BSONObject bson){<br />
+        if (o == null || bson == null) {<br />
+            throw new NullPointerException();<br />
+        }<br />
+        o.setCompany((java.lang.String)bson.get("company"));<br />
+        o.setFlightId((java.lang.String)bson.get("flightId"));<br />
+        return o;<br />
+    }<br />
+}</p>
+
+<p>[/cc]</p>
+
+<p>The project is hosted at
+<a href="http://github.com/sunng87/bason">http://github.com/sunng87/bason</a></p>
+
+<p>If you have any ideas, just let me know.</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

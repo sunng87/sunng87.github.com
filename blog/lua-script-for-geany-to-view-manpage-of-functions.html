@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Lua script for Geany to view manpage of functions</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/lua-script-for-geany-to-view-manpage-of-functions.html" rel="bookmark"
+           title="Permalink to Lua script for Geany to view manpage of functions">Lua script for Geany to view manpage of functions</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-22T00:00:00+08:00">
+                Published: Wed 22 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>c</li>
+<li>foss</li>
+<li>geany</li>
+<li>linux</li>
+<li>lua
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>Requirement</h3>
+When editing when Geany, you need some document of system library functions at hand. So you want to browse manpage at any time.</p></p>
+<p><h3>Solution</h3>
+Just two lines:<br />
+[cc lang="lua"]<br />
+sel=geany.selection()<br />
+geany.launch('rxvt-unicode', '-e', 'man', sel)<br />
+[/cc]
+<a href="http://gist.github.com/591279">http://gist.github.com/591279</a></p>
+
+<p><h3>Install</h3>
+Make sure you have geany-plugin-lua installed:
+<i>sudo apt-get install geany-plugin-lua</i></p>
+
+<p>Create a lua source file named 'ShowMan.lua' in <i>~/.config/geany/plugins/geanylua/</i>  . If the direcotry does not exist, you should create it first.</p>
+
+<p>Copy two lines of lua code into this file, save and close.</p>
+
+<p>Create a file named hotkeys.cfg in <i>~/.config/geany/plugins/geanylua/</i>, add following content:
+<i>ShowMan.lua</i></p>
+
+<p>Restart geany, then open Preferences->Keybindings, Lua Script-> ShowMan, bind a key, for example, Alt+m</p>
+
+<p><h3>Usage</h3>
+Select the function name, and press Alt+m (or from menu Tools->Lua Scripts->ShowMan), then you see the terminal and the manpage.</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/5017060556/" title="geany-lua-manpage by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4127/5017060556_ca89e90517.jpg" width="500" height="313" alt="geany-lua-manpage" /></a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

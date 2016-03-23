@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>New shake syntax</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/new-shake-syntax.html" rel="bookmark"
+           title="Permalink to New shake syntax">New shake syntax</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-09-23T00:00:00+08:00">
+                Published: Sun 23 September 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>As shake goes public, I received a lot of feedback. The top issue is about using clojure variables in shake macros. Now it has been fixed in 0.2.2. Let me show you the new syntax. </p></p>
+<p>Using vars, local bindings in shake macros:<br />
+[cc lang="clojure"]<br />
+(require '[shake.core :as sh])</p>
+
+<p>(let [x "/home/nsun"]<br />
+  (sh/ls -l $x))<br />
+[/cc]</p>
+
+<p>So you have to prefix the clojure variable with a dollar sign. This is quite similar to what we did in shell programming.</p>
+
+<p>And more interesting, you can also use a $ prefixed clojure form in shake:</p>
+
+<p>[cc lang="clojure"]<br />
+(sh/curl $(format "https://github.com/%s" "sunng87"))<br />
+[/cc]</p>
+
+<p>Thanks to Clojure macro system, it has great flexibility to manipulate symbols and code lists, making inventing new syntax much easier than other languages. Shake can be a great example in describing macro system.
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Open Source Charting Toolkits in JavaScript</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/open-source-charting-toolkits-in-javascript.html" rel="bookmark"
+           title="Permalink to Open Source Charting Toolkits in JavaScript">Open Source Charting Toolkits in JavaScript</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-22T00:00:00+08:00">
+                Published: Thu 22 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>canvas</li>
+<li>dojo</li>
+<li>html</li>
+<li>javascript</li>
+<li>mootools</li>
+<li>svg</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>项目的下一阶段，需要做一些数据展现方面的工作，处于对Adobe产品的抵触情绪，我个人还是倾向于用JavaScript来完成。今天找了几个画Chart的库，比较一下功能和编程接口的使用，为接下来的开发做一些准备。
+<h3>dojox.charting</h3>
+(BSD License)<br />
+没什么悬念，第一个想到的就是曾经用过的<a href="http://dojotoolkit.org/" target="_blank">dojo</a>。之前实习时候用dojo画chart也算是积累了一些心得。dojox.charting的最主要优点是编程接口完善、全面，可以配置的项目很多，接口易于编程，易于动态地生成、操作Chart。而另一方面最主要的问题就是文档比较匮乏，不了解的人可能问了，doc.dojotoolkit.org好强大，怎么会文档匮乏呢。其实是dojo和<a href="http://mootools.net">mootools</a>类似，都很喜欢用option object来传递可选参数，但是这些option object在文档中没有任何涉及，很多关键的属性都在其中但是却没有办法查到，算是美中一大不足。
+<pre class="brush:html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</pre></p></p>
+<p>&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</p>
+
+<p>&lt;head&gt;</p>
+
+<p> &lt;script src="dojo-release-1.3.2/dojo/dojo.js" djConfig="isDebug: true"&gt;&lt;/script&gt;</p>
+
+<p> &lt;title&gt;Dojo&lt;/title&gt;</p>
+
+<p> &lt;script type="text/javascript"&gt;</p>
+
+<p>     dojo.require("dojox.charting.Chart2D");</p>
+
+<p> &lt;/script&gt;</p>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<p> &lt;h1&gt;Dojox.charting&lt;/h1&gt;</p>
+
+<p> &lt;div id="charting" style="width:400px; height:250px;"&gt;</p>
+
+<p> &lt;/div&gt;</p>
+
+<p> &lt;script type="text/javascript"&gt;</p>
+
+<p>     （function charting(){</p>
+
+<p>         dojo.empty("charting");</p>
+
+<p>         var data = [2,4,5,7,7,4,4,7];</p>
+
+<p>         var chart = new dojox.charting.Chart2D("charting");</p>
+
+<p>         chart.addPlot("default", {type: "Lines", markers: true, shadows: {dw:2, dy:2, dx:2}});</p>
+
+<p>         chart.addPlot("additional", {type: "Areas"});</p>
+
+<p>         chart.addPlot("other", {type: "ClusteredColumns"})</p>
+
+<p>         chart.addAxis("x");</p>
+
+<p>         chart.addAxis("y", {vertical: true, min:0, max: 10});</p>
+
+<p>         chart.addSeries("Testing Data 1", data);</p>
+
+<p>         chart.addSeries("Average", dojo.map(data, function(it){return (Math.sin(it)+Math.random())*4}), {</p>
+
+<p>             fill: "rgba(145, 213, 100, 0.5)", plot:"additional"</p>
+
+<p>         });</p>
+
+<p>         chart.addSeries("All Random", dojo.map(data, function(it){return (Math.random()*5)}), {</p>
+
+<p>             plot: "other", fill: "#AEC6E2", stroke:{color:"#333", width:1}</p>
+
+<p>         });</p>
+
+<p>         chart.render();</p>
+
+<p>     }）();</p>
+
+<p> &lt;/script&gt;</p>
+
+<p>&lt;/body&gt;</p>
+
+<p>&lt;/html&gt;
+<h3>Protovis</h3>
+(BSD License)
+<a href="http://vis.stanford.edu/protovis/" target="_blank">Protovis</a>，看域名就知道是斯坦福的项目，Protovis是在prototype基础上，不仅有charting的功能，还包括其他可视化方法的实现。看了Demo会发现它真的很不错，不过Protovis的本意似乎只是借助浏览器的图形功能实现可视化，它并没有提供超出可视化范畴的其他东西，甚至看过实例的代码你会发现，作者是不折不扣的函数式编程和链式方法的爱好者，Protovis的代码算是出神入化了，如果你想看看学术的JavaScript是如何写的，那就看看这个发表了论文的JavaScript库吧。<br />
+看起来是很出神入化，可是这样的编程接口如果要用在动态的数据展现上，实在是难以想象。况且，pv.Panel居然没有传入dom对象的接口，无从控制chart的生成位置。说白了，Protovis并不是一个满足项目需要的Library，不过它的功能和代码还是值得多看几眼的。
+<pre class="brush:html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</pre></p>
+
+<p>&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</p>
+
+<p>&lt;head&gt;</p>
+
+<p> &lt;script src="protovis-3.1/protovis-r3.1.js"&gt;&lt;/script&gt;</p>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<p> &lt;div id="page"&gt;</p>
+
+<p>     &lt;h1&gt;Protovis&lt;/h1&gt;</p>
+
+<p>     &lt;div style="border:1px #CCC solid;"&gt;</p>
+
+<p>         &lt;script type="text/javascript"&gt;</p>
+
+<p>             var width = 300;</p>
+
+<p>             var height = 225;</p>
+
+<p>             var data = [1,2,3,4,6,7,5,8,9];</p>
+
+<p>             var dataMax = data[0];</p>
+
+<p>             for(var i=1; i&lt;data.length; i++){</p>
+
+<p>                 dataMax = dataMax &gt; data[i] ? dataMax : data[i];</p>
+
+<p>             }</p>
+
+<p>             var x = pv.Scale.linear(0, dataMax).range(0, width);</p>
+
+<p>             var y = pv.Scale.ordinal(pv.range(10)).splitBanded(0, height, 0.9);</p>
+
+<p>             var charting = new pv.Panel();</p>
+
+<p>             charting.width(width).height(height).left(20).top(20);</p>
+
+<p>             var bar = charting.add(pv.Bar);</p>
+
+<p>             bar.data(data).top(function() y(this.index)).height(y.range().band).left(0).width(x);</p>
+
+<p>             bar.anchor("center").add(pv.Label)</p>
+
+<p>                 .textStyle("white")</p>
+
+<p>                 .textAlign("center")</p>
+
+<p>                 .text(function(d) d.toFixed(1));</p>
+
+<p>             charting.add(pv.Rule)</p>
+
+<p>                 .data(x.ticks())</p>
+
+<p>                 .left(function(d) Math.round(x(d)) - .5)</p>
+
+<p>                 .strokeStyle(function(d) d ? "rgba(255,255,255,.3)" : "#000")</p>
+
+<p>             .add(pv.Rule)</p>
+
+<p>                 .bottom(0)</p>
+
+<p>                 .height(5)</p>
+
+<p>                 .strokeStyle("#C00")</p>
+
+<p>                 .anchor("bottom").add(pv.Label)</p>
+
+<p>                 .text(function(d) d);</p>
+
+<p>             charting.render();</p>
+
+<p>         &lt;/script&gt;</p>
+
+<p>     &lt;/div&gt;</p>
+
+<p> &lt;/div&gt;</p>
+
+<p>&lt;/body&gt;</p>
+
+<p>&lt;/html&gt;
+<h3>Flotr</h3>
+(MIT License)<br />
+不同于上面两个库通过SVG绘图，<a href="http://solutoire.com/category/flotr/" target="_blank">Flotr</a>是用canvas api来完成绘制的。与dojo相比，Flotr的API比较简单，主要只有一个Flotr.draw方法，可以传入三个参数：目标DOM对象，数据和绘图选项。和dojo不同，Flotr的文档里关于这个option object有非常明确的文档。另外强大的是Flotr还提供了一些交互的功能，支持事件绑定。
+<pre class="brush:html">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</pre></p>
+
+<p>&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;</p>
+
+<p>&lt;head&gt;</p>
+
+<p> &lt;script src="flotr-0.2.0-alpha/flotr/lib/prototype-1.6.0.2.js"&gt;&lt;/script&gt;</p>
+
+<p> &lt;script src="flotr-0.2.0-alpha/flotr/flotr-0.2.0-alpha.js"&gt;&lt;/script&gt;</p>
+
+<p> &lt;title&gt;Flotr&lt;/title&gt;</p>
+
+<p> &lt;script type="text/javascript"&gt;</p>
+
+<p> &lt;/script&gt;</p>
+
+<p>&lt;/head&gt;</p>
+
+<p>&lt;body&gt;</p>
+
+<p> &lt;h1&gt;Flotr&lt;/h1&gt;</p>
+
+<p> &lt;div id="charting" style="width:400px; height:250px;"&gt;</p>
+
+<p> &lt;/div&gt;</p>
+
+<p> &lt;script type="text/javascript"&gt;</p>
+
+<p>     (function d(){</p>
+
+<p>         var series1 = {data: (function(){</p>
+
+<p>             var d = [];</p>
+
+<p>             for(var i=0; i&lt;10; i+=0.5){</p>
+
+<p>                 d.push([i, Math.random()-0.5+Math.sin(i)*3]);</p>
+
+<p>             }</p>
+
+<p>             return d;</p>
+
+<p>         })(), label:"d1", lines:{fill:true}};</p>
+
+<p>         var series2 = {data: (function(){</p>
+
+<p>             var d = [];</p>
+
+<p>             for(var i=0; i&lt;10; i+=0.5){</p>
+
+<p>                 d.push([i, (Math.random()-0.5)*2+Math.cos(i)*2]);</p>
+
+<p>             }</p>
+
+<p>             return d;</p>
+
+<p>         })(), label: "s2", points:{show:true}, lines:{show:true}};</p>
+
+<p>         Flotr.draw($("charting"), [series1, series2], {</p>
+
+<p>             legend: {position :"se"},</p>
+
+<p>             yaxis: {min: -3.5, max:3.5}</p>
+
+<p>         });</p>
+
+<p>     })();</p>
+
+<p> &lt;/script&gt;</p>
+
+<p>&lt;/body&gt;</p>
+
+<p>&lt;/html&gt;
+此外，还有一个与Flotr很类似的<a href="http://www.deensoft.com/lab/protochart/">Protochart</a>，后者的网站上写自己是motivated by Flotr，不过我很难想象功能几乎相同是如何motivated的。
+<h3>MilkChart</h3>
+(Apache License 2.0)
+<a href="http://code.google.com/p/milkchart/">MilkChart</a>是一个建立在Mootools上的Charting库，采用canvas api绘图。它的特点是把HTML Table的数据绘制成Chart，如果场景允许，倒是省去了不少构建数组的麻烦。这个项目目前规模还不大，并且在作者积极的开发中，可以参考它的Wiki获得详细的使用方法。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

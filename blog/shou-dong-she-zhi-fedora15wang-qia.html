@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>手动设置Fedora15网卡</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shou-dong-she-zhi-fedora15wang-qia.html" rel="bookmark"
+           title="Permalink to 手动设置Fedora15网卡">手动设置Fedora15网卡</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-28T00:00:00+08:00">
+                Published: Sat 28 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>fedora</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天上午的Fedora更新，版本为<font face="monospace">0.8.999.3</font>的NetworkManager会致使NetworkManager和network service的版本不一致，从而导致网络功能无法使用。而这个时候要通过<font face="monospace">yum downgrade NetworkManager*</font>降级又没有网络连接可用，悲剧。</p></p>
+<p>这时只有手动设置网卡了。<font face="monospace">service network restart</font>和 <font face="monospace">service NetworkManager restart</font>都报告失败，<font face="monospace">ifconfig</font>查看网卡，只有本地回环启动。</p>
+
+<p>接下来接上网线，通过 <font face="monospace">ifconfig -a</font> 查看所有的网卡接口，例如我的接口叫做<font face="monospace">em2</font>.</p>
+
+<p>启动网卡
+<font face="monospace">ifconfig em2 up</font></p>
+
+<p>查看网卡情况
+<font face="monospace">ifconfig em2</font></p>
+
+<p>如果没有获得ip，可以通过dhcpclient获得ip
+<font face="monospace">dhclient -4 em2</font></p>
+
+<p>再查看网卡情况，如果获得了ip，可以尝试<font face="monospace">ping www.baidu.com</font>，如果出现network unreachable的报错，需要再配置一下路由信息，其中gw是你的网关：
+<font face="monospace">route add default gw 192.168.1.1</font></p>
+
+<p>这时你的网络应该暂时可用了，立刻执行<font face="monospace">yum downgrade NetworkManager*</font>降级吧。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=551018aa-7e6c-81e6-b79a-bc1751d9b7be" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

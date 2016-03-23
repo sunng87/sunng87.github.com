@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Gwibber and WebKit</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gwibber-and-webkit.html" rel="bookmark"
+           title="Permalink to Gwibber and WebKit">Gwibber and WebKit</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-03T00:00:00+08:00">
+                Published: Tue 03 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>css</li>
+<li>foss</li>
+<li>gnome</li>
+<li>twitter</li>
+<li>web</li>
+<li>webkit
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。</p></p>
+<p>Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的，拷拷改改很容易就可以给Gwibber增加饭否的支持。如此一来就可以同时看饭否看twitter发饭否发twitter了。</p>
+
+<p>你以为这是一张截图，其实它是分隔线。</p>
+
+<p><img class="alignnone" title="Gwibber with fanfou support" src="http://pic.yupoo.com/classicning/15491710661a/xaq77l24.jpg" alt="" width="338" height="528" /></p>
+
+<p>注意上图，gwibber是一个简单的pyGtk程序加上Webkit，它的核心部分就是html网页。这个网页除了头像以外可是没有图片的，那几个效果是怎么实现的呢。一个一个说。
+<ul>
+    <li>圆角 -webkit-border-radius: 7px;</li>
+    <li>文字阴影 text-shadow: 1px 1px black;</li>
+    <li>渐变 background:  -webkit-gradient(linear, left top, left 220%, from(rgba(254, 240, 152, 0.9)), to(black));</li>
+</ul>
+比较神奇的就是这三个属性。所以也难怪现在用WebKit核心的程序（不完全是浏览器）越来越多。没有记错的话，这三个丰富特性除了text-shadow在Firefox3.1开始支持其他的Gecko都还不支持。</p>
+
+<p>总而言之，用CSS就可以绘制出精致的图形，而且完全可以生长在桌面。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

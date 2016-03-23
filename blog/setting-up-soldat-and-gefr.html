@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Setting up soldat and gefr</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/setting-up-soldat-and-gefr.html" rel="bookmark"
+           title="Permalink to Setting up soldat and gefr">Setting up soldat and gefr</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-03-27T00:00:00+08:00">
+                Published: Sun 27 March 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>java</li>
+<li>jip</li>
+<li>jython</li>
+<li>project</li>
+<li>python</li>
+<li>soldat</li>
+<li>wsgi
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>本文介绍soldat服务器和gefr WSGI适配器的环境搭建，以及jip的基本使用。</p></p>
+<p><h4>安装python工具</h4>
+virtualenv和pip是python开发的关键工具<br />
+sudo apt-get install python-virtualenv<br />
+sudo apt-get install python-pip</p>
+
+<p>jython需要您手动下载安装。推荐安装到/usr/local/下，并建立软连接到/usr/local/bin/中，下文将假设您是这么做的。</p>
+
+<p><h4>创建虚拟jython环境</h4>
+virtualenv -p /usr/local/bin/jython gefr-test<br />
+cd gefr-test<br />
+source bin/activate</p>
+
+<p><h4>安装jip</h4>
+pip install jip</p>
+
+<p><h4>配置jip</h4>
+在$HOME下创建文件.jip，内容为：</p>
+
+<p>[cc lang="ini"]<br />
+[repos:oss]<br />
+uri=http://oss.sonatype.org/content/repositories/snapshots/<br />
+type=remote</p>
+
+<p>[repos:central]<br />
+uri=http://repo1.maven.org/maven2/<br />
+type=remote</p>
+
+<p>[repos:local]<br />
+uri=/home/sun/.m2/repository/<br />
+type=local<br />
+[/cc]</p>
+
+<p><h4>安装soldat</h4>
+配置完jip后，可以使用jip来安装soldat<br />
+jip install info.sunng.soldat:soldat:1.0-SNAPSHOT</p>
+
+<p>文件将被下载到 javalib 目录中，您可以检查安装的正确性：<br />
+$ ls javalib/<br />
+log4j-1.2.16.jar     slf4j-log4j12-1.6.1.jar<br />
+slf4j-api-1.6.1.jar  soldat-1.0-SNAPSHOT.jar</p>
+
+<p><h4>安装gefr</h4>
+pip install gefr==0.1dev2</p>
+
+<p><h4>创建一个简单的Python WSGI程序</h4>
+创建test.py</p>
+
+<p>[cc lang="python"]<br />
+from gefr import Gefr</p>
+
+<p>def wsgiapp(environ, start_response):<br />
+    status = '200 OK'<br />
+    res_body = "<html><head><title>Welcome</title></head><body><h1>It works!</h1></body></html>"<br />
+    res_headers = [('Content-Type', 'text/html'),<br />
+            ('Content-Length', str(len(res_body)))]<br />
+    start_response(status, res_headers)<br />
+    return [res_body]</p>
+
+<p>Gefr(wsgiapp, host='0.0.0.0', port=8000).start()<br />
+[/cc]</p>
+
+<p><h4>启动服务</h4>
+使用jip附带的jython-all<br />
+jython-all test.py</p>
+
+<p>打开浏览器，访问 http://localhost:8000/</p>
+
+<p><h4>用ab测试服务性能</h4>
+$ ab -n 10000 -c 100 http://localhost:8000/
+<pre>
+This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/</pre></p>
+
+<p>Benchmarking localhost (be patient)<br />
+Completed 1000 requests<br />
+Completed 2000 requests<br />
+Completed 3000 requests<br />
+Completed 4000 requests<br />
+Completed 5000 requests<br />
+Completed 6000 requests<br />
+Completed 7000 requests<br />
+Completed 8000 requests<br />
+Completed 9000 requests<br />
+Completed 10000 requests<br />
+Finished 10000 requests</p>
+
+<p>Server Software:        gefr/0.1dev<br />
+Server Hostname:        localhost<br />
+Server Port:            8000</p>
+
+<p>Document Path:          /<br />
+Document Length:        79 bytes</p>
+
+<p>Concurrency Level:      100<br />
+Time taken for tests:   2.539 seconds<br />
+Complete requests:      10000<br />
+Failed requests:        0<br />
+Write errors:           0<br />
+Total transferred:      1640000 bytes<br />
+HTML transferred:       790000 bytes<br />
+Requests per second:    3938.11 [#/sec] (mean)<br />
+Time per request:       25.393 [ms] (mean)<br />
+Time per request:       0.254 [ms] (mean, across all concurrent requests)<br />
+Transfer rate:          630.71 [Kbytes/sec] received</p>
+
+<p>Connection Times (ms)<br />
+              min  mean[+/-sd] median   max<br />
+Connect:        0    0   0.6      0       8<br />
+Processing:     9   25  22.4     21     239<br />
+Waiting:        9   25  22.4     21     239<br />
+Total:         13   25  22.3     21     239</p>
+
+<p>Percentage of the requests served within a certain time (ms)<br />
+  50%     21<br />
+  66%     22<br />
+  75%     22<br />
+  80%     23<br />
+  90%     26<br />
+  95%     40<br />
+  98%     65<br />
+  99%    233<br />
+ 100%    239 (longest request)
+</p>
+
+<p>Good Luck!</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>ClojureScript Recipes</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/clojurescript-recipes.html" rel="bookmark"
+           title="Permalink to ClojureScript Recipes">ClojureScript Recipes</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-07-24T00:00:00+08:00">
+                Published: Sun 24 July 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>一周前左右有人说javascript是assembly language for the web, 结果一周不到clojurescript发布了。闹了半天clojure 1.3迟迟不发布是因为effort都迫不及待地转移到向javascript迁移上去了。简单地说cljs是clojure在javascript上的实现，通过cljsc可以把clojure编译成js，运行在浏览器里或是Node环境里。</p></p>
+<p>目前clojurescript还没有正式的发布版本，需要从github签出开发版本。
+<ol>
+    <li>cljs是在Oracle JDK上开发的，引用了sun.org.mozilla.javascript.internal.Context，这个类在OpenJDK里叫做sun.org.mozilla.javascript.Context。所以没有办法，暂时只能在Oracle JDK上用clojurescript。</li>
+    <li>cljs自带的所有脚本，启动jvm时，heap size都是开2G的。可怜我所有的内存才2.5G，还是分布在两台电脑上（#@&amp;*……@￥@！）。不过我手动把它改为512M后cljsc还是依然可以正常运行的。</li>
+    <li>cljs与javascript的互操作是最麻烦的部分，一般情况cljs通过(js*)这个form来访问javascript数据和对象，比如访问document：(js* "document")。进而访问getElementById时，即(.getElementById (js* "document") "some-id")。</li>
+    <li>cljs访问js对象时，通过(aget)而不是(.属性名)，例如(aget rage "ups")编译后为rage.ups，如果(.ups rage)就会被当作函数调用。不过奇怪的是如果(.title rage)依然会被编译成rage.title。这种不一致的情况在对.url也存在。当然用aget是可以获得一致的结果的（aget在clojure里是根据索引取java数组的form，在cljs里可以支持js object了）。</li>
+    <li>当访问无参数的js对象时，cljs与clojure有不同。例如在clojure里(.toString date)，而在cljs里，这样写编译的结果是date.toString，注意没有括号，直接访问这个function对象了。所以在cljs里，正确的写法有些变化(. date (toString))。</li>
+    <li>创建js对象，可以通过(js-obj)这个form</li>
+    <li>修改dom属性，需要用(set!)这个form，如 (set! (.src img) "http://xxx")。如果把cljs用在网页里，类似这样的操作比比皆是，这和clojure大不相同。</li>
+    <li>cljs里没有STM，暂时也不支持ref。可以直接用def定义变量，随意地访问和修改，js环境是单线程环境。</li>
+    <li>对于要对外访问的方法，在声明时加上^:export可以让编译器不修改方法的名字。</li>
+</ol>
+用cljs开发有趣归有趣，调试还是很困难的，建议开发的时候就写好打log的代码(js* "console.log")，因为目前cljsc编译的速度也不快，反复地修改代价还是挺高的。当然，为了cool，以上都不是问题。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

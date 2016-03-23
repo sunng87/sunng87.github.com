@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>When nodejs meets mapnik</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/when-nodejs-meets-mapnik.html" rel="bookmark"
+           title="Permalink to When nodejs meets mapnik">When nodejs meets mapnik</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-03-05T00:00:00+08:00">
+                Published: Sat 05 March 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>javascript</li>
+<li>mapnik</li>
+<li>node</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>tilelive.js是一个基于nodejs的web地图工具，帮助用户快速查看他们创建的地图样式。tilelive.js是Mapbox众多产品中的一个，你可以通过<a href="http://mapbox.github.com/tilemill/">tilemill</a>了解更多。</p></p>
+<p>要运行tilelive.js，你需要安装一系列软件。</p>
+
+<p><h3>安装mapnik</h3>
+首先需要安装mapnik2，注意并非是目前的稳定版本0.7.1，而是开发版本。<br />
+签出SVN代码：
+<code>svn co http://svn.mapnik.org/trunk mapnik-trunk</code></p>
+
+<p>按照Mapnik的<a href="http://trac.mapnik.org/browser/trunk/INSTALL">文档</a>描述进行安装。</p>
+
+<p><h3>安装node依赖</h3>
+推荐你安装最新的node 0.4.2和npm 0.3.1。</p>
+
+<p>安装npm后执行
+<code>npm config set unsafe-perm true</code>
+去除超级用户运行npm时的警告。</p>
+
+<p>接下来就可以安装一系列node modules了：
+<code>sudo npm install mapnik</code>
+<code>sudo npm install carto</code>
+<code>sudo npm install generic-pool</code>
+<code>sudo npm install underscore</code>
+<code>sudo npm install node-get</code>
+<code>sudo npm install step</code>
+<code>sudo npm install express</code>
+<code>sudo npm install sqlite3</code>
+<code>sudo npm install compress</code></p>
+
+<p><h3>签出 tilelive.js</h3>
+tilelive.js并不兼容最新的node 0.4.x和express 2.0.0，所以你可以签出我fork的版本：
+<code>git clone git://github.com/sunng87/tilelive.js.git</code>
+<code>git checkout new-fork</code></p>
+
+<p>运行：
+<code>./bin/tilelive_server.js examples/stysheet.xml</code></p>
+
+<p>打开浏览器，访问 http://localhost:8888/ 即可
+<a href="http://www.flickr.com/photos/40741608@N08/5498409697/" title="screenshot_001 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5177/5498409697_6bf280e8fb.jpg" width="500" height="405" alt="screenshot_001" /></a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

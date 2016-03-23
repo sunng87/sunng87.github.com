@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Yan Captcha Service</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/yan-captcha-service.html" rel="bookmark"
+           title="Permalink to Yan Captcha Service">Yan Captcha Service</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-24T00:00:00+08:00">
+                Published: Sat 24 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>captcha</li>
+<li>foss</li>
+<li>project</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I'd like to announce my recent works, a project called Yan Captcha Service written in Java which is aimed to provide whole solutions of captcha for your websites. It will be very easy to use the service because 1. interfaces are based on plain http url; 2. different kinds of usage are supported to fit your requirements; 3. the architecture is open so you can add your own solid implementation of captcha; 4. less coupling with your system. And designed for scalability, currently, it applies JGroups to share sessions (memcached support will be added soon), thus you can setup a cluster for the service.</p></p>
+<p>As you may know, the open-source project is split from my current work-time project because it is more closed to my idea. However, soon we will have the product opened to our thousands (millions ?) of users. I can gain feedback from the challenge and improve the open-source edition.</p>
+
+<p>The code is maintained by open-source scm, mercurial (also known as hg). The project is now hosted on <a href="http://bitbucket.org/sunng/yan/">bitbucket.org</a>. You can clone the code to local via:
+<em>$ hg clone https://sunng@bitbucket.org/sunng/yan/</em></p>
+
+<p>To build the project, run this command in root of project directory:
+<em>mvn install</em></p>
+
+<p>To run in a develop environment:
+<em>mvn jetty:run</em></p>
+
+<p><a href="http://bitbucket.org/sunng/yan/issues/?status=new&amp;status=open" target="_blank">Issue reporting</a> and patches are always welcomed.</p>
+
+<p>Check the wiki pages for more information about the project:
+<a href="http://bitbucket.org/sunng/yan/wiki/Home">http://bitbucket.org/sunng/yan/wiki/Home</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

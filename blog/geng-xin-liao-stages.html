@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>更新了stages</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/geng-xin-liao-stages.html" rel="bookmark"
+           title="Permalink to 更新了stages">更新了stages</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-07-13T00:00:00+08:00">
+                Published: Fri 13 July 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>github</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="https://github.com/sunng87/stages">Stages</a>原先是业余时间开发的一个简单的框架，用来实现SEDA。不过现在这个库经过同事们的加强，已经用在了美味和zeen的生产环境。最近我也对开源的这个分支做了一些修改。</p></p>
+<p>首先是使用更安全的线程池，现在必须指定任务积压后的策略，即RejectionHandler。用户也可以设置自己的Queue，并且指定允许的大小。这是之前应该要做但是一直没做的事情。</p>
+
+<p>其次在Task上增加了一个priority属性，如果你使用的是PriorityBlockingQueue，那么任务会根据这个优先级排序。但是由于PriorityBlockingQueue是unbounded，所以请慎用这个功能。</p>
+
+<p>另外，现在所有的Task都通过perf4j计时，你可以用过配置log4j打印出性能报表日志。也可以通过JMX将耗时情况发布出去，我们在生产环境里通过ganglia监控了这些数据，还是比较有参考价值的。</p>
+
+<p>最后，现在jmx监控stage积压队列的功能终于实现了。我会把每个队列的pending tasks数量通过mbean暴露出来，同样可以配置监控这个数据。有了这个数据后，我们可以很明确地了解各个stage的压力情况，调整线程池的策略。</p>
+
+<p><img src="http://i.imgur.com/ashLh.png" alt="" /></p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

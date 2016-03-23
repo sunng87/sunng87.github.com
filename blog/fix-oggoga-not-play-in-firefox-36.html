@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Fix ogg/oga not play in Firefox 3.6</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/fix-oggoga-not-play-in-firefox-36.html" rel="bookmark"
+           title="Permalink to Fix ogg/oga not play in Firefox 3.6">Fix ogg/oga not play in Firefox 3.6</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-15T00:00:00+08:00">
+                Published: Tue 15 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>apache</li>
+<li>firefox</li>
+<li>html
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Native audio support was introduced in since Firefox 3.5 . Ogg is one of the media format supported by Firefox. However, sometimes you may find it doesn't work even if you set the right source path.  And you just check the network status of audio element:</p></p>
+<p><i>document.getElementsByTagName("audio")[0].networkState</i></p>
+
+<p>Then you get the constant of a 4, which is HTMLMediaElement.NETWORK_NO_SOURCE.</p>
+
+<p>This is because firefox checks the Content-Type header to make sure it's a media file. (Webkit based browsers don't have this restriction.) However, ogg format is not configured on most http servers. You can check the content type by:
+<i>curl -I &lt;url-to-media-file&gt;</i></p>
+
+<p>Take Apache as example, you can add following content to your configuration file:
+<i>AddType audio/ogg .oga</i>
+<i>AddType video/ogg .ogv .ogg</i></p>
+
+<p>For more, check this article:
+<a href="https://developer.mozilla.org/en/Configuring_servers_for_Ogg_media">https://developer.mozilla.org/en/Configuring_servers_for_Ogg_media</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

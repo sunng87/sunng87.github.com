@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>desktop-switcher以下</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/desktop-switcheryi-xia.html" rel="bookmark"
+           title="Permalink to desktop-switcher以下">desktop-switcher以下</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-05-29T00:00:00+08:00">
+                Published: Fri 29 May 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>bug</li>
+<li>gnome</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天中午在synaptic里闲搜，发现了一个叫做desktop-switcher的小工具，它的功能是在ubuntu的netbook小桌面模式和经典模式之间切换。好奇心起，就装上试试。一试不得了，两个不太明确的报错之后，面板没有了，桌面也只剩下背景图片，左右键通通废掉，登出也只能按电源开关。尤其是xorg1.6之后，ctrl+alt+backspace也不好使了，甚是无奈。<br />
+这下岂不是又要重装系统了？还好这次冷静（现在越来越冷静了，我是说经历了水泼电脑之后），先新建了一个用户重新进桌面上网搜一下。还真搜到了问题，果然是这个切换工具有bug。<br />
+首先看一下gnome配置中有关的配置<br />
+gconftool-2 --get /desktop/gnome/session/required_components<br />
+这个值居然被清空了，参考launchpad上的讨论，要加上这几项<br />
+gconftool-2 --set /desktop/gnome/session/required_components --type=list --list-type=string ["panel","filemanager","windowmanager"]<br />
+重登录之后panel总算是出来了，原有panel上所有的配置都被清空了，连主菜单都没有了。不过这个没有问题，手动重新添加问题不大。panel的样式需要重新设置，因为这个样式已经被desktop-switcher切换到netbook版本的样式（名字忘了）。<br />
+还有一些小问题，可以在Gnome设置工具里修改：<br />
+1. 桌面右键无效、图标消失了<br />
+查找这个键值：/apps/nautilus/preferences/show_desktop 将其设置为true，让nautilus管理桌面<br />
+2. User Switcher Applet无法添加<br />
+查找这个键值：/desktop/gnome/lockdown/disable_user_switching 将其设置为false，允许用户切换</p></p>
+<p>ok，这样就只剩下虚惊了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

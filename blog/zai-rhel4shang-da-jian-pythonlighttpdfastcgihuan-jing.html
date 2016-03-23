@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>在RHEL4上搭建Python/Lighttpd/FastCGI环境</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/zai-rhel4shang-da-jian-pythonlighttpdfastcgihuan-jing.html" rel="bookmark"
+           title="Permalink to 在RHEL4上搭建Python/Lighttpd/FastCGI环境">在RHEL4上搭建Python/Lighttpd/FastCGI环境</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-27T00:00:00+08:00">
+                Published: Fri 27 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>fastcgi</li>
+<li>lighttpd</li>
+<li>linux</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>在一台赤裸裸的RHEL4上部署web.py程序，一切从几乎是从零开始。以下操作均以root用户操作。
+<h2>1. 安装MySQL数据库</h2>
+<strong>下载安装MySQL</strong>
+<em>wget http://dev.mysql.com/get/Downloads/MySQL-5.1/mysql-5.1.41-linux-i686-glibc23.tar.gz/from/http://mirror.services.wisc.edu/mysql/</em>
+解压，按照INSTALL文件说明进行安装，不多赘述
+<h2>2. 安装Python环境</h2>
+<h3>下载Python源码</h3>
+<em>wget http://www.python.org/ftp/python/2.6.4/Python-2.6.4.tar.bz2</em>
+解压，编译安装，不需要特殊操作。
+<h3>下载Easy_install</h3>
+<em>wget http://pypi.python.org/packages/2.6/s/setuptools/setuptools-0.6c11-py2.6.egg</em>
+安装
+<em>sh setuptools-0.6c11-py2.6.egg</em>
+<h3>安装相关Packages</h3>
+<em>easy_install DBUtils<br />
+easy_install flup<br />
+easy_install web.py</em>
+<h3>安装mysql-python</h3>
+mysql-python包不能用easy_install安装，手动下载
+<em>wget http://downloads.sourceforge.net/project/mysql-python/mysql-python-test/1.2.3b1/MySQL-python-1.2.3b1.tar.gz?use_mirror=softlayer</em>
+加压，编辑site.cfg<br />
+指定mysql_config的路径，注意是新安装的mysql路径
+<em>mysql_config=/usr/local/mysql/bin/mysql_config</em>
+编译、安装
+<em>python setup.py build<br />
+python setup.py install</em>
+声明libmysqlclient路径
+<em>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/mysql/lib</em>
+<h2>3. 安装服务器环境</h2>
+<h3>下载安装fastcgi头文件</h3>
+<em>wget http://www.fastcgi.com/dist/fcgi.tar.gz</em>
+解压，默认编译安装
+<h3>下载安装PCRE</h3>
+<em>wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.00.tar.bz2</em>
+解压，默认编译安装
+<h3>下载lighttpd</h3>
+<em>wget http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.25.tar.bz2</em>
+configure时指定<em>--prefix=/usr/local/lighttpd</em>
+编译，安装
+<h2>4. 配置</h2>
+lighttpd fastcgi运行web.py程序请参考
+<a href="http://www.classicning.com/blog/2009/11/lighttpd%e9%80%9a%e8%bf%87fastcgi%e8%bf%90%e8%a1%8cweb-py%e7%a8%8b%e5%ba%8f/">http://www.classicning.com/blog/2009/11/lighttpd%e9%80%9a%e8%bf%87fastcgi%e8%bf%90%e8%a1%8cweb-py%e7%a8%8b%e5%ba%8f/</a></p></p>
+<p>非常重要的几点注意：
+<ul>
+    <li>通过fastcgi运行的python脚本必须具有可执行权限，<em> chmod u+x web/main.py</em>；</li>
+    <li>重启fastcgi程序需要删除/tmp/fastcgi.socket*</li>
+</ul>
+任何Python程序出错、权限错误都会导致lighttpd这样的报错：
+<em>2009-11-27 18:12:02: (mod_fastcgi.c.1108) child exited with status 13 /home/admin/web/main.py<br />
+2009-11-27 18:12:02: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.<br />
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags.<br />
+2009-11-27 18:12:02: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed.<br />
+2009-11-27 18:12:02: (server.c.931) Configuration of plugins failed. Going down.</em></p>
+
+<p>报错会提示fastcgi未正确安装，而实际上仅仅是程序错误或权限问题而已。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

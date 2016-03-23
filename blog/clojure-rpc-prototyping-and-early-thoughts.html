@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Clojure RPC, prototyping and early thoughts</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/clojure-rpc-prototyping-and-early-thoughts.html" rel="bookmark"
+           title="Permalink to Clojure RPC, prototyping and early thoughts">Clojure RPC, prototyping and early thoughts</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-11-27T00:00:00+08:00">
+                Published: Sun 27 November 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Last week, I prototyped an RPC framework, <a href="https://github.com/sunng87/slacker" target="_blank">slacker</a>, by clojure and for clojure. </p></p>
+<p><h3>What I did ?</h3>
+Suppose you have a sets of clojure functions to expose. Define them under a namespace:<br />
+[cc lang="clojure"]<br />
+(ns slapi)<br />
+(defn timestamp []<br />
+  (System/currentTimeMillis))</p>
+
+<p>;; ...more functions<br />
+[/cc]</p>
+
+<p>Expose the namespace with slacker server, on port 2104:<br />
+[cc lang="clojure"]<br />
+(use 'slacker.server)<br />
+(start-slacker-server (the-ns 'slapi) 2104)[/cc]</p>
+
+<p>On the client side, we use the `defremote` macro to create a facade for `timestamp` function. This API will keep the client code consistent with local mode.<br />
+[cc lang="clojure"]<br />
+(use 'slacker.client)<br />
+(def sc (slackerc "localhost" 2104))<br />
+(defremote sc timestamp)<br />
+(timestamp)<br />
+[/cc]</p>
+
+<p>Internally, slacker uses <a href="https://github.com/ztellman/aleph" target="_blank">aleph</a> for transport and <a href="https://github.com/revelytix/carbonite" target="_blank">carbonite</a> for serialization. I forked carbonite and made it compatible with clojure 1.2 because the aleph mainline is still running on 1.2. </p>
+
+<p><h3>Going further</h3>
+<h4>High-Order Functions</h4>
+In clojure, functions are treated as first class value. Within memory, you can pass function as parameter to another function. However, this is not supported by serialization framework. So is it possible to add support for that in future?</p>
+
+<p><h4>Lazy sequence as parameter</h4>
+This is another interesting feature in clojure function call. You can pass a lazy-sequence to clojure function. In RPC, it requires parameters to be evaluated on the server side.<br />
+[cc lang="clojure"]<br />
+(defn get-first [& args] (first args))<br />
+(apply get-first (range))<br />
+[/cc]<br />
+Example copied from <a href="http://stackoverflow.com/q/8205446/371141" target="_blank">StackOverflow</a></p>
+
+<p><h4>Coordinated states between several remote servers</h4>
+With RPC, we can update states on several servers. So do we need something like distributed dosync:<br />
+[cc lang="clojure"]<br />
+(defremote a1 update-a1-state)<br />
+(defremote a2 update-a2-state)<br />
+(dosync-distributed<br />
+  (update-a1-state some-value)<br />
+  (update-a2-state some-value))<br />
+[/cc]<br />
+I'm not sure if this is a valid scenario in real world but I think it's an interesting topic.(distributed STM?)</p>
+
+<p><h3>Conclusion</h3>
+RPC is the first step to distributed clojure world. I will keep you updated with my prototype. 
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Slacker 0.8.0</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-080.html" rel="bookmark"
+           title="Permalink to Slacker 0.8.0">Slacker 0.8.0</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-04-22T00:00:00+08:00">
+                Published: Sun 22 April 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>github</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>A new release 0.8.0 of <a href="https://github.com/sunng87/slacker">slacker</a> has been pushed to clojars. Let's go through the changes in this version.</p></p>
+<p><h3>Clojure 1.3 compatible</h3>
+Slacker finally landed on clojure 1.3. It takes advantages of performance in 1.3. Also, you can use 1.3 API in slacker. For example, a timeout argument is supported in deref, which is useful when dealing with promise returned by slacker's asynchronous call.</p>
+
+<p><h3>Performance Boost</h3></p>
+
+<p>The performance enhancement is on the highest priority in this release.  I have migrated the NIO infrastructure to a new library called <a href="https://github.com/sunng87/link">link</a>. Now slacker 0.8.0 is at least <strong>8x</strong> faster than previous release. There is significant improvement both on per-request latency and overall throughput. And the server thread model is optimized for data-intensive tasks. Heavy IO tasks in hosted functions won't block the whole server. </p>
+
+<p><h3>slacker as a ring app</h3></p>
+
+<p>Instead of running default transportation, slacker now can be configured as a ring app and deployed on any ring adapter. </p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.server)<br />
+(use 'ring.adapter.jetty)</p>
+
+<p>(run-jetty (slacker-ring-app (the-ns 'slacker.example.api)) {:port 8080})<br />
+[/cc]</p>
+
+<p>This will expose the name space <em>slacker.example.api</em> with HTTP. Functions could be called with following URL pattern:</p>
+
+<p>http://localhost:8080/&lt;namespace&gt;/&lt;function&gt;.&lt;content-type&gt;</p>
+
+<p>For instance: http://localhost:8080/slacker.example.api/timestamp.json</p>
+
+<p><h3>defn-remote</h3></p>
+
+<p>There is a minor update for the defn-remote macro. </p>
+
+<p>In 0.7.0, you have to specify remote namespace with an option:<br />
+[cc lang="clojure"]<br />
+(defn-remote sc timestamp :remote-ns "slacker.example.api")<br />
+[/cc]</p>
+
+<p>In 0.8.0, it's more convenience: <br />
+[cc lang="clojure"]<br />
+(defn-remote sc slacker.example.api/timestamp)<br />
+[/cc]</p>
+
+<p>To keep the core library compact, in 0.8.0, the cluster support has been moved to a standalone project <a href="https://github.com/sunng87/slacker-cluster">slacker-cluster</a>. </p>
+
+<p>All above summarized my recent work in the slacker project. If you have any question with this library, feel free to drop me an email sunng@about.me .
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

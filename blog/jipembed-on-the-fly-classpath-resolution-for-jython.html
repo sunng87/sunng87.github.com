@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'jip.embed: On-the-fly classpath resolution for Jython'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/jipembed-on-the-fly-classpath-resolution-for-jython.html" rel="bookmark"
+           title="Permalink to 'jip.embed: On-the-fly classpath resolution for Jython'">'jip.embed: On-the-fly classpath resolution for Jython'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-06-10T00:00:00+08:00">
+                Published: Fri 10 June 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>jip</li>
+<li>jython</li>
+<li>opensource</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you don't have to download jars manually and append them to your -Dpython.path. You just pick your editor, import jip.embed, code your business, then save and run it.</p></p>
+<p>Code example:</p>
+
+<p>[cc lang="python"]<br />
+import jip.embed<br />
+jip.embed.require('commons-lang:commons-lang:2.6')<br />
+from org.apache.commons.lang import StringUtils</p>
+
+<p>print StringUtils.reverse('jip rocks')<br />
+[/cc]</p>
+
+<p>Output:<br />
+[cc]<br />
+skcor pij<br />
+[/cc]<br />
+(jip will print some log here if dependencies are included for first time)</p>
+
+<p>So please check out my new released jip, 0.7:
+<a href="https://github.com/sunng87/jip">https://github.com/sunng87/jip</a></p>
+
+<p>For virtualenv user, you can install full-featured jip via pip:
+<font face="monospace">$ pip install jip</font></p>
+
+<p>To install jip globally, download the package from <a href="http://pypi.python.org/pypi/jip">python cheese shop</a> and run:
+<font face="monospace">$ jython setup.py install </font><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=36db589c-cfdd-8173-8d89-3b7aeb29cb5c" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

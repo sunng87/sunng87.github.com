@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Checkout Ring Adapter for Jetty 9</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/checkout-ring-adapter-for-jetty-9.html" rel="bookmark"
+           title="Permalink to Checkout Ring Adapter for Jetty 9">Checkout Ring Adapter for Jetty 9</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2013-04-24T00:00:00+08:00">
+                Published: Wed 24 April 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>jetty</li>
+<li>web</li>
+<li>websocket
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>The Clojure world has been using Jetty 7 for quite a long time because it's supported by the Ring development team. However, Jetty 9 brings us exciting features like WebSocket and SPDY. In order to use websocket in my Clojure web application, I built this adapter last weekend.</p></p>
+<p>[info.sunng/ring-jetty9-adapter "0.1.0"]</p>
+
+<p>The API for Clojure is still consistent with the one for jetty 7.<br />
+[cc lang="clojure"]<br />
+(use 'ring.adapter.jetty9)<br />
+(run-jetty app {})<br />
+[/cc]</p>
+
+<p>Options supported in jetty 9 are almost same as jetty 7 except the configurator is dropped. And a new "WebSockets" option is added. Accepting a map of context path and websocket class, it enables websocket protocol in your web application.</p>
+
+<p>[cc lang="clojure"]<br />
+(use 'ring.adapter.jetty9)<br />
+(run-jetty app {:websockets {"/loc" LocationTracker}})<br />
+[/cc]</p>
+
+<p>Due to the lack of WebSocket API standards, I don't spend time on the WebSocket abstraction. Just use Jetty's internal API for websocket. Here is a typical implementation of websocket listener.<br />
+
+wzxhzdk:0
+
+
+<p>Since Jetty will create new instance of adapter for each connection, it requires heavy usage of "gen-class" . Remember to add the namespace to AOT compilation. Detailed Jetty API spec can be found <a href="http://download.eclipse.org/jetty/stable-9/apidocs/org/eclipse/jetty/websocket/api/WebSocketAdapter.html" target="_blank">here</a>.<br />
+
+And also find the project is <a href="https://github.com/sunng87/ring-jetty9-adapter" target="_blank">here</a>.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

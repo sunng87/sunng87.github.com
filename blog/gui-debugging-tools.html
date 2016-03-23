@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>GUI Debugging tools</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gui-debugging-tools.html" rel="bookmark"
+           title="Permalink to GUI Debugging tools">GUI Debugging tools</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-18T00:00:00+08:00">
+                Published: Sat 18 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>c</li>
+<li>foss</li>
+<li>gdb</li>
+<li>gnome</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。<a href="http://www.geany.org">geany</a>是一个简单的C/C++ IDE，它有一个geanygdb插件可以帮助你在geany的图形界面里调试。</p></p>
+<p>但是最近安装在仓库里的geanygdb插件有一些问题，会导致很高的CPU占用。不过这个问题被报告在<a href="http://sourceforge.net/tracker/?func=detail&amp;aid=3019827&amp;group_id=222729&amp;atid=1056532">这里</a>，现在已经修复了。因为新版本还没有release，所以如果急着用的话，可以从svn签出代码：
+<i>svn co https://geany-plugins.svn.sourceforge.net/svnroot/geany-plugins/trunk/geany-plugins</i>
+然后执行：<br />
+[cc lang="bash"]<br />
+cd geany-plugins<br />
+./autogen.sh<br />
+./configure<br />
+cd geanygdb<br />
+make<br />
+sudo make install<br />
+[/cc]</p>
+
+<p>重启geany，打开plugin manager，看到geanygdb的版本已经变成0.20就可以使用了。</p>
+
+<p>geany现在还不支持ctags，是因为它内部有一套自己的tags实现。代码导航可以用过上下文菜单 Go to tag Definition 或者 Go to tag Declaration 实现，最好是到Preference中给这两个命令设置一个快捷键，比如Ctrl+]，再对Navigate back 设置一个Ctrl+t，就如同vim+ctags一样了。</p>
+
+<p>实际上在GNOME桌面还有一个专门的GDB图形界面，叫做<a href="http://projects.gnome.org/nemiver/">Nemiver</a>。Nemiver对gdb的常用命令都有快捷键操作，把鼠标移动到代码上还可以查看变量的值，效果和eclipse调试java程序一样，非常强大。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

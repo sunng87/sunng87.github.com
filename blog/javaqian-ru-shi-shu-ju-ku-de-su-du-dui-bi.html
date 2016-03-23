@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Java嵌入式数据库的速度对比</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/javaqian-ru-shi-shu-ju-ku-de-su-du-dui-bi.html" rel="bookmark"
+           title="Permalink to Java嵌入式数据库的速度对比">Java嵌入式数据库的速度对比</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-24T00:00:00+08:00">
+                Published: Thu 24 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>db</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Yan的APIKEY一直是用嵌入式的数据库存储的，最初使用的是hsqldb，最近又添加了H2和Derby的支持，基本上囊括了所有开源的Java嵌入式数据库。实现多了自然需要挑选、比较一下。</p></p>
+<p>数据库特性的比较，H2的网站上有很好的Matrix，一目了然<br />
+http://www.h2database.com/html/features.html#comparison</p>
+
+<p>关于速度的比较，今天做了一个简单的测试。</p>
+
+<p>分别从derby / H2 / hsqldb中取出10 、100、1000条数据，循环100000次，比较耗时，如下：</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2665/4210754380_5cb4d7b0a8_o.png" alt="" width="376" height="394" /></p>
+
+<p>三者的速度差距非常明显，hsqldb远快于其他两个。</p>
+
+<p>而在10、100、1000条记录的索引上查询，并取出指定记录呢，同样是100000次，如下：</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2716/4210754396_e52acc7e69_o.png" alt="" width="376" height="394" /></p>
+
+<p>再索引上查询，速度受记录数量的影响非常微弱了。但是hsqldb还是远快于其他二者，有趣的是derby的速度要略微快于H2.</p>
+
+<p>根据这样的结果，在Yan的应用中，hsqldb还是最理想的实现。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

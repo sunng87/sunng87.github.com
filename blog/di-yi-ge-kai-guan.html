@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>第一个开关</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/di-yi-ge-kai-guan.html" rel="bookmark"
+           title="Permalink to 第一个开关">第一个开关</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2013-02-23T00:00:00+08:00">
+                Published: Sat 23 February 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>Arduino</li>
+<li>Electronic
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><img src="http://i.imgur.com/3S4WPUG.jpg" alt="" /></p></p>
+<p>过年回家路上无聊看了一些关于电子制作的书，知道了 Android 上的开发板 IOIO。另外认识了 Arduino 的程序，感觉要比想象中还要简单。本来担心还要学一门新的语言，看了之后发现完全是多虑。</p>
+
+<p>在淘宝上找 IOIO 的时候正好发现了<a href="http://item.taobao.com/item.htm?id=13115078082">一整套元件</a>。买回来以后看看可能价格是贵了，但是对我这样的新手来说，省去了自己找元件的麻烦。因为找元件实在是很容易让人退缩。</p>
+
+<p>点亮 Arduino 基本上没什么问题。但是在 Archlinux 上访问 serial port 需要一些配置。首先要把用户加入 uucp 组确保可以访问 /dev/tty* 的设备。其次，需要给当前用户访问 /run/lock 的权限，否则 Arduino IDE 还是无法访问到 Arduino，这点在 Archlinux 的 Wiki 上有提及。</p>
+
+<p>我这个开关电路太简单了就不详细说了，参考书是一本 Getting started with Arduino。据说这本书出第二版了，第一版上 Arduino 的版本不是 Uno，所以图片有一些出入，不过接口都没有变化。这第一个二极管开关的电路还是挺有成就感的，晚上我就可以让台灯什么的都退了休吧。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>迁移pylonsbook chapter 8到pylons1.0</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/qian-yi-pylonsbook-chapter-8dao-pylons10.html" rel="bookmark"
+           title="Permalink to 迁移pylonsbook chapter 8到pylons1.0">迁移pylonsbook chapter 8到pylons1.0</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-12T00:00:00+08:00">
+                Published: Sun 12 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>pylons</li>
+<li>python</li>
+<li>sqlalchemy
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Pylonsbook的<a href="http://pylonsbook.com/en/1.1/starting-the-simplesite-tutorial.html">第八章</a>，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。</p></p>
+<p>首先查看你使用的各种库的版本：
+<i>paster shell development.ini</i>
+[cc lang="python"]<br />
+import pylons<br />
+pylons.__version__<br />
+import sqlalchemy<br />
+sqlalchemy.__version__<br />
+import webhelpers<br />
+webhelpers.__version__<br />
+[/cc]</p>
+
+<p>Pylons 1.0开始鼓励通过继承Base类的声明式ORM（pylonsbook介绍的是pylons 0.9x，sqlalchemy 0.5x，使用mapper的方式）<br />
+对pylons1.0，mode/__init__.py中声明model的代码如下：<br />
+[cc lang="python"]<br />
+from sqlalchemy import *<br />
+from sqlalchemy.orm import relationship</p>
+
+<p>class PageTag(Base):<br />
+    __tablename__ = 'pagetag'<br />
+    id = Column('id', Integer, Sequence('pagetag_seq_id', optional=True), primary_key=True)<br />
+    pageid = Column('pageid', Integer, ForeignKey('page.id'))<br />
+    tagid = Column('tagid', Integer, ForeignKey('tag.id'))</p>
+
+<p>class Page(Base):<br />
+    """docstring for Page"""<br />
+    __tablename__ = 'page'<br />
+    id = Column('id', Integer, Sequence('page_seq_id', optional=True), primary_key=True)<br />
+    content = Column('content', Text, nullable=False)<br />
+    posted = Column('posted', DateTime, default=now())<br />
+    title = Column('title', Unicode(255), default=u'Untitled Page')<br />
+    heading = Column('heading', Unicode(255))</p>
+
+<p>    tags = relationship(PageTag, backref='page')<br />
+    comments = relationship("Comment", backref='page')</p>
+
+<p>class Tag(Base):<br />
+    """docstring for Tag"""<br />
+    __tablename__ = 'tag'<br />
+    id = Column('id', Integer, Sequence('tag_seq_id', optional=True), primary_key=True)<br />
+    name = Column('name', Unicode(20), nullable=False, unique=True)</p>
+
+<p>class Comment(Base):<br />
+    __tablename__ = 'comment'<br />
+    id = Column('id', Integer, Sequence('comment_seq_id', optional=True), primary_key=True)<br />
+    content = Column('content', Text, default=u'')<br />
+    name = Column('name', Unicode(255))<br />
+    email = Column('email', Unicode(255), nullable=False)<br />
+    created = Column('created', TIMESTAMP, default=now())<br />
+    pageid = Column(Integer, ForeignKey('page.id'))</p>
+
+<p>[/cc]</p>
+
+<p><em>init_model</em> 方法的内容也不相同，但是对Session的配置都是在Session.configure里进行。 如果设置autocommit=True，即使设置了autoflush=True仍然需要Session.flush()一下才能把变更写入数据库。否则，则需要显示调用Session.commit()</p>
+
+<p>在写controller的部分，pylonsbook大量用了<br />
+[cc lang="python"]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.get(int(id))<br />
+[/cc]</p>
+
+<p>或<br />
+[cc lang="python"]<br />
+page_q = model.meta.Session.query(model.Page)<br />
+c.page = page_q.filter_by(id=id).first()<br />
+[/cc]<br />
+在新版本里只需要<br />
+[cc lang="python" inline="true"]<br />
+c.page=Session.query(model.Page).get(id)<br />
+[/cc]<br />
+即可。</p>
+
+<p>在模板部分，pylons现在默认不依赖formbuild，所以文中提到的helper方法要额外安装formbuild库。不过这些也可以用过webhelper来实现，在lib/helpers.py里：<br />
+[cc lang="python" inline="true"]<br />
+from webhelpers.html.tags import *<br />
+[/cc]</p>
+
+<p>在field.html中<br />
+[cc lang="html"]</p>
+
+<p><p>Heading: ${h.text(<br />
+    "heading"<br />
+)}
+</p></p>
+
+<p><p>
+Title: ${h.text(<br />
+    "title"<br />
+)}
+</p></p>
+
+<p><p>
+Content: ${h.textarea(<br />
+    "content", cols=40, rows=10<br />
+)}
+</p></p>
+
+<p>[/cc]</p>
+
+<p>模板中一个非常常用的方法url_for在pylons1.0里被改为pylons.url，需要修改/lib/helpers.py<br />
+[cc lang="python"  inline="true"]<br />
+from pylons import url<br />
+[/cc]</p>
+
+<p>书中所有的重定向都是直接设置response相关属性实现的，实际可以用redirect，结合url：<br />
+[cc lang="python"  inline="true"]<br />
+redirect(url(controller='page', action='view', id=page.id))<br />
+[/cc]</p>
+
+<p>分页部分，如果你使用的是sqlalchemy 0.6的话，随pylons 1.0发布的Webhelpers 0.6还不支持 sqlalchemy 0.6的query object，需要手动升级到1.2. (<i>easy_install -U webhelpers</i>)</p>
+
+<p>最后关于flash状态，webhelpers里有一个专门的实现，不过还是不太好用：
+<a href="http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/">http://pylonshq.com/docs/en/1.0/thirdparty/webhelpers/pylonslib/</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

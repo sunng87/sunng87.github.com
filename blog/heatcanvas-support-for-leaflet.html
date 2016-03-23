@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>HeatCanvas support for Leaflet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/heatcanvas-support-for-leaflet.html" rel="bookmark"
+           title="Permalink to HeatCanvas support for Leaflet">HeatCanvas support for Leaflet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-07-18T00:00:00+08:00">
+                Published: Mon 18 July 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>GIS</li>
+<li>heatcanvas</li>
+<li>javascript</li>
+<li>map
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://leaflet.cloudmade.com/" title="leaflet" target="_blank">Leaflet</a> is a light weight web mapping library developed by <a href="http://cloudmade.com/" title="cloudmade" target="_blank">Cloudmade</a>. Leaflet is designed for compatibility with both desktop browser and mobile browser.</p></p>
+<p>HeatCanvas-Leaflet extension enables heat map on Leaflet. You can create heat map layer and add it to Leatlet map:<br />
+[cc lang="javascript"]<br />
+var heatmap = new L.TileLayer.HeatCanvas("Heat Canvas", map, {},<br />
+                        {'step':0.3, 'degree':HeatCanvas.QUAD, 'opacity':0.7});<br />
+heatmap.pushData(32.1104, 118.0852, 14);<br />
+//push more data ...<br />
+map.addLayer(heatmap);<br />
+[/cc]</p>
+
+<p>You can find live demo on:
+<a href="http://sunng87.github.com/heatcanvas/leaflet.html" title="heatcanvas demo" target="_blank">http://sunng87.github.com/heatcanvas/leaflet.html</a>
+Mobile browser is also supported. (Tested on Firefox Android and default Android browser)</p>
+
+<p>Find more about HeatCanvas on <a href="https://github.com/sunng87/heatcanvas">github page</a>.</p>
+
+<p>Leaflet is still buggy for extension. There is a latlng-pixel coordinate conversion <a href="https://github.com/CloudMade/Leaflet/issues/190" target="_blank">issue</a> in low zoom level, affects this demo. Hope it could be fixed soon.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

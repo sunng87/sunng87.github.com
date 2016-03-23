@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>My First Hello World Web App Using Compojure</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/my-first-hello-world-web-app-using-compojure.html" rel="bookmark"
+           title="Permalink to My First Hello World Web App Using Compojure">My First Hello World Web App Using Compojure</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-04-24T00:00:00+08:00">
+                Published: Sat 24 April 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>clojure</li>
+<li>compojure</li>
+<li>java</li>
+<li>lein
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://github.com/weavejester/compojure">Compojure</a>是一个用<a href="http://clojure.org/">Clojure</a>写成的类似<a href="http://www.sinatrarb.com/">Sinatra</a>的Web框架。<a href="http://github.com/technomancy/leiningen">Leiningen</a>是一个新的Clojure构建工具，它用Maven来处理依赖管理，而通过封装<a href="http://github.com/stuarthalloway/lancet">Lancet</a>（基于Ant）来实现build-in的task。</p></p>
+<p>以上是背景介绍。以下是HelloWorld。</p>
+
+<p>创建一个目录作为工程目录<br />
+[cc lang="bash"]<br />
+mkdir compojure-app<br />
+cd compojure-app<br />
+[/cc]</p>
+
+<p>像创建build.xml和pom.xml一样创建project.clj<br />
+[cc lang="lisp"]<br />
+(defproject info.sunng/compojure-app "0.0.1"<br />
+        :description "A demo app running on compojure framework"<br />
+        :dependencies [[org.clojure/clojure "1.1.0"]<br />
+                        [org.clojure/clojure-contrib "1.1.0"]<br />
+                        [compojure "0.3.2"]]<br />
+        :dev-dependencies [[leiningen/lein-swank "1.1.0"]]<br />
+        :main info.sunng.compojureapp.helloworld)<br />
+[/cc]<br />
+首行定义了项目的groupId, artifactId和version，其后的是maven风格的依赖定义，最后我们还定义了程序的主类。</p>
+
+<p>这个helloworld只有一个文件，被放在src/info/sunng/compojureapp/目录下<br />
+[cc lang="lisp"]<br />
+(ns info.sunng.compojureapp.helloworld (:gen-class) (:use compojure))</p>
+
+<p>(defroutes example-routes<br />
+    (GET "/" "Hello W0rld")<br />
+    (ANY "*" [404 "Page Not Found"]))</p>
+
+<p>(defn -main []<br />
+    (run-server {:port 8080} "/*" (servlet example-routes)))<br />
+[/cc]<br />
+中间就是Sinatra风格的URL映射定义，最后在主类中通过一个run-server方法以嵌入式的方式运行一个jetty</p>
+
+<p>回到工程目录，执行构建<br />
+[cc lang="bash"]<br />
+lein deps<br />
+lein compile<br />
+lein uberjar<br />
+[/cc]</p>
+
+<p>通过uberjar可以将依赖通通打入一个jar包中，接着就可以通过
+<em>java -jar compojure-app-standalone.jar </em>
+启动你的Web程序了，很酷吧</p>
+
+<p>除了这种方式，还可以通过
+<em>lein swank</em>
+启动一个<a href="http://github.com/technomancy/leiningen/tree/master/lein-swank">swank</a> server（project.clj中定义了dev-dependency），再用Emacs的<a href="http://common-lisp.net/project/slime/">SLIME</a>交互式地运行程序。</p>
+
+<p>参考
+<ul>
+    <li><a href="http://kzar.co.uk/blog/view/simple-compojure-project">http://kzar.co.uk/blog/view/simple-compojure-project</a></li>
+        <li><a href="http://schipplock.de/2010/01/31/clojure-web-framework-compojure/">http://schipplock.de/2010/01/31/clojure-web-framework-compojure/</a></li>
+        <li><a href="http://zef.me/2470/building-clojure-projects-with-leiningen">http://zef.me/2470/building-clojure-projects-with-leiningen</a></li></ul></p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

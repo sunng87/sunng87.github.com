@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Performance Visualization with Gnuplot, continued</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/performance-visualization-with-gnuplot-continued.html" rel="bookmark"
+           title="Permalink to Performance Visualization with Gnuplot, continued">Performance Visualization with Gnuplot, continued</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-24T00:00:00+08:00">
+                Published: Thu 24 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>foss</li>
+<li>gnuplot</li>
+<li>linux</li>
+<li>shell</li>
+<li>vmstat
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>After I post my command to <a href="http://www.commandlinefu.com/" target="_blank">commandlinefu.com</a>, there is an alternative command followed:
+<em>(echo "set terminal png;plot '-' u 1:2 t 'cpu' w linespoints;"; sudo vmstat 2 10 | awk 'NR &gt; 2 {print NR, $13}') | gnuplot &gt; plot.png</em></p></p>
+<p>This one is appreciated for using pipes and redirection. It works on Ubuntu Jaunty, on which, gnuplot doesn't provide a -e option. The author also showed an link to an open source project 'vmplot' on <a href="http://freshmeat.net/projects/vmplot/" target="_blank">freshmeat</a>. Vmplot is written in python, which combines parameters with scripts and end up with an os.system call. Grab the source from <a href="http://elvis.elte.hu/~fuji/stuff/vmplot.py" target="_blank">here</a>. (Why use python instead on a simple bash command? because it's difficult to draw a multiplot without temp file or variables, you cannot read '-' twice.)</p>
+
+<p>There are several people vote me down for my command! It must be primers whose use ubuntu and knows the world via Synaptic only, because they failed to run the command on their dated machine (*_*)</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

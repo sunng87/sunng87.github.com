@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>使用gnome-dictionary和dictd</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shi-yong-gnome-dictionaryhe-dictd.html" rel="bookmark"
+           title="Permalink to 使用gnome-dictionary和dictd">使用gnome-dictionary和dictd</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-07T00:00:00+08:00">
+                Published: Sun 07 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>dictd</li>
+<li>foss</li>
+<li>gnome</li>
+<li>linux</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>最近琢磨字典多一些，以前一直不知道gnome自带的gnome-dictionary如何使用，因为默认的字典源里都没有中文字典，而且离线更是无法使用。其实不然，字典服务可以自架，并且可以使用自己的字典。</p></p>
+<p>在自己的机器上架设dictionary server，以ubuntu为例：</p>
+
+<p>安装dictd / dict
+<em>sudo apt-get install dictd dict</em></p>
+
+<p>前者是字典服务器，后者是字典服务客户端。还可以从仓库里安装已经打包好的字典，如
+<em>sudo apt-get install dict-stardic</em>
+是一个英汉字典</p>
+
+<p>dictd安装好后会默认自启动，也可以通过
+<em>sudo service dictd start</em>
+来控制dictd的启动、重启和关闭。</p>
+
+<p>通过dict测试服务的状况
+<em>dict -D</em>
+命令会列出可用的数据库（即字典）</p>
+
+<p>在gnome-dictionary中添加字典源 Edit-&gt;Preference-&gt;Source-&gt;Add<br />
+Name: 自定义的字典名<br />
+Transport: Dictionary Source<br />
+Hostname: 127.0.0.1<br />
+Port: 2628</p>
+
+<p>Close之后可以到主界面打开侧边栏，在Dictionary Source中双击选定此字典，在Aailable Dictionaries里双击选中目标字典，于是就可以在gnome-dictionary里使用本地的字典服务了。</p>
+
+<p>接下来安装自己的字典。stardict的<a href="http://stardict.sourceforge.net/Dictionaries_zh_CN.php">网站</a>上有很多中文字典，上面也都标示了授权协议。要在dictd里使用这些字典，需要进行一个简单的格式转换。安装一个工具
+<em>sudo apt-get install dictconv</em></p>
+
+<p><em>它的使用方法：<br />
+dictconv -o OUTPUT_FILE INPUT_FILE</em></p>
+
+<p>在input_file指定stardict的.ifo文件，在output_file指定要生成的dictd的.index文件。这个转换非常耗时，需要有足够的耐心。这个操作将会生成.index和.dict文件。对.dict文件进行压缩：
+<em>dictzip OUT.dict</em></p>
+
+<p>转换完成后，编辑<em>/var/lib/dictd/db.list</em>文件，在其中添加一个database定义
+<em>database YOUR_DB_NAME{<br />
+data PATH_TO_DICT_DZ<br />
+index PATH_TO_INDEX<br />
+}</em></p>
+
+<p>其中PATH_TO_DICT_DZ是上一步的.dz文件，PATH_TO_INDEX是到上一步生成的.index文件的路径。编辑完成后，重启dictd服务
+<em>sudo service dictd restart</em></p>
+
+<p>使用dict -D可以查看启用的字典。</p>
+
+<p>建议备份<em>/var/lib/dictd/db.list</em>文件，因为每次从apt-get安装字典后，这个文件都会被覆盖。</p>
+
+<p>dictd服务也可以在fantasdic里访问。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

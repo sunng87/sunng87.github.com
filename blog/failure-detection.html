@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Failure Detection</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/failure-detection.html" rel="bookmark"
+           title="Permalink to Failure Detection">Failure Detection</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-07-03T00:00:00+08:00">
+                Published: Sun 03 July 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>algorithm</li>
+<li>distribute
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>分布式系统中检测节点的工作情况，最直观的方法是采用心跳包的方式，通过定时发送心跳包，如果对端节点没有正常返回，则认为此节点处在failure状态，这时系统需要采取一定的措施来保证正常运行。目前，Zookeeper就是采用这种方式（org.apache.zookeeper.ClientCnxn）。</p></p>
+<p>但是为了避免由于网络抖动等等意外因素导致的误报，通常在心跳包的基础上做一些改进。我在盛大做服务的路由代理时，代理和后端的服务通过心跳包保持连接。当心跳包出现异常，或服务调用出现异常（类似HTTP 500的系统异常），代理会记录当时的时间戳。根据配置，代理会存储最近50次的时间戳，并且检查他们的方差，当方差小于一个阈值时，就认定服务为failure状态，将服务从列表中剔除并发送报警。在一些测试里，这套机制是可以按照预期工作的。可惜这个系统最后没有上生产系统，所以也没有实际的运维经验。</p>
+
+<p>最近看到了Cassandra使用的Failure Detection机制，叫做Phi Failure Detection Model。这个思路在一定程度上跟我的方式类似，在Cassandra的实现里，他会存储最近1000次失败的信息（org.apache.cassandra.gms.FailureDetector#sampleSize_）。此外，Cassandra存储的是失败的间隔，而不是绝对的时间戳（首次失败，存储的是心跳间隔的二分之一）。判断失败的φ值是通过这个公式就算：
+<font face="monospace">φ = (now - last_failure) * lnE / mean(interval_samples)</font>
+当φ值大于配置的threshold时，Cassandra的Gossip机制认为这个节点为failure。默认的配置里，这个threshold值为8. 关于Phi Failure Detection Model，可以参考论文：Information Propagation on the Phi Failure Detector</p>
+
+<p>而为了提高Zookeeper的Failure Detection的质量，去年的<a href="https://issues.apache.org/jira/browse/ZOOKEEPER-702">一个Google Summer of Code项目</a>为Zookeeper引入了一些流行的检测模型，包括前面提到的Phi Failure Detector，以及Bertier的方法和Chen的方法。</p>
+
+<p>Chen方法以一个固定的alpha常数，加平均到达时间作为估计的timeout值。</p>
+
+<p>在Bertier方法中，用于判断心跳包失败的timeout时间通过三个参数gamma/beta/phi被动态修正：
+<font face="monospace">error = now -ea - delay;</font> （收到心跳包的时间-估计的心跳包到达时间-估计的延迟）
+<font face="monospace">delay = delay + gamma * error;</font> （根据gamma和error修正延迟）
+<font face="monospace">var = var + gamma*(abs(error) - var);</font> （error值的variation，即<font face="monospace">var<sub>n</sub>=Σ g(1-g)<sup>n-i</sup>*e<sub>i</sub></font>）
+<font face="monospace">ea = now + avg(‌interval);</font> （根据心跳包的平均间隔修正估计时间）
+<font face="monospace">timeout = avg(interval) + beta*delay + phi*var</font> (计算新的timeout)<br />
+假如心跳包在timeout后到达，timeout还需要在上面的基础上加上常数moderationStep。</p>
+
+<p>GSoC项目里，gamma/beta/phi/moderationStep的默认值分别为0.1/1.0/4.0/500。Bertier方法的timeout值根据网络情况自适应。</p>
+
+<p>评价一种Failure Detector的标准，包括它发现failure节点的时间和误报率。<a href="http://wiki.apache.org/hadoop/ZooKeeper/GSoCFailureDetector#Experimentation">这里</a>有GSoC项目中作者进行的实验及结论，可供参考。</p>
+
+<p><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=957af0b9-0304-8a1e-9128-4be44f8e7b1e" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

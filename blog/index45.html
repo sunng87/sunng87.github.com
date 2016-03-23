@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/bottle-fapws3.html" rel="bookmark"
+                           title="Permalink to bottle & fapws3">bottle & fapws3</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-21T00:00:00+08:00">
+                Published: Wed 21 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>bottle</li>
+<li>fapws3</li>
+<li>python</li>
+<li>wsgi
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://github.com/defnull/bottle">Bottle</a>是一个Python web框架，兼容<a href="http://www.python.org/dev/peps/pep-0333">wsgi</a>标准，lightweight，self-contained。</p></p>
+<p>提到web框架，自然要和相类似的python框架相比。</p>
+
+<p>Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点，使用Django意味着必须使用关系型数据库进行存储（尽管有一些Model层的其他实现，但绝大多数都是Hack的方式实现），必须使用Django并不非常出色的Template系统。Pylons针对Django的这些问题，采用了松散的方式，数据层可选择由SQLAlchemy实现，模板系统可以选择mako / jinja等。Pylons用paster来管理项目、创建代码模板。借鉴了rails的哲学，目录结构也相类似。可是pylons仍然显得重量级，把注意力放到web.py。只要定义一个router，定义相应的handler就可以处理web请求，handler对象的GET POST等方法分别对应相应的HTTP请求。看起来不错了，不过与bottle相比，webpy仍然显得繁琐、功能有限，而且它本身的db模块就更加鸡肋了 ...</p>
+                <a class="readmore" href="/bottle-fapws3.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/bayeux-protocol.html" rel="bookmark"
+                           title="Permalink to Bayeux Protocol">Bayeux Protocol</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-17T00:00:00+08:00">
+                Published: Sat 17 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>bayuex</li>
+<li>cometd</li>
+<li>http</li>
+<li>websocket
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>运行一个CometD Demo非常简单，只要创建一个Maven项目即可（<a href="http://cometd.org/documentation/howtos/primer">CometD Howtos</a>）：
+<i>$ mvn archetype:generate -DarchetypeCatalog=http://cometd.org</i></p></p>
+<p>maven会提示用户选择archetype，包括cometd的版本1、版本2，jetty6、jetty7的实现，以及客户端dojo或jquery的实现。这里可以选择最新的：
+<i>http://cometd.org -> cometd-archetype-dojo-jetty7 (2.0.0 - CometD archetype for creating a server-side event-driven web application)</i></p>
+
+<p>项目创建完成后执行mvn jetty:run即可，打开http://127 ...</p>
+                <a class="readmore" href="/bayeux-protocol.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/websocket-protocol.html" rel="bookmark"
+                           title="Permalink to Websocket Protocol">Websocket Protocol</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-16T00:00:00+08:00">
+                Published: Fri 16 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>html5</li>
+<li>http</li>
+<li>jetty</li>
+<li>websocket
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>下午用jetty的WekSocketServlet写了一个简单的WebIM程序，正好第一次瞥见WebSocket的狰容。</p></p>
+<p>服务器端<br />
+jetty 7.1.5<br />
+客户端<br />
+Chromium 5.0.375.86</p>
+
+<p>通过wireshark抓包获得这样一些数据：
+<em>var _ws = new WebSocket("ws://127.0.0.1:8080/nothing")</em>
+这个环节创建WebSocket，浏览器与服务器端进行handshake，发送请求</p>
+
+<p><blockquote>GET /nothing HTTP/1.1<br />
+Upgrade: WebSocket<br />
+Connection: Upgrade<br />
+Host: 127.0 ...</blockquote></p>
+                <a class="readmore" href="/websocket-protocol.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/clojure-recur.html" rel="bookmark"
+                           title="Permalink to clojure recur">clojure recur</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-15T00:00:00+08:00">
+                Published: Thu 15 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>clojure
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数：</p></p>
+<p>[cc lang="lisp"]<br />
+(defn addup<br />
+    ([limit] (addup limit 0 0))<br />
+    ([limit current sum]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (addup limit (+ 1 current) (+ current sum)))))<br />
+[/cc]</p>
+
+<p>调用</p>
+
+<p>(addup 10)</p>
+
+<p>可以得到55</p>
+
+<p>但是调用</p>
+
+<p>(addup 50000)</p>
+
+<p>不出意外，出现了StackOverflowException， 这是递归典型的错误。</p>
+
+<p>为此，需要进行优化。尾递归优化是指如果递归满足一定条件，编译器可以将递归展开，避免出现栈溢出的问题。这里的条件 ...</p>
+                <a class="readmore" href="/clojure-recur.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid.html" rel="bookmark"
+                           title="Permalink to fixing "libmozjs" missing when using mongodb on Ubuntu lucid">fixing "libmozjs" missing when using mongodb on Ubuntu lucid</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-13T00:00:00+08:00">
+                Published: Tue 13 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>mongodb</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><strong>Problem</strong>
+When running mongod/mongo/mongos, you got message like this:
+<i>mongod: error while loading shared libraries: libmozjs.so: cannot open shared object file: No such file or directory</i></p></p>
+<p><strong>Solution</strong>
+Make sure you have xulrunner-dev installed:
+<em>sudo apt-get install xulrunner-dev</em></p>
+
+<p>then find ...</p>
+                <a class="readmore" href="/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index44.html">&laquo;</a>
+    Page 45 / 77
+        <a href="/index46.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>OSM Static API with JavaFX</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/osm-static-api-with-javafx.html" rel="bookmark"
+           title="Permalink to OSM Static API with JavaFX">OSM Static API with JavaFX</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-07-18T00:00:00+08:00">
+                Published: Sat 18 July 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>foss</li>
+<li>GIS</li>
+<li>JavaFX</li>
+<li>map</li>
+<li>OpenStreetMap</li>
+<li>RIA</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>OSM(http://www.osm.org) has released their first prototype of static map api. It is aimed to make web mapping easier to refer just like google has done.</p></p>
+<p>All interfaces are listed in following page:
+<a href="http://dev.openstreetmap.org/~pafciu17/" target="_blank">http://dev.openstreetmap.org/~pafciu17/</a></p>
+
+<p>With OSM static api, you can:
+<ul>
+    <li>Show a map centered at a specified point. (using center, height and width)</li>
+    <li>Show a map contains specified bound box. (using bbox, zoom/height/width)</li>
+    <li>Create point/path/polygon in static map.</li>
+    <li>Choose different map render engines.</li>
+    <li>Control logo position in output image.</li>
+</ul>
+I just tested it with a simple javafx applet. For there is no crossdomain.xml on the server of OSM, to get cross-domain images, you will be asked to confirm security. Feel free to change center latitude/longitude and zoom level.</p>
+
+<p><!--more-->
+<script src="http://dl.javafx.com/1.2/dtfx.js"></script> <script type="text/javascript">// <![CDATA[<br>
+      javafx(         {               archive: "http://www.classicning.com/archives/OSMStaticMap.jar",               width: 500,               height: 500,               code: "OSMStaticMap",               name: "OSMStaticMap"         }     );<br>
+// ]]></script></p>
+
+<p>Enjoy all these free data on free applications :)</p>
+
+<p>Steps to create signed javafx applet
+<ul>
+    <li>javafxc OSMStaticMap.fx</li>
+    <li>javafxpackger javafxpackager -src . -appClass OSMStaticMap -appWidth 500 -appHeight 500</li>
+    <li>cd dist</li>
+    <li>keytool -genkey -keystore classicning.keys -alias  http://www.classicning.com/ -validity 365</li>
+    <li>jarsigner --keystore classicning.keys --storepass ******** OSMStaticMap.jar http://www.classicning.com/</li>
+</ul></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

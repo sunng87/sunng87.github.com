@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Extend slacker server with interceptors</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/extend-slacker-server-with-interceptors.html" rel="bookmark"
+           title="Permalink to Extend slacker server with interceptors">Extend slacker server with interceptors</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-18T00:00:00+08:00">
+                Published: Sun 18 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>clojure</li>
+<li>github</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>An interceptor framework was introduced in slacker 0.3.0. It's designed to allow user to add custom functionality without hacking into the internal of slacker.</p></p>
+<p>Like many server frameworks, slacker abstracts the request processing as a pipeline. The request object is modified by adding or updating attributes through each node of the pipeline. So it's easy to add your interceptor into the pipeline, with which you can get the data before and after function executed.</p>
+
+<p>To create such an interceptor, you should use the <em>slacker.interceptor/definterceptor</em> macro and <em>slacker.interceptor/definterceptor+</em> macro:</p>
+
+<p><blockquote>(definterceptor name<br />
+  :before interceptor-function<br />
+  :after interceptor-function)</blockquote></p>
+
+<p><blockquote>(definterceptor+ name [arguments]<br />
+  :before interceptor-function<br />
+  :after interceptor-function)</blockquote></p>
+
+<p>definterceptor+ can accept arguments so you can configure the interceptor when you use it.</p>
+
+<p>See a simple example:<br />
+[cc lang="clojure"]<br />
+(definterceptor log-function-call<br />
+  :before (fn [req] (println (str "calling " (:fname req))) req))</p>
+
+<p>(definterceptor+ log-function-call-prefixed [prefix]<br />
+  :before (fn [req] (println (str <br />
+                               (if (fn? prefix) (prefix) prefix) <br />
+                               " calling " <br />
+                               (:fname req))) <br />
+                    req))<br />
+[/cc]</p>
+
+<p>Then, add it to your slacker server by<br />
+[cc lang="clojure"]<br />
+(use '[slacker.interceptor])<br />
+(import '[java.util Date])<br />
+(start-slacker (the-ns 'slapi) 2104<br />
+  :interceptors (interceptors log-function-call<br />
+                              (log-function-call-prefixed <br />
+                                (fn [] (.toString (Date.)))))<br />
+[/cc]</p>
+
+<p>Now you can log every function call of your slacker server.</p>
+
+<p>For more detail about the interceptor framework, especially the request data, please check the <a href="https://github.com/sunng87/slacker/wiki/Interceptors" target="_blank">wiki page</a>.</p>
+
+<p>In slacker 0.3.0, there is a built-in interceptor to stats function calls. You can find it at <em>slacker.interceptors.stats</em>. The stats data is expose via JMX. You can also write monitoring application to retrieve the data. 
+<a href="http://imgur.com/vtOoL"><img src="http://i.imgur.com/vtOoL.png" alt="" title="Hosted by imgur.com" /></a></p>
+
+<p>And there will be more built-in interceptors in 0.4.0, includes function call time stats and logging.</p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

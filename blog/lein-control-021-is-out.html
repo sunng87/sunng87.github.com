@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>lein-control 0.2.1 is out</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/lein-control-021-is-out.html" rel="bookmark"
+           title="Permalink to lein-control 0.2.1 is out">lein-control 0.2.1 is out</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-11-01T00:00:00+08:00">
+                Published: Tue 01 November 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I have updated the leiningen plugin for <a href="https://github.com/killme2008/clojure-control" target="_blank">clojure-control</a> 0.2.1. There is no new feature for it as a plugin. But some new features from upstream are supported and should be highlighted:</p></p>
+<p><h3>SSH command DSL</h3>
+This feature is committed by me and first announced in clojure-control 0.2.1. With this DSL, you can write your SSH command with some predefined macros which is more readable and enjoyable.</p>
+
+<p>For example, an ssh task can be defined as:<br />
+[cc lang="clojure"]<br />
+   (deftask :restart-server "restart your jetty server"<br />
+          []<br />
+          (ssh (cd "/opt/jetty/bin"<br />
+                 (run "./jetty.sh restart"))))<br />
+[/cc]</p>
+
+<p>which equals to :<br />
+[cc lang="clojure"]<br />
+   (deftask :restart-server "restart your jetty server"<br />
+          []<br />
+          (ssh "cd /opt/jetty/bin; ./jetty/sh restart"))<br />
+[/cc]</p>
+
+<p>For full document of this DSL, please check the <a href="https://github.com/killme2008/clojure-control/blob/master/README.md" target="_blank">README</a>.</p>
+
+<p><h3>Improved syntax for defcluster</h3>
+ssh/scp/rsync options in defcluster could be written as a vector:<br />
+[cc lang="clojure"]<br />
+(defcluster :mycluster<br />
+  :ssh-options "-p 44"<br />
+  :scp-options "-v"<br />
+  :rsync-options ["-arz" "--delete"]<br />
+  :clients [<br />
+    { :host "c.domain.com" :user "clogin" :ssh-options "-v -p 43"}<br />
+  ]<br />
+  :user "login"<br />
+  :addresses ["a.domain.com" "b.domain.com"])[/cc]<br />
+(code quote from official announcement)</p>
+
+<p><h3>Parallel support</h3>
+Tasks could be executed in parallel if you add option <code>:parallel true</code> on defcluster.</p>
+
+<p>Finally, to use this plugin, add dev-dependency to your project.clj:<br />
+[cc lang="clojure"]<br />
+        :dev-dependencies [[lein-control "0.2.1"]]<br />
+[/cc]<br />
+More detailed instructions could be found <a href="https://github.com/sunng87/lein-control/blob/master/README" target="_blank">here</a>.</p>
+
+<p>BTW, this is the last release of lein-control as a standalone artifact. I will be working on merging lein-control into clojure-control. Soon you will have a few flexible ways to use clojure-control.
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>ibatis infinite loop when getFirstResultSet</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/ibatis-infinite-loop-when-getfirstresultset.html" rel="bookmark"
+           title="Permalink to ibatis infinite loop when getFirstResultSet">ibatis infinite loop when getFirstResultSet</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-08T00:00:00+08:00">
+                Published: Tue 08 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>ibatis</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：<br />
+https://issues.apache.org/jira/browse/IBATIS-384<br />
+https://issues.apache.org/jira/browse/IBATIS-587</p></p>
+<p>在mysql数据库上，没有结果集时，<em>stmt.getUpdateCount()</em>会返回0，而非-1.<br />
+ibatis 2.4.3<br />
+[cc lang="java"]<br />
+  private ResultSet getFirstResultSet(StatementScope scope, Statement stmt) throws SQLException {<br />
+    ResultSet rs = null;<br />
+    boolean hasMoreResults = true;<br />
+    while (hasMoreResults) {<br />
+      rs = stmt.getResultSet();<br />
+      if (rs != null) {<br />
+        break;<br />
+      }<br />
+      hasMoreResults = moveToNextResultsIfPresent(scope, stmt);<br />
+    }<br />
+    return rs;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
+    boolean moreResults;<br />
+    // This is the messed up JDBC approach for determining if there are more results<br />
+    moreResults = !(((moveToNextResultsSafely(scope, stmt) == false) && (stmt.getUpdateCount() == -1)));<br />
+    return moreResults;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
+    if (forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets()) {<br />
+      return stmt.getMoreResults();<br />
+    }<br />
+    return false;<br />
+  }</p>
+
+<p>[/cc]<br />
+moreResults恒为真，程序出现死循环。</p>
+
+<p>在mybatis 2.5的代码里，这部分已经修改为：<br />
+[cc lang="java"]<br />
+  private boolean moveToNextResultsIfPresent(StatementScope scope, Statement stmt) throws SQLException {<br />
+    boolean moreResults;<br />
+    // This is the messed up JDBC approach for determining if there are more results<br />
+    boolean movedToNextResultsSafely = moveToNextResultsSafely(scope, stmt);<br />
+    int updateCount = stmt.getUpdateCount();</p>
+
+<p>    moreResults = !(!movedToNextResultsSafely && (updateCount == -1));</p>
+
+<p>    //ibatis-384: workaround for mysql not returning -1 for stmt.getUpdateCount()<br />
+    if (moreResults == true){<br />
+        moreResults = !(!movedToNextResultsSafely && !isMultipleResultSetSupportPresent(scope, stmt));<br />
+    }</p>
+
+<p>    return moreResults;<br />
+  }</p>
+
+<p>  private boolean moveToNextResultsSafely(StatementScope scope, Statement stmt) throws SQLException {<br />
+    if (isMultipleResultSetSupportPresent(scope, stmt)) {<br />
+      return stmt.getMoreResults();<br />
+    }<br />
+    return false;<br />
+  }</p>
+
+<p>  /**<br />
+   * checks whether multiple result set support is present - either by direct support of the database driver or by forcing it<br />
+   */<br />
+  private boolean isMultipleResultSetSupportPresent(StatementScope scope,<br />
+          Statement stmt) throws SQLException {<br />
+      return forceMultipleResultSetSupport(scope) || stmt.getConnection().getMetaData().supportsMultipleResultSets();<br />
+  }<br />
+[/cc]<br />
+这部分条件判断实在很极致了。</p>
+
+<p>新的实现当getUpdateResult是0时，moreResults恒为真，这时再进行一个判断，如果是由于isMultipleResultSetSupportPresent为false导致了moveToNextResultsSafely为false，那么实际moreResults应是false</p>
+
+<p>MyBatis 2.5还有一个issue没有解决，离发布还有一些时间，这个问题只好签出新版本代码自己build了</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

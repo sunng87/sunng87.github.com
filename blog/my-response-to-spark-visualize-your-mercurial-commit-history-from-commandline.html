@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'My response to Spark: Visualize your mercurial commit history from commandline'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/my-response-to-spark-visualize-your-mercurial-commit-history-from-commandline.html" rel="bookmark"
+           title="Permalink to 'My response to Spark: Visualize your mercurial commit history from commandline'">'My response to Spark: Visualize your mercurial commit history from commandline'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-11-16T00:00:00+08:00">
+                Published: Wed 16 November 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>github</li>
+<li>hg</li>
+<li>opensource</li>
+<li>python</li>
+<li>visualization
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>标题长了些。还是用母语吧。</p></p>
+<p>昨天HackerNews上一个<a href="http://news.ycombinator.com/item?id=3237478" target="_blank">小脚本</a>轰动了，所谓山不在高程序不在小。为了响应这个小脚本，我写了一个更加简单的Mercurial(hg)扩展，帮助你输出hg仓库的提交历史。这个feature和github的直方图有点像，在我看来github的直方图是他们最重要的feature之一，它鞭策着你不断地commit。</p>
+
+<p><img src="http://i.imgur.com/ZcEfH.png" alt="hg summary" /></p>
+
+<p><script src="https://gist.github.com/1366606.js"> </script></p>
+
+<p>安装:将这个脚本放在任意一处，在你的hgrc中添加：<br />
+[cc lang="text"]<br />
+[extensions]<br />
+summary = /path/to/your/script<br />
+[/cc]</p>
+
+<p>由于很简单，就不按照mercurial的规范发布了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Mapping Geometry in Grails and MySQL</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/mapping-geometry-in-grails-and-mysql.html" rel="bookmark"
+           title="Permalink to Mapping Geometry in Grails and MySQL">Mapping Geometry in Grails and MySQL</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-06T00:00:00+08:00">
+                Published: Tue 06 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>GIS</li>
+<li>Grails</li>
+<li>groovy</li>
+<li>jts</li>
+<li>mysql
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>针对地理数据的ORM，有一个Hibernate的扩展<a href="http://www.hibernatespatial.org/" target="_blank">HibernateSpatial</a>项目可以将JTS对象映射到MySQL/PostGIS/Oracle中。这个扩展同样可以用在Grails里，这里有一篇简单的介绍，关于在Grails和MySQL中管理地理数据：
+<a href="http://www.grails.org/MySQL+GIS-Geometry+with+Grails" target="_blank">http://www.grails.org/MySQL+GIS-Geometry+with+Grails</a></p></p>
+<p>不过按照这个文章里介绍的方法用，很可能会遭遇这样的报错：
+<blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
+这个问题最终在这里得到了解答：
+<a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
+按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition，对应的Hibernate属性是sql-type。虽然作者承诺会在今后的版本里修改这个问题，不过眼下的M2版本还没有修正这个问题。为此，Grails的用户特地提出在Grails中加入sql-type的支持：
+<a href="http://jira.codehaus.org/browse/GRAILS-3201" target="_blank">http://jira.codehaus.org/browse/GRAILS-3201</a>
+现在按照下面文档的说明，可以在mapping里指定sqlType了：
+<a href="http://grails.org/doc/latest/ref/Database%20Mapping/column.html" target="_blank">http://grails.org/doc/latest/ref/Database%20Mapping/column.html</a></p>
+
+<p>实例代码里的domain定义应该改成：
+<pre class="brush:groovy">
+import com.vividsolutions.jts.geom.Polygon
+import org.hibernatespatial.GeometryUserType</pre></p>
+
+<p>public class MyPoly {<br />
+    String name<br />
+    Polygon poly</p>
+
+<p>    static mapping = {<br />
+        poly type: GeometryUserType， sqlType:"GEOMETRY"<br />
+    }</p>
+
+<p>}
+
+于是，再也没有莫名其妙的No Dialect报错了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>I cloned Beanstalkd with Clojure</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/i-cloned-beanstalkd-with-clojure.html" rel="bookmark"
+           title="Permalink to I cloned Beanstalkd with Clojure">I cloned Beanstalkd with Clojure</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-09-24T00:00:00+08:00">
+                Published: Sat 24 September 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>beanstalkd</li>
+<li>clojure</li>
+<li>opensource</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I just cloned <a href="http://kr.github.com/beanstalkd/">Beanstalkd</a> with clojure and you can find this project on <a href="https://github.com/sunng87/clojalk">github</a>. It's a light weight task queue that "producers" could put tasks in and "workers" are blocked to reserve them and process them. It will help you to split expensive operations (sending email, etc) to background.</p></p>
+<p>The features:
+<ul>
+    <li>Almost compatible with Beanstalkd protocol</li>
+    <li>Full support on Beanstalkd verbs: put/reserve/release/bury/kick</li>
+    <li>Persistence with binary write-ahead logs</li>
+    <li>Simple JMX monitoring</li></ul></p>
+
+<p></p>
+
+<p>The networking layer is based on @<a href="https://github.com/ztellman">ztellman</a>'s libraries, aleph, lamina and gloss. And I also received great help from him on implementing the protocol with gloss. </p>
+
+<p>This is not my first clojure project but the largest one. I add <a href="https://github.com/fogus/marginalia">marginalia</a> in the dev-dependencies, you can generate well formatted code and docs with `lein marg`.</p>
+
+<p>By the way, this project is not well tested. I'm still working on it to find potential issues and to fix them. Do not use it on any production environment before you have carefully gone through the code base. I just made this announcement here to let people know this project if they are interested in this topic. </p>
+
+<p>And always, Any fork/contribution is welcomed.
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

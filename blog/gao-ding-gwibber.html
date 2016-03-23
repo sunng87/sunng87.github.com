@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>搞定gwibber</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gao-ding-gwibber.html" rel="bookmark"
+           title="Permalink to 搞定gwibber">搞定gwibber</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-03-22T00:00:00+08:00">
+                Published: Mon 22 March 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>foss</li>
+<li>gwibber</li>
+<li>pycurl</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>升级10.04之后，gwibber2.29开始使用pycurl来处理IO。结果一条更新都拿不下来，为此搜到很多相关、不相关的bug。最后终于自己找到问题，<strong>原来是pycurl.setopt方法传入字符串如果是unicode就会报typeerror</strong>。而通过gwibber配置界面输入的所有字符都是unicode编码，于是问题也就简单了。做个处理，在 <em>/usr/lib/python2.6/dist-packages/gwibber/microblog/network.py</em> 第18到21行：<br />
+[cc lang="python"]<br />
+    self.curl.setopt(pycurl.URL, str(url).encode('ascii'))</p></p>
+<p>    if username and password:<br />
+      self.curl.setopt(pycurl.USERPWD, ("%s:%s" % (username, password)).encode('ascii'))<br />
+[/cc]</p>
+
+<p>另外，使用StatusNet的Twitter兼容API来做Twitter API代理，需要把代理的目录名设置为api，因为/api这个路径是写死在gwibber代码里的。通过界面输入的，只是代理的domain。</p>
+
+<p>说实在的gwibber还是挺烂的。<br />
+https://bugs.launchpad.net/bugs/542501<br />
+https://bugs.launchpad.net/bugs/543860</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

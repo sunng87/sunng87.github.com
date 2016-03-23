@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/slacker-performance-enhanced.html" rel="bookmark"
+                           title="Permalink to Slacker performance enhanced">Slacker performance enhanced</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-04-02T00:00:00+08:00">
+                Published: Mon 02 April 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>github</li>
+<li>netty</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure meetup, I will focus on the performance enhancement in next release. </p></p>
+<p>Now I have worked out a ...</p>
+                <a class="readmore" href="/slacker-performance-enhanced.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/wei-webworkershe-zhi-zheng-que-de-lu-jing.html" rel="bookmark"
+                           title="Permalink to 为WebWorker设置正确的路径">为WebWorker设置正确的路径</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-03-22T00:00:00+08:00">
+                Published: Thu 22 March 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>heatcanvas</li>
+<li>javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>WebWorker的路径通常是写在代码源文件中，而且这个路径并非其相对父js文件的相对路径，而似乎是相对页面的路径。所以指定一个正确的可随处部署的路径变得有些麻烦。昨天有人给HeatCanvas提了这个问题我才想到上网搜索了一下，有一个还算挺不错的办法。</p></p>
+<p>写一个getPath函数，从document里找到父js的路径，拼到Worker的名字上。对heatcanvas.js这个文件来说就是：</p>
+
+<p>[cc lang="javascript"]<br />
+HeatCanvas.getPath = function() {<br />
+    var scriptTags = document.getElementsByTagName("script");<br />
+    for (var i=0; i<scriptTags.length; i++) {<br />
+        var src = scriptTags[i].src;<br />
+        var pos = src.indexOf("heatcanvas.js");<br />
+        if (pos > 0) {<br />
+            return ...</scripttags.length;></p>
+                <a class="readmore" href="/wei-webworkershe-zhi-zheng-que-de-lu-jing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/my-favorite-feature-in-leiningen-2.html" rel="bookmark"
+                           title="Permalink to My favorite feature in leiningen 2">My favorite feature in leiningen 2</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-03-21T00:00:00+08:00">
+                Published: Wed 21 March 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>clojure</li>
+<li>leiningen</li>
+<li>maven
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Recently, the leiningen team has released a preview version for leiningen 2. It brings <a href="https://github.com/technomancy/leiningen/blob/master/NEWS.md" target="_blank">new features</a> to the clojure build tool. But my favorite one is not listed in any document. So I would like to share with you here.</p></p>
+<p>As ...</p>
+                <a class="readmore" href="/my-favorite-feature-in-leiningen-2.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shua-htc-evo-3d-gsm.html" rel="bookmark"
+                           title="Permalink to 刷HTC EVO 3D GSM">刷HTC EVO 3D GSM</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-03-19T00:00:00+08:00">
+                Published: Mon 19 March 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>android
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行，系统连google账户，官方market都没有。</p></p>
+<p>那么只能刷一下了。所有的步骤开始之前都是解锁，按照官方的解锁方式(http://www.htcdev.com)基本上没有什么难度。在我的archlinux上，不需要安装HTC Sync（也没得装），只需要从aur安装android-sdk和android-sdk-platform-tools就有adb和fastboot在PATH里。唯一值得一提的是，在我的系统上fastboot oem get_identifier_token需要sudo，否则会一直wait device。除了这个小插曲以外，按照官方的步骤就可以解锁HBOOT。</p>
+
+<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru ...</p>
+                <a class="readmore" href="/shua-htc-evo-3d-gsm.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kliment-voroshilov-tank-2.html" rel="bookmark"
+                           title="Permalink to Kliment Voroshilov tank 2">Kliment Voroshilov tank 2</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-03-11T00:00:00+08:00">
+                Published: Sun 11 March 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>D60</li>
+<li>tank
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>业余时间，我除了写括号以外，也会做点模型，不过是入门水平。用淘宝店家的话说，你随便涂涂就行了。这个KV-2坦克是去年秋天买的，后来周末学车加上天冷坐不住就搁置下来。现在稍微暖和一点，就赶紧把开工。</p></p>
+<p>KV-2坦克，是二战时期苏联的重型坦克。最早参加了苏芬战争，后来投入到早期的苏德战争。但是绝大多数被德军在巴巴罗萨行动中摧毁、俘虏。被俘虏的KV-2坦克被刷上德军的标志也为德军服役，这在二战早期的东线战场倒是很常见。我的这个KV-2附带的水贴纸也分两个版本，分别是苏军和德军的涂装。</p>
+
+<p>花了一天时间素组。
+<a href="http://www.flickr.com/photos/40741608@N08/6825567316/" title="DSC_0016 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7043/6825567316_29e7e13830.jpg" width="500" height="335" alt="DSC_0016" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825568984/" title="DSC_0013 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7041/6825568984_8e897f9513.jpg" width="335" height="500" alt="DSC_0013" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971689967/" title="DSC_0023 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7180/6971689967_171ab05c49.jpg" width="335" height="500" alt="DSC_0023" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825572612/" title="DSC_0019 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7176/6825572612_a4bdb17248.jpg" width="500" height="335" alt="DSC_0019" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971692767/" title="DSC_0029 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7182/6971692767_c84b5aba61.jpg" width="500" height="335" alt="DSC_0029" /></a></p>
+
+<p>今天又花了一上午时间上漆。第一次上漆，也没看什么教程，就是这个结果了。</p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971694113/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7057/6971694113_73c6939dc8.jpg" width="335" height="500" alt="DSC_0003" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6825576398/" title="DSC_0009 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7059/6825576398_e57bf106a2.jpg" width="500" height="335" alt="DSC_0009" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/6971697399/" title="DSC_0015 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7045/6971697399_fd01ca6c69.jpg" width="335" height="500" alt="DSC_0015" /></a></p>
+
+<p>下一个目标就是T34。</p>
+
+<p></p>
+                <a class="readmore" href="/kliment-voroshilov-tank-2.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun9.html">&laquo;</a>
+    Page 10 / 77
+        <a href="/author/ning-sun11.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

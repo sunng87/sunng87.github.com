@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>cp bookmakes to another pdf file</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/cp-bookmakes-to-another-pdf-file.html" rel="bookmark"
+           title="Permalink to cp bookmakes to another pdf file">cp bookmakes to another pdf file</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-25T00:00:00+08:00">
+                Published: Wed 25 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>java</li>
+<li>pdf
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><p>其实这事不好。</p>
+<p>看电子书的时候，有的没有Bookmake书签，或者叫目录也成。这样读起来就非常疲劳，经常一恍惚就根本不知道读到哪里了，上下文都弄不清怎么办。这种问题尤其对于一本1500页的电子书来说更严重。想办法自己加书签吧，reader根本不提供这个功能。这能自立更生了。</p>
+<p>对于apress的电子书（我在写这些的时候内心很痛苦，作为一个第三世界的民工，这个出版社的书我一直是看电子版），如果电子书没有书签，可以从apress的官方网站上下载目录，这个目录恰好就包含书签。这样的话只要把这个书签拷贝到我们之前的电子书里就可以了。</p>
+<p>于是需要一个能够读写pdf文件的库，我找到一个pdfbox，它现在是apache incubator中的一个项目，貌似签到apache之后还没有一个正式的release。上一个release可以在sourceforge上<a href="http://sourceforge.net/projects/pdfbox/" target="_blank">项目原来的页面</a>找到，版本号我不记得了。</p>
+<p>最近比较怀旧直接用Java写。其实很简单，pdfbox都已经建模了，只要取出来、放进去、写下来（ZB一些应该是get出来，set进去，write下来）就可以了。以下是个sample</p>
+[codesyntax lang="java" lines="fancy"]<br />
+public class Main {</p></p>
+<p> /**<br />
+     * @param args<br />
+     */<br />
+    public static void main(String[] args) throws Exception{</p>
+
+<p>     FileInputStream ctfile = new FileInputStream("E:\\cs_content.pdf");<br />
+        PDFParser parser = new PDFParser(ctfile);<br />
+        parser.parse();<br />
+        PDDocument ctpdf = parser.getPDDocument();</p>
+
+<p>     PDDocument rlpdf = PDDocument.load("E:\\cs.pdf");</p>
+
+<p>     PDDocumentOutline outline = ctpdf.getDocumentCatalog().getDocumentOutline();<br />
+        rlpdf.getDocumentCatalog().setDocumentOutline(outline);</p>
+
+<p>     FileOutputStream out = new FileOutputStream("E:\\cs_out.pdf");<br />
+        COSWriter writer = new COSWriter(out);<br />
+        writer.write(rlpdf);<br />
+        writer.close();<br />
+    }<br />
+}
+[/codesyntax]
+<p>非常简单，就不解释了。只是有一个小小的问题（其实相当严重），Apress的目录文件里bookmark是没有设置destination的（这也是ZB的说法，其实就是点了没反应）。我想了一下如果要让书签真正起到作用要去读pdf的目录页面，那里面有页码，虽然这个页码和pdf的页码有时候会有一个固定的偏移。不过读pdf似乎有那么一点麻烦，因为里面有不少控制字符。</p>
+<p>暂时就是这样。不知道有没有其他什么更好的办法。</p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

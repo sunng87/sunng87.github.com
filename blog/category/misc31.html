@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/correct-source-file-encoding-with-one-liner.html" rel="bookmark"
+                           title="Permalink to Correct source file encoding with one liner">Correct source file encoding with one liner</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-03-08T00:00:00+08:00">
+                Published: Tue 08 March 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>bash</li>
+<li>shell
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://amoeba.meidusa.com/wordpress/">Amoeba</a>项目最早的代码可以追溯到2008年了，其中有多个作者贡献代码，因为一直在Windows下开发，所以没有使用UTF8编码，最近大家统一到UTF8，遇到了代码编码不正确的问题。</p></p>
+<p>于是我们需要统一解决一下这个问题：
+<code>iconv -f gbk -t utf8 -o ConnectionManager.java ConnectionManager.java</code></p>
+
+<p>这样可以把gbk编码的源文件转换为UTF8，原地转换。</p>
+
+<p>推广到整个代码目录，用find和xargs做，xargs通过-I来制定一个占位符。
+<code>find . -name "*.java" -type f -perm +600 -print | xargs -I _ iconv -f gbk -t utf8 -o _ -c ...</code></p>
+                <a class="readmore" href="/correct-source-file-encoding-with-one-liner.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/when-nodejs-meets-mapnik.html" rel="bookmark"
+                           title="Permalink to When nodejs meets mapnik">When nodejs meets mapnik</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-03-05T00:00:00+08:00">
+                Published: Sat 05 March 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>javascript</li>
+<li>mapnik</li>
+<li>node</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>tilelive.js是一个基于nodejs的web地图工具，帮助用户快速查看他们创建的地图样式。tilelive.js是Mapbox众多产品中的一个，你可以通过<a href="http://mapbox.github.com/tilemill/">tilemill</a>了解更多。</p></p>
+<p>要运行tilelive.js，你需要安装一系列软件。</p>
+
+<p><h3>安装mapnik</h3>
+首先需要安装mapnik2，注意并非是目前的稳定版本0.7.1，而是开发版本。<br />
+签出SVN代码：
+<code>svn co http://svn.mapnik.org/trunk mapnik-trunk</code></p>
+
+<p>按照Mapnik的<a href="http://trac.mapnik.org/browser/trunk/INSTALL">文档</a>描述进行安装。</p>
+
+<p><h3>安装node依赖</h3>
+推荐你安装最新的node 0.4.2和npm 0.3.1。</p>
+
+<p>安装npm后执行
+<code>npm config ...</code></p>
+                <a class="readmore" href="/when-nodejs-meets-mapnik.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/python3-script-to-query-free-toefl-seats.html" rel="bookmark"
+                           title="Permalink to Python3 script to query free TOEFL seats">Python3 script to query free TOEFL seats</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-28T00:00:00+08:00">
+                Published: Mon 28 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>应同学要求，写了一个爬托福考试空闲考位的脚本。这是第一次真正用Python3写。</p></p>
+<p><script src="https://gist.github.com/846150.js?file=gistfile1.py"></script></p>
+
+<p>通过调用get_seat_status，传入省名（如'Jiangsu'），时间（如'201104'），您可以得到这样的数据结构：<br />
+[cc lang="python"]<br />
+[ [datetime.datetime(2011, 4, 23, 10, 0),  'STN80085B',  '南通市教育装备与勤工俭学管理中心',  '1415',  True],<br />
+ [datetime.datetime(2011, 4, 23, 10, 0), 'STN80086A', '扬州大学', '1415', True]]<br />
+[/cc]</p>
+
+<p>下面是一个多线程调用的例子：<br />
+[cc lang="python"]<br />
+#! /usr ...</p>
+                <a class="readmore" href="/python3-script-to-query-free-toefl-seats.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/zhu-xia-chuan-liang-tou-tou-jian.html" rel="bookmark"
+                           title="Permalink to 宁夏川两头头尖">宁夏川两头头尖</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-27T00:00:00+08:00">
+                Published: Sun 27 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Music
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>前天在豆瓣电台上听到赵牧阳的《<a href="http://site.douban.com/zhaomuyang/?s=24204">黄河谣</a>》，循声找过去发现这两天在上海有小演出，一时兴起叫上纯西北人<a href="http://www.phio.me/">亚洲</a>就决定去听听。</p></p>
+<p>地点在上海电视台后面的Wooden Box酒吧。鉴于是第一次在上海听这样的演出，所以也没有什么可比较的。酒馆不大，为了能占个好位置，9点开始的演出我们一行人7点半就坐在了整个酒馆最好的座位上，开始等着。事后证明这是正确的选择，节目开始整个酒馆连个落脚的地方都没有。</p>
+
+<p>大约9点半赵牧阳出现了，先挂了一副艺术品，抱歉我实在没看懂画上画什么。头戴雷锋帽，身穿，身穿还是土豆上大家能看到那个视频的衣服，还专门做出了一道汗渍。当然啦，沧桑是装不出来的，吼两声就知道有没有。</p>
+
+<p>第一环节是赵牧阳弹三弦唱秦腔，大约唱了三首。具体唱什么现在都忘掉了，以前觉得三弦一响都是何玉笙，何勇，现在老观念改改了。亚洲基本上都能听懂，而且能听出出处，虽然是新唱，但都是老曲老调，所以正宗西北人听得透。我之前补习过张佺和苏阳，宁夏川两头头尖，黄河水流过了家流过了兰州我还是知道一点的。</p>
+
+<p>第二个环节是赵牧阳和酒吧老板出门抽烟，场子里周朝的吉他solo。<a href="http://www.douban.com/people/2664402/">周朝 ...</a></p>
+                <a class="readmore" href="/zhu-xia-chuan-liang-tou-tou-jian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/using-dojo-on-chromechromium-from-local-file-system.html" rel="bookmark"
+                           title="Permalink to Using dojo on Chrome/Chromium from local file system">Using dojo on Chrome/Chromium from local file system</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-21T00:00:00+08:00">
+                Published: Mon 21 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>Chrome</li>
+<li>dojo</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>dojo.require uses XMLHttpRequest to load additional components. On default Chrome settings, XMLHttpRequest on local file system is not allowed. This will break whole dojo system.</p></p>
+<p>To change the default policy, you can start Chrome with a command line option <i>--allow-file-access-from-files ...</i></p>
+                <a class="readmore" href="/using-dojo-on-chromechromium-from-local-file-system.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc30.html">&laquo;</a>
+    Page 31 / 77
+        <a href="/category/misc32.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

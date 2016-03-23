@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Spark in common lisp</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/spark-in-common-lisp.html" rel="bookmark"
+           title="Permalink to Spark in common lisp">Spark in common lisp</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-11-19T00:00:00+08:00">
+                Published: Sat 19 November 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>lisp
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>还是关于spark的，一石激起千层浪，每个人心中都有一个spark。其实spark脚本刚出来的时候问题很多，但是就是因为产生了共鸣，众人拾柴pull request多。像redis的作者antirez也忍不住自己用c写了一个<a href="https://github.com/antirez/aspark" target="_blank">aspark</a>。</p></p>
+<p>说完了别人的，那么来看看我的：clspark，common-lisp的spark。原本是打算用clojure写，但是想到jvm的启动速度，把这个机会留给我的第一个common lisp程序吧。</p>
+
+<p><img src="http://i.imgur.com/oD7m4.png" alt="" /></p>
+
+<p>其实很简单。
+<script src="https://gist.github.com/1375401.js"> </script></p>
+
+<p>common lisp的核心库里没有split，所以这里从cl-cookbook拷贝了一个split的实现，坦白说我还看不太懂这个loop的写法。loop是common lisp中最尴尬的form，因为他的形式太多。这点在clojure中是不存在的。比较一下就能发现，在语言层面，clojure是相对现代得多的lisp方言。
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

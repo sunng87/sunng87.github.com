@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>多线程服务器</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
+           title="Permalink to 多线程服务器">多线程服务器</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-04-12T00:00:00+08:00">
+                Published: Thu 12 April 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>NIO</li>
+<li>programming
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>写了挺长时间网络程序了，有些事到最近才弄明白，记录一下。</p></p>
+<p>写一个高性能的服务器，传统的BIO方式基本上已经被淘汰了，很难获得理想的性能。所以现在都是以事件驱动的方式来写，在Linux上用epoll,Java平台上就是NIO。再向上，有一些包装的库，比如twisted比如libevent比如Java上的Netty。</p>
+
+<p>Netty的server需要至少两组线程，BossPool和WorkerPool,。前者负责accept，后者负责r/w。通常的例子里，这就是仅有的两组线程。用户在框架之上的业务逻辑，写在handler里，以单线程的方式运行在worker线程上。</p>
+
+<p>这样的方式在很多例子里很普遍。但是如果handler里的业务逻辑比较复杂，尤其是IO的等待过长(比如查询数据库)，就会由于在handler上阻塞的时间过长，导致服务器读写的效率下降。所以通常是不能在这样环境下的handler里写IO阻塞的代码。</p>
+
+<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间，换取更高的利用率。</p>
+
+<p>但是随之而来了另一个问题，因为在handler中使用了多线程的模型。对顺序收到的包，交由不同的线程并行处理，就没有办法保证返回时的顺序。客户端就无法了解刚刚返回的包是对应哪个请求的。</p>
+
+<p>这个情况也有两种办法处理。其一是在线程管理上做文章，采用一种折中的办法。对于每一个客户端连接来说，仍然是占用同一个线程来处理。这样首先任务不会占用worker线程，其次在整体上仍然提高了CPU的利用率。但是这样做的缺点是，在单一客户端看来，任务仍然是串行执行: 三个需要耗时500ms的请求同时顺序发出，第三个至少要在1500ms之后才能收到响应，客户端的latency比较高。</p>
+
+<p>另一种，就是在应用协议层面做一个冗余字段，通常叫做serial id或者transaction id。客户端为每一个请求生成一个这样的id，并存储这个id对应的回调。服务器端不需要对包的顺序作任何关注，只需要把这个id原封不动地拷贝回去即可。这样，服务器就可以自由调度线程来处理请求。以上面的例子，在不繁忙的情况下，三个响应在500ms左右就都可以到达了。</p>
+
+<p>这种方式对应用协议有特殊的要求，但是比较常见的协议都预留了这个字段，Diameter协议甚至留了两个这样的字段来便于代理的实现。</p>
+
+<p>slacker 0.7.x基于aleph，由于aleph / lamina无法侵入协议层面，所以采用的都是顺序的客户端和服务器。这种方式编程非常简洁，协议设计简单，实现起来很快。但是作为RPC框架，一旦客户的函数阻塞较长，就会影响整体性能。0.8.0开始，通过新的协议和link库支持，slacker采用了transaction id的方式，服务器端默认使用并行处理，客户端不再依赖顺序指定响应和回调。尽管在一些CPU为局限的测试里性能有少许下降(与单线程相比，增加了调度的成本)，但是针对实际应用里IO等待较多的情况，新版本应该会表现出更好的综合性能。</p>
+
+<p>以上这些，就是最近的心得，希望能解释清楚事件驱动服务器里的这些事情。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

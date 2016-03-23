@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Update on HeatCanvas and gefr</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/update-on-heatcanvas-and-gefr.html" rel="bookmark"
+           title="Permalink to Update on HeatCanvas and gefr">Update on HeatCanvas and gefr</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-06-14T00:00:00+08:00">
+                Published: Tue 14 June 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>gefr</li>
+<li>heatcanvas</li>
+<li>javascript</li>
+<li>jython</li>
+<li>opensource</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>HeatCanvas的百度地图扩展</h3></p></p>
+<p>感谢@lbt05姐的无私贡献，现在HeatCanvas又增加了百度地图API支持。你可以在你的百度地图中使用heat map了。详情可以参考<a href="http://nihuajie.com/blog/?p=469">@lbt05姐撰写的文档</a>，而<a href="http://sunng87.github.com/heatcanvas/baidumap.html">这里</a>是一个简单的live demo。此外，@lbt05姐还贡献了GoogleMap扩展的patch，帮助我解决了地图拖动后Canvas无法覆盖viewport的bug。再次感谢<a href="http://twitter.com/lbt05">@lbt05</a>姐。</p>
+
+<p>百度地图支持已经汇入主干，可以在<a href="https://github.com/sunng87/heatcanvas">github</a>找到它。</p>
+
+<p><h3>Gefr新增 Jetty WSGI Bridge</h3></p>
+
+<p>昨天为<a href="https://bitbucket.org/sunng/gefr">gefr</a>新增了Jetty服务器的支持，这样你可以将自己的Python WSGI程序运行在成熟的Jetty服务器上。性能是大家关心的因素，下面是在我的本机（32位CentOS，双核2.8GHz，4G内存）上一个粗略的测试结果：</p>
+
+<p>100并发，20000请求：
+<blockquote>
+Server Software:        gefr-jetty/0.3dev<br />
+Server Hostname:        localhost<br />
+Server Port:            8088</blockquote></p>
+
+<p>Document Path:          /<br />
+Document Length:        19 bytes</p>
+
+<p>Concurrency Level:      100<br />
+Time taken for tests:   3.120827 seconds<br />
+Complete requests:      20000<br />
+Failed requests:        0<br />
+Write errors:           0<br />
+Total transferred:      2584515 bytes<br />
+HTML transferred:       380665 bytes<br />
+Requests per second:    6408.56 [#/sec] (mean)<br />
+Time per request:       15.604 [ms] (mean)<br />
+Time per request:       0.156 [ms] (mean, across all concurrent requests)<br />
+Transfer rate:          808.44 [Kbytes/sec] received</p>
+
+<p>Connection Times (ms)<br />
+              min  mean[+/-sd] median   max<br />
+Connect:        0    4 114.1      0    3000<br />
+Processing:     0    7  18.5      5    1776<br />
+Waiting:        0    6  18.5      4    1776<br />
+Total:          0   12 115.8      6    3015</p>
+
+<p>Percentage of the requests served within a certain time (ms)<br />
+  50%      6<br />
+  66%      7<br />
+  75%      8<br />
+  80%      8<br />
+  90%     10<br />
+  95%     13<br />
+  98%     70<br />
+  99%     74<br />
+ 100%   3015 (longest request)
+</p>
+
+<p>如果打开KeepAlive，吞吐量可以达到10000以上：</p>
+
+<p><blockquote>
+Server Software:        gefr-jetty/0.3dev<br />
+Server Hostname:        localhost<br />
+Server Port:            8088</blockquote></p>
+
+<p>Document Path:          /<br />
+Document Length:        19 bytes</p>
+
+<p>Concurrency Level:      100<br />
+Time taken for tests:   1.749189 seconds<br />
+Complete requests:      20000<br />
+Failed requests:        0<br />
+Write errors:           0<br />
+Keep-Alive requests:    20000<br />
+Total transferred:      3062142 bytes<br />
+HTML transferred:       380266 bytes<br />
+Requests per second:    11433.87 [#/sec] (mean)<br />
+Time per request:       8.746 [ms] (mean)<br />
+Time per request:       0.087 [ms] (mean, across all concurrent requests)<br />
+Transfer rate:          1709.36 [Kbytes/sec] received</p>
+
+<p>Connection Times (ms)<br />
+              min  mean[+/-sd] median   max<br />
+Connect:        0    0   0.8      0      23<br />
+Processing:     0    8   8.0      6      85<br />
+Waiting:        0    8   8.0      6      85<br />
+Total:          0    8   8.1      6      85</p>
+
+<p>Percentage of the requests served within a certain time (ms)<br />
+  50%      6<br />
+  66%      7<br />
+  75%      8<br />
+  80%      9<br />
+  90%     11<br />
+  95%     20<br />
+  98%     41<br />
+  99%     43<br />
+ 100%     85 (longest request)
+</p>
+
+<p>你可以根据<a href="http://gefr.rtfd.org/">gefr的文档</a>安装它。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

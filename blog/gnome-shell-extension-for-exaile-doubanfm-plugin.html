@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>GNOME-Shell Extension for Exaile DoubanFM Plugin</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/gnome-shell-extension-for-exaile-doubanfm-plugin.html" rel="bookmark"
+           title="Permalink to GNOME-Shell Extension for Exaile DoubanFM Plugin">GNOME-Shell Extension for Exaile DoubanFM Plugin</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-07T00:00:00+08:00">
+                Published: Sat 07 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>dbus</li>
+<li>Douban</li>
+<li>exaile</li>
+<li>foss</li>
+<li>gnome-shell</li>
+<li>javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>从有这个动机到基本可用，花了整整一天的时间。现在可以通过GNOME-Shell的一个小菜单从外部控制Exaile豆瓣电台了。它的意思就是说如果你使用Gnome-Shell，你可以把Exaile界面扔到一个你不想看到的地方去，比如第n+1个workspace。然后通过左上角的菜单来控制豆瓣电台的播放。见多识广的你不会对此感到太惊奇，其实它和Ubuntu上的Sound Menu Indicator类似，不过是专门给豆瓣电台设计的。
+<a href="http://www.flickr.com/photos/40741608@N08/5696429062/" title="Exaile with doubanfm plugin by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5104/5696429062_7f62a4d7f2.jpg" alt="Exaile with doubanfm plugin" height="313" width="500" /></a></p></p>
+<p>要实现这个功能，需要播放器通过dbus来expose一些接口供外部程序调用，它和Sound Menu是一样的，通过dbus来解耦。开发起来比较困难的是目前GNOME-Shell的API还不成熟，还没有文档，传统的javascript object inspect方法似乎在这个mozjs的环境里也不能用，所以实在是无从知道一些API。更不要提通过gjs来调用dbus了。网上有一些文档起了很大的作用，如果你也感兴趣，这些文章是：
+<ul><li>开发GNOME-Shell Extension：<a href="http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html">http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html</a></li>
+<li>gjs调用dbus： <a href="http://blog.roodo.com/rocksaying/archives/14229429.html">blog.roodo.com/rocksaying/archives/14229429.html</a></li>
+</ul></p>
+
+<p>支持dbus的exaile-doubanfm-plugin会在stable之后合并到主干供大家使用。现在和gjs一样，它的API也不稳定，所以放在分支中：
+<a href="https://github.com/sunng87/exaile-doubanfm-plugin/tree/dbus">https://github.com/sunng87/exaile-doubanfm-plugin/tree/dbus</a></p>
+
+<p>gnome-shell extension的代码现在也放在github上（其实还不成熟的东西放到bitbucket比较好的）。有兴趣可以了解：
+<a href="https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension">https://github.com/sunng87/exaile-doubanfm-gnome-shell-extension</a></p>
+
+<p>以上都是unstable，仅供吊胃口之用。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=a656b959-d8af-8db6-8cbc-e246c779cf1c" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

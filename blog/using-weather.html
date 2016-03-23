@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Using weather</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/using-weather.html" rel="bookmark"
+           title="Permalink to Using weather">Using weather</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-18T00:00:00+08:00">
+                Published: Thu 18 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>linux</li>
+<li>location</li>
+<li>util
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Ubuntu仓库里有个weather-util包，可以用来查看天气信息。weather工具从weather.noaa.gov网站获得天气信息，对美国的城市可以直接用名字查询，其他国家只能使用id查询。id的规则和weather.com不太相同。</p></p>
+<p>中国的天气站点id可以在<a href="http://weather.noaa.gov/weather/CN_cc.html">这个页面</a>上查到。比如南京ZSNJ，上海浦东ZSPD。使用weather工具查询：
+<em>weather -i ZSNJ</em>
+<blockquote>Current conditions at China (ZSNJ) 32-00N 118-48E 12M (ZSNJ)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 59%<br />
+   Wind: from the SSW (210 degrees) at 4 MPH (4 KT)</blockquote></p>
+
+<p>简化操作，可以在$HOME下创建.weatherrc文件，形如<br />
+[cc lang="ini"]<br />
+[default]<br />
+ID = ZSPD<br />
+[nj]<br />
+ID = ZSNJ<br />
+[/cc]</p>
+
+<p>就可以直接使用
+<em>weather</em>
+<blockquote>
+Current conditions at China (ZSPD) 31-07N 121-46E (ZSPD)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 47%<br />
+   Wind: from the NE (050 degrees) at 7 MPH (6 KT) (direction variable)
+</blockquote>
+和
+<em>weather nj</em>
+<blockquote>Current conditions at China (ZSNJ) 32-00N 118-48E 12M (ZSNJ)<br />
+Last updated Feb 18, 2010 - 08:00 AM EST / 2010.02.18 1300 UTC<br />
+   Temperature: 35 F (2 C)<br />
+   Relative Humidity: 59%<br />
+   Wind: from the SSW (210 degrees) at 4 MPH (4 KT)</blockquote></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

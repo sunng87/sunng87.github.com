@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Patch for Fantasdic Google Source</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/patch-for-fantasdic-google-source.html" rel="bookmark"
+           title="Permalink to Patch for Fantasdic Google Source">Patch for Fantasdic Google Source</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-02T00:00:00+08:00">
+                Published: Tue 02 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>foss</li>
+<li>gnome</li>
+<li>ruby
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I found fantasdic a great powerful dictionary tool with friendly UI and supports multiply sources. Unfortunately, this project seems to be no longer maintained. The latest version is 1.0-beta7.
+<a title="fantasdic-google by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4324570353/"><img src="http://farm5.static.flickr.com/4049/4324570353_c1f79ac6dc.jpg" alt="fantasdic-google" width="500" height="362" /></a></p></p>
+<p>The google translate source was created in 2007. As the google translate service page changed, this module doesn't work any more, so I just picked up my vim then created this patch for those still want to use it.</p>
+
+<p>This patch has dependency with ruby's json module, so before you apply it, run:
+<em>sudo gem install json</em>
+or
+<em>sudo apt-get install libjson-ruby1.8</em></p>
+
+<p>Download the patch at:
+<a href="https://bugzilla.gnome.org/attachment.cgi?id=152835">https://bugzilla.gnome.org/attachment.cgi?id=152835</a></p>
+
+<p>Patch it (Ubuntu installation as example):
+<em>cd /usr/lib/ruby/1.8/fantasdic/sources/<br />
+sudo patch google_translate.rb /home/sun/google_translate.rb.diff</em></p>
+
+<p>Restart fantasdic, then your get it works! And this bug is tracked at:
+<a href="https://bugzilla.gnome.org/show_bug.cgi?id=605641">https://bugzilla.gnome.org/show_bug.cgi?id=605641</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

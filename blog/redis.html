@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Redis</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/redis.html" rel="bookmark"
+           title="Permalink to Redis">Redis</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-24T00:00:00+08:00">
+                Published: Thu 24 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>kvstore</li>
+<li>redis
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://code.google.com/p/redis">Redis</a>是一个高性能Key-Value store</p></p>
+<p><h2>Installation</h2>
+下载解压，make之后就可以直接启动./redis-server 默认读取当前目录下的redis.conf作为配置，亦可参数指定。默认监听6379端口。</p>
+
+<p><h2>Features</h2>
+<h3>支持多种数据结构</h3>
+相较memcached，redis支持多种数据结构，包括
+<ul>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_string_values">string</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_lists">list</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sets">set</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sorted_sets_(zsets,_Redis_version_%3E=_1.">sorted set</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_hashes">hash</a></li>
+</ul></p>
+
+<p>针对每种数据结构，redis都提供比较完整的操作支持。</p>
+
+<p><h3>高性能</h3>
+据Wiki上说可以达到110,000 SETs/second, 81,000 GETs/second，数据根据一定的策略存在内存和磁盘上（支持持久化）。从1.1开始支持<a href="http://code.google.com/p/redis/wiki/AppendOnlyFileHowto">append-only持久化方式</a>，数据被加到文件中，并进行异步的维护，保证文件的大小。从2.0（即1.3）开始支持virtual memory<a href="http://code.google.com/p/redis/wiki/VirtualMemoryUserGuide"></a>，当内存占用超过配置文件中vm-max-memory时，数据被写入virtual memory。</p>
+
+<p><h2>Replication</h2>
+redis支持主从复制，从而提供多台实例进行读操作，可以在slave的配置文件里配置master的地址。</p>
+
+<p><h2>Protocol</h2>
+redis目前只有基于TCP的文本协议，与memcache类似，有一些改进。<br />
+客户端通常发送
+<i>命令 参数... 值字节数\r\n</i>
+<i>值\r\n</i></p>
+
+<p>服务端的返回，根据第一个字节，可以判断：
+<ul>
+<li><strong>-</strong> 错误信息</li>
+<li><strong>+</strong> 普通文本信息</li>
+<li><strong>$</strong> 变长字节数，$6表示CRLF之后有6个字节的字符</li>
+<li><strong>:</strong> 返回一个整数</li>
+<li><strong>*</strong> 返回组数，即*6表示CRLF之后将返回6组变长字符</li>
+</ul></p>
+
+<p><h2>其他</h2>
+项目地址
+<a href="http://code.google.com/p/redis/">http://code.google.com/p/redis/</a>
+<a href="http://github.com/antirez/redis/">http://github.com/antirez/redis/</a>
+开发者twitter
+<a href="http://twitter.com/antirez">http://twitter.com/antirez</a>
+<a href="http://twitter.com/pnoordhuis">http://twitter.com/pnoordhuis</a></p>
+
+<p>Redis功能简单精悍，很符合Unix哲学，核心redis.c只有一万多行，实在是个让人爱不释手的东西。如果可能，争取把他用到生产环境来取代现在的memcached。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

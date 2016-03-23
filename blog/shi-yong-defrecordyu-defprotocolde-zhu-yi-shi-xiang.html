@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>使用defrecord与defprotocol的注意事项</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/shi-yong-defrecordyu-defprotocolde-zhu-yi-shi-xiang.html" rel="bookmark"
+           title="Permalink to 使用defrecord与defprotocol的注意事项">使用defrecord与defprotocol的注意事项</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-07-22T00:00:00+08:00">
+                Published: Fri 22 July 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>programming
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>简单地说，protocol是clojure中的接口，record是clojure中的数据类型。</p></p>
+<p>可以通过这样的code定义一个protocol<br />
+[cc lang="clojure"]<br />
+(defprotoco DummyProtocol<br />
+  "doc string..."<br />
+  (method-one [self x] "doc string..."))<br />
+[/cc]</p>
+
+<p>需要注意的是，protocol里所有方法的第一个参数都是self/this参数（类似python），从第二个开始才是调用时传入的参数。如果方法要重载呢？</p>
+
+<p>[cc lang="clojure"]<br />
+(defprotocol DummyProtocol<br />
+  "doc string..."<br />
+  (method-one [self x] [self x y] "doc string")<br />
+)
+[/cc]</p>
+
+<p>Apress的 Practical Clojure 书里的例子，给重载的参数表加上了括号，这样会导致编译错误（<a href="http://book.douban.com/annotation/13819191/" target="_blank">注记</a>）。</p>
+
+<p>定义一个record实现protocol</p>
+
+<p>[cc lang＝"clojure"]<br />
+(defrecord DummyRecord [a b c]<br />
+  DummyProtocol<br />
+  (method-one [self x] (+ a x))<br />
+  (method-one [self x y] (+ a x y)))<br />
+[/cc]<br />
+Practical Clojure里关于这部分的代码，又丢掉了self参数（<a href="http://book.douban.com/annotation/13819264/" target="_blank">注记</a>）。</p>
+
+<p>最后还有一个问题，如果直接use你的ns，你会发现调用record时出现：<br />
+java.lang.IllegalArgumentException: Unable to resolve classname: DummyRecord</p>
+
+<p>怎么回事，不是都use了吗？原因是record被编译成了java对象，所以引用时要用java对象的引用方式，import之。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/yes-it-is.html" rel="bookmark"
+                           title="Permalink to Yes, it is">Yes, it is</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-04-18T00:00:00+08:00">
+                Published: Sat 18 April 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>football</li>
+<li>friends</li>
+<li>Nanjing</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我发现<a title="Samson" href="http://blog.samsonis.me/">samson</a>的blog写法是effective的，于是我决定山寨他。
+<ol>
+    <li>我又回南京了，虽然对某些组织我还宣称自己身在外地。这次可以多留一段时间，南京还是非常好的。我家出来这里就是两条河，波光粼粼，现在又是绿色最绿青草更青的季节，凉风徐徐树影婆娑，春光明媚心潮暗涌，让人没法不热爱生活。</li>
+    <li>回家之后我吹牛说我妈已经可以从厨房退休了。这两天午饭都是我把我妈关在外面，一人独自在厨房里意气风发挥斥方遒。除了切出了钢笔一样的肉丝而且最后根本咬不动以外，其他都还是一切安好的。可歌可泣的是，再也没有没有糊味从厨房传出来了。</li>
+    <li>昨天再超市突然发现地上有个秤，于是迈上我轻盈的步伐piapia地站上去，指针的速度那叫一风驰电掣，它在越过70之后依然没有慢下来的迹象。想知道最后它停在哪了吗，移动用户你就编辑短信去吧。</li>
+    <li>除了毕业要做的东西，这两天在看微机原理，看CPU指令系统看内存寻址啥啥的。我要是说自己看不懂是不是太丢人了，那我就说看不太懂吧。好像还不知道考什么，下周找pipitu这样的成功人士求经了。顺便把我北京的公交卡郑重地交给她，里面的钱正好够她从火车站到五道口。嗯，另外20块押金的事情面谈。</li>
+    <li>今天终于不能忍了，开始升级ubuntu9 ...</li></ol></p></p>
+                <a class="readmore" href="/yes-it-is.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/cp-bookmakes-to-another-pdf-file.html" rel="bookmark"
+                           title="Permalink to cp bookmakes to another pdf file">cp bookmakes to another pdf file</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-25T00:00:00+08:00">
+                Published: Wed 25 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>java</li>
+<li>pdf
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><p>其实这事不好。</p>
+<p>看电子书的时候，有的没有Bookmake书签，或者叫目录也成。这样读起来就非常疲劳，经常一恍惚就根本不知道读到哪里了，上下文都弄不清怎么办。这种问题尤其对于一本1500页的电子书来说更严重。想办法自己加书签吧，reader根本不提供这个功能。这能自立更生了。</p>
+<p>对于apress的电子书（我在写这些的时候内心很痛苦，作为一个第三世界的民工，这个出版社的书我一直是看电子版），如果电子书没有书签，可以从apress的官方网站上下载目录，这个目录恰好就包含书签。这样的话只要把这个书签拷贝到我们之前的电子书里就可以了。</p>
+<p>于是需要一个能够读写pdf文件的库，我找到一个pdfbox，它现在是apache incubator中的一个项目，貌似签到apache之后还没有一个正式的release。上一个release可以在sourceforge上<a href="http://sourceforge.net/projects/pdfbox/" target="_blank">项目原来的页面</a>找到，版本号我不记得了。</p>
+<p>最近比较怀旧直接用Java写。其实很简单，pdfbox都已经建模了，只要取出来、放进去、写下来（ZB一些应该是get出来，set进去，write下来）就可以了。以下是个sample</p>
+[codesyntax lang="java ...</p></p>
+                <a class="readmore" href="/cp-bookmakes-to-another-pdf-file.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shang-hai-zhe-ji-tian.html" rel="bookmark"
+                           title="Permalink to 上海这几天">上海这几天</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-14T00:00:00+08:00">
+                Published: Sat 14 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>到上海一个星期了，借宿在亲戚家里没有办法上网。所以一直不能更新，这种状况从现在起还要延续将近一个月左右。</p></p>
+<p>最近已经在新公司开始被培训了。情况简单地来说就是不太理想，即将面对的困难、问题比想象中的还要多还要复杂。<strong>画外音：出于安全的考虑希望大家不要在留言中透露公司的名字</strong>。这种时候呢就越发怀念之前在北京CRL实习时候的经历，相比相对照实在是点点点点点。当然在现在这里也是机会与挑战并存，只是可能要面对不少单纯技术之外的挑战。也有好处，催化成熟，促进衰老。</p>
+
+<p>倒是在这种环境里更加坚定了我的决心，之前一直抱怨没有足够的时间能够认认真真做一些事情。现在恐怕还是没有时间，但是为了个人以后的发展，也不能有什么顾虑了，该学习的要学习，该花时间花精力的也不能无奈了。万事开头难，有意一起开头的请留言或Email，咱们一起找个头开。</p>
+
+<p>上海在我眼里是个比较变态的地方，也是真正到了这里我才发现自己虽然不至于热爱山洞里的居住，但是也和这样所谓现代大都市格格不入。在北京的时候还有文化上的偏好和归属感，以及对人生对未来的希望在左右，到了上海没有了这二者虚无飘渺的光环，生活啊，它一下就变得很艰难很残酷了。呵呵。</p>
+
+<p>也就是这种气氛，让人不由自主地去想未来改变这种生活状态的手法和途径，然而就像高旗唱的“对明天的恐惧来自对今天的厌倦”一样，迷茫，不知所措 ...</p>
+                <a class="readmore" href="/shang-hai-zhe-ji-tian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kan-tu-bu-shuo-hua.html" rel="bookmark"
+                           title="Permalink to 看图不说话">看图不说话</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-04T00:00:00+08:00">
+                Published: Wed 04 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>linux</li>
+<li>opera
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>EXE是Windows上的可执行文件，那么在Linux上系统默认是如何对待它的呢。请看下图。</p></p>
+<p><img class="alignnone" title="看图不说话" src="http://pic.yupoo.com/classicning/7941771206a6/onmtjqmk.jpg" alt="" width="440" height="256" /></p>
+                <a class="readmore" href="/kan-tu-bu-shuo-hua.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gwibber-and-webkit.html" rel="bookmark"
+                           title="Permalink to Gwibber and WebKit">Gwibber and WebKit</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-03T00:00:00+08:00">
+                Published: Tue 03 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>css</li>
+<li>foss</li>
+<li>gnome</li>
+<li>twitter</li>
+<li>web</li>
+<li>webkit
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。</p></p>
+<p>Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的，拷拷改改很容易就可以给Gwibber增加饭否的支持。如此一来就可以同时看饭否看twitter发饭否发twitter了。</p>
+
+<p>你以为这是一张截图，其实它是分隔线。</p>
+
+<p><img class="alignnone" title="Gwibber with fanfou support" src="http://pic.yupoo.com/classicning/15491710661a/xaq77l24.jpg" alt="" width="338" height="528" /></p>
+
+<p>注意上图，gwibber是一个简单的pyGtk程序加上Webkit，它的核心部分就是html网页。这个网页除了头像以外可是没有图片的，那几个效果是怎么实现的呢。一个一个说。
+<ul>
+    <li>圆角 -webkit-border-radius: 7px;</li>
+    <li>文字阴影 text-shadow: 1px 1px black;</li>
+    <li>渐变 background:  -webkit-gradient(linear, left top, left 220%, from ...</li></ul></p>
+                <a class="readmore" href="/gwibber-and-webkit.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index75.html">&laquo;</a>
+    Page 76 / 77
+        <a href="/index77.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

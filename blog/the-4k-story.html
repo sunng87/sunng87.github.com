@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>The 4k Story</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/the-4k-story.html" rel="bookmark"
+           title="Permalink to The 4k Story">The 4k Story</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-10-08T00:00:00+08:00">
+                Published: Fri 08 October 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>linux</li>
+<li>mmap</li>
+<li>mongodb</li>
+<li>nosql</li>
+<li>redis
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>从 Redis 2.0 开始，Redis的作者就不断地被问道，你为什么要自己造一个VM轮子呢。尽管作者在<a href="http://code.google.com/p/redis/wiki/FAQ#Do_you_plan_to_implement_Virtual_Memory_in_Redis?_Why_don%27t">FAQ</a>里说明了，但是仍然有很多不同意见。</p></p>
+<p>反向代理Varnish的开发人员，Poul-Henning Kamp 写了一篇文章，<a href="http://www.varnish-cache.org/trac/wiki/ArchitectNotes">What's wrong with 1975 programming ?</a>，锋芒毕露，矛头直指竞争对手Squid，顺便也打击一大片牵连到了Redis的作者Antirez。他说：
+<blockquote>I have spent many years working on the FreeBSD kernel, and only rarely did I venture into userland programming, but when I had occation to do so, I invariably found that people programmed like it was still 1975. </blockquote>
+Kamp兄有来到user-space之后一夜回到解放前的感觉，又好像摇晃着饮料瓶子对着Antirez说：你Out啦！也许是因为作者就是个内核开发者，所以Varnish对操作系统的Virtual Memory机制充分信任，把Squid对内存的手动管理称为wasted work。"So Welcome to Varnish, a 2006 architecture program. "</p>
+
+<p>还有<a href="http://blog.kennejima.com/post/1226487020/thoughts-on-redis">用户</a>也提出
+<blockquote>
+Redis doesn’t use OS swap. According to Salvatore Sanfilippo, the creator of Redis, it was because the page size of 4KB was too big. I personally don’t think that helps but it’d be better if Redis preallocated specified amount of buffer pool and bring related objects to the same page to increase locality of reference, instead of letting the heap manager blindly fragment objects. In my opinion, the page size of 32 bytes is too small, considering that the hardware architectures and the compilers are optimized for the conventional page size. In that scale, even the latency of reading something from RAM could be dominant (RAM is too slow for CPU, therefore it’s got L1/L2 cache), and RAM has the pipelined burst mode to pre-fetche memory contents at a few clock cycles, before they are actually requested.
+</blockquote></p>
+
+<p>5号，Antirez在博客上写了回击 <a href="http://antirez.com/post/what-is-wrong-with-2006-programming.html">What's wrong with 2006 programming?</a>，他认为：
+<ul>
+<li>OS Swap在一些情况下会导致客户端阻塞</li>
+<li>4K大小的Page可能包含很多key，其中总有一些被访问到，导致操作系统无法swap这些page</li>
+<li>使用自己实现的Paging为程序提供了极大的自由度，包括作者提到的2.2将会引入的数据压缩、新的数据结构以及自定义的过期算法</li>
+</ul></p>
+
+<p>前段时间，Foursquare用MongoDB时，因为Sharding方法一些疏漏把大量的数据集中到了一台机器上，导致一台EC2实例内存耗尽无法工作。Mongodb的内部机制就是mmap，我的同事做过相关的测试，当内存耗尽时，读写操作都使用磁盘，这时mongodb的性能是完全无法使用的。事后10gen的开发人员Horowitz总结出现问题的原因<a href="http://groups.google.com/group/mongodb-user/browse_thread/thread/528a94f287e9d77e">总结出现问题的原因</a>时，其中很重要的一点是
+<blockquote>Document size is less than 4k. Such documents, when moved, may be too small to free up pages and, thus, memory. </blockquote></p>
+
+<p>看了这个原因，Redis的作者Twitter上大喜："Real world instance of my 4k page + small objects concerns"</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

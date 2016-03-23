@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/wo-de-qia-qia-song.html" rel="bookmark"
+                           title="Permalink to 我的卡卡颂">我的卡卡颂</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-24T00:00:00+08:00">
+                Published: Mon 24 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>boardgame</li>
+<li>carcassonne
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>口水了一年多的入门桌游，在山寨高仿版本泛滥的时候，我终于拥有了属于自己的。
+<a href="http://www.flickr.com/photos/40741608@N08/4635772206/" title="carcassonne by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4062/4635772206_044925a923.jpg" width="500" height="335" alt="carcassonne" /></a></p></p>
+<p>卡卡颂规则简单，号称是最佳入门桌游。除了基本版以外，后来又陆陆续续除了很多扩展，更有传闻说还有一款投石机扩展，提供一个木制的简易投石机让卡卡松变成了动作类游戏。我最喜欢卡卡颂的地方除了本身的趣味性之外，还要数最后游戏结束时的场面，让人看了真有成就感。（本来这里有幅图的，鉴于背景是床单，就不展示给大家了）</p>
+
+<p>原版的<a href="http://www.amazon.com/Rio-Grande-Games-Carcassonne-Big/dp/B001UH9FHQ/ref=sr_1_2?ie=UTF8&s=toys-and-games&qid=1274712191&sr=8-2">卡卡颂big box 2</a>（所谓全集），在亚马逊上要卖到64美元。而淘宝上山寨的原版加四合一扩展大概也就不到90元（big box比这个多了一个修道院与市长扩展），关于这个我也不说什么了。</p>
+
+<p>第一次玩卡卡颂是全年三月底左右和工作室的上海帮在桌游店，那是第一次玩桌游，印象那叫一个深刻。第二次是毕业前和原来寝室同学一起玩他自己买的Bigbox（那叫一个阔气）。嗯，要提一下，第一次组织游戏的童鞋后来去了伦敦，第二次组织游戏童鞋后来去了米国。等过几天回南京了，我再找那位要去倭国的童鞋来两局，进一步提升一下国际影响。</p>
+
+<p>我还是个桌游新手，最近盯上了冷战背景的<a href="http://www.amazon.com/Robinson-Gamestore-Twilight-Struggle/dp/B000TQ17FC/ref=sr_1_1?ie=UTF8&s=toys-and-games&qid=1274712752&sr=1-1">Twilight Struggle</a>， 心里有痒痒的 ...</p>
+                <a class="readmore" href="/wo-de-qia-qia-song.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/maven-recipe-1-test-java-code-with-groovy.html" rel="bookmark"
+                           title="Permalink to 'Maven recipe #1: Test Java code with groovy'">'Maven recipe #1: Test Java code with groovy'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-19T00:00:00+08:00">
+                Published: Wed 19 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>groovy</li>
+<li>java</li>
+<li>maven
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>问题： 受够了，不想写Java了，写个含有数据的map还要new出来一个一个put进去，想用groovy解决单元测试<br />
+解决： gmaven+groovy eclipse插件可以解决这个需求<br />
+在pom.xml中添加gmaven的依赖，注意，仅用来测试。老大不让生产代码里有不可靠的东西。<br />
+[cc lang="xml"]<br />
+...<br />
+        <dependency>
+            <groupid>org.codehaus.groovy.maven.runtime</groupid>
+            <artifactid>gmaven-runtime-default</artifactid>
+            <version>1.0-rc-3</version>
+            <scope>test</scope>
+        </dependency>
+...<br />
+            <plugin>
+                <groupid>org.codehaus.groovy.maven</groupid>
+                <artifactid>gmaven-plugin</artifactid>
+                <version>1.0-rc-3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateStubs</goal>
+                            <goal>compile</goal>
+                            <goal>generateTestStubs</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+[/cc]</p></p>
+<p>在eclipse中新建source folder, <em>src ...</em></p>
+                <a class="readmore" href="/maven-recipe-1-test-java-code-with-groovy.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/maven-recipe-0.html" rel="bookmark"
+                           title="Permalink to 'Maven recipe #0'">'Maven recipe #0'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-16T00:00:00+08:00">
+                Published: Sun 16 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>java</li>
+<li>maven</li>
+<li>recipe
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>问题： 多个root pom的dependencyManagement有重复的内容，希望统一管理。<br />
+解决：<br />
+新建一个空pom.xml，在dependencyManagement中指定这些依赖，如<br />
+[cc lang="xml"]
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br />
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p></p>
+<p> <modelversion>4.0.0</modelversion>
+    <groupid>info.sunng</groupid>
+    <artifactid>root</artifactid>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <dependencymanagement /></p>
+
+<p>     <dependencies>
+            <dependency>
+                <groupid>info.sunng</groupid>
+                <artifactid>X ...</artifactid></dependency></dependencies></p>
+                <a class="readmore" href="/maven-recipe-0.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/kai-shi-shi-jian-poromodo-technique.html" rel="bookmark"
+                           title="Permalink to 开始实践Poromodo Technique">开始实践Poromodo Technique</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-12T00:00:00+08:00">
+                Published: Wed 12 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>看了@juvenxv的博客介绍<a href="http://book.douban.com/subject/4199701/">Poromodo Technique Illustrated</a>一书，结合我现在低下的工作效率，我决定实践一下这个方法。
+<ul>
+    <li>一张TODO表记录今天的计划</li>
+    <li>一张Activity Inventory表用于记录长期的任务，标记已完成的任务</li>
+    <li>一张Record表统计每天完成的任务数量</li>
+</ul></p></p>
+<p>一个Poromodo持续25分钟，在这25分钟内只专注当前任务。Poromodo间隙用来给大脑做缓冲，清空前一个任务的影响，以便下一个Poromodo开始时快速切换到相应任务。</p>
+
+<p>应对Interruption，对internal的accept, record & continue，一个poromodo作为一个原子单元不可被打断，一旦被打断应该重新开始。<br />
+对external的，评估重要性，分别拒绝、延后、安排时间、安排回调。</p>
+                <a class="readmore" href="/kai-shi-shi-jian-poromodo-technique.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/jiao-tong-you-xi-openttd.html" rel="bookmark"
+                           title="Permalink to 交通游戏OpenTTD">交通游戏OpenTTD</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-02T00:00:00+08:00">
+                Published: Sun 02 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>foss</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我总是对这种城市建设、交通规划一类的游戏欲罢不能，以前在Linux上一直只是玩<a href="http://lincity-ng.berlios.de/">Lincity</a>，后来发现了纯交通类的<a href="http://www.simutrans.com/">simutrans</a>，最近升级到Ubuntu10.04以后，终于可以玩这个六年磨一剑，精雕细琢的<a href="http://openttd.org">OpenTTD</a>了。</p></p>
+<p><a href="http://www.flickr.com/photos/40741608@N08/4571371260/" title="Chindhattan Springs Transport, 19th Dec 1953 by 贝小塔, on Flickr"><img src="http://farm4.static.flickr.com/3521/4571371260_ce28e57779.jpg" width="500" height="284" alt="Chindhattan Springs Transport, 19th Dec 1953" /></a></p>
+
+<p>可以建造各种客运货运的汽车站、火车站，机场，码头等等，可以建设道路、铁路，可以购买公交车、卡车、火车头、火车车厢等等。可惜我玩了大半天还不知道怎么盈利。。。</p>
+                <a class="readmore" href="/jiao-tong-you-xi-openttd.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index48.html">&laquo;</a>
+    Page 49 / 77
+        <a href="/index50.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

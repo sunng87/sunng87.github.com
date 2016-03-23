@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/javaqian-ru-shi-shu-ju-ku-de-su-du-dui-bi.html" rel="bookmark"
+                           title="Permalink to Java嵌入式数据库的速度对比">Java嵌入式数据库的速度对比</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-24T00:00:00+08:00">
+                Published: Thu 24 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>db</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Yan的APIKEY一直是用嵌入式的数据库存储的，最初使用的是hsqldb，最近又添加了H2和Derby的支持，基本上囊括了所有开源的Java嵌入式数据库。实现多了自然需要挑选、比较一下。</p></p>
+<p>数据库特性的比较，H2的网站上有很好的Matrix，一目了然<br />
+http://www.h2database.com/html/features.html#comparison</p>
+
+<p>关于速度的比较，今天做了一个简单的测试。</p>
+
+<p>分别从derby / H2 / hsqldb中取出10 、100、1000条数据，循环100000次，比较耗时，如下：</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2665/4210754380_5cb4d7b0a8_o.png" alt="" width="376" height="394" /></p>
+
+<p>三者的速度差距非常明显，hsqldb远快于其他两个。</p>
+
+<p>而在10、100、1000条记录的索引上查询，并取出指定记录呢，同样是100000次，如下：</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2716/4210754396_e52acc7e69_o.png" alt="" width="376" height="394" /></p>
+
+<p>再索引上查询，速度受记录数量的影响非常微弱了。但是hsqldb还是远快于其他二者，有趣的是derby的速度要略微快于H2.</p>
+
+<p>根据这样的结果，在Yan的应用中，hsqldb还是最理想的实现。</p>
+                <a class="readmore" href="/javaqian-ru-shi-shu-ju-ku-de-su-du-dui-bi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/na-nian-rong-shu-xia.html" rel="bookmark"
+                           title="Permalink to 那年榕树下">那年榕树下</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-23T00:00:00+08:00">
+                Published: Wed 23 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>internet</li>
+<li>snda
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>有的朋友看到这标题，肯定感叹，哎呀妈呀，这哥们也堕落了，开始写软文了。好吧，就算是软文吧，我决定东拉西扯地码一些字，不同于上周五的工作指标，这次完全是自觉自愿的。</p></p>
+<p>榕树下，25号，重新上线。</p>
+
+<p>我接触互联网稍微晚了一些，2002年冬天周五的一个下午（不出意外是2002年12月20号），家里终于接上了网线。我打开的第一个网站是搜狐，第二个是华军，第三个不记得了。那时已经听说了榕树下，途径大约是每季度一期的贝塔斯曼广告和天天都有的广播小说节目。</p>
+
+<p>贝塔斯曼当时似乎和榕树下还是合作关系，后来收购了榕树下，这也是榕树的不幸。每一期的目录都会有热门的网络小说，那时还都是以榕树下的为主。我记得曾经买过陆幼青的书，红极一时的。</p>
+
+<p>广播每晚十点左右多会有读小说的节目，安妮宝贝的文字常常是DJ们的偏好。到现在具体的内容早就不记得，但是暖暖的感觉还是值得常常温故。</p>
+
+<p>这是我对互联网最初的认识，虽然我那时也不看网络小说，但在印象里，网络小说是互联网生活很重要的一部分。现在要是问我知名的作者我可能几乎都说不上来，但是看到今天网站上列出来那些名字，诸如李寻欢、安妮、宁财神 ...</p>
+                <a class="readmore" href="/na-nian-rong-shu-xia.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shang-hai-tu-shu-guan.html" rel="bookmark"
+                           title="Permalink to 上海图书馆">上海图书馆</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-22T00:00:00+08:00">
+                Published: Tue 22 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Books</li>
+<li>Life</li>
+<li>Shanghai
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>发现南图的资源很不错之后就想着到了上海以后要办一张借书证，眼看住这半年了，险些忘了这件事。上上周六去办证不料比截止时间晚了三分钟，白白跑了一趟。上周六正好约samson去，终于一切顺利。</p></p>
+<p>办证的系统很强大，我第一次见识了二代身份证的高级功能。读卡器可以直接读取身份证里的相应信息，简化填申请表的过程。普通外借功能只需要一年100元押金即可，没有额外的收费。一次可以借5本书，还书的期限是4周。</p>
+
+<p>比较遗憾的是发现在衡山路附近的上图的外借馆非常小，可选的书相对也少。计算机类的书架大约有两个，这个数量和南图是差不多的，但是长度远远没有南图的长，就是说比起南图的外借馆这个规模实在是很可怜。除去一些初级的、质量较低的书，想要刨出理想的计算机图书还是很难的，考虑到这图书馆serve着如此大的一个城市，这也是很正常的，恐怕真要看准时机才能找到目标。</p>
+
+<p>幸运的是这次借到了一直没舍得买的《Unix编程艺术》，当时看到它躺在书架上时几乎是直接抢过来抓在手里的，生怕被别人捷足先登。另外找到一本Jolt获奖的《Code Quality》的译本，也是没翻先拿在手上再说。还有一本《空间数据库》是早先想买但是各大网站纷纷缺货的书，现在拿到有点物是人非的感觉。而另外一本CSS的书是拿回来用来放松的 ...</p>
+                <a class="readmore" href="/shang-hai-tu-shu-guan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/using-yan-in-ruby-web-application.html" rel="bookmark"
+                           title="Permalink to Using Yan in Ruby Web Application">Using Yan in Ruby Web Application</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-21T00:00:00+08:00">
+                Published: Mon 21 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>captcha</li>
+<li>ruby</li>
+<li>web</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I will show you the usage of Yan captcha service. In this tutorial, it's based on a simple ruby web application of the Sinatra web framework.</p></p>
+<p>Before we start to use the service, it is necesary to get Yan ...</p>
+                <a class="readmore" href="/using-yan-in-ruby-web-application.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/yan-03.html" rel="bookmark"
+                           title="Permalink to Yan 0.3">Yan 0.3</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-20T00:00:00+08:00">
+                Published: Sun 20 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>captcha</li>
+<li>java</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>经过一周的重构和开发，我的开源项目，验证码服务，打上了0.3的tag，算是一个release吧。</p></p>
+<p>This release has been focusing on support for different types captcha generators. Now Yan is not only able to provide image/jpeg captcha, but also text/plain and any others.
+<h3>Changeset:</h3>
+<ul>
+    <li>Internal API Changes:
+<ul>
+    <li>Cache ...</li></ul></li></ul></p>
+                <a class="readmore" href="/yan-03.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index59.html">&laquo;</a>
+    Page 60 / 77
+        <a href="/index61.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Substract a vector from a matrix in Octave</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/substract-a-vector-from-a-matrix-in-octave.html" rel="bookmark"
+           title="Permalink to Substract a vector from a matrix in Octave">Substract a vector from a matrix in Octave</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-10-21T00:00:00+08:00">
+                Published: Fri 21 October 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>math</li>
+<li>octave
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>假设你有一个矩阵：</p></p>
+<p>[cc lang="text"]<br />
+A = [1,2;3,4;5,6]<br />
+[/cc]</p>
+
+<p>以及一个矢量：</p>
+
+<p>[cc lang="text"]<br />
+B = [2,5]<br />
+[/cc]</p>
+
+<p>你希望对A的每一行元素对元素地减B，例如第一行<br />
+[cc lang="text"]<br />
+[1-2,2-5]<br />
+[/cc]</p>
+
+<p>但你不希望用循环完成这个工作，那么你可能想到利用B创建一个和A一样维度的矩阵然后进行.-：<br />
+[cc lang="text"]<br />
+C = [2,5;2,5;2,5]<br />
+A .- C<br />
+[/cc]</p>
+
+<p>在Octave中可以利用repmat这个函数获得C：<br />
+[cc lang="text"]<br />
+C = repmat(B, length(A), 1)<br />
+[/cc]<br />
+但是对于大矩阵来说这是一种对内存的浪费。</p>
+
+<p>更好的方法是利用bsxfun：<br />
+[cc lang="text"]<br />
+bsxfun(@minus, A, B)<br />
+[/cc]</p>
+
+<p>bsxfun在octave的文档中似乎鲜有提及。
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

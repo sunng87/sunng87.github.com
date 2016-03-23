@@ -1,921 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Here comes the Sun</title>
-  <link rel="alternate" type="text/html" href="http://sunng.info/blog/"/>
-  <link rel="self" type="application/atom+xml" href="http://sunng.info/blog/blog/categories/programming/atom.xml"/>
-  <id>http://sunng.info/blog/</id>
-  <updated>2015-10-18T13:45:37+08:00</updated>
-  <generator uri="http://octopress.org/">Octopress</generator>
-  
-  <rights>Copyright © 2015, Sun Ning</rights>
-
-  <entry>
-    <title type="html">Summarizing Changes in Slacker 0.13</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/10/18/summarizing-changes-in-slacker-0-13/"/>
-    
-    <id>/blog/2015/10/18/summarizing-changes-in-slacker-0-13</id>
-    <published>2015-10-18T13:45:37+08:00</published>
-    <updated>2015-10-18T13:45:37+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
-
-<p>Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.</p>
-
-<h3>Application managed thread pool</h3>
-
-<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.</p>
-
-<p>The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by <code>:threads</code> option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.</p>
-
-<h3>Interrupt</h3>
-
-<p>0.13 introduces a new low-level API called <code>interrupt</code> and a new option <code>interrupt-on-timeout</code>. This is backend by a new protocol level command, <code>interrupt</code>. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once <code>interrupt</code> received.</p>
-
-<p>Typically you don&#39;t have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it&#39;s timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.</p>
-
-<h3>Plug-able Serializers</h3>
-
-<p>To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.</p>
-
-<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommended for Slacker. It&#39;s a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
-
-<p>You can also extend our serializer system by create new implementations for serializer multi-method.</p>
-
-<h3>Server data for Slacker Cluster</h3>
-
-<p>The new Slacker Cluster <code>start-slacker-server</code> offers a new option <code>:server-data</code>. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.</p>
-
-<p>In the client grouping function, you can use the data to filter servers:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">slacker.client.cluster</span><span class="w"> </span><span class="no">:refer</span><span class="w"> </span><span class="no">:all</span><span class="p">])</span><span class="w">
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">(</span><span class="nf">clustered-slackerc</span><span class="w"> </span><span class="n">...</span><span class="p">))</span><span class="w"></span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">defn-remote</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="n">some-function</span><span class="w">
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:grouping</span><span class="w"> </span><span class="p">(</span><span class="k">fn</span><span class="w"> </span><span class="p">[</span><span class="n">ns</span><span class="w"> </span><span class="n">func</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="n">servers</span><span class="p">]</span><span class="w">
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>               </span><span class="c1">;; test :prod? property of server data</span>
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="w">               </span><span class="p">(</span><span class="nf">rand-nth</span><span class="w"> </span><span class="p">(</span><span class="nb">filter</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="no">:prod?</span><span class="w"> </span><span class="p">(</span><span class="nf">server-data</span><span class="w"> </span><span class="err">@</span><span class="n">sc</span><span class="w"> </span><span class="n">%</span><span class="p">))</span><span class="w"> </span><span class="n">servers</span><span class="p">))))</span></div></div></pre></div></figure>
-
-<p>The grouping function in this snippet filters production servers, and choose one from them to call.</p>
-
-<p>The server side looks pretty simple:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">require</span><span class="w"> </span><span class="o">'</span><span class="p">[</span><span class="n">slacker.server.cluster</span><span class="w"> </span><span class="no">:refer</span><span class="w"> </span><span class="p">[</span><span class="n">start-slacker-server</span><span class="p">]])</span><span class="w">
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">start-slacker-server</span><span class="w"> </span><span class="n">some-port</span><span class="w"> </span><span class="p">[</span><span class="n">some-ns</span><span class="p">]</span><span class="w">
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:server-data</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:prod?</span><span class="w"> </span><span class="n">true</span><span class="p">&#x7d;</span><span class="w">
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="n">...</span><span class="p">)</span></div></div></pre></div></figure>
-
-<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.</p>
-
-<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Running Ring Web Application on HTTP2 With Rj9a</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/07/25/ring-on-http2/"/>
-    
-    <id>/blog/2015/07/25/ring-on-http2</id>
-    <published>2015-07-25T14:54:54+08:00</published>
-    <updated>2015-07-25T14:54:54+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
-
-<p>In case you still have no idea about HTTP2, it&#39;s the biggest update to HTTP, the protocol we use everyday and everywhere. In short, <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP2</a> introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that&#39;s part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.</p>
-
-<p>The basic part of HTTP2 is fully compatible for 1.1, so you won&#39;t have to modify your application code to use it. In rj9a, just add option <code>:h2? true</code> to enable HTTP2. And <code>:h2c? true</code> to enable its variance on plain socket.</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">dummy-app</span><span class="w"> </span><span class="p">[</span><span class="n">req</span><span class="p">]</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:body</span><span class="w"> </span><span class="s">"It works"</span><span class="w"> </span><span class="no">:status</span><span class="w"> </span><span class="mi">200</span><span class="p">&#x7d;)</span><span class="w"></span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">jetty/run-jetty</span><span class="w"> </span><span class="n">dummy-app</span><span class="w"> </span><span class="p">&#x7b;</span><span class="no">:port</span><span class="w"> </span><span class="mi">5000</span><span class="w">
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:h2c?</span><span class="w"> </span><span class="n">true</span><span class="w">
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:h2?</span><span class="w"> </span><span class="n">true</span><span class="w">
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:ssl?</span><span class="w"> </span><span class="n">true</span><span class="w">
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:ssl-port</span><span class="w"> </span><span class="mi">5443</span><span class="w">
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:keystore</span><span class="w"> </span><span class="s">"..."</span><span class="w">
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>                            </span><span class="no">:key-password</span><span class="w"> </span><span class="s">"..."</span><span class="p">&#x7d;)</span><span class="w"></span>
-</div></div></pre></div></figure>
-
-<p>To test HTTP2 interface, you will need to install <a href="https://nghttp2.org">nghttp</a>. It&#39;s pretty similar to curl:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="gp">$ </span>nghttp -v https://localhost:5443
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.000] Connected
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>The negotiated protocol: h2-14
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>12, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>2<span class="o">)</span>
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_MAX_CONCURRENT_STREAMS<span class="o">(</span>0x03<span class="o">)</span>:100]
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_INITIAL_WINDOW_SIZE<span class="o">(</span>0x04<span class="o">)</span>:65535]
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>3&gt;
-</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>201, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>5&gt;
-</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>101, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>7&gt;
-</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>0, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>9&gt;
-</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>7, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send PRIORITY frame &lt;<span class="nv">length</span><span class="o">=</span>5, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>11&gt;
-</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">dep_stream_id</span><span class="o">=</span>3, <span class="nv">weight</span><span class="o">=</span>1, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.031] send HEADERS frame &lt;<span class="nv">length</span><span class="o">=</span>37, <span class="nv">flags</span><span class="o">=</span>0x25, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
-</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_STREAM | END_HEADERS | PRIORITY
-</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">padlen</span><span class="o">=</span>0, <span class="nv">dep_stream_id</span><span class="o">=</span>11, <span class="nv">weight</span><span class="o">=</span>16, <span class="nv">exclusive</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; Open new stream
-</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>         :method: GET
-</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>         :path: /
-</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>         :scheme: https
-</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>         :authority: localhost:5443
-</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>         accept: <span class="k">*</span>/<span class="k">*</span>
-</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>         accept-encoding: gzip, deflate
-</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'>         user-agent: nghttp2/1.0.1
-</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] recv SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>12, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
-</div></div><div data-line='30' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>2<span class="o">)</span>
-</div></div><div data-line='31' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_HEADER_TABLE_SIZE<span class="o">(</span>0x01<span class="o">)</span>:4096]
-</div></div><div data-line='32' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">[</span>SETTINGS_INITIAL_WINDOW_SIZE<span class="o">(</span>0x04<span class="o">)</span>:65535]
-</div></div><div data-line='33' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] send SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>0, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
-</div></div><div data-line='34' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; ACK
-</div></div><div data-line='35' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='36' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.032] recv SETTINGS frame &lt;<span class="nv">length</span><span class="o">=</span>0, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
-</div></div><div data-line='37' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; ACK
-</div></div><div data-line='38' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">niv</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='39' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv <span class="o">(</span><span class="nv">stream_id</span><span class="o">=</span>13<span class="o">)</span> :status: 200
-</div></div><div data-line='40' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv <span class="o">(</span><span class="nv">stream_id</span><span class="o">=</span>13<span class="o">)</span> server: Jetty<span class="o">(</span>9.3.1.v20150714<span class="o">)</span>
-</div></div><div data-line='41' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] recv HEADERS frame &lt;<span class="nv">length</span><span class="o">=</span>20, <span class="nv">flags</span><span class="o">=</span>0x04, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
-</div></div><div data-line='42' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_HEADERS
-</div></div><div data-line='43' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">padlen</span><span class="o">=</span>0<span class="o">)</span>
-</div></div><div data-line='44' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; First response header
-</div></div><div data-line='45' class='code-highlight-row numbered'><div class='code-highlight-line'>It works[  0.033] recv DATA frame &lt;<span class="nv">length</span><span class="o">=</span>8, <span class="nv">flags</span><span class="o">=</span>0x01, <span class="nv">stream_id</span><span class="o">=</span>13&gt;
-</div></div><div data-line='46' class='code-highlight-row numbered'><div class='code-highlight-line'>         ; END_STREAM
-</div></div><div data-line='47' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>  0.033] send GOAWAY frame &lt;<span class="nv">length</span><span class="o">=</span>8, <span class="nv">flags</span><span class="o">=</span>0x00, <span class="nv">stream_id</span><span class="o">=</span>0&gt;
-</div></div><div data-line='48' class='code-highlight-row numbered'><div class='code-highlight-line'>         <span class="o">(</span><span class="nv">last_stream_id</span><span class="o">=</span>0, <span class="nv">error_code</span><span class="o">=</span>NO_ERROR<span class="o">(</span>0x00<span class="o">)</span>, opaque_data<span class="o">(</span>0<span class="o">)=[])</span>
-</div></div></pre></div></figure>
-
-<p>The verbose output shows us every detail about request and response in HTTP2.</p>
-
-<p>Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and <a href="http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting">put alpn-boot jar in your bootclasspath</a>.  I have created <a href="https://github.com/sunng87/lein-bootclasspath-deps">a leiningen plugin</a> to manage bootclasspath in clojure project.</p>
-
-<p>The complete example is available in <a href="https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj">github repository</a>.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Handlebars 的 Rust 实现</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2015/01/25/ann-handlebars-rust/"/>
-    
-    <id>/blog/2015/01/25/ann-handlebars-rust</id>
-    <published>2015-01-25T16:22:50+08:00</published>
-    <updated>2015-01-25T16:22:50+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
-
-<p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
-
-<p>这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：</p>
-
-<ul>
-<li>不要把 rust 代码写进 html 模版里，反例： jsp, ejs</li>
-<li>不要把 html 代码写进 rust 里，反例： hiccup</li>
-<li>能够复用，基于“继承”而不是 include</li>
-<li>能够简单地自定义标签，反例：mustach</li>
-</ul>
-
-<p>基于以上的原则，<a href="https://github.com/sunng87/handlebars-rust">handlebars-rust</a> 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 <a href="https://github.com/sunng87/handlebars-iron">handlebars-iron</a> 项目，作为一个 <a href="http://ironframework.io">Iron 框架</a>的 middlaware。</p>
-
-<p>简单总结几点收获：</p>
-
-<ul>
-<li>Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型</li>
-<li>静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 <code>false</code>/<code>0</code>/<code>&quot;&quot;</code>/<code>[]</code> 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 <code>Json</code> 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 <code>ToJson</code>，算是设计上的一个取舍。</li>
-<li>Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的</li>
-<li>关于 Rust 的 ownership 看<a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html">这篇文章</a>，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错</li>
-<li>有任何问题都可以在 stackoverflow 上问，有几个人会很快回复</li>
-</ul>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">AVOS Cloud 实时通信服务架构：微服务和服务发现</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery/"/>
-    
-    <id>/blog/2014/08/19/avoscloud-rtm-architecture-microservice-and-service-discovery</id>
-    <published>2014-08-19T16:46:20+08:00</published>
-    <updated>2014-08-19T16:46:20+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
-
-<p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
-
-<p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
-
-<ul>
-<li>Push 服务：处理推送的订阅关系，触发推送</li>
-<li>长连接服务器：维持设备与服务的长连接</li>
-<li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
-<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警</li>
-<li>数据存储：群组数据，用户可以通过API访问</li>
-<li>HBase：消息记录存储</li>
-</ul>
-
-<p>模块间的集成，根据业务的特性分别使用 <a href="https://github.com/sunng87/slacker">Slacker</a> 远程调用框架和 <a href="http://twitter.github.io/kestrel/">Kestrel</a> 消息队列。
-对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。</p>
-
-<p>Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 <a href="http://clojure.org/macros">Clojure 宏</a>的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 <code>(require)</code> 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 <a href="https://github.com/ptaoussanis/nippy">nippy</a>，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。</p>
-
-<p>以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。</p>
-
-<h3>服务发现</h3>
-
-<p>长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 <a href="https://en.wikipedia.org/wiki/Publish/subscribe">Pub/Sub 抽象</a>的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。</p>
-
-<p>在这方面，我们利用了 <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster 框架</a>。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。</p>
-
-<p>所有的服务提供者将自己能够提供的服务注册在 <a href="https://zookeeper.apache.org/">Zookeeper</a> 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c"># Zookeeper 目录结构</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>ls /slacker/example-cluster/namespaces/
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>my.serviceA, my.serviceB]
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>ls /slacker/example-cluster/namespaces/my.serviceA
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">[</span>192.168.1.100:2104, 192.168.1.101:2014...]</div></div></pre></div></figure>
-
-<p>所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。</p>
-
-<p>在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。</p>
-
-<p>有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。</p>
-
-<p>原载 <a href="https://blog.avoscloud.com/1927/">AVOSCloud Blog</a></p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">在 Docker 中安装和使用 Rust Nightly 版本</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/08/02/rust-with-docker/"/>
-    
-    <id>/blog/2014/08/02/rust-with-docker</id>
-    <published>2014-08-02T18:02:12+08:00</published>
-    <updated>2014-08-02T18:02:12+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>一直关注 Rust 语言，最近一下发现了两个 web 框架，<a href="http://ironframework.org">Iron</a> 和 <a href="http://nickel.rs">Nickel.rs</a>。先不说这两个框架成熟度如何，一般情况下，一个语言有了 web 框架，算是一个里程碑，说明他离靠谱也不远了。这样我决定跟一下 nightly 版本（新框架都是跟 nightly），另外也能感受一下 <a href="https://mail.mozilla.org/pipermail/rust-dev/2014-March/009090.html">Yehuda Katz 的构建工具 Cargo</a>。ArchLinux 的仓库里已经有 0.11 版本，再用脚本安装必然会有冲突。于是想到了最近半年<a href="https://twitter.com/jessenoller/status/495037475421954048">最火的 Docker</a>，可以轻松的创建多个环境，正是一个非常好的场景。</p>
-
-<h2>安装</h2>
-
-<p>安装 Docker, Arch Linux 仓库里很早就有，非常方便：<code>sudo pacman -S docker</code>。完成之后启动他：<code>sudo systemctl start docker</code>。</p>
-
-<p>之后我们拉一个 ubuntu 的镜像下来：<code>docker pull ubuntu</code>。</p>
-
-<p>完成之后，我们启动一个 container，做一些基本的 setup：<code>docker run -i -t ubuntu:14.04 /bin/bash</code></p>
-
-<p>这相当与运行在 ubuntu:14.04 这个镜像上运行一个 shell，接下来就进入了这个 shell 环境，和 ubuntu 安装版本完全一致，我们做一些基础的准备，安装一些必要的工具：<code>apt-get install build-essentials git curl libssl-dev</code></p>
-
-<p>之后，就可以下载 Rust 提供的脚本来安装 nightly 版本了：<code>curl -s http://www.rust-lang.org/rustup.sh &gt; rustup</code></p>
-
-<p>这里有个问题，rustup 脚本判断64位系统时会出错导致安装失败：
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c"># Detect 64 bit linux systems with 32 bit userland and force 32 bit compilation</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG<em>OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG</em>CPUTYPE</span> <span class="o">=</span> x86<em>64 <span class="o">]</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">then
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span>file -L <span class="s2">&quot;</span><span class="nv">$SHELL</span><span class="s2">&quot;</span> | grep -q <span class="s2">&quot;x86[</em>-]64&quot;</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> !<span class="o">=</span> 0 <span class="o">]</span>; <span class="k">then
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">fi
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>fi</span></div></div></pre></div></figure></p>
-
-<p>因为在我的机器上已知系统是64位，就强行绕过了他的判断。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$CFG_OSTYPE</span> <span class="o">=</span> unknown-linux-gnu -a <span class="nv">$CFG_CPUTYPE</span> <span class="o">=</span> x86_64 <span class="o">]</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">then
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span>file -L <span class="s2">"</span><span class="nv">$SHELL</span><span class="s2">"</span> | grep -q <span class="s2">"x86[_-]64"</span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> 0 <span class="o">]</span>; <span class="k">then
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>        </span><span class="nv">CFG_CPUTYPE</span><span class="o">=</span>i686
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">fi
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>fi</span></div></div></pre></div></figure>
-
-<p>之后执行 rustup 就可以直接安装最近的 rustc 和 cargo 了。安装完成执行 <code>rustc -v</code> 和 <code>cargo --version</code> （两个工具还不统一！）可以了解安装情况。</p>
-
-<p>exit 退出 shell，commit 你的镜像，这样一个干净的镜像要好好保存：<code>docker commit IMAGE_ID sunng/rust-nightly</code></p>
-
-<h2>Hello World</h2>
-
-<p>之后可以写点代码了，我们不在 docker 里写，我们在 host 机器上写，然后挂载到 docker 上，因此 emacs 什么的也不用配置了。</p>
-
-<p>创建一个目录，比如在 <code>$HOME/var/docker/helloworld</code>下，最简单的 rust 项目只要两个文件： <code>Cargo.toml</code> 和 <code>src/main.rs</code>。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>#Cargo.toml
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>[package]
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>name = "hello-world"
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>version = "0.1.0"
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>authors = [ "sunng@about.me" ]</div></div></pre></div></figure>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c">//main.rs</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="nd">println!</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">);</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div></pre></div></figure>
-
-<p>构建项目不需要手动 rustc 了，那是上个世纪的东西，我们直接 <code>cargo build</code> 就可以：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>其中 <code>-v</code> 参数用于挂载目录，<code>-w</code> 参数指定执行的 pwd。</p>
-
-<p>如果构建成功，就可以执行了，在 docker 中执行：<code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly target/hello-world</code></p>
-
-<p>其实可以直接在 host 系统里执行也是完全可以的：<code>$HOME/var/docker/helloworld/target/hello-world</code>。</p>
-
-<h2>Web Hello World</h2>
-
-<p>前面说了 Rust 都有 web 框架了，我们就写一个 Web 版本的 Hello World 吧。这次用 Iron 框架，首先添加依赖到 Cargo 文件：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>[package]
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>name = "hello-world"
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>version = "0.1.0"
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>authors = [ "sunng@about.me" ]
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>[dependencies.iron]
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>git = "https://github.com/iron/iron.git"
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>[dependencies.core]
-</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>git = "https://github.com/iron/core.git"</div></div></pre></div></figure>
-
-<p>Cargo 目前还没有中央仓库，但是<a href="http://crates.io/faq.html#github">据说将来会有</a>。目前还都是用 git 仓库来直接添加，所以构建环境里必须要有 git。</p>
-
-<p>照着 <a href="https://github.com/iron/iron/blob/master/examples/hello.rs">Iron 的例子</a>写一个最简单的 hello world 程序。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">extern</span> <span class="n">crate</span> <span class="n">iron</span><span class="p">;</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">extern</span> <span class="n">crate</span> <span class="n">http</span><span class="p">;</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">io</span><span class="p">::</span><span class="nn">net</span><span class="p">::</span><span class="nn">ip</span><span class="p">::</span><span class="n">Ipv4Addr</span><span class="p">;</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">iron</span><span class="p">::&#x7b;</span><span class="n">Iron</span><span class="p">,</span> <span class="n">Server</span><span class="p">,</span> <span class="n">Chain</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">Alloy</span><span class="p">,</span> <span class="n">Status</span><span class="p">,</span> <span class="n">Unwind</span><span class="p">,</span> <span class="n">FromFn</span><span class="p">&#x7d;;</span>
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">http</span><span class="p">::</span><span class="n">status</span><span class="p">;</span>
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">hello_world</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Request</span><span class="p">,</span> <span class="n">res</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Response</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">Alloy</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Status</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">res</span><span class="nf">.serve</span><span class="p">(</span><span class="nn">status</span><span class="p">::</span><span class="nb">Ok</span><span class="p">,</span> <span class="s">"Hello, world!"</span><span class="p">);</span>
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">Unwind</span>
-</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">let</span> <span class="k">mut</span> <span class="n">server</span><span class="p">:</span> <span class="n">Server</span> <span class="o">=</span> <span class="nn">Iron</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
-</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="py">.chain</span><span class="nf">.link</span><span class="p">(</span><span class="nn">FromFn</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">hello_world</span><span class="p">));</span>
-</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="nf">.listen</span><span class="p">(</span><span class="nf">Ipv4Addr</span><span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">3000</span><span class="p">);</span>
-</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
-</div></div></pre></div></figure>
-
-<p>编译 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld sunng/nightly cargo build</code></p>
-
-<p>运行 <code>docker run -i -t -v $HOME/var/docker:/mnt/data -w /mnt/data/helloworld -p 3000:3000 sunng/nightly target/hello-world</code></p>
-
-<p>新增的参数<code>-p</code>是把 docker 环境里的端口3000映射到 host 上的3000，这样我们才能在外面访问。</p>
-
-<p>最后还有一个问题，因为程序听的是127.0.0.1，所以在 host 上是无法访问这个端口的，修改代码：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">server</span><span class="nf">.listen</span><span class="p">(</span><span class="nf">Ipv4Addr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">3000</span><span class="p">);</span></div></div></pre></div></figure>
-
-<p>就可以正常工作了。</p>
-
-<h2>Wrap up</h2>
-
-<p>总结一下上面用 docker 比虚拟机的好处：</p>
-
-<ul>
-<li>占用资源少，启动快</li>
-<li>与 host 共享网络、硬盘都非常方便，满足开发需要不成问题</li>
-<li>所有都是命令，与 host 系统上的进程集成也非常方便</li>
-<li>支持镜像的版本控制和仓库</li>
-</ul>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Clojure Microservice Architecture With Slacker Cluster</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/08/microservice-and-slacker-cluster/"/>
-    
-    <id>/blog/2014/07/08/microservice-and-slacker-cluster</id>
-    <published>2014-07-08T22:12:52+08:00</published>
-    <updated>2014-07-08T22:12:52+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
-
-<p>It&#39;s a new concept in enterprise architecture, since the last movement in the field promotes SOA architecture. SOA encourages architects to componentize their business logic in service, and deploy service bus(ESB) for integration. Microservice can be more concrete and light-weighted. The service units in Microservice can be any standalone function, or just a tier in traditional tier based development. These units can be deployed on dedicate process or grouped into a process.</p>
-
-<p>In clojure development at <a href="https://avoscloud.com">avoscloud</a>, we are using the <a href="https://github.com/sunng87/slacker-cluster">slacker cluster framework</a> for our microsrvice architecture.</p>
-
-<p><a href="https://github.com/sunng87/slacker">Slacker RPC</a> exposes services as  clojure namespace (pretty light-weighted) All functions in the namespace can be called from remote. A slacker server can expose any number of namespaces:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">start-slacker-server</span><span class="w"> </span><span class="mi">2014</span><span class="w"> </span><span class="p">[</span><span class="n">my.serviceA</span><span class="w"> </span><span class="n">my.serviceB</span><span class="w"> </span><span class="n">...</span><span class="p">])</span></div></div></pre></div></figure>
-
-<p>Slacker uses a binary protocol on TCP and configurable serialization (json/edn/<a href="https://github.com/ptaoussanis/nippy">nippy</a>) for communication, which is fast and compact.</p>
-
-<p>And in slacker cluster, exposed namespaces are registered on zookeeper as ephemeral nodes. The client doesn&#39;t have to know which service is deployed on which process. Instead, it connects to zookeeper and look up all process address for service it interests in. </p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">def</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="p">(</span><span class="nf">clustered-slacker-client</span><span class="w"> </span><span class="n">zk-addr</span><span class="w"> </span><span class="n">...</span><span class="p">))</span><span class="w"></span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">defn-remote</span><span class="w"> </span><span class="ss">'sc</span><span class="w"> </span><span class="n">my.serviceA/fn-abc</span><span class="p">)</span><span class="w">
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="c1">;;when calling remote function for the first time, the client will look up zookeeper for remote processes and cache the results</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">fn-abc</span><span class="p">)</span><span class="w"> </span></div></div></pre></div></figure>
-
-<p>If there are more than one process available, the client library will balance the load on each process. And for stateful service, slacker cluster also elects master node to ensure all requests go to single process. (<a href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/">Slacker cluster grouping</a>)</p>
-
-<p>Zookeeper directory structure:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>ls /slacker/example-cluster/namespaces/
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>[my.serviceA, my.serviceB]
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>ls /slacker/example-cluster/namespaces/my.serviceA
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>[192.168.1.100:2104, 192.168.1.101:2014...]</div></div></pre></div></figure>
-
-<p>Decoupling processes and services made microservice deployment quite flexible. Functional namespaces can be deployed on any process, standalone or grouped together, like Martin Fowler&#39;s chart <a href="http://martinfowler.com/articles/microservices/images/sketch.png">shows</a>.</p>
-
-<p>All these nodes are also watched by clients. If a process crashed or put offline, the clients will get notified by zookeeper, then no requests will be made on that process. Also, when you exhausted service capacity, just simply put on another process, the client will soon balance load to the new node. Scaling services is easy like that.</p>
-
-<p>Thanks to zookeeper&#39;s watch mechanism, there&#39;s no need to configure service static and update while you add/remove nodes. This is especially important in large-scale deployment. (Since microservices are often find-grained, you will always have a lot of process to update/restart.)</p>
-
-<p>For more about Slacker Cluster, <a href="https://github.com/sunng87/slacker-cluster">check my code repository</a>.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">扩展 Linux Ephemeral 端口限制</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/07/01/extend-linux-ephemeral-ports/"/>
-    
-    <id>/blog/2014/07/01/extend-linux-ephemeral-ports</id>
-    <published>2014-07-01T17:11:58+08:00</published>
-    <updated>2014-07-01T17:11:58+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
-
-<h3>增加文件打开数</h3>
-
-<p>第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>$ sudo ulimit -n 999999</div></div></pre></div></figure>
-
-<p>持久化这个配置，可以在<code>/etc/security/</code>（或<code>/etc/security.d/</code>，取决于你的发行版）下建立文件，增加</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>*     hard    nofile      999999
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>*       soft    nofile      999999</div></div></pre></div></figure>
-
-<p>这将对所有用户起效。</p>
-
-<h3>增加客户端端口数</h3>
-
-<p>当Linux发起客户端连接时，如果没有显式指定，会给客户端socket绑定一个 ephemeral 端口。这个端口的范围是从这个区间选取的：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'> $ cat /proc/sys/net/ipv4/ip_local_port_range
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>32768   61000
-</div></div></pre></div></figure>
-
-<p>如果这个区间的端口耗尽，socket就会产生<code>cannot assign requested address</code>的错误。要增加端口范围，我们需要把他设置得更大：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>$ sudo echo "1025 65535" > /proc/sys/net/ipv4/ip_local_port_range</div></div></pre></div></figure>
-
-<p>这样，单台机器就可以发出六万多个连接。</p>
-
-<h3>增加虚拟网卡</h3>
-
-<p>对于内存大一点的客户端机器，六万多个连接远不是其性能极限。由于IP消息中，一条消息是由 <code>src_addr</code>, <code>src_port</code>, <code>dst_addr</code>, <code>dst_port</code> 四元组标识，所以要增加连接，我们需要更多IP。在Linux上，我们可以启动虚拟网卡绑定额外的IP。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>$ sudo ifconfig eth0:0 192.168.1.100
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>$ sudo ifconfig eth0:1 192.168.1.101
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>...</div></div></pre></div></figure>
-
-<p>要关闭这些虚拟网卡</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>$ sudo ifconfig eth0:0 down</div></div></pre></div></figure>
-
-<h3>使用虚拟网卡连接</h3>
-
-<p>拥有多个IP之后，客户端socket需要显示绑定这些IP才行，以python为例，在connect前调用：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">local_addr</span><span class="p">,</span> <span class="n">local_port</span><span class="p">))</span></div></div></pre></div></figure>
-
-<p>可以指定连接的源地址和端口。在普通的Linux编程里，当你指定<code>local_port</code>为<code>0</code>时，Linux会分配一个之前提到的 ephemeral 端口。但是当使用虚拟IP时，如果仍然指定0，系统并不会因为IP不同而重用端口号，达到六万多的限制后，仍然会抛出不能获得地址的异常。</p>
-
-<p>实际上是可以获得的，这里需要用户显式地指定端口好。如果需要大规模的连接，那就一个一个绑定好了。</p>
-
-<h3>启用time_wait reuse和recycle</h3>
-
-<p>Linux的socket进入<code>time_wait</code>后需要有一定的时间回收，之后端口才能重新使用。这在大规模测试的时候就比较麻烦，为了免去等待，可以打开<code>tw_reuse</code>和<code>tw_recycle</code>这两个选项。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>$ echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>$ echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse</div></div></pre></div></figure>
-
-<p>注意这两个选项都比较激进，最好仅在测试机上使用。</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Slacker Cluster 0.12: Grouping</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/06/09/grouping-in-slacker-0-dot-12/"/>
-    
-    <id>/blog/2014/06/09/grouping-in-slacker-0-dot-12</id>
-    <published>2014-06-09T21:06:39+08:00</published>
-    <updated>2014-06-09T21:06:39+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<h2>What are Slacker and Slacker Cluster</h2>
-
-<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn&#39;t ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
-
-<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
-
-<h2>Grouping in Slacker Cluster</h2>
-
-<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
-
-<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
-
-<h3>:random</h3>
-
-<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
-
-<h3>:leader</h3>
-
-<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
-
-<h3>:all</h3>
-
-<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it&#39;s broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there&#39;s only one server called, just like local invocation. In <code>:all</code>, there&#39;s chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
-
-<h3>Custom</h3>
-
-<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
-
-<h2>Grouping results</h2>
-
-<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
-
-<p>In short words:</p>
-
-<ul>
-<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
-<li><code>:vector</code> returns  a vector of all results.</li>
-<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
-<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
-</ul>
-
-<h2>Grouping exceptions</h2>
-
-<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
-
-<h2>Granularity</h2>
-
-<p>The grouping options can be set to client level:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">clustered-slackerc</span><span class="w"> </span><span class="s">"cluster-name"</span><span class="w"> </span><span class="s">"127.0.0.1:2181"</span><span class="w"> </span><span class="no">:grouping</span><span class="w"> </span><span class="no">:leader</span><span class="p">)</span></div></div></pre></div></figure>
-
-<p>or function level:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="nf">defn-remote</span><span class="w"> </span><span class="n">sc</span><span class="w"> </span><span class="n">slacker.example.api/timestamp</span><span class="w">
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:grouping</span><span class="w"> </span><span class="no">:all</span><span class="w">
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="no">:grouping-results</span><span class="w"> </span><span class="no">:single</span><span class="p">)</span></div></div></pre></div></figure>
-
-<h2>Conclusion</h2>
-
-<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Fork-Join in Papaline</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/05/27/fork-join-in-papaline/"/>
-    
-    <id>/blog/2014/05/27/fork-join-in-papaline</id>
-    <published>2014-05-27T21:47:45+08:00</published>
-    <updated>2014-05-27T21:47:45+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model &quot;fork-join&quot; for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
-
-<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
-
-<p><img src="http://i.imgur.com/w6RlNZo.png" alt="linear execution"></p>
-
-<p>This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it&#39;s always better to run them in parallel. Here we have <code>(fork)</code> command for the situation.</p>
-
-<p>For example, you are using the <em>fanout-on-write</em> model to build an activity stream. Once a user posted a new status, you need to find all followers(stage 1) of that user and append the status to their timeline(stage 2).</p>
-
-<p>In previous version of papaline, these two stages are:</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">find-followers</span><span class="w"> </span><span class="p">[</span><span class="n">id</span><span class="w"> </span><span class="n">msg</span><span class="p">]</span><span class="w">
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">followers</span><span class="w"> </span><span class="p">(</span><span class="nf">query-db-for-followers</span><span class="w"> </span><span class="n">id</span><span class="p">)]</span><span class="w">
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span><span class="p">[</span><span class="n">followers</span><span class="w"> </span><span class="n">msg</span><span class="p">]))</span><span class="w">
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fanout-to-user-timeline</span><span class="w"> </span><span class="p">[</span><span class="n">user-ids</span><span class="w"> </span><span class="n">msg</span><span class="p">]</span><span class="w">
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="nb">doseq</span><span class="w"> </span><span class="p">[</span><span class="n">user-id</span><span class="w"> </span><span class="n">user-ids</span><span class="p">]</span><span class="w">
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span><span class="p">(</span><span class="nf">write-redis-list</span><span class="w"> </span><span class="n">user-id</span><span class="w"> </span><span class="n">msg</span><span class="p">)))</span><span class="w"></span>
-</div></div></pre></div></figure>
-
-<p>In the second task, the msg is appended to user&#39;s timeline one by one.</p>
-
-<p>Using <code>(fork)</code>, the <code>fanout-to-user-timeline</code> can be executed in parallel.</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">find-followers</span><span class="w"> </span><span class="p">[</span><span class="n">id</span><span class="w"> </span><span class="n">msg</span><span class="p">]</span><span class="w">
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">[</span><span class="n">followers</span><span class="w"> </span><span class="p">(</span><span class="nf">query-db-for-followers</span><span class="w"> </span><span class="n">id</span><span class="p">)]</span><span class="w">
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    </span><span class="p">(</span><span class="nf">fork</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="o">#</span><span class="p">(</span><span class="nb">vector</span><span class="w"> </span><span class="n">%</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="n">followers</span><span class="p">))))</span><span class="w">
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'></span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">(</span><span class="k">defn</span><span class="w"> </span><span class="n">fanout-to-user-timeline</span><span class="w"> </span><span class="p">[</span><span class="n">user-ids</span><span class="w"> </span><span class="n">msg</span><span class="p">]</span><span class="w">
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>  </span><span class="p">(</span><span class="nf">write-redis-list</span><span class="w"> </span><span class="n">user-id</span><span class="w"> </span><span class="n">msg</span><span class="p">))</span><span class="w"></span>
-</div></div></pre></div></figure>
-
-<p>After the <code>find-followers</code> function, the result will be splitted into <code>(count followers)</code> parts and sent into input channel of stage 2. So the tasks execution will be like:</p>
-
-<p><img src="http://i.imgur.com/MLhZ0Pm.png" alt="forked execution"></p>
-
-<p>To collect the results of all forked sub-tasks, you can use <code>(join)</code>. If the return value is wrapped with join, it won&#39;t trigger next stage immediately but to wait all forked tasks to finish.</p>
-
-<p><img src="http://i.imgur.com/BVDEH9Q.png" alt="join"></p>
-
-<p>So with <code>(fork)</code> and <code>(join)</code>, it&#39;s very flexible to change execution model in Papaline.  Internally, I use clojure&#39;s <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of <a href="http://github.com/sunng87/papaline">Papaline</a>.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Papaline: Concurrent Pipeline With core.async</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/concurrent-pipeline-with-core-async/"/>
-    
-    <id>/blog/2014/04/20/concurrent-pipeline-with-core-async</id>
-    <published>2014-04-20T17:21:44+08:00</published>
-    <updated>2014-04-20T17:21:44+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>According to <a href="http://en.wikipedia.org/wiki/Staged_event-driven_architecture">wikipedia</a>, Staged Event-driven Architecture is an approach to software architecture that decomposes a complex, event-driven application into a set of stages connected by queues. We were using Java framework, <a href="https://github.com/sunng87/stages">stages</a>, to implement queue based SEDA. As we are using more and more Clojure nowadays, I decide to re-implement it in Clojure language, and in Clojure way. It&#39;s <a href="https://github.com/sunng87/papaline">papaline</a>.</p>
-
-<p>The most important difference between papaline and stages is the usage of IoC threads. Core.async introduces IoC threads for Clojure, which is a popular concurrent mechanism recently. In traditional queue based thread pool, threads are blocked on queue to wait for tasks. While for IoC threads, channels act similar to queues but no actual thread is blocked on channel. Once there is a task available in channel, an underlying thread will be picked to execute it. So for core.async, you don&#39;t have to assign a static thread pool to each channel. The channel will pick thread from a shared system thread pool on demand. In current core.async release, it&#39;s a fixed thread pool with <em>(processors * 4) + 42</em> threads. That&#39;s much flexible and efficient.</p>
-
-<p>Papaline takes advantages of this feature. The base concept in papaline is <strong>stage</strong> and <strong>pipeline</strong>. A pipeline is created with a ordered sequence of stages. Stages configured in a pipeline are connected with channels, instead of queues. Threads are automatically managed by core.async, and scheduled based on load of channels. </p>
-
-<p>When you run a pipeline, the input data is sent to the inbound channel of the first stage. The stage will received the data and pick a thread to execute the function. Then the result is put into the second stage&#39;s inbound channel. The user-visible behavior is much like <code>comp</code>, but in concurrent.</p>
-
-<p>Also core.async offers different type of channel buffers: fixed <code>buffer</code>, <code>sliding-buffer</code> and <code>dropping-buffer</code>. They are channels equivalent to j.u.c thread pool&#39;s <code>RejectedExecutionHandler</code>. </p>
-
-<p>We have already deployed papaline in our asynchronous system and it works great by far. Find the project on <a href="https://github.com/sunng87/papaline">github</a> if you are interested in.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Rust语言：安全的并发</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/"/>
-    
-    <id>/blog/2014/04/20/rust-concurrent-made-safely</id>
-    <published>2014-04-20T16:31:54+08:00</published>
-    <updated>2014-04-20T16:31:54+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>本文原载于2014年3月《程序员》杂志编程语言专题。</p>
-
-<p>Rust 语言是近两年来 Mozilla 正在开发的一种新编程语言，它以并发，安全和实用为口号，主要使用场景是系统编程，用来取代C++语言的角色。有人戏称 Mozilla 由于大量使用 C++，深知其弊端，所以诞生了 Rust。目前，Rust 的两个主要产品是 Mozilla 下一代的浏览器布局引擎 Servo 和 Rust 编译器。由于语言在快速的开发和演进中，每个版本都会产生一些不兼容的变更，所以现在并非是学习这门语言细节并真正使用它的最佳时机。不过，这并不影响我们了解 Rust 语言：作为多年来鲜有的新系统编程语言，他本身有很多新颖之处，也可以帮助我们了解一些编程语言设计的流行趋势。</p>
-
-<h2>并发</h2>
-
-<p>和现在流行的很多新语言一样，Rust 在语言层面支持了绿色线程（Green threads）：Task。Task 作为并发执行的单元，是用户空间的“线程”，创建和调度成本较低，可以大量共存。Task之间通过消息传递通信，没有直接的共享数据。从最近的流行趋势来看，绿色线程几乎已经成为并发方案大战最终的赢家。除了Rust，之前流行的Go语言，Erlang，Python的Gevent，以及最近Clojure世界里正在发展的core.async，采用的都是这种绿色线程的模式。</p>
-
-<p>绿色线程的程序与传统多线程程序的写法几乎一致。在编写服务器程序时，与事件驱动的回调机制相比，编写更简单，表义更清晰。当并发任务增多时，传统的多线程程序由于启动线程和调度线程的成本高而使系统整体性能降低。而绿色线程可以基本不受限制，随意创建。Rust的文档指出在32位系统上可以支持数十万个Task同时存在。</p>
-
-<p>Task也是Rust程序的基础单元，一个Rust进程又多个并行的task组成，main函数本身也是一个Task。Task之间通过一个 (Port, Chan) 元组传递数据。Port和Chan相当于管道的两端，Port用于取数据，Chan用于发送数据。下面的例子里，我们通过do spawn语法（类似Ruby的block语法），启动一个新Task，并打印收到的数据。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()&#x7b;</span> 
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">let</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">"hello world"</span><span class="p">;</span> 
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="nn">Chan</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span> 
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">chan</span><span class="nf">.send</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span> 
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">do</span> <span class="n">spawn</span> <span class="p">&#x7b;</span> 
-</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">let</span> <span class="n">received_msg</span> <span class="o">=</span> <span class="n">port</span><span class="nf">.recv</span><span class="p">();</span> 
-</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="nf">println</span><span class="p">(</span><span class="n">received_msg</span><span class="p">);</span> 
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="p">&#x7d;</span> 
-</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span> 
-</div></div></pre></div></figure>
-
-<h2>引用系统</h2>
-
-<p>Rust 语言设计的核心是安全性（这里安全性指safety，而非 security）。Rust 希望通过语言的机制和编译器的功能，把程序员易于犯错，不易检查的问题解决在编译期，避免运行时的Segmentation Fault。Rust 的设计可以说是处处小心。Clojure语言强调可变性给编程带来的复杂性，在 Rust 语言中，设计者对这点也有格外的重视。除非特别声明为 mut，所有 Rust 的局部变量默认都是不可变的，对不可变变量值的修改会导致 编译器直接报错。</p>
-
-<p>Rust 的安全性还通过独有的引用类型系统来实现。</p>
-
-<p>Rust 语言中堆内存块的引用类型叫做box。最新版本的Rust 在语言层面只保留了一种owned box，它在使用时具有一种所有权（ownership）的概念，只有具有所有权的变量才可以访问这段内存。Owned box在同一时刻只允许一个变量作为所有者，它的变量赋值称为move。一旦owned pointer被赋值，用户就无法通过原先的引用访问这块数据，这种错误会在编译时检查。
-一个简单的例子：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">let</span> <span class="n">a</span><span class="p">:</span> <span class="o">~</span><span class="nb">int</span> <span class="o">=</span> <span class="o">~</span><span class="mi">50</span><span class="p">;</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">let</span> <span class="n">b</span><span class="p">:</span> <span class="o">~</span><span class="nb">int</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="nd">println!</span><span class="p">(</span><span class="s">"&#x7b;:?&#x7d;"</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">);</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span></div></div></pre></div></figure>
-
-<p>~ 代表owned box，这里我们把一个包含值为50的owned box赋给owned pointer a。然后把a的所有权通过赋值的形式move给b。最后我们试图通过 <code>*a</code> 访问这个值。在C语言里，这时a和b同时指向统一块内存，可以通过<code>*a</code>访问到这里的值。但Rust的所有权机制给予了这段内存额外的保护。编译这段程序将失败：</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'>own.rs:4:23: 4:24 error: use of moved value: `a`
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>own.rs:4     println!("&#x7b;:?&#x7d;", *a);
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>                               ^
-</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>...
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>own.rs:3:9: 3:10 note: `a` moved here because it has type `~int`, which is moved by default (use `ref` to override)
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>own.rs:3     let b: ~int = a;
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>                 ^
-</div></div></pre></div></figure>
-
-<p>编译器会明确地指出错误的引用在何处被move。事实上所有owned box的生命周期管理都是直接在编译时完成的，编译器通过静态检查跟踪使用情况，完成内存开辟和回收。这是Rust 确保编程正确、安全的重要手段。</p>
-
-<p>新版本的Rust在标准库中提供 <code>std::rc::Rc</code>（引用计数） 和 <code>std::gc::Gc</code> （垃圾回收）类型，取代了原先的managed box，用来提供可以有限共享的引用类型。</p>
-
-<p>在 Task 间传递数据，如果要避免数据拷贝，也有专门的引用类型：用于不可变数据的<code>extra::arc::Arc</code> (atomically reference counted ，原子的引用计数类型) , 以及用于可变数据的 RWArc（带读写锁的原子引用计数类型） 。RWArc在操作可变数据时，通过内在的读写锁控制对共享数据的访问，从而在API层面实现安全性。</p>
-
-<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">extern</span> <span class="k">mod</span> <span class="n">extra</span><span class="p">;</span>
-</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">use</span> <span class="nn">extra</span><span class="p">::</span><span class="nn">arc</span><span class="p">::&#x7b;</span><span class="n">RWArc</span><span class="p">&#x7d;;</span>
-</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="o">~</span><span class="s">"hello world"</span><span class="p">;</span>
-</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">let</span> <span class="n">arc_ref</span> <span class="o">=</span> <span class="nn">RWArc</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>        <span class="k">let</span> <span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">chan</span><span class="p">)</span> <span class="o">=</span> <span class="nn">Chan</span><span class="p">::</span><span class="nf">new</span><span class="p">();</span>
-</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>        <span class="n">chan</span><span class="nf">.send</span><span class="p">(</span><span class="n">arc_ref</span><span class="nf">.clone</span><span class="p">());</span>
-</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>        <span class="k">do</span> <span class="n">spawn</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>            <span class="k">let</span> <span class="n">arc_local_ref</span> <span class="o">=</span> <span class="n">port</span><span class="nf">.recv</span><span class="p">();</span>
-</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>            <span class="n">arc_local_ref</span><span class="nf">.write</span><span class="p">(|</span><span class="nb">str</span><span class="p">|</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>                <span class="nb">str</span><span class="nf">.push_char</span><span class="p">(</span><span class="sc">'!'</span><span class="p">);</span>
-</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>            <span class="p">&#x7d;);</span>
-</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>            <span class="n">arc_local_ref</span><span class="nf">.read</span><span class="p">(|</span><span class="nb">str</span><span class="p">|</span> <span class="p">&#x7b;</span>
-</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>                <span class="nf">println</span><span class="p">(</span><span class="o">*</span><span class="nb">str</span><span class="p">);</span>
-</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>            <span class="p">&#x7d;);</span>
-</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>        <span class="p">&#x7d;</span>
-</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="p">&#x7d;</span>
-</div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span></div></div></pre></div></figure>
-
-<p>Rust谨慎地定义如此繁多，各具功能的引用类型，就是希望用户在编程过程中，根据应用场景、引用的功能职责，选择合适的类型，进而在引用类型系统和编译器的保护下，减少在运行时出错的机会。这一点也和Clojure的4种引用类型的设计初衷类似，不过Clojure并不能提供太多编译时的安全保护。</p>
-
-<h2>更多</h2>
-
-<p>篇幅所限，我只选择了Rust最具特点的两个部分介绍。Rust是一门具备自身显著特点，精心设计的语言，而绝非普通的“又一门编程语言”。在语法层面，它包含了模式匹配，闭包，泛型等流行功能，作为系统编程语言，使用的舒适度不亚于脚本语言。另外还可以通过FFI（Foreign Function Interface）调用已有的C语言库，满足了实用性的需要。</p>
-
-<p>如果你也开始对这门新语言感兴趣，可以：</p>
-
-<ul>
-<li>通过<a href="http://static.rust-lang.org/doc/master/tutorial.html">它的文档</a>学习最新版本的语法和细节 </li>
-<li>加入<a href="https://mail.mozilla.org/listinfo/rust-dev">rust-dev邮件列表</a>了解开发者的讨论</li>
-<li>关注<a href="https://github.com/mozilla/rust">Rust项目代码仓库</a></li>
-<li>关注<a href="https://delicious.com/tag/rust">Delicious</a> 和 <a href="http://www.reddit.com/r/rust">Reddit</a> 上流行的 rust 链接</li>
-<li>关注<a href="http://cmr.github.io/">The week in Rust</a>，介绍每周 Rust 语言正在发生的变化</li>
-</ul>
-
-
-
-]]>
-    </content>
-  </entry>
-
-  <entry>
-    <title type="html">Slacker Library Updated</title>
-    
-    <link rel="alternate" type="text/html" href="http://sunng.info/blog/blog/2014/03/04/slacker-0-dot-11-released/"/>
-    
-    <id>/blog/2014/03/04/slacker-0-dot-11-released</id>
-    <published>2014-03-04T23:40:00+08:00</published>
-    <updated>2014-03-04T23:40:00+08:00</updated>
-    <author>
-      <name>Sun Ning</name>
-      <uri>http://sunng.info/blog/</uri>
-    </author>
-    <content type="html" xml:base="http://sunng.info/blog/" >
-<![CDATA[
-
-<p>After almost two years idle in commit log, I restarted development of my slacker frameworks recently. It will be used in our AVOS Cloud production as integration solution between clojure systems.</p>
-
-<p>The recent update in slacker, slacker-cluster and link are:</p>
-
-<h3>link</h3>
-
-<p>There are two releases in the <a href="https://github.com/sunng87/link">link</a> library, features include:</p>
-
-<ul>
-<li>Ported to Netty 4</li>
-<li>WebSocket server handler</li>
-<li>Ability to shutdown server</li>
-<li>Ability to use core.async with link ring adapter</li>
-</ul>
-
-<h3>slacker</h3>
-
-<p>The most recent release of <a href="https://github.com/sunng87/slacker">slacker</a> is 0.11.0:</p>
-
-<ul>
-<li>New ping-interval option for clients</li>
-<li>Async callback will accept two argument, and can handle exceptions</li>
-<li>Slingshot removed, we are now using clojure built-in ex-info</li>
-<li>All client creation functions and defn-remote are delayed</li>
-<li>Bugfix for issue when several clients started in a process</li>
-</ul>
-
-<h3>slacker-cluster</h3>
-
-<p>There&#39;s major enhancement in <a href="https://github.com/sunng87/slacker-cluster">slacker cluster</a> 0.11.0</p>
-
-<ul>
-<li>Server exception no longer blocks client</li>
-<li>Added options to call functions on multiple servers, control return type and exception handling</li>
-</ul>
-
-<p>All these libraries are available on github. I will write more about how we use them in AVOS Cloud in future.</p>
-
-
-
-]]>
-    </content>
-  </entry>
-
-</feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="/" rel="alternate"></link><link href="https://sunng.info/blog/blog/categories/programming/atom.xml" rel="self"></link><id>/</id><updated>2016-03-21T22:28:06+08:00</updated><entry><title>"Smoothing Your Rust Crates Release With Cargo-release"</title><link href="/smoothing-your-rust-crates-release-with-cargo-release.html" rel="alternate"></link><updated>2016-03-21T22:28:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2016-03-21:smoothing-your-rust-crates-release-with-cargo-release.html</id><summary type="html">&lt;p&gt;Cargo-release is a cargo subcommand that automates your libraries
+release process. The idea was inspired by Clojure's leiningen, which
+has a &lt;code&gt;release&lt;/code&gt; command does exact same thing.&lt;/p&gt;
+&lt;p&gt;Typically, when you decide to release a library to crates.io, you need
+to go through following steps at least:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bump version in Cargo.toml&lt;/li&gt;
+&lt;li&gt;create a git tag for the release&lt;/li&gt;
+&lt;li&gt;run &lt;code&gt;cargo publish&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;push tags/commits to github&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cargo-release command deals these tasks for you. In addition, it
+increases your patch version and add a &lt;code&gt;pre&lt;/code&gt; extension after &lt;code&gt;cargo
+publish&lt;/code&gt;. The Java/Maven world uses a &lt;code&gt;SNAPSHOT&lt;/code&gt; version for
+pre-release. What's sad, no other package manager follows this great
+idea. With this pre-release extension, users are able to tell if your
+master branch is on a released version or not.&lt;/p&gt;
+&lt;p&gt;By default, cargo-release removes pre-release extension as the version
+to release. You can override this behavior by a &lt;code&gt;--level&lt;/code&gt;. The value
+for &lt;code&gt;--level&lt;/code&gt; can be &lt;code&gt;major&lt;/code&gt;, &lt;code&gt;minor&lt;/code&gt; or &lt;code&gt;patch&lt;/code&gt;. As the name
+suggests, it increases different part of a semver version.&lt;/p&gt;
+&lt;p&gt;For multi-crates repository, &lt;code&gt;cargo-release&lt;/code&gt; reads you sub-directory
+name and use it as prefix of git tag to avoid conflicts.&lt;/p&gt;
+&lt;p&gt;Some more features are planned for this tool, for instance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Custom tag prefix&lt;/li&gt;
+&lt;li&gt;Build docs and push to gh-pages&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I hope this tool can be used as a standard of rust library release
+process. You can install this tool by &lt;code&gt;cargo install
+cargo-release&lt;/code&gt;. And the github repo is
+&lt;a href="https://github.com/sunng87/cargo-release"&gt;here&lt;/a&gt;.&lt;/p&gt;</summary><category term="rust"></category><category term="programming"></category></entry><entry><title>"Summarizing Changes in Slacker 0.13"</title><link href="/summarizing-changes-in-slacker-013.html" rel="alternate"></link><updated>2015-10-18T13:45:37+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-10-18:summarizing-changes-in-slacker-013.html</id><summary type="html">&lt;p&gt;After a year of feature development and minor fixes, &lt;a href="https://github.com/sunng87/slacker"&gt;Slacker&lt;/a&gt; and &lt;a href="https://github.com/sunng87/slacker-cluster"&gt;Slacker Cluster&lt;/a&gt; version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.&lt;/p&gt;
+&lt;p&gt;Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.&lt;/p&gt;
+&lt;h3&gt;Application managed thread pool&lt;/h3&gt;
+&lt;p&gt;During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.&lt;/p&gt;
+&lt;p&gt;The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by &lt;code&gt;:threads&lt;/code&gt; option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.&lt;/p&gt;
+&lt;h3&gt;Interrupt&lt;/h3&gt;
+&lt;p&gt;0.13 introduces a new low-level API called &lt;code&gt;interrupt&lt;/code&gt; and a new option &lt;code&gt;interrupt-on-timeout&lt;/code&gt;. This is backend by a new protocol level command, &lt;code&gt;interrupt&lt;/code&gt;. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once &lt;code&gt;interrupt&lt;/code&gt; received.&lt;/p&gt;
+&lt;p&gt;Typically you don't have to call &lt;code&gt;interrupt&lt;/code&gt; on slacker client. The &lt;code&gt;interrupt-on-timeout&lt;/code&gt; option allows you to cancel a tasks on both client and server when it's timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.&lt;/p&gt;
+&lt;h3&gt;Plug-able Serializers&lt;/h3&gt;
+&lt;p&gt;To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.&lt;/p&gt;
+&lt;p&gt;The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(&lt;code&gt;:json&lt;/code&gt;) and nippy(&lt;code&gt;:nippy&lt;/code&gt;). &lt;a href="https://github.com/ptaoussanis/nippy"&gt;Nippy&lt;/a&gt; is high recommended for Slacker. It's a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.&lt;/p&gt;
+&lt;p&gt;You can also extend our serializer system by create new implementations for serializer multi-method.&lt;/p&gt;
+&lt;h3&gt;Server data for Slacker Cluster&lt;/h3&gt;
+&lt;p&gt;The new Slacker Cluster &lt;code&gt;start-slacker-server&lt;/code&gt; offers a new option &lt;code&gt;:server-data&lt;/code&gt;. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.&lt;/p&gt;
+&lt;p&gt;In the client grouping function, you can use the data to filter servers:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;require&lt;/span&gt; &lt;span class="o"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;slacker.client.cluster&lt;/span&gt; &lt;span class="ss"&gt;:refer&lt;/span&gt; &lt;span class="ss"&gt;:all&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;def &lt;/span&gt;&lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;clustered-slackerc&lt;/span&gt; &lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;defn-remote&lt;/span&gt; &lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="nv"&gt;some-function&lt;/span&gt;
+  &lt;span class="ss"&gt;:grouping&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;fn &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="kd"&gt;ns &lt;/span&gt;&lt;span class="nv"&gt;func&lt;/span&gt; &lt;span class="nv"&gt;params&lt;/span&gt; &lt;span class="nv"&gt;servers&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+               &lt;span class="c1"&gt;;; test :prod? property of server data&lt;/span&gt;
+               &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;rand-nth&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;filter &lt;/span&gt;&lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;:prod?&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;server-data&lt;/span&gt; &lt;span class="o"&gt;@&lt;/span&gt;&lt;span class="nv"&gt;sc&lt;/span&gt; &lt;span class="nv"&gt;%&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="nv"&gt;servers&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The grouping function in this snippet filters production servers, and choose one from them to call.&lt;/p&gt;
+&lt;p&gt;The server side looks pretty simple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;require&lt;/span&gt; &lt;span class="o"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;slacker.server.cluster&lt;/span&gt; &lt;span class="ss"&gt;:refer&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;start-slacker-server&lt;/span&gt;&lt;span class="p"&gt;]])&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;start-slacker-server&lt;/span&gt; &lt;span class="nv"&gt;some-port&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;some-ns&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+  &lt;span class="ss"&gt;:server-data&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:prod?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="nv"&gt;...&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.&lt;/p&gt;
+&lt;p&gt;After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.&lt;/p&gt;</summary><category term="'programming'"></category><category term="'clojure'"></category></entry><entry><title>Running Ring web application on HTTP2 with rj9a</title><link href="/running-ring-web-application-on-http2-with-rj9a.html" rel="alternate"></link><updated>2015-07-25T14:54:54+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-07-25:running-ring-web-application-on-http2-with-rj9a.html</id><summary type="html">&lt;p&gt;&lt;a href="https://github.com/sunng87/ring-jetty9-adapter"&gt;Ring-jetty9-adapter(rj9a)&lt;/a&gt; just received an update, the &lt;a href="https://clojars.org/info.sunng/ring-jetty9-adapter"&gt;0.9&lt;/a&gt;, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.&lt;/p&gt;
+&lt;p&gt;In case you still have no idea about HTTP2, it's the biggest update to HTTP, the protocol we use everyday and everywhere. In short, &lt;a href="https://en.wikipedia.org/wiki/HTTP/2"&gt;HTTP2&lt;/a&gt; introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that's part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.&lt;/p&gt;
+&lt;p&gt;The basic part of HTTP2 is fully compatible for 1.1, so you won't have to modify your application code to use it. In rj9a, just add option &lt;code&gt;:h2? true&lt;/code&gt; to enable HTTP2. And &lt;code&gt;:h2c? true&lt;/code&gt; to enable its variance on plain socket.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;dummy-app&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;req&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:body&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;It works&amp;quot;&lt;/span&gt; &lt;span class="ss"&gt;:status&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;jetty/run-jetty&lt;/span&gt; &lt;span class="nv"&gt;dummy-app&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="ss"&gt;:port&lt;/span&gt; &lt;span class="mi"&gt;5000&lt;/span&gt;
+                            &lt;span class="ss"&gt;:h2c?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:h2?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:ssl?&lt;/span&gt; &lt;span class="nv"&gt;true&lt;/span&gt;
+                            &lt;span class="ss"&gt;:ssl-port&lt;/span&gt; &lt;span class="mi"&gt;5443&lt;/span&gt;
+                            &lt;span class="ss"&gt;:keystore&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;...&amp;quot;&lt;/span&gt;
+                            &lt;span class="ss"&gt;:key-password&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To test HTTP2 interface, you will need to install &lt;a href="https://nghttp2.org"&gt;nghttp&lt;/a&gt;. It's pretty similar to curl:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ nghttp -v https://localhost:5443
+&lt;span class="o"&gt;[&lt;/span&gt;  0.000&lt;span class="o"&gt;]&lt;/span&gt; Connected
+The negotiated protocol: h2-14
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;12, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_MAX_CONCURRENT_STREAMS&lt;span class="o"&gt;(&lt;/span&gt;0x03&lt;span class="o"&gt;)&lt;/span&gt;:100&lt;span class="o"&gt;]&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x04&lt;span class="o"&gt;)&lt;/span&gt;:65535&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;201, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;101, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;7&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;9&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;7, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send PRIORITY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;5, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;11&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.031&lt;span class="o"&gt;]&lt;/span&gt; send HEADERS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;37, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x25, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_STREAM &lt;span class="p"&gt;|&lt;/span&gt; END_HEADERS &lt;span class="p"&gt;|&lt;/span&gt; PRIORITY
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;padlen&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;dep_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;11, &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;16, &lt;span class="nv"&gt;exclusive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; Open new stream
+         :method: GET
+         :path: /
+         :scheme: https
+         :authority: localhost:5443
+         accept: */*
+         accept-encoding: gzip, deflate
+         user-agent: nghttp2/1.0.1
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; recv SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;12, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_HEADER_TABLE_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x01&lt;span class="o"&gt;)&lt;/span&gt;:4096&lt;span class="o"&gt;]&lt;/span&gt;
+         &lt;span class="o"&gt;[&lt;/span&gt;SETTINGS_INITIAL_WINDOW_SIZE&lt;span class="o"&gt;(&lt;/span&gt;0x04&lt;span class="o"&gt;)&lt;/span&gt;:65535&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; send SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; ACK
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.032&lt;span class="o"&gt;]&lt;/span&gt; recv SETTINGS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; ACK
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;niv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&lt;span class="o"&gt;)&lt;/span&gt; :status: 200
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&lt;span class="o"&gt;)&lt;/span&gt; server: Jetty&lt;span class="o"&gt;(&lt;/span&gt;9.3.1.v20150714&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv HEADERS frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;20, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x04, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_HEADERS
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;padlen&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; First response header
+It works&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; recv DATA frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x01, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;13&amp;gt;
+         &lt;span class="p"&gt;;&lt;/span&gt; END_STREAM
+&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/span&gt; send GOAWAY frame &amp;lt;&lt;span class="nv"&gt;length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;8, &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0x00, &lt;span class="nv"&gt;stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0&amp;gt;
+         &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;last_stream_id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0, &lt;span class="nv"&gt;error_code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;NO_ERROR&lt;span class="o"&gt;(&lt;/span&gt;0x00&lt;span class="o"&gt;)&lt;/span&gt;, opaque_data&lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)=[])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The verbose output shows us every detail about request and response in HTTP2.&lt;/p&gt;
+&lt;p&gt;Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and &lt;a href="http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting"&gt;put alpn-boot jar in your bootclasspath&lt;/a&gt;.  I have created &lt;a href="https://github.com/sunng87/lein-bootclasspath-deps"&gt;a leiningen plugin&lt;/a&gt; to manage bootclasspath in clojure project.&lt;/p&gt;
+&lt;p&gt;The complete example is available in &lt;a href="https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj"&gt;github repository&lt;/a&gt;.&lt;/p&gt;</summary><category term="'programming'"></category><category term="'clojure'"></category></entry><entry><title>"Handlebars 的 rust 实现"</title><link href="/handlebars-de-rust-shi-xian.html" rel="alternate"></link><updated>2015-01-25T16:22:50+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2015-01-25:handlebars-de-rust-shi-xian.html</id><summary type="html">&lt;p&gt;本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给&lt;a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/"&gt;程序员杂志写了一篇 Rust 的文章&lt;/a&gt;，结果导致现在程序员杂志停刊了。&lt;/p&gt;
+&lt;p&gt;扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。&lt;/p&gt;
+&lt;p&gt;这次选的就是实现 Handlebars，主要原因是 rust 已经逐渐有一点 web 开发的生态圈了，但是缺少一个模版引擎，于是我就来趟这潭浑水吧。为什么是 Handlebars 呢：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不要把 rust 代码写进 html 模版里，反例： jsp, ejs&lt;/li&gt;
+&lt;li&gt;不要把 html 代码写进 rust 里，反例： hiccup&lt;/li&gt;
+&lt;li&gt;能够复用，基于“继承”而不是 include&lt;/li&gt;
+&lt;li&gt;能够简单地自定义标签，反例：mustach&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基于以上的原则，&lt;a href="https://github.com/sunng87/handlebars-rust"&gt;handlebars-rust&lt;/a&gt; 实现了基本的模版解析、渲染，重用机制（partial/include）和自定义 helper。除了不支持一些 mustach 风格的语法以外（可以用 #each / #if 这样的 helper 替代，更清晰），基本上所有的 handlebars 功能全部支持了。如果有遗漏的话欢迎 PR。另外还写了一个 &lt;a href="https://github.com/sunng87/handlebars-iron"&gt;handlebars-iron&lt;/a&gt; 项目，作为一个 &lt;a href="http://ironframework.io"&gt;Iron 框架&lt;/a&gt;的 middlaware。&lt;/p&gt;
+&lt;p&gt;简单总结几点收获：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rust 中要实现类似OO的多态需要用枚举类型，trait可以用来做范型&lt;/li&gt;
+&lt;li&gt;静态类型语言和一个基于 javascript 视角的模版引擎对接很困难，比如 js 里有 falsy 的概念，if 的判断里 &lt;code&gt;false&lt;/code&gt;/&lt;code&gt;0&lt;/code&gt;/&lt;code&gt;""&lt;/code&gt;/&lt;code&gt;[]&lt;/code&gt; 这些值都是 false，但是在rust里需要根据不同类型作判断，直接使用简直不可能。所以在 handlebars-rust 里利用了 rustc-serialize 里的 &lt;code&gt;Json&lt;/code&gt; 枚举类型（没有真正序列化），要求所有渲染的数据都必须实现 &lt;code&gt;ToJson&lt;/code&gt;，算是设计上的一个取舍。&lt;/li&gt;
+&lt;li&gt;Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的&lt;/li&gt;
+&lt;li&gt;关于 Rust 的 ownership 看&lt;a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html"&gt;这篇文章&lt;/a&gt;，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错&lt;/li&gt;
+&lt;li&gt;有任何问题都可以在 stackoverflow 上问，有几个人会很快回复&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="'programming'"></category><category term="'rust'"></category></entry><entry><title>"AVOS Cloud 实时通信服务架构：微服务和服务发现"</title><link href="/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="alternate"></link><updated>2014-08-19T16:46:20+08:00</updated><author><name>Ning Sun</name></author><id>tag:,2014-08-19:avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html</id><summary type="html">&lt;p&gt;“微服务” (Microservice) 是今年特别热的一个概念，&lt;a href="http://martinfowler.com/articles/microservices.html"&gt;Martin Fowler 的文章&lt;/a&gt;对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。&lt;/p&gt;
+&lt;p&gt;在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.&lt;/p&gt;
+&lt;p&gt;以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Push 服务：处理推送的订阅关系，触发推送&lt;/li&gt;
+&lt;li&gt;长连接服务器：维持设备与服务的长连接&lt;/li&gt;
+&lt;li&gt;Router：应用层的 lookup，负责分配合适的长连接服务器给新设备&lt;/li&gt;
+&lt;li&gt;WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警&lt;/li&gt;
+&lt;li&gt;数据存储：群组数据，用户可以通过API访问&lt;/li&gt;
+&lt;li&gt;HBase：消息记录存储&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;模块间的集成，根据业务的特性分别使用 &lt;a href="https://github.com/sunng87/slacker"&gt;Slacker&lt;/a&gt; 远程调用框架和 &lt;a href="http://twitter.github.io/kestrel/"&gt;Kestrel&lt;/a&gt; 消息队列。
+对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。&lt;/p&gt;
+&lt;p&gt;Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 &lt;a href="http://clojure.org/macros"&gt;Clojure 宏&lt;/a&gt;的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 &lt;code&gt;(require)&lt;/code&gt; 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 &lt;a href="https://github.com/ptaoussanis/nippy"&gt;nippy&lt;/a&gt;，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。&lt;/p&gt;
+&lt;p&gt;以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。&lt;/p&gt;
+&lt;h3&gt;服务发现&lt;/h3&gt;
+&lt;p&gt;长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 &lt;a href="https://en.wikipedia.org/wiki/Publish/subscribe"&gt;Pub/Sub 抽象&lt;/a&gt;的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。&lt;/p&gt;
+&lt;p&gt;在这方面，我们利用了 &lt;a href="https://github.com/sunng87/slacker-cluster"&gt;Slacker Cluster 框架&lt;/a&gt;。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。&lt;/p&gt;
+&lt;p&gt;所有的服务提供者将自己能够提供的服务注册在 &lt;a href="https://zookeeper.apache.org/"&gt;Zookeeper&lt;/a&gt; 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Zookeeper 目录结构&lt;/span&gt;
+ls /slacker/example-cluster/namespaces/
+&lt;span class="o"&gt;[&lt;/span&gt;my.serviceA, my.serviceB&lt;span class="o"&gt;]&lt;/span&gt;
+
+ls /slacker/example-cluster/namespaces/my.serviceA
+&lt;span class="o"&gt;[&lt;/span&gt;192.168.1.100:2104, 192.168.1.101:2014...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。&lt;/p&gt;
+&lt;p&gt;在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。&lt;/p&gt;
+&lt;p&gt;有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。&lt;/p&gt;
+&lt;p&gt;原载 &lt;a href="https://blog.avoscloud.com/1927/"&gt;AVOSCloud Blog&lt;/a&gt;&lt;/p&gt;</summary><category term="programming"></category></entry></feed>

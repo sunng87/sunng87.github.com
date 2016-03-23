@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>早起，写一个变色的小程序</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/zao-qi-xie-yi-ge-bian-se-de-xiao-cheng-xu.html" rel="bookmark"
+           title="Permalink to 早起，写一个变色的小程序">早起，写一个变色的小程序</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-05-05T00:00:00+08:00">
+                Published: Tue 05 May 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>gnome</li>
+<li>linux</li>
+<li>shell
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>以前用Windows的时候，我是说用XP的时候，因为不支持颜色主题，也无从知晓如何通过自动化的方式更换Windows的主题，所以，经常是人肉地每天换主题（其实只是为了换标题栏的颜色），追求新鲜感。<br />
+现在用Gnome桌面以后依然保持着这种爱好。遗憾是之前一直没有找到设置存放的位置。前两天在<a href="http://www.commandlinefu.com" target="_parent">command-line-fu</a>上恰好看到一个变换桌面背景的命令，原来这类配置都存放在gconf里，用gconftool就可以进行操作了。<br />
+然后很容易地就能在图形化配置管理器里找到颜色配置的键值位于/desktop/gnome/interface/gtk_color_scheme，值是一个用换行符隔开的名值对，内容就是我们在Appearance配置窗口里看到的那些。good，写个shell小程序每天换颜色！<br />
+以下是我孱弱的shell脚本：<br />
+[codesyntax lang="bash" lines="fancy"]
+<pre>case <code>date +%w</code> in
+    0) color='#C4C4A0A00000';;
+    1) color='#CECE5C5C0000';;
+    2) color='#8F8F59590202';;
+    3) color='#4E4E9A9A0606';;
+    4) color='#20204A4A8787';;
+    5) color='#5C5C35356666';;
+    6) color='#A4A400000000';;
+esac</pre></p></p>
+<p>sedcommand="s/\(selected_bg_color:\)\(.*\)/\1$color/"</p>
+
+<p>color_scheme=`gconftool-2 -g /desktop/gnome/interface/gtk_color_scheme | sed $sedcommand`</p>
+
+<p>gconftool-2 -t string -s /desktop/gnome/interface/gtk_color_scheme "$color_scheme"
+[/codesyntax]<br />
+每天一换，颜色是tango调色板里的色彩，HOHOHAHA</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

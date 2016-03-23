@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>List your installed virtualbox virtual marchines using vbox python xpcom api</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/list-your-installed-virtualbox-virtual-marchines-using-vbox-python-xpcom-api.html" rel="bookmark"
+           title="Permalink to List your installed virtualbox virtual marchines using vbox python xpcom api">List your installed virtualbox virtual marchines using vbox python xpcom api</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-02-12T00:00:00+08:00">
+                Published: Fri 12 February 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>linux</li>
+<li>python</li>
+<li>VirtualBox
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I'm sorry for the long title. Due to lack of documentation, it's not easy to use python xpcom api from virtualbox sdk. The code below is just a sample that lists your installed virtual machines. It works on linux with VirtualBox OSE 2.0.8. Hope useful to you.<br />
+[cc lang="python"]<br />
+import vboxapi<br />
+vmsg = vboxapi.VirtualBoxManager(None, None)<br />
+vbox = vmsg.vbox<br />
+vmsg.mgr.getSessionObject(vbox)<br />
+machs = vbox.getMachines()<br />
+names = map(lambda x: (x.name,x.id), machs)<br />
+print names<br />
+[/cc]<br />
+Output:<br />
+[cc lang="python" nowrap="false" line_numbers="false"]<br />
+[(u'Ubuntu', u'aac3fd46-4f1e-4f6e-8abe-b1a5516abf8c'), (u'Windows', u'fa73952e-f0a6-4bf0-af20-259513d73bc1'), (u'OpenSolaris', u'a951542c-3178-4a6b-8087-f1b0314e283a'), (u'LinuxMint', u'8191f256-1b76-4ce7-a202-93730dae1b33'), (u'Fedora', u'ca250f45-d752-4baf-9281-fb0847dc8287'), (u'Freebsd', u'8322b62a-aed5-4f04-9815-9fadfeba9fe1'), (u'ArchLinux', u'efc1167a-4e06-4c14-aeb0-bfb303c8f5f7'), (u'openSUSE', u'02e18816-311d-420b-99b3-6b4b4cccf7b7'), (u'CentOS', u'ccf0421c-85c4-4123-8722-57abc494c633')]<br />
+[/cc]</p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

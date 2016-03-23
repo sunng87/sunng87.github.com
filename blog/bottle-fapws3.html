@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>bottle & fapws3</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/bottle-fapws3.html" rel="bookmark"
+           title="Permalink to bottle & fapws3">bottle & fapws3</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-21T00:00:00+08:00">
+                Published: Wed 21 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>bottle</li>
+<li>fapws3</li>
+<li>python</li>
+<li>wsgi
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://github.com/defnull/bottle">Bottle</a>是一个Python web框架，兼容<a href="http://www.python.org/dev/peps/pep-0333">wsgi</a>标准，lightweight，self-contained。</p></p>
+<p>提到web框架，自然要和相类似的python框架相比。</p>
+
+<p>Django是大型框架，包含ORM、Controller、Templating全套，这也是Django的缺点，使用Django意味着必须使用关系型数据库进行存储（尽管有一些Model层的其他实现，但绝大多数都是Hack的方式实现），必须使用Django并不非常出色的Template系统。Pylons针对Django的这些问题，采用了松散的方式，数据层可选择由SQLAlchemy实现，模板系统可以选择mako / jinja等。Pylons用paster来管理项目、创建代码模板。借鉴了rails的哲学，目录结构也相类似。可是pylons仍然显得重量级，把注意力放到web.py。只要定义一个router，定义相应的handler就可以处理web请求，handler对象的GET POST等方法分别对应相应的HTTP请求。看起来不错了，不过与bottle相比，webpy仍然显得繁琐、功能有限，而且它本身的db模块就更加鸡肋了。</p>
+
+<p>看一个实例便知：<br />
+定义一个简单的HTTP页面：<br />
+[cc lang="python"]<br />
+from bottle import Bottle, run, mako_view, request<br />
+from bottle import FapwsServer</p>
+
+<p>myapp = Bottle()</p>
+
+<p>@myapp.route('/nihao/:name/:count#\\d+#')<br />
+@mako_view('nihao')<br />
+def nihao(name, count):<br />
+    return dict(n=name, c=int(count), ip=request.environ.get('REMOTE_ADDR'))</p>
+
+<p>run(app=myapp, server=FapwsServer)</p>
+
+<p>[/cc]<br />
+对应的nihao.tpl模板，用mako引擎实现：<br />
+[cc lang="html"]
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" /></head></html></p>
+
+<p>    <title>Nihao</title></p>
+
+<p>
+<body>
+    <div id="ip">
+        <h1 id="heading">Request From ${ip}</h1>
+    </div>
+    <%def name="greeting(n)">
+        <div id="name">
+            Nihao ${n}<br />
+        </div>
+    </%def>
+    % for i in range(c):<br />
+        ${greeting(n)}<br />
+    % endfor
+</body>
+
+[/cc]<br />
+仅仅是一些简单的内容，接着只需要：
+<i>python bottle-test.py</i>
+即可运行服务器。</p>
+
+<p>bottle通过decorator定义route规则，还支持url提取参数。通过decorator指定模板、模板引擎。可以说近乎简化到了极致。</p>
+
+<p>bottle遵循单一职责原则，不提供数据层的实现，由用户自己指定，bottle没有任何限制。模板引擎，bottle支持mako / jinja / cheetah，本身还内建一个默认SimpleTemplate引擎。bottle还支持多种wsgi服务器，包括flup / wsgiref / cherrypy / paste / twisted / tornado / fapws3 等等。</p>
+
+<p>最后提一个wsgi的实现<a href="http://github.com/william-os4y/fapws3">fapws3</a>，号称是目前最快的wsgi服务器。fapws3用libev实现，在不同的操作系统上采用不同的多路IO模型以达到高性能。</p>
+
+<p>bottle的作者做过一个关于不同实现的性能比较：
+<a href="http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance">http://bottle.paws.de/page/2009-12-19_Comparing_HelloWorld_Performance</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

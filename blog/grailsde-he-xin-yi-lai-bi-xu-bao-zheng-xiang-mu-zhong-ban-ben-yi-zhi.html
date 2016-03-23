@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Grails的核心依赖必须保证项目中版本一致！</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/grailsde-he-xin-yi-lai-bi-xu-bao-zheng-xiang-mu-zhong-ban-ben-yi-zhi.html" rel="bookmark"
+           title="Permalink to Grails的核心依赖必须保证项目中版本一致！">Grails的核心依赖必须保证项目中版本一致！</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-10-15T00:00:00+08:00">
+                Published: Sat 15 October 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>Grails</li>
+<li>maven
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>好久没写语录式大标题了，实在是今天玩Grails受害很深很深。</p></p>
+<p>Grails因为本身是通过ivy来管理依赖的，虽然后续的版本和maven的集成不断加深，但是本身还是通过ivy来解析pom.xml。也就是说最后的活还是ivy干的。如果你的项目比较大，选择了通过maven来管理项目，而你的依赖中又牵扯了很多其他的依赖，那么你危险了。</p>
+
+<p><blockquote>:: UNRESOLVED DEPENDENCIES ::</blockquote></p>
+
+<p>:: log4j#log4j;1.2.16: configuration not found in log4j#log4j;1.2.16: 'master'. It was required from ...;1.7.0 runtime</p>
+
+<p>对maven用户这是一条多么发指的报错！（比如<a href="http://forum.springsource.org/showthread.php?104033-Can-not-load-a-log4J-library" target="_blank">这个</a>）</p>
+
+<p>它的原因其实是你的dependency中有!=1.2.16版本你的log4j，比如1.2.12，即使你在pom里将它添加到了exclusion中也没有用，必须要保持版本的一致！至于你用什么办法让他们保持一致，还是干脆放弃用maven管理你的grails项目：It's up to you.</p>
+
+<p>同样的问题还出现在其他核心依赖上，例如commons-pool。
+</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

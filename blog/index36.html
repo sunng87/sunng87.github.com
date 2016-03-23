@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/i-am-location-aware.html" rel="bookmark"
+                           title="Permalink to I am Location Aware">I am Location Aware</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-12-03T00:00:00+08:00">
+                Published: Fri 03 December 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>GIS</li>
+<li>gps</li>
+<li>OpenStreetMap
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>身为一个跟GIS沾过边的人，我直到今年才真正知道我在哪。尽管有了带GPS功能的手机，但是为了能离cartographer更进一步，今天我又买了一个专门的GPS Logger设备Holux M1000C。所谓GPS Logger就是以固定时间间隔采集GPS数据并记录的设备，现在国内的绝大多数GPS设备都是以导航为主，少有这样功能简单价格合理的GPS产品。
+<a href="http://www.flickr.com/photos/40741608@N08/5229058140/" title="DSC_0006 by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5249/5229058140_cb0e8e44a2.jpg" width="500" height="335" alt="DSC_0006" /></a></p></p>
+<p>这类设备，自带的软件当然都是Windows only的，不过在Linux上也不是没有办法。处理GPS数据最著名的工具叫做BT747，支持多种设备、格式，用Java写的，可以通过jnlp启动，quick and dirty一下还是很不错的。不过如果要找一个长相厮守的命令行工具，还是要用gpsbabel。</p>
+
+<p>以USB连接为例，将M1000C通过USB线连接到电脑，开启设备。可以用dmesg命令查看连接的USB设备，找到该设备（我的机器上设备叫做 /dev/ttyACM0）。M1000C使用的是MTK芯片，gpsbabel的命令为：
+<i>gpsbabel -t -i m241 -f /dev ...</i></p>
+                <a class="readmore" href="/i-am-location-aware.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dbus-python-in-case-you-dont-know.html" rel="bookmark"
+                           title="Permalink to dbus-python, in case you don't know">dbus-python, in case you don't know</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-29T00:00:00+08:00">
+                Published: Mon 29 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>dbus</li>
+<li>linux</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>上周用dbus-python写exaile插件，实现mpris2.0，非常痛苦，因为几乎没有完整的文档，只有一个<a href="http://dbus.freedesktop.org/doc/dbus-python/doc/tutorial.html">tutorials</a>帮助你入门。总结一下我这次quick and dirty的开发所掌握的资料，当然，因为没有太多时间，所以也没有对dbus做更深入的了解，仅仅是in case you don't know。</p></p>
+<p><h3>DBus Interface Properties</h3>
+对mpris 2.0中定义的properties用dbus-python应该如何实现呢，似乎没有@dbus.service.properties这种decorator啊。<a href="http://dbus.freedesktop.org/doc/dbus-specification.html#standard-interfaces-properties">这里</a>的文档对Properties进行了简单的说明，对于python程序，只能这样实现了：<br />
+[cc lang="python"]<br />
+    @dbus.service.method(dbus ...</p>
+                <a class="readmore" href="/dbus-python-in-case-you-dont-know.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/exaile-sound-menu-integration.html" rel="bookmark"
+                           title="Permalink to Exaile sound menu integration">Exaile sound menu integration</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-28T00:00:00+08:00">
+                Published: Sun 28 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>exaile</li>
+<li>opensource</li>
+<li>ubuntu</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="https://wiki.kubuntu.org/SoundMenu">Sound menu indicator</a> was introduced in Ubuntu Maverick(10.10).  User can control playback from this menu, and view current track information.</p></p>
+<p>The control is based on mpris spec 2.0, which is a common specification of controlling media player ...</p>
+                <a class="readmore" href="/exaile-sound-menu-integration.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/artificial301-firefox-addon-11.html" rel="bookmark"
+                           title="Permalink to Artificial301 Firefox Addon 1.1">Artificial301 Firefox Addon 1.1</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-21T00:00:00+08:00">
+                Published: Sun 21 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>firefox</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>由于一些众所周知的原因，一些链接仅仅是因为feedproxy.google.com这样的链接不能打开而无法访问（链接本身是可以访问的）。这个时候你需要Firefox插件：Artificial301。
+<a href="http://www.flickr.com/photos/40741608@N08/5191869453/" title="reload with artificial301 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4090/5191869453_a26474c5d8.jpg" width="500" height="313" alt="reload with artificial301" /></a></p></p>
+<p>本次更新的1.1版本，新增了“Reload With Artificial301”的选项。</p>
+
+<p>下载页面：
+<a href="https://github.com/sunng87/Artificial301/downloads">https://github.com/sunng87/Artificial301/downloads</a></p>
+                <a class="readmore" href="/artificial301-firefox-addon-11.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/first-week.html" rel="bookmark"
+                           title="Permalink to First Week">First Week</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-20T00:00:00+08:00">
+                Published: Sat 20 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>sap</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>这周是加入新公司的第一周，一切从新开始。这已经是两年里的第三家公司了，这个嘛，哎，比较坎坷。</p></p>
+<p>因为长得比较苍凉，工作的时间又不长，大家都问你是研究生毕业吧，心里估计还有几分揣摩：这位兄台肯定是越挫越勇，不弃不馁，复读多年的。否定答复后，大家还会觉得我可能比较坎坷，读书比较晚，最后还要追问一句是哪年的。得到答案心中一凉，87年的都长成这样了，岁月不饶人啊。其实我没那么显老吧。</p>
+
+<p>公司的东西全部是封闭的，而且自成体系，所以基本上是从头开始了。封闭的副作用就是找人的成本比较高，反倒也促进了公司有完整的培训体系培训资料，新人入门也算是有章可循。周二的培训课程一下午三个小时，简直就是找回了大学上课的感觉。恰好会议室门口有个饮料机，一倒饮料就嗡嗡作响。这倒好，昏昏欲睡的时候，饮料机突然响了，有人说了打下课铃了，众人立刻精神百倍。原来上大学的时候下课就失眠的不只我一个。</p>
+
+<p>如果说公司有什么的特点的话，就是杯具特别多。你不用带着杯子走来走去，每一层楼都有大量的马克杯，统一印公司logo ...</p>
+                <a class="readmore" href="/first-week.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index35.html">&laquo;</a>
+    Page 36 / 77
+        <a href="/index37.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

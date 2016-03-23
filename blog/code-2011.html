@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Code 2011</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/code-2011.html" rel="bookmark"
+           title="Permalink to Code 2011">Code 2011</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-31T00:00:00+08:00">
+                Published: Sat 31 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>当时
+tags:</li>
+<li>Life</li>
+<li>programming
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>成功人士是不写总结的，所以我来写个总结。</p></p>
+<p>今年的coding从ABAP开始，这个很多人现在不知道以后也不用知道最好永远也不要知道的语言和他的平台，是一个脱胎于Pascal，在发展过程里又杂糅了SQL和C++的怪物，最后几乎变成了满屏幕关键字。再加上缺乏文档，实在是一段不堪回首的记忆。</p>
+
+<p>3月份开始，我又重新开始了一个python项目叫做<a href="https://github.com/sunng87/jip" target="_blank">jip</a>，他兼容maven，可以与virtualenv和setuptools集成，帮助你解决jython项目的java依赖，简化jython项目的发布，提高工作效率。这个小工具倾注了我不少时间，如果你某一天要和jython打交道的话，可以试试看。</p>
+
+<p>今年还尝试了coffeescript，它恰到好处地消除了javascript里一些ugly的部分，大大提高了编码速度。我用它改写了网站<a href="http://sunng.info/scripts/action.coffee" target="_blank">首页的js</a>。</p>
+
+<p>6月份我又重拾起1年前的javascript库heatcanvas，和<a href="http://nihuajie.com/" target="_blank">lbt05</a>协作完善了程序。通过HTML5的Web worker API改善了渲染canvas时的用户体验，增加了对Google Maps，OpenLayers,Baidu Map以及Leaflet的支持。这个项目的介绍被顶到hackernews的首页，这是一种前所未有的感觉。</p>
+
+<p>7月份开始迎来了一个重大的转折。断断续续学习了一年半的clojure，终于开始写第一个库，<a href="https://github.com/sunng87/reddit.clj" target="_blank">reddit.clj</a>，用clojure封装reddit网站的API。通过这个入口算是真正走进了clojure的世界，七月底reddit.clj基本完成之后我开始写他的第一个应用，<a href="https://github.com/sunng87/rageviewer" target="_blank">rageviewer</a>。这是个clojure的web项目，借着这个契机又接触了compojure和ring。而且写rageviewer的时候恰逢clojurescript公开，一不做二不休，于是这个项目就成了一个full stack的clojure项目：前后端都是clojure。最后rageviewer部署在当时刚刚开始邀请测试的cloudfoundry上。</p>
+
+<p>8月参加了在上海的cn-clojure列表第一次聚会后，我开始用clojure克隆一个已有的并不复杂的程序，当时选择了beanstalkd，一个轻量级的task queue。这个项目取名为<a href="https://github.com/sunng87/clojalk" target="_blank">clojalk</a>。最后它成功地支持了beanstalkd协议的所有命令，支持了通过Write-ahead log做持久化和恢复。这个项目用到了aleph，见识了一把clojure思维下的网络编程。</p>
+
+<p>另外我还帮clojure-control写了一个leiningen的插件，现在这个插件已经合并到clojure-control项目里了。clojure能有这么快的发展，leiningen作为构建工具也有很大的帮助。就好比上半年做jip时，感受到jython的小世界里就没有一个好的方案来同时解决java和python的项目管理问题，而且人们也不重视这个问题。</p>
+
+<p>年底还有一个clojure RPC框架的诞生，这个项目叫做<a href="https://github.com/sunng87/slacker" target="_blank">slacker</a>。项目还没有到总结的时候，我的org file列表上还有一长串的TODO。</p>
+
+<p>总得来说，我觉得今年学习clojure的这个过程很有借鉴价值。对于一个新语言新平台新生态系统，如何入门并且getting real。你可以从一个功能简单的库开始，比如包装一个网站的API，或者（对于clojure来说），包装一个已有的java的库。在完成之后，利用这个库，写一个web应用，进而去了解这个平台上的web开发。再下一步，可以去克隆一个其他平台上的项目，规模不要太大。如此循序渐进，学习的效果很不错。另外，无论做了什么，只要是有用的，就应该说出来，这不仅是自我鼓励，有时候也能找到志同道合的朋友一起参与。</p>
+
+<p>最后除了clojure之外，今年还接着gnome-shell的发布和更新，接触了gnome-shell的gjs扩展开发。又是一个不堪回首的平台，也许是还没有finalize吧，没有任何文档，而且一个平台上的库连变量拼写的风格都不一样！我是不会再浪费时间了，当然，以后的这个<a href="https://extensions.gnome.org/extension/24/exaile-doubanfm-control/" target="_blank">豆瓣电台的control</a>还是会继续跟着gnome-shell的发布一直维护的。</p>
+
+<p>除了上面提到的，今年还尝了一些groovy，common-lisp，甚至octave，不管怎么说都算是一个big year了。但愿明年能把这种状态保持下去，享受这种愉悦。</p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

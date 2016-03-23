@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>clojure recur</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/clojure-recur.html" rel="bookmark"
+           title="Permalink to clojure recur">clojure recur</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-15T00:00:00+08:00">
+                Published: Thu 15 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>clojure是函数是编程语言，本身没有循环的语法。要实现类似循环的效果，需要用递归来实现。比如计算从1加到n的和这样一个函数：</p></p>
+<p>[cc lang="lisp"]<br />
+(defn addup<br />
+    ([limit] (addup limit 0 0))<br />
+    ([limit current sum]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (addup limit (+ 1 current) (+ current sum)))))<br />
+[/cc]</p>
+
+<p>调用</p>
+
+<p>(addup 10)</p>
+
+<p>可以得到55</p>
+
+<p>但是调用</p>
+
+<p>(addup 50000)</p>
+
+<p>不出意外，出现了StackOverflowException， 这是递归典型的错误。</p>
+
+<p>为此，需要进行优化。尾递归优化是指如果递归满足一定条件，编译器可以将递归展开，避免出现栈溢出的问题。这里的条件，就是递归的最后一次调用是否是其本身，比如上面的代码，最后一次操作仍然是addup，即满足尾递归的条件，而如果同样的代码写成：</p>
+
+<p>[cc lang="lisp"]<br />
+(defn addup2<br />
+    ([limit] (addup2 limit 0))<br />
+    ([limit current]<br />
+        (if (< limit current)<br />
+            0<br />
+            (+ current (addup2 limit (+ current 1))))))[/cc]</p>
+
+<p>最后一个操作是+，不满足尾递归循环，无法进行优化。</p>
+
+<p>clojure默认不进行尾递归优化，需要使用关键字recur来保证优化，把第一段代码写成：</p>
+
+<p>[cc lang="lisp"]<br />
+(defn addup<br />
+    ([limit] (addup limit 0 0))<br />
+    ([limit current sum]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (recur limit (+ 1 current) (+ current sum)))))<br />
+[/cc]</p>
+
+<p>社区的解释是，如果程序员在无法进行尾递归优化的代码中使用recur会发生报错，这样有助于他们发现代码中潜在的缺陷。</p>
+
+<p>在第二段代码中使用recur，会得到异常：</p>
+
+<p>java.lang.UnsupportedOperationException: Can only recur from tail position</p>
+
+<p>此外，clojure提供loop函数简化书写：</p>
+
+<p>[cc lang="lisp"]<br />
+(defn addup3<br />
+    ([limit]<br />
+    (loop [current 0 sum 0]<br />
+        (if (< limit current)<br />
+            sum<br />
+            (recur (+ current 1) (+ current sum))))))<br />
+[/cc]</p>
+
+<p>这种写法同样可以应用尾递归优化而不会导致栈溢出。</p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

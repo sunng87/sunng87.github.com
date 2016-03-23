@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Python读取二进制文件</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/pythondu-qu-er-jin-zhi-wen-jian.html" rel="bookmark"
+           title="Permalink to Python读取二进制文件">Python读取二进制文件</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-02-20T00:00:00+08:00">
+                Published: Fri 20 February 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>c</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Python里虽然可以通过'b'的标记来区别普通文件和二进制文件，但是依然是把二进制文件当作普通文本处理。要读写二进制文件，需要用struct库来作pack和unpack。</p></p>
+<p>比如我最近拿到一个如下数据结构的二进制文件</p>
+
+<p>[codesyntax lang="c" lines="fancy"]<br />
+struct DEMTYPE {<br />
+    int row;<br />
+    int col;<br />
+    float xmin;<br />
+    float ymin;<br />
+    float xmax;<br />
+    float ymax;<br />
+    float size;<br />
+    float vmin;<br />
+    float vmax;<br />
+    float scale;<br />
+    float *data;<br />
+};<br />
+[/codesyntax]</p>
+
+<p>其中data是一个长度为row*col的数组。要读取这样一个二进制文件，可以用这样的代码<br />
+[codesyntax lang="python" lines="fancy"]<br />
+row, col, xmin, ymin, xmax, ymax, size, vmin, vmax, scale = \<br />
+        struct.unpack('&lt;2i8f', datastring[:(4*2+4*8)])<br />
+vdata = struct.unpack('&lt;'+str(row*col)+'f', datastring[(4*2+4*8):])<br />
+[/codesyntax]<br />
+核心是unpack的第一个参数，用来标识二进制数据的格式，其中&lt;表示little-endian，i表示整型数，f表示单精度浮点数，数字是量词。</p>
+
+<p>更详细的说明可以看manual：
+<a href="http://docs.python.org/library/struct.html" target="_blank">http://docs.python.org/library/struct.html</a></p>
+
+<p>好吧，我承认我写这个是来测试highlight插件的。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

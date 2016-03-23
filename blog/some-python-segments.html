@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Some python segments</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/some-python-segments.html" rel="bookmark"
+           title="Permalink to Some python segments">Some python segments</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-22T00:00:00+08:00">
+                Published: Tue 22 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><pre class="brush:python">
+import MySQLdb
+import subprocess
+from smtplib import *
+from datetime import date, timedelta</pre></p></p>
+<p>class StatEntry(object):<br />
+    def __init__(self, name, count):<br />
+        self.name = name<br />
+        self.count = count<br />
+    def __str__(self):<br />
+        return "%s\t%d" % (self.name, self.count)</p>
+
+<p>def fetchdb(date):<br />
+    conn = MySQLdb.connect(host="localhost", user="root", passwd="acd", db="cls")<br />
+    cursor = conn.cursor()<br />
+    cursor.execute("SELECT link, count(*) FROM sdocom WHERE DATE(logtime) = DATE('%s') GROUP BY link" % date)<br />
+    rows = cursor.fetchall()<br />
+    result = map(lambda x: StatEntry(*x), rows)<br />
+    return result</p>
+
+<p>def archive(datelist):<br />
+    for date in datelist:<br />
+        subprocess.call(["gzip", "cls-"+date+".log"])</p>
+
+<p>def sendmail(results):<br />
+    mailcontent = reduce(lambda x,y: x+str(y)+"\n", results, "")<br />
+    smtp = SMTP("your.smtp.server")<br />
+    smtp.login("user","passwd")<br />
+    smtp.sendmail("cls-no-reply@smtp.server", ["your@mail.server"], mailcontent)<br />
+    smtp.quit()</p>
+
+<p>def dumpall(data):<br />
+    content = reduce(lambda x,y: x+str(y)+"\n", data, "")<br />
+    print content</p>
+
+<p>def main():<br />
+    yesterday = str(date.today()-timedelta(1))<br />
+    results = fetchdb(yesterday)<br />
+    #dumpall(results)<br />
+    sendmail(results)<br />
+    archive([yesterday])</p>
+
+<p>if __name__ == '__main__':<br />
+    main()
+</p>
+
+<p>As log file was imported to database automatically by other process, the script retrieves statistical data from mysql db and sends the result to your mail box via smtp. Also, log file would be compressed by gzip to minimize storage overhead. Add it to crontab, you will get daily statistical report.</p>
+
+<p>This example shows you basic usage of mysql-python lib, smtplib and how to calculate yesterday by datetime.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

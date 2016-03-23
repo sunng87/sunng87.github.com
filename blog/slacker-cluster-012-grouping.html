@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>"Slacker Cluster 0.12: Grouping"</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-cluster-012-grouping.html" rel="bookmark"
+           title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-06-09T21:06:39+08:00">
+                Published: Mon 09 June 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/clojure.html">clojure</a> <a href="/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info -->      <h2>What are Slacker and Slacker Cluster</h2>
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
+<h2>Grouping in Slacker Cluster</h2>
+<p>Started in 0.11, then enhanced in 0.12, Slacker Cluster now has flexible <strong>grouping</strong> choices for your scenario. In Slacker Cluster, <strong>grouping</strong> means which server(s) to call on a particular invocation.</p>
+<p>There and four kinds of grouping for you: <code>:random</code>, <code>:leader</code>, <code>:all</code> and custom.</p>
+<h3>:random</h3>
+<p>By default, Slacker cluster clients use <code>:random</code> grouping: select a random server from server list. Random grouping works great for stateless services. It automatically balances load of each server.</p>
+<h3>:leader</h3>
+<p>Slacker servers selects leader for each namespace they expose. So at any time there will be one and only one leader node for every namespaces. The <code>:leader</code> grouping routes all invocations onto the leader node. This is required when your server has state, and you have to ensure the consistency and availability.</p>
+<h3>:all</h3>
+<p>As the name suggests, <code>:all</code> grouping routes invocations on every node at same time. In other words, it's broadcast. Note that this grouping might change your function return values. In <code>:random</code> and <code>:leader</code> mode, there's only one server called, just like local invocation. In <code>:all</code>, there's chances several servers are called and several values returned. I will talk about how to deal with these return values later.</p>
+<h3>Custom</h3>
+<p>You can also provide a function for dynamic grouping. For requested namespace, function and arguments, you can specify any server(s) or grouping option.</p>
+<h2>Grouping results</h2>
+<p>Grouping may break original behavior of you code by returning multiple values from multiple servers. But you still have full control over it. There are four types of value you can specify for results aggregation: <code>:single</code>, <code>:vector</code>, <code>:map</code> and custom function.</p>
+<p>In short words:</p>
+<ul>
+<li><code>:single</code> returns the first valid result, and behavior same as calling single server or local invocation. This is the default value.</li>
+<li><code>:vector</code> returns  a vector of all results.</li>
+<li><code>:map</code> returns a map of all results, indexed by server addresses.</li>
+<li>Custom aggregation function accepts the results and allows you to merge the values.</li>
+</ul>
+<h2>Grouping exceptions</h2>
+<p>What happens when remote function threw exceptions? The grouping exception option defines that. When set to <code>:all</code>, the client will raise an error only if all remote nodes broken. Otherwise, the broken result will be ignored and only valid results will apply <code>grouping-results</code> rules. The opposite option is <code>:any</code>, which mean client will raise error when any of calls is broken.</p>
+<h2>Granularity</h2>
+<p>The grouping options can be set to client level:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="s">&quot;cluster-name&quot;</span> <span class="s">&quot;127.0.0.1:2181&quot;</span> <span class="ss">:grouping</span> <span class="ss">:leader</span><span class="p">)</span>
+</pre></div>
+
+
+<p>or function level:</p>
+<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">slacker.example.api/timestamp</span>
+  <span class="ss">:grouping</span> <span class="ss">:all</span>
+  <span class="ss">:grouping-results</span> <span class="ss">:single</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>Conclusion</h2>
+<p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

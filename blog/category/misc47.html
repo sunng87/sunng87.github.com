@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/redis.html" rel="bookmark"
+                           title="Permalink to Redis">Redis</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-24T00:00:00+08:00">
+                Published: Thu 24 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>kvstore</li>
+<li>redis
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://code.google.com/p/redis">Redis</a>是一个高性能Key-Value store</p></p>
+<p><h2>Installation</h2>
+下载解压，make之后就可以直接启动./redis-server 默认读取当前目录下的redis.conf作为配置，亦可参数指定。默认监听6379端口。</p>
+
+<p><h2>Features</h2>
+<h3>支持多种数据结构</h3>
+相较memcached，redis支持多种数据结构，包括
+<ul>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_string_values">string</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_lists">list</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sets">set</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_sorted_sets_(zsets,_Redis_version_%3E=_1.">sorted set</a></li>
+<li><a href="http://code.google.com/p/redis/wiki/CommandReference#Commands_operating_on_hashes">hash</a></li>
+</ul></p>
+
+<p>针对每种数据结构，redis都提供比较完整的操作支持。</p>
+
+<p><h3>高性能</h3>
+据Wiki上说可以达到110,000 SETs/second, 81,000 GETs/second，数据根据一定的策略存在内存和磁盘上（支持持久化）。从1.1开始支持<a href="http://code.google.com/p/redis/wiki/AppendOnlyFileHowto">append-only持久化方式</a>，数据被加到文件中，并进行异步的维护，保证文件的大小。从2 ...</p>
+                <a class="readmore" href="/redis.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/xia-ban-liao.html" rel="bookmark"
+                           title="Permalink to 下班了">下班了</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-22T00:00:00+08:00">
+                Published: Tue 22 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>snda</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>先汇报一下时间，我这个WP主题默认不显示具体时间，现在是2010年6月22日凌晨4点整，西班牙2：0领先洪都拉斯，比赛进行到75分钟。</p></p>
+<p>我刚刚下班，晚上我们部署了t.sdo.com的新版本，性能有了一定的改善。后半夜发现一台memcached行为诡异，暂且先禁用了那台，踉踉跄跄回家准备睡觉。</p>
+
+<p>今天<a href="http://t.sdo.com">t.sdo.com</a>正式发布了，现在不需要鸡和马就可以注册登录。产品本身不谈了，如果你不感兴趣说明你不是目标人群，缺乏90后的气质。前两天twitter上有一篇新浪工程师的<a href="http://liruqi.cn/aboutleavesina">离职感言</a>，里面透露新浪要做的“游戏平台”，t.sdo.com就是典型的这种东西。至于里面说的新浪那种气氛，，恐怕在国内的互联网公司里，这种现象都比较普遍吧。</p>
+
+<p>邀请链接，大家点这个就可以了
+<a href="http://isdo.cn/10CM">http://isdo.cn/10CM</a></p>
+
+<p>这就睡觉去，今天不用上班了。</p>
+
+<p>The ...</p>
+                <a class="readmore" href="/xia-ban-liao.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/jin-ri-suo-shi.html" rel="bookmark"
+                           title="Permalink to 近日琐事">近日琐事</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-18T00:00:00+08:00">
+                Published: Fri 18 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>最近创作激情很是强烈，又赶上大家在博客上踊跃留言，我继续无聊闲扯吧。</p></p>
+<p>做现在这个项目以来，我总是被需要同时处理多件事情的状况困扰。多任务处理，今天终于发现自己是LIFO的方式，后进先出，总是在做最近发生的事情，之前的就压栈，栈满了没准栈底就自动丢失了（策略就是java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy）。用这种方式，耗时较长的任务往往花掉的时间非常长而且不断被打断。</p>
+
+<p>今天公司新鲜事，我们的工牌的带子终于换掉了。这以前带子的颜色表明了森严的等级制度，员工深蓝色，中层红色，高层黄色，访客绿色，外包白色，物业粉色，平时走在公司里花花绿绿的实在是他妈的一道景观。这事还在twitter上被冯大辉retweet了一下搞得地球人都知道了，今天通通换成了统一的红色。对于一个员工来说，今天看见自己领子上挂着一个鲜艳的中层颜色的带子，时常还是有那么一点错觉。</p>
+
+<p>还得说说世界杯，这是我看得第四届世界杯了，已经说不上自己支持哪个队了，为此我都怀疑自己已经是伪球迷了。眼看着当初看球时候的球星现在陆陆续续当了教练，那种沧桑感啊。98年的时候还在收集方便面里的球星卡，那时候法国的5号布兰科，人家今年世界杯以后就要上任了。而像比埃尔霍夫这样96年欧洲杯一战成名的 ...</p>
+                <a class="readmore" href="/jin-ri-suo-shi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/wo-zai-na-li-chi-la-mian.html" rel="bookmark"
+                           title="Permalink to 我在那里吃拉面">我在那里吃拉面</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-16T00:00:00+08:00">
+                Published: Wed 16 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>Beijing</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>“终于找到一家和我身份地位品味收入都相符的拉面馆。” 这条本来要发到twitter上的，结果不料哪哪出了问题，没发出去，却被我吃面条的时候记下来了。自从有了饭否twitter，只言片语多了，真正坐下来搞创作的动力却没有了，咱虽然比不上<a href="http://www.google.com.hk/search?hl=zh-CN&newwindow=1&safe=strict&q=%E6%9E%81%E5%B0%91%E9%83%A8%E5%88%86%E6%90%9E%E8%89%BA%E6%9C%AF%E7%9A%84%E7%94%B7%E9%9D%92%E5%B9%B4&aq=f&aqi=&aql=&oq=&gs_rfai=">极少部分搞艺术的男青年</a>，但追求上进也不该含糊是吧。</p></p>
+<p>纵然再有追求，也比不上清真拉面馆热卖鱼香肉丝面。上海郊区天高真主远，远亲不如近邻，再不<a href="http://it.21cn.com/itnews/hygc/2010/06/13/7588720.shtml">创个新</a>，小小的拉面馆恐怕连在这里匹配我的身份地位和品味的可能性也没有了。但是在首都的时候就不一样，同样是少数民族兄弟开的面馆，人家可不含糊，别说是买鱼香肉丝了，门都不让进。</p>
+
+<p>在<a href="http://osm.org/go/50je@Ocrn-">宝盛里</a>的半年，我发现最贴近我们民工生活的就要数西北拉面和成都小吃，碗大量足（当然也不会有拿着筷子在碗里一粒一粒拣肉末吃的男士）。就为了第一次在成都小吃发现盖浇饭里鸡丁可以比花生多，我在那家店里活活吃过了夏秋冬，后来我每每想起这事都难免情绪激动。而之所以没能熬到冬去春来，也是因为老板时间长了实在看不下去，问我要不要换点别的。我是受宠若惊，才不得不转战拉面店。那家叫不上名字店，名字不重要你知道它在哪就成，墙上还挂着清真寺的画，就像很多湘菜馆会挂毛主席像一样。你可以想象这样一家店是绝对做不出卖鱼香肉丝的勾当的 ...</p>
+                <a class="readmore" href="/wo-zai-na-li-chi-la-mian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/perfomed-my-first-commit-to-openstreetmaporg.html" rel="bookmark"
+                           title="Permalink to Perfomed my first commit to OpenStreetMap.org">Perfomed my first commit to OpenStreetMap.org</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-13T00:00:00+08:00">
+                Published: Sun 13 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>GIS</li>
+<li>map</li>
+<li>opensource</li>
+<li>OpenStreetMap
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>每每看到OSM上<a href="http://osm.org/go/5nFq9bhH-">南京的地图</a>都一阵唏嘘，这么多年了几乎没有任何变化，仅有的一些数据也都是错误百出，身为一个南京人，又是一个GIS专业毕业的，深感压力巨大。</p></p>
+<p>实际上编辑OSM没有大家想象的那么复杂。任何人都可以注册登录网站，用默认的Potlatch工具进行编辑，即使你手上没有数据也可以编辑一些基本的属性，比如把错误的中山路纠正为北京东路。我从MapMyTracks上导出GPX文件上传到OSM，GPS数据会在OSM上被显示出来，根据这些数据稍作加工就是道路信息了。浏览器里的编辑器功能并不强大，KDE桌面的Merkaator的编辑能力要强大得多，可以对道路进行split/join操作，这些操作对之前南京地图上各种错误的数据非常必要。</p>
+
+<p>其实OpenStreetMap可以借助一些背景图进行数字化，但是在国内，目前只有分辨率非常低Yahoo卫星地图可以用。至于Google的卫星地图，<a href="http://wiki.openstreetmap.org/wiki/FAQ#What_images_and_maps_may_I_use_to_make_maps_from.3F">由于License的原因</a>，你是不能在编辑自由地图时使用的。</p>
+
+<p>上海的OSM已经非常完善，数据完善的程度、渲染出地图的壮观已经让你难以想象，连去年开通的张江电车已经在地图上标出，还有各个站名。注册后可以发现，仅仅在浦东就有十几位OSM的贡献者。相比之下，南京在这方面一片空白，甚至还没有苏州的地图完善。考虑到南京有这么多学校这么多GIS专业学生，每年做那么多无用的、自以为是的数字化作业 ...</p>
+                <a class="readmore" href="/perfomed-my-first-commit-to-openstreetmaporg.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc46.html">&laquo;</a>
+    Page 47 / 77
+        <a href="/category/misc48.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

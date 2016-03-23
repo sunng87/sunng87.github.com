@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/heatcanvas-performance-enhanced.html" rel="bookmark"
+                           title="Permalink to HeatCanvas performance enhanced">HeatCanvas performance enhanced</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-11T00:00:00+08:00">
+                Published: Sat 11 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>heatcanvas</li>
+<li>html5</li>
+<li>javascript</li>
+<li>project</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><img src="http://i.imgur.com/6vkpo.png" alt="heatcanvas" /></p></p>
+<p>时隔半年日日沉浸在clojure世界里的时候，多亏了github上<a href="https://github.com/dazuma">Daniel Azuma</a>的提示，现在HeatCanvas通过Image Data数组来绘制图像。过去由于不太熟悉Canvas API，我用的是fillRect来填充1像素大小的区域，模拟像素的渲染。但是这种方式导致浏览器渲染的效率非常低。</p>
+
+<p>ImageDataArray允许用户开辟一个固定大小的buffer，并设置每一像素的像素值，然后一次性地渲染到canvas上。详情可以参考这里：<a href="https://developer.mozilla.org/En/HTML/Canvas/Pixel_manipulation_with_canvas" target="_blank">Pixel manipulation with canvas</a></p>
+
+<p>这次性能的提升基本没有影响API，唯一的区别是如果原先自定义了value-color的映射函数的话，现在不再接受hsl的css字符串了，新的API需要你返回一个四个元素的数组，分别代表h, s, l, a，值域[0-1]。</p>
+
+<p>感谢关注HeatCanvas的朋友。</p>
+                <a class="readmore" href="/heatcanvas-performance-enhanced.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/china-clojurians-meetup-2-is-calling-you.html" rel="bookmark"
+                           title="Permalink to 'China Clojurians Meetup #2 is calling you'">'China Clojurians Meetup #2 is calling you'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-09T00:00:00+08:00">
+                Published: Thu 09 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Beijing</li>
+<li>clojure
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>大家期待已久的第二次Clojure中国用户聚会来了，这次聚会将在三月初的北京举行。感兴趣的朋友请猛击<a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">这里</a>报名。如果你有任何关于Clojure的心得，都欢迎加入分享，不要害羞～和上次一样本人会继续抛砖继续不害羞，介绍我的RPC框架Slacker。</p></p>
+<p>For English readers:<br />
+If you are interested in Clojure and also living in Beijing, feel free to join our meetup. Please register <a href="http://www.diaochapai.com/survey/312738f0-cab0-49b0-9f48-18803f79ddf4" target="_blank">here</a>. We will see you there!
+</p>
+                <a class="readmore" href="/china-clojurians-meetup-2-is-calling-you.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/slacker-cluster.html" rel="bookmark"
+                           title="Permalink to Slacker Cluster">Slacker Cluster</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-04T00:00:00+08:00">
+                Published: Sat 04 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Cluster support is one of the big thing in slacker 0.6.x. Cluster enables high-availability and load balancing on slacker client and server. </p></p>
+<p>Slacker cluster has a centralized registry, a zookeeper node, stores information of all the namespaces and servers ...</p>
+                <a class="readmore" href="/slacker-cluster.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/slacker-06-exposing-multiple-namespaces.html" rel="bookmark"
+                           title="Permalink to 'Slacker 0.6: Exposing multiple namespaces'">'Slacker 0.6: Exposing multiple namespaces'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-03T00:00:00+08:00">
+                Published: Fri 03 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>After <a href="https://github.com/sunng87/slacker/compare/8b4abdb62a...3e41e035b9" title="Changes">98 commits</a> in about one month, I'm glad to announce [slacker "0.6.1"].</p></p>
+<p>One thing in slacker 0.6.x is you can expose multiple namespaces from a single server.</p>
+
+<p>Suppose you have two namespaces `redday.stats` and ...</p>
+                <a class="readmore" href="/slacker-06-exposing-multiple-namespaces.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/pa-shan.html" rel="bookmark"
+                           title="Permalink to 爬山！">爬山！</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-01T00:00:00+08:00">
+                Published: Wed 01 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天是2月1号，本人决定从今天开始到月底的每个工作日中午去爬山锻炼身体，以摆脱目前体重极速增长的困局。口说无凭，立此为据。</p></p>
+<p>[mapsmarker marker="2"]</p>
+
+<p></p>
+                <a class="readmore" href="/pa-shan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun11.html">&laquo;</a>
+    Page 12 / 77
+        <a href="/author/ning-sun13.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

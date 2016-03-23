@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Breaking changes in compojure 0.6.0</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/breaking-changes-in-compojure-060.html" rel="bookmark"
+           title="Permalink to Breaking changes in compojure 0.6.0">Breaking changes in compojure 0.6.0</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-02T00:00:00+08:00">
+                Published: Wed 02 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>compojure</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>在compojure 0.6.0里，默认的middleware被移除了。因为还没有正式发布，所以网上几乎没有相关的文档说明，而0.5.x的例子已经没能正常工作了。</p></p>
+<p>[cc lang="clojure"]<br />
+;...<br />
+(defroutes root<br />
+    (GET "/" {params :params} (str params)))</p>
+
+<p>(run-jetty root {:port 8080}))<br />
+[/cc]</p>
+
+<p>这样在0.5.x中可以正确运行的代码，在0.6.0中params变成了空的map。</p>
+
+<p>在0.6.0中，compojure引入了一个新的ns叫做compojure.handler，其中包含两个function， api和site，它们包含了一些默认的middleware，适合相应的开发场景。为了让代码能够工作，在新版本中：<br />
+[cc lang="clojure"]<br />
+;...<br />
+(use 'compojure.handler)<br />
+(defroutes root<br />
+    (GET "/" {params :params} (str params)))</p>
+
+<p>(def app (site root))</p>
+
+<p>(run-jetty root {:port 8080}))<br />
+[/cc]</p>
+
+<p>详细可以在这里找到
+<a href="https://groups.google.com/group/compojure/browse_thread/thread/4f8574d808ddf53e">https://groups.google.com/group/compojure/browse_thread/thread/4f8574d808ddf53e</a></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

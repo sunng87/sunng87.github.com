@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Slacker Cluster</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-cluster.html" rel="bookmark"
+           title="Permalink to Slacker Cluster">Slacker Cluster</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-02-04T00:00:00+08:00">
+                Published: Sat 04 February 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project</li>
+<li>slacker
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Cluster support is one of the big thing in slacker 0.6.x. Cluster enables high-availability and load balancing on slacker client and server. </p></p>
+<p>Slacker cluster has a centralized registry, a zookeeper node, stores information of all the namespaces and servers instances in the cluster. Once a client declared remote functions, by calling `defn-remote` or `use-remote`, it reads all available servers offering that namespace from the registry and create connection to each of them. We the user issues a request, the client randomly pick up a connection from them. So the load is eventually distributed to every instance of slacker servers. And thanks to zookeeper's notification feature, the client watches certain znode. It will be notified when 1. a connected server goes offline 2. a new server serving required namespace added into the cluster. Thus you don't have to change client code or restart client when server changes. </p>
+
+<p>To start a slacker server and add it to a cluster, you have to provide cluster information using the new <strong>:cluster</strong> option:<br />
+[cc lang="clojure"]<br />
+(start-slacker-server (the-ns 'slacker.example.api)<br />
+                      2104<br />
+                      :cluster {:zk "127.0.0.1:2181"<br />
+                                :name "example-cluster"})<br />
+[/cc]</p>
+
+<p><ul>
+    <li>:zk is the address of zookeeper node</li>
+    <li>:name is a znode qualified string, to identify the cluster</li>
+</ul></p>
+
+<p>On the client side, it's important to use APIs from `slacker.client.cluster` instead of `slacker.client`:</p>
+
+<p>[cc lang="clojure"]<br />
+(use 'slacker.client.cluster)<br />
+;; arguments: cluster-name, zookeeper address<br />
+(def sc (clustered-slackerc "example-cluster" "127.0.0.1:2181"))<br />
+(use-remote 'sc 'slacker.example.api)</p>
+
+<p>;; call the function from a random server<br />
+(timestamp)<br />
+[/cc]</p>
+
+<p>If all servers provide 'slacker.example.api go offline, slacker client will raise a "not-found" exception.</p>
+
+<p>Slacker cluster is also designed with simple and clean in mind. You don't have to change you business code to make it remote or cluster. Everything is transparent and non-invasive. Enjoy it.</p>
+
+<p></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

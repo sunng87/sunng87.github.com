@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/all-new-sunnginfo.html" rel="bookmark"
+                           title="Permalink to All new SUNNG.INFO">All new SUNNG.INFO</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-28T00:00:00+08:00">
+                Published: Thu 28 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>blog</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今早短路，在godaddy上注册了我的新域名sunng.info。更换域名主要出于几方面的考虑：
+<ol>
+    <li>新域名1年的注册费用相当于原先的一半；</li>
+    <li>众所周知的原因，域名放在国内存在一定的风险；</li>
+    <li>原先域名过长不方便记忆和交流；</li>
+    <li>.com后缀和我一穷二白地状况不符</li>
+    <li>classicning.com曾被加入stopbadware.org，至今没有从twitter的malcious数据库里移除</li>
+</ol>
+原先的classicning.com会在今年6月到期，如果没有意外情况我不准备续费了，届时这个使用了四年的域名就要废弃了（当时客服大嫂还在电话里娇嗔地问我为啥不续十年呢，你说为啥呢）。</p></p>
+<p>麻烦大家利用这半年的时间逐步改变习惯，逐步用sunng.info了。</p>
+                <a class="readmore" href="/all-new-sunnginfo.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/new-composite-based-captcha-image.html" rel="bookmark"
+                           title="Permalink to New composite based captcha image">New composite based captcha image</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-27T00:00:00+08:00">
+                Published: Wed 27 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>captcha</li>
+<li>java</li>
+<li>project</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>recaptcha的验证码新增了alpha composite的新机制取代干扰线，今天用了一些时间在<a href="http://bitbucket.org/sunng/yan/" target="_blank">YAN</a>上也实现了这种绘图机制。</p></p>
+<p><a title="30a2512d899641a8ab79a7c86946ff71 by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4308533479/"><img src="http://farm3.static.flickr.com/2752/4308533479_42337f4525_o.png" alt="30a2512d899641a8ab79a7c86946ff71" width="300" height="100" /></a>
+<a title="f03ec596b91b4ce985c5b5af4a79e961 by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4308533483/"><img src="http://farm5.static.flickr.com/4068/4308533483_a9e687b74c_o.png" alt="f03ec596b91b4ce985c5b5af4a79e961" width="300" height="100" /></a></p>
+
+<p>使用Java2D的AlphaComposite实现，选用的Rule为alpha 1.0的SrcOut，即通过公式</p>
+
+<p>Ar = As * (1 – Ad )<br />
+Cr = Cs * (1 – Ad )<br />
+用语言描述就是叠加区域的透明度为0. 使用这种机制必须采用BufferedImage.TYPE_INT_ARGB的图像，并且输出支持alpha通道的格式。</p>
+                <a class="readmore" href="/new-composite-based-captcha-image.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/jin-kuang-0.html" rel="bookmark"
+                           title="Permalink to 近况0">近况0</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-19T00:00:00+08:00">
+                Published: Tue 19 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags: []
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><ol>
+    <li>这是经历了又一次长时间的unavailable回来。</li>
+    <li>最近挺忙，新项目启动了，旧项目月底要上线，早先的项目deadline也要到了，还不见动静不知道什么情况，今天又被叫去说数据部门的老大又有新想法了，娘勒，四个，四个啊。</li>
+    <li>即使有四个，我发现我在twitter上还是那么神情自若，rabr自动取新消息的功能太害人了，忍不住就想点点看看，看了就想点，很影响注意力的集中。于是最近改用lynx / w3m这样的命令行浏览器上rabr。rabr做的还真是非常不错，在没有Javascript支持的情况下依然能用。诚心推荐大家一起来复古，w3m很powerful，支持vim和lynx的快捷键切换，居然还能显示图片，当时我就shock了。</li>
+    <li>YAN有了200次commit，接下来的主要工作是把它拆成多个maven module，以便未来开发的方便。尽管之前做了一些准备了，但是这个过程预计不会太轻松。最近精力有限，暂时先不全砸在上面吧。</li>
+    <li>业余的项目还要做下去，分为multimodule之后YAN的开发也就差不多了；之前写的Exaile的豆瓣Cover插件也没有后续开发的必要了，大家有什么点子欢迎分享。</li>
+    <li>上周去上图发现楼上的阅览室资源很多，我决定以后每个月至少花一天泡在图书馆。</li>
+    <li>有时候想想我真凄凉啊，哎</li>
+</ol></p></p>
+                <a class="readmore" href="/jin-kuang-0.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/which-university.html" rel="bookmark"
+                           title="Permalink to Which University">Which University</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-10T00:00:00+08:00">
+                Published: Sun 10 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>joke</li>
+<li>Life</li>
+<li>Nanjing
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>这年头怪事真叫多。今天在珠江路地铁站，突然过来一位深度大叔，弱弱地问我这个方向是不是去火车站，我说这大叔也真不容易，牌子都不认识怎么进来的，赶紧说是的。<br />
+大叔继续问你也去火车站吗，我想这大叔估计第一次来，人生地不熟的，也说是。<br />
+这就罢了吧，您跟着我就行了。但是大叔不罢休，继续，“你是学生吗”。我本能地把手装进口袋握住钱包，说了一个我平生最凄凉的谎话，是的。以为会话到此结束的朋友你们错了，大叔继续不依不饶，问你是哪个学校的啊，我刚要如实撒谎，大叔蹦出一句which university（请相信我的听力，我的听力和大叔的口语水平还是相当的），这句没让我当场摔倒完全是多亏中午吃得多有劲。<br />
+奇妙的对话从他娘的which university开始了，大叔滔滔不绝<br />
+“英语怎么样？四级过了吗？”<br />
+“你是学什么专业的？which major？”<br />
+“What about your speaking English ...</p></p>
+                <a class="readmore" href="/which-university.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/oauth-step-by-step.html" rel="bookmark"
+                           title="Permalink to OAuth Step by Step">OAuth Step by Step</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-04T00:00:00+08:00">
+                Published: Mon 04 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>mashup</li>
+<li>oauth</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>最近琢磨OAuth认证方式。OAuth的优点主要在于﻿
+<ul>
+    <li>用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源；</li>
+    <li>资源提供方对第三方应用有更细粒度的控制。</li>
+</ul>
+在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、URL编码的请求路径和请求的参数表组成。<br />
+请求的参数表是除去oauth_signature以外的所有参数，按参数名排序，并进行url转义
+<pre class="brush:python">def to_signature_key(method, url, data):
+    keys = list(data.keys())
+    keys.sort()
+    encoded = urllib.quote("&amp;".join([key+"="+data[key] for key in keys]))
+    return "&amp;".join([method, urllib.quote ...</pre></p></p>
+                <a class="readmore" href="/oauth-step-by-step.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc56.html">&laquo;</a>
+    Page 57 / 77
+        <a href="/category/misc58.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

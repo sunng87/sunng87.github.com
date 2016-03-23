@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/rpc-serialization-and-schema.html" rel="bookmark"
+                           title="Permalink to RPC, Serialization and Schema">RPC, Serialization and Schema</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-12T00:00:00+08:00">
+                Published: Sat 12 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>java</li>
+<li>sergent</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p></p>
+<p>糖果项目的后端用Java编写，我负责service gateway的开发（暂且叫sergent），服务以Java接口+Annotation的形式声明，与Spring集成使用，Java对象被序列化为JSON和XML（通过jackson和castor）与外部系统交互。专门的JSON Schema和XML Schema是可选的，系统交互通过简明的文档和人工确认。</p>
+
+<p>RPC框架是跨进程、跨系统交互的重要工具，RPC框架中又包括远程调用、网络传输和序列化反序列化等等部分。流行的工具包括Facebook的<a href="http://incubator.apache.org/thrift/">thrift</a>，Google的<a href="http://code.google.com/p/protobuf/">Protobuf</a>和原先Hadoop项目下的<a href="http://avro.apache.org/">avro</a>。其中thrift包含远程调用、反序列化、网络等等全部的功能。Protobuf本身是一个序列化反序列化库，另有很多<a href="http://code.google.com/p/protobuf/wiki/ThirdPartyAddOns#RPC_Implementations">第三方RPC实现</a>，avro目前除了序列化和反序列化的功能 ...</p>
+                <a class="readmore" href="/rpc-serialization-and-schema.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/ibatis-infinite-loop-when-getfirstresultset.html" rel="bookmark"
+                           title="Permalink to ibatis infinite loop when getFirstResultSet">ibatis infinite loop when getFirstResultSet</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-08T00:00:00+08:00">
+                Published: Tue 08 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>ibatis</li>
+<li>java
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>前几天上线后老大发现几台负载非常高，dump线程状态后发现多个线程死循环在同一处，于是发现了ibatis的这个bug：<br />
+https://issues.apache.org/jira/browse/IBATIS-384<br />
+https://issues.apache.org/jira/browse/IBATIS-587</p></p>
+<p>在mysql数据库上，没有结果集时，<em>stmt.getUpdateCount()</em>会返回0，而非-1.<br />
+ibatis 2.4.3<br />
+[cc lang="java"]<br />
+  private ResultSet getFirstResultSet(StatementScope scope, Statement stmt) throws SQLException {<br />
+    ResultSet rs = null ...</p>
+                <a class="readmore" href="/ibatis-infinite-loop-when-getfirstresultset.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/tsdocomshang-xian.html" rel="bookmark"
+                           title="Permalink to t.sdo.com上线">t.sdo.com上线</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-08T00:00:00+08:00">
+                Published: Tue 08 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>snda</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>昨天搞到3点多，盛大糖果<a href="http://t.sdo.com/">http://t.sdo.com/</a>，昨天晚上终于开放IP给大家访问了。</p></p>
+<p>留一些邀请码给大家
+<ul>
+<li>2HlXyYKYz2</li>
+<li>2dKoCcQZYV</li>
+<li>oHBYhO1JPw</li>
+<li>-~YTMDYmN+</li>
+<li>IXKYMq0kE@</li>
+<li>Ub-C@xk8~r</li>
+</ul></p>
+
+<p>我们后端服务从3月初开始正式开发，11个成员，加了三个多月的班。</p>
+                <a class="readmore" href="/tsdocomshang-xian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/pythonhuo-qu-ben-ji-ip.html" rel="bookmark"
+                           title="Permalink to Python获取本机IP">Python获取本机IP</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-06-05T00:00:00+08:00">
+                Published: Sat 05 June 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>linux</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>除了用<a href="http://alastairs-place.net/netifaces/">inetface</a>库和分析ifconfig输出以外，一个比较简单的获取本机IP的方法：<br />
+[cc lang="python"]<br />
+import socket<br />
+def get_local_ip():<br />
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br />
+    s.connect(("sdo.com",80))<br />
+    return s.getsockname()[0]<br />
+[/cc]</p></p>
+<p>参考 http://stackoverflow.com/questions/166506/finding-local-ip-addresses-in-python</p>
+                <a class="readmore" href="/pythonhuo-qu-ben-ji-ip.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/alexandria-with-douban-support.html" rel="bookmark"
+                           title="Permalink to Alexandria with Douban support">Alexandria with Douban support</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-25T00:00:00+08:00">
+                Published: Tue 25 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>opensource
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>迟到的新闻了，5月8号，GNOME桌面的书籍管理程序Alexandria发布了0.6.6 Beta2。上个月底我提交的豆瓣支持已经被加入了标准发布的打包里，这里可以看到Release note
+<a href="http://alexandria.rubyforge.org/news/2010-05-08--0.6.6beta2-released.html">http://alexandria.rubyforge.org/news/2010-05-08--0.6.6beta2-released.html</a></p></p>
+<p>最近半年忙里偷闲给开源软件做一点贡献，上次<a href="http://live.gnome.org/DeskbarApplet/Extending">gnome deskbar wiki</a>名字是自己加上去的，这次在alexandria里终于算是得到了一些认可，再接再厉，嗯！</p>
+
+<p>各位用开源桌面的读者是不是看在这个份上也装一下这个软件啊。。。</p>
+                <a class="readmore" href="/alexandria-with-douban-support.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/index47.html">&laquo;</a>
+    Page 48 / 77
+        <a href="/index49.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

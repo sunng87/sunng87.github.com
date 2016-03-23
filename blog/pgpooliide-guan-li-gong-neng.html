@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>pgpoolII的管理功能</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/pgpooliide-guan-li-gong-neng.html" rel="bookmark"
+           title="Permalink to pgpoolII的管理功能">pgpoolII的管理功能</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-02-14T00:00:00+08:00">
+                Published: Mon 14 February 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>postgresql
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>pgpool是postgresql的中间件，他的主要功能包括：
+<ul>
+<li>Connection Pooling 连接池</li>
+<li>Replication 双写</li>
+<li>Load Balance 负载均衡</li>
+<li>Limiting Exceeding Connections 连接限制</li>
+<li>Parallel Query 并行查询</li>
+</ul></p></p>
+<p>除此以外，pgpool还提供了对数据库节点的健康检查功能，自动fail over。</p>
+
+<p>对pgpool的管理，pgpool本身除了工作端口（默认5433）以外，还开放一个pcp端口9898，类似FTP的控制端口。通过pcp端口可以获取pgpool的运行时信息，也可以进行运行时的操作。这些功能罗列在：<br />
+http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#reference</p>
+
+<p>封装这些命令的二进制文件也随着pgpool发行，由于是通过网络通信，所以并不要求这些工具与pgpool安装在同一台机器上。</p>
+
+<p>除此以外，为了用户友好，pgpool还有一个具有UI的用户管理工具。这个工具的功能包括：
+<ul>
+<li>系统信息，主要是pcp的信息</li>
+<li>配置文件编辑，这个功能似乎要求pgpooladmin和pgpool安装在一台机器上以便直接都写配置文件</li>
+<li>切分规则编辑</li>
+</ul></p>
+
+<p>另外，pgpool还通过一些自定义的SQL语句允许用户从工作端口提取一些配置信息和运行时信息：<br />
+http://pgpool.projects.postgresql.org/pgpool-II/doc/pgpool-en.html#show-commands</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

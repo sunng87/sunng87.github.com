@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - linux</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="/kuo-zhan-linux-ephemeral-duan-kou-xian-zhi.html">"扩展 Linux ephemeral 端口限制"</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2014-07-01T17:11:58+08:00">
+                Published: Tue 01 July 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+<p>tags: <a href="/tag/linux.html">linux</a> <a href="/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info --><p>默认情况下，单一Linux能发起的客户端连接数是十分有限的，为此，我们要测试大规模连接程序时不得不启动很多客户端机器模拟连接。下面介绍一些增加单台Linux发起连接数的方法。</p>
+<h3>增加文件打开数</h3>
+<p>第一步最为基础的，提高打开文件描述符的数量。默认的情况下，这个配置为1024，是不能满足我们的使用的。增加到999999个：</p>
+<div class="highlight"><pre><span></span>$ sudo <span class="nb">ulimit</span> -n 999999
+</pre></div>
+
+
+<p>持久化这个配置，可以在<code>/etc/security/</code>（或<code>/etc/security.d/</code>，取决于你的发行版）下建立文件，增加</p>
+<div class="highlight"><pre><span></span>*       hard    nofile      999999
+*       soft    nofile      999999
+</pre></div>
+
+
+<p>这将对所有用户起效。</p>
+<h3>增加客户端端口数</h3>
+<p>当Linux发起客户端连接时，如果没有显式指定，会给客户端socket绑定一个 ephemeral 端口。这个端口的范围是从这个区间选取的：</p>
+<div class="highlight"><pre><span></span> $ cat /proc/sys/net/ipv4/ip_local_port_range
+32768   61000
+</pre></div>
+
+
+<p>如果这个区间的端口耗尽，socket就会产生<code>cannot assign requested address</code>的错误。要增加端口范围，我们需要把他设置得更大：</p>
+<div class="highlight"><pre><span></span>$ sudo <span class="nb">echo</span> <span class="s2">&quot;1025 65535&quot;</span> &gt; /proc/sys/net/ipv4/ip_local_port_range
+</pre></div>
+
+
+<p>这样，单台机器就可以发出六万多个连接。</p>
+<h3>增加虚拟网卡</h3>
+<p>对于内存大一点的客户端机器，六万多个连接远不是其性能极限。由于IP消息中，一条消息是由 <code>src_addr</code>, <code>src_port</code>, <code>dst_addr</code>, <code>dst_port</code> 四元组标识，所以要增加连接，我们需要更多IP。在Linux上，我们可以启动虚拟网卡绑定额外的IP。</p>
+<div class="highlight"><pre><span></span>$ sudo ifconfig eth0:0 192.168.1.100
+$ sudo ifconfig eth0:1 192.168.1.101
+...
+</pre></div>
+
+
+<p>要关闭这些虚拟网卡</p>
+<div class="highlight"><pre><span></span>$ sudo ifconfig eth0:0 down
+</pre></div>
+
+
+<h3>使用虚拟网卡连接</h3>
+<p>拥有多个IP之后，客户端socket需要显示绑定这些IP才行，以python为例，在connect前调用：</p>
+<div class="highlight"><pre><span></span><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">local_addr</span><span class="p">,</span> <span class="n">local_port</span><span class="p">))</span>
+</pre></div>
+
+
+<p>可以指定连接的源地址和端口。在普通的Linux编程里，当你指定<code>local_port</code>为<code>0</code>时，Linux会分配一个之前提到的 ephemeral 端口。但是当使用虚拟IP时，如果仍然指定0，系统并不会因为IP不同而重用端口号，达到六万多的限制后，仍然会抛出不能获得地址的异常。</p>
+<p>实际上是可以获得的，这里需要用户显式地指定端口好。如果需要大规模的连接，那就一个一个绑定好了。</p>
+<h3>启用time_wait reuse和recycle</h3>
+<p>Linux的socket进入<code>time_wait</code>后需要有一定的时间回收，之后端口才能重新使用。这在大规模测试的时候就比较麻烦，为了免去等待，可以打开<code>tw_reuse</code>和<code>tw_recycle</code>这两个选项。</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="m">1</span> &gt; /proc/sys/net/ipv4/tcp_tw_recycle
+$ <span class="nb">echo</span> <span class="m">1</span> &gt; /proc/sys/net/ipv4/tcp_tw_reuse
+</pre></div>
+
+
+<p>注意这两个选项都比较激进，最好仅在测试机上使用。</p>                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Convert a Python function to Java anonymous class</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/convert-a-python-function-to-java-anonymous-class.html" rel="bookmark"
+           title="Permalink to Convert a Python function to Java anonymous class">Convert a Python function to Java anonymous class</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-04-29T00:00:00+08:00">
+                Published: Fri 29 April 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>java</li>
+<li>jython</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>When calling Java with Jython, anonymous inner class might be an issue because there is no such equivalent in Python.</p></p>
+<p>In GUI programming, jython made additional effort on AWT event processing. You can pass a python function as some types of event listener.<br />
+[cc lang="python"]<br />
+def change_text(event):<br />
+    print 'Clicked!'</p>
+
+<p>button = JButton('Click Me!', actionPerformed=change_text)<br />
+frame.add(button)<br />
+[/cc]</p>
+
+<p>Described in the <a href="http://www.jython.org/jythonbook/en/1.0/GUIApplications.html">Definitive Guide of Jython</a>:</p>
+
+<p><blockquote>This works because Jython is able to automatically recognize events in Java code if they have corresponding addEvent()* and *removeEvent() methods. Jython takes the name of the event and makes it accessible using the nice Python syntax as long as the event methods are public. </blockquote></p>
+
+<p>However, it does not work with Runnable, Callable and many other interfaces designed for anonymous usage.</p>
+
+<p>To solve the incompatibility, I created a small decorator that converts Python function to a Java object.
+<script src="https://gist.github.com/947926.js"> </script></p>
+
+<p>Thanks to python's dynamic magic, we can create class in runtime and assign modified method to a particular instance. The conversion is performed once the function loaded. Also, you can pass something as arguments to constructor.</p>
+
+<p>With anonymous_class decorator, the example above can be written as:<br />
+[cc lang="python"]<br />
+from javax.swing import JButton, JFrame<br />
+from java.awt.event import ActionListener</p>
+
+<p>frame = JFrame('Hello, Jython!',<br />
+            defaultCloseOperation = JFrame.EXIT_ON_CLOSE,<br />
+            size = (300, 300)<br />
+        )</p>
+
+<p>@anonymous_class(ActionListener, "actionPerformed")<br />
+def change_text(dummy, event):<br />
+    print 'Clicked!'</p>
+
+<p>button = JButton('Click Me!', actionPerformed=change_text)<br />
+frame.add(button)<br />
+frame.visible = True<br />
+[/cc]</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

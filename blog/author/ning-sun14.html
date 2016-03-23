@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/code-2011.html" rel="bookmark"
+                           title="Permalink to Code 2011">Code 2011</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-31T00:00:00+08:00">
+                Published: Sat 31 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Life</li>
+<li>programming
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>成功人士是不写总结的，所以我来写个总结。</p></p>
+<p>今年的coding从ABAP开始，这个很多人现在不知道以后也不用知道最好永远也不要知道的语言和他的平台，是一个脱胎于Pascal，在发展过程里又杂糅了SQL和C++的怪物，最后几乎变成了满屏幕关键字。再加上缺乏文档，实在是一段不堪回首的记忆。</p>
+
+<p>3月份开始，我又重新开始了一个python项目叫做<a href="https://github.com/sunng87/jip" target="_blank">jip</a>，他兼容maven，可以与virtualenv和setuptools集成，帮助你解决jython项目的java依赖，简化jython项目的发布，提高工作效率。这个小工具倾注了我不少时间，如果你某一天要和jython打交道的话，可以试试看。</p>
+
+<p>今年还尝试了coffeescript，它恰到好处地消除了javascript里一些ugly的部分，大大提高了编码速度。我用它改写了网站<a href="http://sunng.info/scripts/action.coffee" target="_blank">首页的js</a>。</p>
+
+<p>6月份我又重拾起1年前的javascript库heatcanvas，和<a href="http://nihuajie.com/" target="_blank">lbt05</a>协作完善了程序。通过HTML5的Web worker API改善了渲染canvas时的用户体验，增加了对Google Maps，OpenLayers,Baidu Map以及Leaflet的支持。这个项目的介绍被顶到hackernews的首页，这是一种前所未有的感觉。</p>
+
+<p>7月份开始迎来了一个重大的转折。断断续续学习了一年半的clojure ...</p>
+                <a class="readmore" href="/code-2011.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/shi-yong-enlivezuo-wei-mo-ban-yin-qing.html" rel="bookmark"
+                           title="Permalink to 使用Enlive作为模板引擎">使用Enlive作为模板引擎</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-29T00:00:00+08:00">
+                Published: Thu 29 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>在所有的clojure web开发例子里，对模板的介绍都很少。很多的简单例子都是以hiccup作为页面生成的手段。hiccup是个clojure的html DSL，例子里用这样的DSL生成页面确实很酷，可是他是real world吗，当然不是。</p></p>
+<p>好在clojure世界里早就有了enlive，它不仅是一个通过css selector解析html的库，本身也可以作为模板引擎应用在web开发中。我不知道这种通过css selector的方式是否是enlive首创，不过他实在是非常新颖独特，而且平滑了页面设计和程序的集成。</p>
+
+<p>例如这样一个模板 index.html：<br />
+[cc lang="html"]
+<div id="cc">Sample Text</div>
+[/cc]</p>
+
+<p>在clojure程序中，使用enlive的deftemplate<br />
+[cc lang="clojure"]<br />
+(deftemplate index "index.html"<br />
+  [ctx]<br />
+  [:div#cc] (content (:data ctx ...</p>
+                <a class="readmore" href="/shi-yong-enlivezuo-wei-mo-ban-yin-qing.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/roar-for-mootools-14.html" rel="bookmark"
+                           title="Permalink to Roar for mootools 1.4">Roar for mootools 1.4</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-24T00:00:00+08:00">
+                Published: Sat 24 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>github</li>
+<li>javascript</li>
+<li>mootools
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>早在天下大势还处在分久必合的时候，那时候mootools还有不少简单实用的小库，比如我今天搜索"mootools notification"就找到这个08年的库叫做<a href="http://digitarald.de/project/roar/" target="_blank">Roar</a>。不过遗憾的是从那以后，这个库就再也没有更新过了。</p></p>
+<p>Mootools本身也沉寂了很久，这个项目恐怕也要思考自己未来的发展方向了。今年9月Mootools迈进了1.4，API上有一些变化。现在的下载页也能看到with/without backward compatibility的版本分开下载。为了用上Roar，我尝试了这两个版本发现都不能使用。最后downgrade到1.2可以确定Roar本身在当时是没有什么问题。</p>
+
+<p>这么多年对mootools痴心不改，所以顺手维护了一下Roar，现在可以在1.4 without compatibility的发布下运行了。主要是几个小修改，大多是一些多年deprecated函数被正式删除：
+<ul>
+    <li>Type常量，原先的String.type，Object.type现在统一到一个Type对象下，变成Type.isString和Type.isObject</li>
+    <li>$empty 常量被删除了，现在直接用function ...</li></ul></p>
+                <a class="readmore" href="/roar-for-mootools-14.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/tf101-101.html" rel="bookmark"
+                           title="Permalink to TF101 101">TF101 101</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-22T00:00:00+08:00">
+                Published: Thu 22 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>pad
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>上周末决定不再忍耐，又入了一个大件：华硕的平板，变形金刚。TF101上市已经半年了，而且现在TF102号称四核的版本已经开始接受预订了，所以差不多也到了应该出手的时候了。因为我知道如果去等102的话，我还会像现在这样地去和103做比较。</p></p>
+<p>选择这款的主要原因即他的键盘配置，平板加键盘的组合彻底把上网本推进深渊。对于我这种还算是制造内容比率比较高的人来说，有个强有力的输入设备是必要的。目前市面上有这种搭配的只有transformer和think的，而且think似乎又只有配图和说明，没见真正卖那款键盘的。更严重的是，当然，think太贵了。</p>
+
+<p>接下来开始说问题：<br />
+第一关叫做充电。TF101在充电方面有严重的缺陷。当电池电量极低时，会出现无法充电的情况。明明接着电源，可是电量提示一直是0%。如此情况下我整整充了一天拔下电源依然无法开机。最后看了网上的说法，在充电自动开机后关机了半个小时终于起死回生。</p>
+
+<p>第二个小问题，键盘底座的平板本身电源是分离的，二者各自充电。所以在前面〝整整充了一天〞之前还有整整充了一晚上键盘。早晨起来键盘电满了，平板没充进去。</p>
+
+<p>系统出厂是Android 3.0，这个系统的伟大之处在于从他一启动开始，就开始不断有程序报出错退出，不断有应用停止响应 ...</p>
+                <a class="readmore" href="/tf101-101.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/finished-my-machine-learning-courses.html" rel="bookmark"
+                           title="Permalink to Finished my machine learning courses">Finished my machine learning courses</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-19T00:00:00+08:00">
+                Published: Mon 19 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>course</li>
+<li>ml
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>经过三个月的时间，终于看完了ml-class的所有视频课程，完成了所有review questions，提交了所有programming exercises.感觉不错，之前一直对数据挖掘相关的方面感兴趣，回想一下大学时候一些地统计分析甚至遥感图像数据处理的课都跟机器学习相关，但是毕竟不是这方面的课程，所以介绍的不是很系统。今年秋天斯坦福推出这个在线课程，机器学习作为其中之一真算是弥补了我们民间科学爱好者的遗憾了。</p></p>
+<p>这个课程在有限的篇幅里涵盖了linear regression, logistic regression, ANN, SVM, PCA, K-Means, Anomaly Detection等等知识，基本上算是一个完整实用的导论。Andrew Ng教授的讲解也算是通俗易懂深入浅出，完全感觉不到什么门槛。</p>
+
+<p>对于online course这种形式，今年秋天斯坦福的人工智能、数据库、机器学习也算是首开先河，目前这三门课程都已经结束，网上的反响非常强烈。好消息是明年Q1斯坦福还有更多数量更多方向的课程。今天MIT也宣布了明年的online course计划，他们也将加入提供在线课程的行列。而且，MIT的在线课程还会颁发一个名叫MITx的certification。开放式课程已经成为大势所趋，信息本应自由传播 ...</p>
+                <a class="readmore" href="/finished-my-machine-learning-courses.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun13.html">&laquo;</a>
+    Page 14 / 77
+        <a href="/author/ning-sun15.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

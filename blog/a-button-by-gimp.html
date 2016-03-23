@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>A button by GIMP</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/a-button-by-gimp.html" rel="bookmark"
+           title="Permalink to A button by GIMP">A button by GIMP</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-09T00:00:00+08:00">
+                Published: Wed 09 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>foss</li>
+<li>gimp
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Inspired by a <a href="http://sixrevisions.com/tutorials/web-development-tutorials/create-an-animated-call-to-action-button/" target="_blank">"Call to action" tutorial of Photoshop</a>, I'd like to do the same thing with free and open source software, GIMP.</p></p>
+<p>Before we start the journey, it's better to get well prepared. Take a look at the powerful plugin "<a href="http://registry.gimp.org/node/186" target="_blank">Layer Effects</a>". It provides you complete functionality as "Layer Style" in Photoshop does which is of critical importance in such kind of image manipulation. Follow the installation guide and I won't spend many words about this step.</p>
+
+<p>Open your gimp, create a new canvas with custom size (which makes you feel comfortable)</p>
+
+<p>New a layer, use selection tool to create a rounded rectangle selection area.</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2744/4171189572_a6c70c8b00.jpg" alt="" width="500" height="375" /></p>
+
+<p>Fill the selection with gradient color.</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2653/4170430801_ee9b8e973d.jpg" alt="" width="500" height="375" /></p>
+
+<p>Resize the canvas. Glow the selection with 3px by menu command "selection-&gt;glow". The crop the canvas by selection using "image-&gt;crop by selection".</p>
+
+<p>Then we apply some layer effects to beauty the button.
+<ul>
+    <li>layer effects: inner glow, white 75% opacity, size 5</li>
+    <li>layer effects: stroke 1px</li>
+</ul>
+<img src="http://farm3.static.flickr.com/2592/4171189712_2b48af7d78.jpg" alt="" width="500" height="375" /></p>
+
+<p>Place some text on the button such as "Sign Up". Bold sans font(DejaVu sans or Helvetica bold) is recommended here.</p>
+
+<p>Use gradient overlay effect on the text. As the layer effects plugin doesn't support gradient overlay on text, we have to do it in a different way. First, create a new layer. Then convert text to selection with context menu command. Gradient fill the selection and hide the original text layer at last. Now we got:</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2692/4170430973_8f65b08603.jpg" alt="" width="500" height="375" /></p>
+
+<p>Don't stop here. Add layer effects on the new layer:
+<ul>
+    <li>inner shadow, black, size 2px, distance 2px, angle 90</li>
+    <li>drop shadow, light, size 2px, distance 2px, angle 90</li>
+</ul>
+<img class="alignnone" src="http://farm3.static.flickr.com/2579/4170431039_4eff9b67ff.jpg" alt="" width="500" height="375" /></p>
+
+<p>You can tune the color schema by yourself along the process :)</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2765/4171189918_f1ea2c2eff_o.png" alt="" width="170" height="71" /></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

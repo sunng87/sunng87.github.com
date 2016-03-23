@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Using Google closure library with ClojureScript</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/using-google-closure-library-with-clojurescript.html" rel="bookmark"
+           title="Permalink to Using Google closure library with ClojureScript">Using Google closure library with ClojureScript</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-08-05T00:00:00+08:00">
+                Published: Fri 05 August 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>clojure</li>
+<li>clojurescript</li>
+<li>javascript
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Google closure library is shipped with ClojureScript, and could be compiled with ClojureScript into a minimized javascript file. So closure library is doubtlessly the first candidate when you are considering to use an external Javascript library in your cljs browser application.</p></p>
+<p>However, different from clojure's interoperability with Java, ClojureScript has its own characteristics when you are interoperating with JavaScript and JavaScript based libraries.</p>
+
+<p><strong>Clojure types are not fully compatible with JavaScript types</strong>
+In ClojureScript, you can never treat a Clojure map as a JavaScript object although they have similar characteristics. You have to do some conversion before passing a clojure map to javascript functions. Matthew Gilliard made <a href="https://gist.github.com/1098417#file_ajax.cljs" target="_blank">a sample</a> of such conversion.</p>
+
+<p><strong>JavaScript package is not Clojure namespace</strong>
+This could be a common mistake for ClojureScript newbie. Actually, JavaScript doesn't have concept of "Package" or "Namespace". Many JavaScript libraries(dojo, Google Closure) made enhancement on this. ClojureScript also takes advantage of this mechanism. So before you start to coding with closure, you may browse <a href="http://closure-library.googlecode.com/svn/docs/index.html" target="_blank">closure library API document</a>, and find a module called <em>goog.net</em> which includes lots of types. Then you write this:<br />
+[cc lang="clojure"]<br />
+(ns myjs<br />
+  (:require [goog.net :as gnet]))<br />
+[/cc]</p>
+
+<p>But compiler shows you "ERROR: JSC_MISSING_PROVIDE_ERROR. required "goog.net" namespace never<br />
+provided at ... ". This is not a PATH issue. The root cause is that closure module has a lower granularity than Clojure ones. Types are often contained in their own modules. You can find closure source code in <em>clojurescript/closure/library/closure</em>. Modules are declare with <em>goog.provide</em> function. Thus, you should require this name instead of the logical module name.<br />
+[cc lang="clojure"]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+[/cc]</p>
+
+<p>In addition, ClojureScript does not support 'use'.</p>
+
+<p><strong>Just use full name for JavaScript class</strong>
+For functions contains in some module, you can refer it with the clojure way:<br />
+[cc lang="clojure"]<br />
+(ns myjs<br />
+  (:require [goog.dom :as dom]))<br />
+(dom/$ "element-id")<br />
+[/cc]</p>
+
+<p>But for classes, just use the full name and ignore the module alias.<br />
+[cc lang="clojure"]<br />
+(ns myjs<br />
+  (:require [goog.net.XhrIo :as gxhr]))<br />
+(def xhr (goog.net.XhrIo.))<br />
+[/cc]</p>
+
+<p>These are basic tips before you start using Closure with ClojureScript. Leveraging on Google's closure library, you can create cross-browser JavaScript application with Clojure easily.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

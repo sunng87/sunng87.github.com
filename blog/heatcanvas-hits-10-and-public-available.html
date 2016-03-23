@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>HeatCanvas hits 1.0, and public available</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/heatcanvas-hits-10-and-public-available.html" rel="bookmark"
+           title="Permalink to HeatCanvas hits 1.0, and public available">HeatCanvas hits 1.0, and public available</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-06-03T00:00:00+08:00">
+                Published: Fri 03 June 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>heatcanvas</li>
+<li>html5</li>
+<li>javascript</li>
+<li>project</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>As described in Wikipedia, a heat map is a graphical representation of data in a two-dimensional table. HeatCanvas enables heat map on HTML5 canvas. With HeatCanvas, you can visualize your data on modern web browser without server-side support.</p></p>
+<p>HeatCanvas is based on <a href="http://sunng.info/blog/2010/02/sunngs-canvas-based-heatmap-api/">the prototype</a> I wrote 15 months ago. I just rewrite the whole with WebWorker API to keep user away from UI frozen and annoying slow-script warning. HeatCanvas is implemented as pixel based, so the image quality is great.</p>
+
+<p><img src="http://i.imgur.com/gNHOw.png" alt="" title="Hosted by imgur.com" /></p>
+
+<p>The API is rather simple. There are only three steps to create a basic heat map.</p>
+
+<p>1. Create the heat map object:<br />
+[cc lang="javascript"]<br />
+var heatmap = new HeatCanvas('canvasId');<br />
+[/cc]</p>
+
+<p>2. Add some data to heat map:<br />
+[cc lang="javascript"]<br />
+heatmap.push(223, 98, 10); // x,y and value for this point<br />
+[/cc]</p>
+
+<p>3. Render it:<br />
+[cc lang="javascript"]<br />
+heatmap.render();<br />
+[/cc]</p>
+
+<p>In contrast to the base API, HeatCanvas also supports flexible options to customize the rendering. Even custom colour scheme is allowed. You can <a href="https://github.com/sunng87/heatcanvas/blob/master/README.md">refer to the doc</a> for detail.</p>
+
+<p>And for your convenience, we have a GoogleMap plugin, <b>HeatCanvasOverlayView</b>, that wraps HeatCanvas. You can use it in your GoogleMap application.</p>
+
+<p>For live demos, you can find at:
+<a href="http://sunng87.github.com/heatcanvas/">http://sunng87.github.com/heatcanvas/</a></p>
+
+<p>As always, the project is hosted on github:
+<a href="https://github.com/sunng87/heatcanvas">https://github.com/sunng87/heatcanvas</a> .</p>
+
+<p>The three javascript files are only necessary in your application, thus, please ignore the htmls in your deployment. Any feedback is welcomed and also please kindly let me know your application using this API.<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9343259e-039c-8fdf-8721-dbd6277de695" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

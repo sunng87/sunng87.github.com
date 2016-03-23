@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>用coffeescript重写了首页</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/yong-coffeescriptzhong-xie-liao-shou-ye.html" rel="bookmark"
+           title="Permalink to 用coffeescript重写了首页">用coffeescript重写了首页</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-05-13T00:00:00+08:00">
+                Published: Fri 13 May 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>coffeescript</li>
+<li>javascript</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>下午有时间看了一下<a href="http://jashkenas.github.com/coffee-script/">coffeescript</a>，发现非常优雅。过去对JavaScript的工作，从dojo到jquery主要是在库的层面，这次coffeescript的出现是在语言层面对javascript做了一次加强。现在对语言的加强不再需要mozilla/microsoft/google/apple几家坐下来慢慢聊了，民间的力量就可以实现。</p></p>
+<p>coffeescript的几个特点也属于博采众长：
+<ul>
+<li>类似python的，以缩进取代代码块</li>
+<li>类似ruby/perl，方法调用括号可选</li>
+<li>类似ruby，无须return</li>
+<li>正常的类声明语法</li>
+</ul></p>
+
+<p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
+
+<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

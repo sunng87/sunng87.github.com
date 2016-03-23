@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Awesome autostart</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/awesome-autostart.html" rel="bookmark"
+           title="Permalink to Awesome autostart">Awesome autostart</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-11-09T00:00:00+08:00">
+                Published: Tue 09 November 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>装备
+tags:</li>
+<li>awesome</li>
+<li>linux</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>Problem</h3>
+让Awesome环境像Openbox一样在启动时，在根上下文中执行一个autostart脚本（启动程序、声明环境变量）。</p></p>
+<p><h3>Solution</h3>
+Ubuntu中GDM启动后会执行<i> /etc/gdm/Xsession</i> 这个脚本，如果是custom会话（启动参数custom），会执行用户目录下的.xsession脚本，否则会执行 <i>/etc/X11/Xsession.d/</i> 目录下的所有脚本。</p>
+
+<p>为了支持autostart脚本，可以在 <i>/etc/X11/Xsession.d/</i> 里创建一个新的脚本 55awesome-autostart<br />
+[cc lang="bash"]<br />
+BASESTARTUP=$(basename "$STARTUP" | cut -d\  -f1)<br />
+if [ "$BASESTARTUP" = x-session-manager ]; then<br />
+    BASESTARTUP=$(basename $(readlink /etc/alternatives/x-session-manager))<br />
+fi<br />
+if [ "$BASESTARTUP" = "awesome" ]; then<br />
+    AWESOME_AUTOSTART=$HOME/.config/awesome/autostart.sh<br />
+    if [ -e "$AWESOME_AUTOSTART" ]; then<br />
+        . "$AWESOME_AUTOSTART"<br />
+    fi<br />
+fi<br />
+[/cc]<br />
+这个脚本会判断启动的session是否是awesome，如果是，并且autostart.sh存在的话，source这个文件。autostart.sh按照xdg的约定，放在配置文件目录 <i>$HOME/.config/awesome/</i> 里。</p>
+
+<p>这样，在用户目录下的配置文件里，就可执行一些自启动程序，或者声明环境变量，典型的应用就是指定awesome会话专用的gtkrc：<br />
+[cc lang="bash"]<br />
+AWESOME_CONFIG_PATH=$HOME/.config/awesome<br />
+export GTK2_RC_FILES=$AWESOME_CONFIG_PATH/gtkrc</p>
+
+<p>xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D6 &<br />
+awsetbg -u feh -f .config/awesome/ubuntu.jpg<br />
+[/cc]</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

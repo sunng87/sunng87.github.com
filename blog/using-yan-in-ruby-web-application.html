@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Using Yan in Ruby Web Application</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/using-yan-in-ruby-web-application.html" rel="bookmark"
+           title="Permalink to Using Yan in Ruby Web Application">Using Yan in Ruby Web Application</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-21T00:00:00+08:00">
+                Published: Mon 21 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>把戏
+tags:</li>
+<li>captcha</li>
+<li>ruby</li>
+<li>web</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>I will show you the usage of Yan captcha service. In this tutorial, it's based on a simple ruby web application of the Sinatra web framework.</p></p>
+<p>Before we start to use the service, it is necesary to get Yan running. Download the code from <a href="http://bitbucket.org/sunng/yan/" target="_blank">the project page</a>, then build and run it with maven:
+<em>mvn jetty:run</em></p>
+
+<p>To enable the application to use Yan, we have to register our application to get an API Key. If you use Yan 0.3, there is a secret registration page at <em>http://localhost:8080/yan/reg.jsp</em> The page is protected by HTTP Basic Authentication, the username and password are store in 'realm.properties' which is considered to locate in the root directory. Open the file you can see the plain text username and password. If you are running the latest development version, there is no long any UI for API Key creation, but restful interface. This won't be hard to you, pickup your tools such as curl or poster (a firefox extension) to send a HTTP request. Take curl as example, do it like this:
+<em>curl -X PUT "http://localhost:8080/yan/apikey/" -d "SinatraTestApp" -u "username:password"</em></p>
+
+<p>If it works, you will get a line of json:
+<em>{"apikey":"b251b0dc2eed31cac38555b61d4fa6a453923bfd","appName":"SinatraTestApp"}</em>
+Save this apikey.</p>
+
+<p>Sinatra is generally considered to be the world's lightest and smallest web framework. And our application is rather simple. Just check the code:
+<pre class="brush:ruby">require "rubygems"
+require "sinatra"
+require "net/http"
+require "yaml"</pre></p>
+
+<p>apikey='b251b0dc2eed31cac38555b61d4fa6a453923bfd'</p>
+
+<p>get '/' do<br />
+    conn = Net::HTTP.new('localhost', 8080)<br />
+    q = "ip=#{@env['REMOTE_ADDR']}&amp;apikey=#{apikey}&amp;alt=yaml&amp;mode=0"<br />
+    resp, data = conn.get("/yan/ticket?#{q}")<br />
+    @ticket = YAML::load(data)<br />
+    haml :sinatra_captcha<br />
+end</p>
+
+<p>post '/' do<br />
+    conn = Net::HTTP.new('localhost', 8080)<br />
+    q = "ip=#{@env['REMOTE_ADDR']}&amp;apikey=#{apikey}&amp;key=#{params['key']}&amp;code=#{params['captcha']}"<br />
+    resp, data = conn.get("/yan/validate?#{q}")<br />
+    data<br />
+end</p>
+
+<p>use_in_file_templates!<br />
+__END__</p>
+
+<p>@@ sinatra_captcha<br />
+%html<br />
+    %head<br />
+        %title Yan Captcha on Sinatra<br />
+    %body<br />
+        %form{:action=&gt;"/", :method=&gt;"post"}<br />
+            %p<br />
+                Username:<br />
+                %input{:name=&gt;"username", :type=&gt;"text"}<br />
+            %p<br />
+                Password:<br />
+                %input{:name=&gt;"password", :type=&gt;"password"}<br />
+            %p<br />
+                Captcha:<br />
+                %img{:src=&gt;@ticket['url']}<br />
+                %br<br />
+                %input{:name=&gt;"captcha", :type=&gt;"text"}<br />
+                %input{:name=&gt;"key", :type=&gt;"hidden", :value=&gt;@ticket['key']}<br />
+                %input{:type=&gt;'submit'}
+
+There are two parts of this application: ruby code and haml. I just use in-file-template for convenience. We define a get handler and a post handler on the path '/'. The get handler will request a ticket from Yan which contains captcha image url and ticket key. The post handler will extract user input and submit the Yan's validator and return user the result. And the HAML code is template for page rendering after GET request.</p>
+
+<p>Maybe you need to install sinatra and some dependency:
+<em>sudo gem install sinatra haml</em></p>
+
+<p>Run the code with a build-in WEBrick
+<em>ruby sinatra-yan.rb</em></p>
+
+<p>Browse to the default url, test it:</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2766/4203612734_3237ed066c_o.png" alt="" width="459" height="268" /></p>
+
+<p>For another similar tutorial using python, check Yan's wiki page:
+<a href="http://bitbucket.org/sunng/yan/wiki/SampleCode" target="_blank">http://bitbucket.org/sunng/yan/wiki/SampleCode</a></p>
+
+<p>Thank you for your support. btw, today is my dear girl friend's birthday, I just wish her happy everyday.</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

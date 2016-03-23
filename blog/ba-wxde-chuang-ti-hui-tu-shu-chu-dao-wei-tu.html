@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>把wx的窗体绘图输出到位图</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/ba-wxde-chuang-ti-hui-tu-shu-chu-dao-wei-tu.html" rel="bookmark"
+           title="Permalink to 把wx的窗体绘图输出到位图">把wx的窗体绘图输出到位图</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-04-22T00:00:00+08:00">
+                Published: Wed 22 April 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>python</li>
+<li>wx
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我想用这种低调的含糊不清的标题也没有什么坏处。</p></p>
+<p>问题很简单，我们要把在wx窗体上绘制的图形保存到一个位图文件中去。</p>
+
+<p>首先看一下wx的绘图机制，所有和绘图相关的操作，都从wx.DC这样一个父类继承。DC即Device Context，文档里对这个类的功能有这样的描述
+<blockquote>A wx.DC is a device context onto which graphics and text can be drawn. It is intended to represent a number of output devices in a generic way, so a window can have a device context associated with it, and a printer also has a device context. In this way, the same piece of code may write to a number of different devices, if the device context is used as a parameter.</blockquote>
+进而，这样的DC包括子类WindowDC，PrinterDC等等，用于在不同的设备上画图。WindowDC又有两个子类ClientDC和MemoryDC。在窗体上画图，就是在EVT_PAINT事件里，应该使用ClientDC的子类PaintDC。而MemoryDC就是在内存中的位图上绘图。要把窗体上的图形输出到位图文件中去，只要把PaintDC中的绘制的图形数据拷贝到MemoryDC上就可以了。</p>
+
+<p>以下是一个典型的OnPaint方法<br />
+[codesyntax lang="python" lines="fancy"]<br />
+class CanvasAlpha(wx.Panel):<br />
+    def __init__(self, parent):<br />
+        wx.Panel.__init__(self, parent, -1)<br />
+        self.SetBackgroundColour(wx.Color(255, 255, 255))<br />
+        self.Bind(wx.EVT_PAINT, self.OnPaint)</p>
+
+<p>    def OnPaint(self, evt):<br />
+        dc = wx.PaintDC(self)<br />
+        gc = wx.GraphicsContext.Create(dc)</p>
+
+<p>        ## draw ...<br />
+[/codesyntax]<br />
+在拷贝之前，首先创建一个新的位图并且指定他的宽高<br />
+bitmap = wx.EmptyBitmap(width, height, -1)<br />
+获得memoryDC<br />
+memDC = wx.MemoryDC()<br />
+指定memoryDC的内存对象<br />
+memDC.SelectObject(bitmap)<br />
+利用DC中一个非常重要的Blit方法，把PaintDC上的图形轻松地拷贝到MemoryDC上（关于参数的意义请参考wx的文档了）<br />
+memDC.Blit(0, 0, width, height, dc, 0, 0)<br />
+这还没有完，将memoryDC的内存对象设置为null，即传入一个null对象。这一步相当于flush。<br />
+memDC.SelectObject(wx.NullBitmap)<br />
+最后，用bitmap的Save方法就可以非常轻松地输出图片了<br />
+bitmap.SaveFile(filename, wx.BITMAP_TYPE_JPEG)</p>
+
+<p>这样，在窗口中截图也就实现了。</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

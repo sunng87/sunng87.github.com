@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - Ning Sun</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html" rel="bookmark"
+                           title="Permalink to 验证码服务的两种方式">验证码服务的两种方式</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-12T00:00:00+08:00">
+                Published: Mon 12 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>captcha</li>
+<li>project</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>方式1，应用服务器负责生成验证码字符，验证码服务器主要负责验证码图片生成。</h3>
+<img class="alignnone" src="http://farm3.static.flickr.com/2624/4005000566_e100e098ef.jpg" alt="" width="500" height="310" />
+<ol>
+    <li>用户浏览器向应用服务器请求包含验证码的页面；</li>
+    <li>应用服务器生成验证码字符，存储在session中；应用服务器发送相关图片参数（验证码字符、宽、高、复杂度、背景色等）到验证码服务器；</li>
+    <li>验证码服务器返回图片地址到应用服务器；</li>
+    <li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
+    <li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
+    <li>验证码服务器输出验证码图片流到用户浏览器；</li>
+    <li>用户判读验证码图片，提交表单；</li>
+    <li>应用服务器取出session中的验证码字符比对，返回结果。</li>
+</ol>
+这种方式的优点：
+<ol>
+    <li>较少的HTTP请求调用</li>
+    <li> 替换原应用中独立的验证码功能相对容易</li>
+    <li> 验证码服务器相对简单</li>
+</ol>
+<h3>方式2，验证码服务器承担验证功能，应用服务器在验证中仅起到传递作用。</h3>
+<img class="alignnone" src="http://farm3.static.flickr.com/2464/4005000760_cc402da4c1.jpg" alt="" width="500" height="310" />
+<ol>
+    <li>用户浏览器向应用服务器请求包含验证码的页面；</li>
+    <li>应用服务器发送相关图片参数（宽、高、复杂度、背景色等）到验证码服务器；</li>
+    <li>验证码服务器返回图片地址、惟一的会话id到应用服务器；</li>
+    <li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
+    <li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
+    <li>验证码服务器输出验证码图片流到用户浏览器；</li>
+    <li>用户判读验证码图片 ...</li></ol></p></p>
+                <a class="readmore" href="/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/jie-shou-can-guan-huan-ying-liu-yan.html" rel="bookmark"
+                           title="Permalink to 接受参观，欢迎留言">接受参观，欢迎留言</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-10T00:00:00+08:00">
+                Published: Sat 10 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>留影
+tags:</li>
+<li>clip</li>
+<li>daf
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><img class="alignnone" src="http://farm4.static.flickr.com/3448/3997603627_6b2ce9be05.jpg" alt="" width="500" height="333" /><!--more--></p></p>
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2569/3997603859_500a635a3f.jpg" alt="" width="500" height="357" /></p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2442/3998364828_72f5b4f4bc.jpg" alt="" width="500" height="208" />
+<span style="color: #999999;">A: 对对对<br />
+A: 有个那个什么的请求<br />
+A: 我想被flatter<br />
+A: 你把那三张图post到你blog<br />
+A: 成不~<br />
+B: 没问题<br />
+B: 呵呵<br />
+A: 好~<br />
+B: 稍等～<br />
+A: 更新好~<br />
+A: 我来瞅瞅<br />
+B: 很快就好<br />
+B: 你去刷牙<br />
+A: 然后豆瓣也share<br />
+A: 然后继续接受flatter<br />
+A: XDDDDDD<br />
+B: 呵呵<br />
+B: 行啊<br />
+A: 哇哦<br />
+A: 被flatter够了以后继续画 嗯</span></p>
+                <a class="readmore" href="/jie-shou-can-guan-huan-ying-liu-yan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dou-ban-jia-gou-fa-zhan-pptzhuan.html" rel="bookmark"
+                           title="Permalink to 豆瓣架构发展PPT[转]">豆瓣架构发展PPT[转]</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-09T00:00:00+08:00">
+                Published: Fri 09 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>他山
+tags:</li>
+<li>Architecture</li>
+<li>Douban
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天下午看到了这个豆瓣架构发展历程的PPT，是今年上半年QCon上的，看了以后感觉很有启发意义。随着用户量的增大，压力的增加，功能的扩展，豆瓣架构上做出相应的变化，从最初一台机器上跑lighttpd/mysql/Quixote/memcached到现在的DoubanFS存储，DoubanDB分布式Key-Value Store，加上多台mysql，多台appserver，专门的后台运算服务器等等。</p></p>
+<p>PPT地址：
+<a href="http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf" target="_blank">http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf</a></p>
+
+<p>可惜因为字体的问题好像在Evince里很多中文字看不到，还得开一下虚拟机。</p>
+                <a class="readmore" href="/dou-ban-jia-gou-fa-zhan-pptzhuan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/a-ba.html" rel="bookmark"
+                           title="Permalink to 阿巴">阿巴</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-08T00:00:00+08:00">
+                Published: Thu 08 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>自话
+tags:</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>早晨八点半下楼开自行车锁，突然听见背后有微弱的声音。回头一看是个老太太坐在轮椅上，眼睛直直地盯着我，嘴里含糊不清地发出阿巴阿巴的声音。我自然是听不懂她说什么了，继续开锁。十月份虽然还是阳光普照，但是风里已经有点肃穆的意思了。这样的天气，年纪大了的人独自在外面这么坐着，想起来还是很残酷的。我推车要走，老太太还是盯着我阿巴阿巴地喊。假日的早晨小区里空空荡荡，遇到这样的场面还真有点超出“奇怪”能表达的意思。我又不好意思头也不回就走，推着自行车走上前去，想问老太太点什么，但是好像又无从问起，最后大约问了些“您怎么在这里”，“您的家里人在哪”这类的问题。最终都没有形成对话，老太太还是自顾自颤颤巍巍地喊阿巴阿巴。这个时候旁边单元出来个中年妇女远远说了什么一句，我听不懂，只是听到“神经病”三个字。一看有亲戚在旁边，我想眼前这一切大约都还在别人的可控范围里，可以走了。</p></p>
+<p>也不知道这个阿巴到底是什么意思，或者说于老人自己是什么意思。路上我故意想得戏剧性一些，难道是老太太的什么亲人，早年走失的儿子？当然了，很有可能只是一个老人丧失语言能力之后惟一能发出的声音而已。</p>
+                <a class="readmore" href="/a-ba.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/dao-tou-liao.html" rel="bookmark"
+                           title="Permalink to 到头了">到头了</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-06T00:00:00+08:00">
+                Published: Tue 06 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Life
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>不管这是不是30号下午我伸直了脖子期待的国庆假期，总之伴随明天早晨8点45分打卡机一声鸣音它是要见鬼去了。8号？8号用来中和后一天的周一综合症吧，不指望了。今年国庆真是无聊到一定程度了，我印象中似乎从来都还没有这么无聊过。本来还想着靠自己一些勉强存在的兴趣爱好来抵抗无聊的，后来发现是不堪一击。概括地说这六天看了整整六天的喜羊羊。上帝啊。好像也不完全是，还听了很多革命歌曲看了一些老电影。总之正经事是没有什么明显的进度，哎呦不说了，我现在连什么是正经事都说不清楚。</p></p>
+<p>在上海一点出门的欲望了都没有，六天以来取得最远的地方就是旁边的超市，其中还有包括今天在内的三天连楼都没下去。豆瓣上本来还有个老电影的活动来着，结果正好是明天加班，想去也去不成。形势危急，主办方发了三封豆邮说大家快去，不然这个活动办不下去了。我想着在北京的时候还有点兴趣爱好什么的，那么严酷的斗争环境，周末还去听个讲座参加个沙龙什么的，在上海就一点胃口都没有了。要不以后还是找机会去北京吧，但是去干什么呢，真无聊。</p>
+
+<p>今天突然冒出个想法，要是能重活一次的话，我马上毫不犹豫爬到楼顶跳下来reset。</p>
+
+<p>好在好在，明天就回公司了，要试着配一下ehcache的集群，有时间的话比较一下RMI方式和JGroup方式的性能，再做下一步打算。对了，还有一个系统的维护指南要写。</p>
+
+<p>我还是想想明天上班Syu时的情景吧 ...</p>
+                <a class="readmore" href="/dao-tou-liao.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/author/ning-sun65.html">&laquo;</a>
+    Page 66 / 77
+        <a href="/author/ning-sun67.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Here Comes the Sun - misc</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+                <section id="content" class="body">
+                    <ol id="posts-list" class="hfeed" start="4">
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/gui-debugging-tools.html" rel="bookmark"
+                           title="Permalink to GUI Debugging tools">GUI Debugging tools</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-18T00:00:00+08:00">
+                Published: Sat 18 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>c</li>
+<li>foss</li>
+<li>gdb</li>
+<li>gnome</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>想了解一个C程序的运行，打算用gdb来单步看一下流程，发现直接用gdb不太方便，然后模仿偶像用emacs的gdb支持(M-x gdb)。但是境界实在是比不上偶像，emacs的操作都还不熟练。最后选择了geany。<a href="http://www.geany.org">geany</a>是一个简单的C/C++ IDE，它有一个geanygdb插件可以帮助你在geany的图形界面里调试。</p></p>
+<p>但是最近安装在仓库里的geanygdb插件有一些问题，会导致很高的CPU占用。不过这个问题被报告在<a href="http://sourceforge.net/tracker/?func=detail&amp;aid=3019827&amp;group_id=222729&amp;atid=1056532">这里</a>，现在已经修复了。因为新版本还没有release，所以如果急着用的话，可以从svn签出代码：
+<i>svn co https://geany-plugins.svn.sourceforge.net/svnroot/geany-plugins/trunk/geany-plugins</i>
+然后执行：<br />
+[cc lang="bash"]<br />
+cd geany-plugins ...</p>
+                <a class="readmore" href="/gui-debugging-tools.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/artificial301.html" rel="bookmark"
+                           title="Permalink to Artificial301">Artificial301</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-16T00:00:00+08:00">
+                Published: Thu 16 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>firefox</li>
+<li>github</li>
+<li>jetpack</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://www.flickr.com/photos/40741608@N08/4995443949/" title="screenshot_002 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4130/4995443949_fd2f7b8fa4_z.jpg" width="640" height="441" alt="screenshot_002" /></a></p></p>
+<p><a href="http://www.flickr.com/photos/40741608@N08/4995474823/" title="screenshot_003 by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4107/4995474823_d0cee8e91c.jpg" width="394" height="228" alt="screenshot_003" /></a></p>
+
+<p>Get artificial301 at:
+<a href="http://github.com/sunng87/Artificial301/downloads">http://github.com/sunng87/Artificial301/downloads</a></p>
+
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
+                <a class="readmore" href="/artificial301.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/hudson-tips.html" rel="bookmark"
+                           title="Permalink to Hudson tips">Hudson tips</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-15T00:00:00+08:00">
+                Published: Wed 15 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>hudson</li>
+<li>java</li>
+<li>maven
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Hudson的项目有三种状态，分别是failed, Success, Unstable。当单元测试未能通过时，Hudson不会fail掉整个build而是设置为ubstable，并且继续执行post build scripts和actions。这就为集成的版本带来了一些不可知因素。取消这个设置，可以通过在maven options中添加一个 <i>-Dmaven.test.failure.ignore=false</i>。或者在全局设置，manage hudson -&gt; configure hudson -&gt; Global MAVEN_OPTS。这个方法来自：<a href="http://stackoverflow.com/questions/1004540/fail-hudson-build-on-single-unit-test-failure">http://stackoverflow.com/questions/1004540/fail-hudson-build-on-single-unit-test-failure</a></p></p>
+<p>此外，我们借助hudson来自动完成开发环境的部署。从hudson的插件列表中安装ssh plugin和scp plugin。对打包项目新增一个post build action，使用SCP插件把打包生成的压缩文件上传到开发机上 ...</p>
+                <a class="readmore" href="/hudson-tips.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/qian-yi-pylonsbook-chapter-8dao-pylons10.html" rel="bookmark"
+                           title="Permalink to 迁移pylonsbook chapter 8到pylons1.0">迁移pylonsbook chapter 8到pylons1.0</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-12T00:00:00+08:00">
+                Published: Sun 12 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>pylons</li>
+<li>python</li>
+<li>sqlalchemy
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Pylonsbook的<a href="http://pylonsbook.com/en/1.1/starting-the-simplesite-tutorial.html">第八章</a>，是一个完整的CRUD程序例子。pylons升级到1.0之后，有一些代码不能正常工作了。</p></p>
+<p>首先查看你使用的各种库的版本：
+<i>paster shell development.ini</i>
+[cc lang="python"]<br />
+import pylons<br />
+pylons.__version__<br />
+import sqlalchemy<br />
+sqlalchemy.__version__<br />
+import webhelpers<br />
+webhelpers.__version__<br />
+[/cc]</p>
+
+<p>Pylons 1.0开始鼓励通过继承Base类的声明式ORM（pylonsbook介绍的是pylons 0.9x，sqlalchemy 0.5x，使用mapper的方式）<br />
+对pylons1.0，mode/__init__ ...</p>
+                <a class="readmore" href="/qian-yi-pylonsbook-chapter-8dao-pylons10.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="/9yue-10ri-yun-zhuan-ji.html" rel="bookmark"
+                           title="Permalink to 9月10日运转记">9月10日运转记</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-09-10T00:00:00+08:00">
+                Published: Fri 10 September 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Shanghai
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>庆祝教师节，今天请假休息出门放松。</p></p>
+<p>线路：<br />
+609 -> 其昌栈渡口 -> 秦皇岛路渡口 -> 37 -> 33 -> 金陵西路渡口 -> 东昌路渡口 -> 东川线</p>
+
+<p>609从张江路经金桥路出张江，经过碧云路、云山路、羽山路、源深路、福山路等，连接了浦东几个人口稠密的地区。从张江出发做609可以直达世纪大道、张杨路的浦东医保中心，这些地方之前去过但是都不知道，今天途径才恍然大悟。不过609的缺点就是太绕，尤其是在张江这段简直无语。</p>
+
+<p>其昌栈渡口人不多，极少行人，多数是摩托车电动车。轮渡稍微有点破旧，行人票价0.5元。
+<a href="http://www.flickr.com/photos/40741608@N08/4976039507/" title="20100910039.resized by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4130/4976039507_8a43361c11.jpg" width="500" height="375" alt="20100910039.resized" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/40741608@N08/4976039365/" title="20100910041.resized by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4085/4976039365_ba35005f9b.jpg" width="500" height="375" alt="20100910041.resized" /></a>
+没有带相机，手机拍拍玩。</p>
+
+<p>渡过黄浦江后是浦西的秦皇岛路渡口，附近是4号线大连路车站。从附近坐37路，沿东大名路，经过外白渡铁桥到外滩。
+<a href="http://www.flickr.com/photos/40741608@N08/4976650260/" title="20100910046.resized by 贝小塔, on Flickr"><img src="http://farm5.static.flickr.com/4125/4976650260_430b0e1911.jpg" width="500" height="375" alt="20100910046.resized" /></a>
+像不像这个：<a href="http://music.douban.com/subject/2025422/">http://music.douban.com/subject ...</a></p>
+                <a class="readmore" href="/9yue-10ri-yun-zhuan-ji.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+                </ol><!-- /#posts-list -->
+<p class="paginator">
+        <a href="/category/misc40.html">&laquo;</a>
+    Page 41 / 77
+        <a href="/category/misc42.html">&raquo;</a>
+</p>
+                </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

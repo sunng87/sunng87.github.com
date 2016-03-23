@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>'Maven recipe #0'</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/maven-recipe-0.html" rel="bookmark"
+           title="Permalink to 'Maven recipe #0'">'Maven recipe #0'</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-05-16T00:00:00+08:00">
+                Published: Sun 16 May 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>手艺
+tags:</li>
+<li>java</li>
+<li>maven</li>
+<li>recipe
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>问题： 多个root pom的dependencyManagement有重复的内容，希望统一管理。<br />
+解决：<br />
+新建一个空pom.xml，在dependencyManagement中指定这些依赖，如<br />
+[cc lang="xml"]
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br />
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;</p></p>
+<p> <modelversion>4.0.0</modelversion>
+    <groupid>info.sunng</groupid>
+    <artifactid>root</artifactid>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <dependencymanagement /></p>
+
+<p>     <dependencies>
+            <dependency>
+                <groupid>info.sunng</groupid>
+                <artifactid>X</artifactid>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency></dependencies></p>
+
+<p>     
+    </p>
+
+<p>
+[/cc]<br />
+将这个pom.xml部署到你的Maven私服。</p>
+
+<p>在其他root pom中添加这样的dependencyManagement<br />
+[cc lang="xml"]<br />
+....<br />
+            <dependency>
+                <groupid>info.sunng</groupid>
+                <artifactid>root</artifactid>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+....<br />
+[/cc]</p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

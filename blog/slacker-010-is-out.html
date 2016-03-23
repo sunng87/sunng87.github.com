@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Slacker 0.1.0 is out</title>
+        <link rel="stylesheet" href="/theme/css/main.css" />
+        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+
+        <!--[if IE]>
+            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="/">Here Comes the Sun </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/slacker-010-is-out.html" rel="bookmark"
+           title="Permalink to Slacker 0.1.0 is out">Slacker 0.1.0 is out</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-12-02T00:00:00+08:00">
+                Published: Fri 02 December 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->      <ul>
+<li>ANN
+tags:</li>
+<li>clojure</li>
+<li>project
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Glad to roll out the first release of the <strong>slacker</strong> framework. Slacker is a clojure RPC framework on top of a TCP binary protocol. It provides a set of non-invasive APIs for both server and client. The remote invocation is completely transparent to user.</p></p>
+<p>In addition to APIs introduced in <a href="http://sunng.info/blog/2011/11/clojure-rpc-prototyping-and-early-thoughts/">last post</a>, asynchronous approach is supported in client API :<br />
+[cc lang="clojure"]<br />
+(defremote remote-func :async true)<br />
+@(remote-func)<br />
+[/cc]<br />
+If you add option `:async` to defremote, then the function facade will return a promise. You have to deref it by yourself. Also you can use the `:callback` option in defremote to specify a callback function.<br />
+[cc lang="clojure"]<br />
+(defremote remote-func :callback #(println %))<br />
+(remote-func)<br />
+[/cc]</p>
+
+<p>This gives you much more flexibility of using remote function. But be careful it will break consistency between local and remote mode. </p>
+
+<p>To use slacker, add it to your project.clj<br />
+[cc lang="clojure"]<br />
+:dependencies [[info.sunng/slacker "0.1.0"]]<br />
+[/cc]</p>
+
+<p>You can find examples on the <a href="https://github.com/sunng87/slacker" target="_blank">github page</a>. </p>
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="https://github.com/sunng87">Github</a></li>
+                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
