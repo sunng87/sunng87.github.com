@@ -23,6 +23,52 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/gwibber-and-webkit.html" rel="bookmark"
+                           title="Permalink to Gwibber and WebKit">Gwibber and WebKit</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-03-03T00:00:00+08:00">
+                Published: Tue 03 March 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>css</li>
+<li>foss</li>
+<li>gnome</li>
+<li>twitter</li>
+<li>web</li>
+<li>webkit
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>Gwibber是一个用来接收流行的web2.0应用的消息的客户端。（靠，这句绝望了。）今天LinuxToy才刚刚介绍，不过我前几天就发现了，哦hohohoho。</p></p>
+<p>Gwibber的架构很容易扩展，稍微看一看就清楚了，我就不描述了。正好饭否和twitter的接口是保持一致的，拷拷改改很容易就可以给Gwibber增加饭否的支持。如此一来就可以同时看饭否看twitter发饭否发twitter了。</p>
+
+<p>你以为这是一张截图，其实它是分隔线。</p>
+
+<p><img class="alignnone" title="Gwibber with fanfou support" src="http://pic.yupoo.com/classicning/15491710661a/xaq77l24.jpg" alt="" width="338" height="528" /></p>
+
+<p>注意上图，gwibber是一个简单的pyGtk程序加上Webkit，它的核心部分就是html网页。这个网页除了头像以外可是没有图片的，那几个效果是怎么实现的呢。一个一个说。
+<ul>
+    <li>圆角 -webkit-border-radius: 7px;</li>
+    <li>文字阴影 text-shadow: 1px 1px black;</li>
+    <li>渐变 background:  -webkit-gradient(linear, left top, left 220%, from ...</li></ul></p>
+                <a class="readmore" href="https://sunng.info/blog/gwibber-and-webkit.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/zui-hou-yi-ke.html" rel="bookmark"
                            title="Permalink to 最后一课">最后一课</a></h1>
                 </header>
@@ -184,47 +230,11 @@ struct DEMTYPE {<br />
                 <a class="readmore" href="https://sunng.info/blog/pythondu-qu-er-jin-zhi-wen-jian.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/ye-huo-shao-bu-jin-cao-mu-hua-niao-yu.html" rel="bookmark"
-                           title="Permalink to 野火烧不尽，草木花鸟鱼">野火烧不尽，草木花鸟鱼</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-02-18T00:00:00+08:00">
-                Published: Wed 18 February 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>自话
-tags:</li>
-<li>blog</li>
-<li>friends</li>
-<li>www
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>Blog被封很长时间了，让大家担心了，不知道的朋友恐怕还以为我在单向街书店被捅了吧，好在那位不是我，我还没有恶心到把那个部位当作我的网名。</p></p>
-<p>经过一系列折腾，我现在终于搬到好友WG的地盘上继续写东西了。原本大算使用habari来做blog系统，但是没有部署成功，对PHP/Apache的问题我只能望洋兴叹。最后还是随了大流，用了Wordpress。随大流对我来说是一件困难的事情，为此我经历了相当痛苦的抉择。</p>
-
-<p>其实原有的文章我已经在网站被封之前抢救下来了，并且在habari中实现了恢复。不过既然habari部署搞不定，那也就算了，毕竟以前的东西在新的系统里总有些不伦不类。而且更重要的是，大家的评论我没有精力恢复了。既然没有了大家的评论，以前的blog也就不重要了，嗯。将近两年的log我就自己收藏了，不在与大家分享了，也算是我即将告别校园，有一些历史数据出于安全考虑需要封存。</p>
-
-<p>blog刚刚架起来，还有很多东西要改。最后十分感谢WG在为难时刻出手相助。</p>
-                <a class="readmore" href="https://sunng.info/blog/ye-huo-shao-bu-jin-cao-mu-hua-niao-yu.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc76.html">&laquo;</a>
-    Page 77 / 77
+    Page 77 / 78
+        <a href="https://sunng.info/blog/category/misc78.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->
         <section id="extras" class="body">

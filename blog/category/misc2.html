@@ -23,6 +23,35 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark"
+                           title="Permalink to "AVOS Cloud 实时通信服务架构：微服务和服务发现"">"AVOS Cloud 实时通信服务架构：微服务和服务发现"</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-08-19T16:46:20+08:00">
+                Published: Tue 19 August 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+<p>tags: <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info -->                <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
+<p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
+<p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
+<ul>
+<li>Push 服务：处理推送的订阅关系，触发推送</li>
+<li>长连接服务器：维持设备与服务的长连接</li>
+<li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
+<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警 ...</li></ul>
+                <a class="readmore" href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/zai-docker-zhong-an-zhuang-he-shi-yong-rust-nightly-ban-ben.html" rel="bookmark"
                            title="Permalink to "在 Docker 中安装和使用 Rust nightly 版本"">"在 Docker 中安装和使用 Rust nightly 版本"</a></h1>
                 </header>
@@ -141,33 +170,10 @@
                 <a class="readmore" href="https://sunng.info/blog/kuo-zhan-linux-ephemeral-duan-kou-xian-zhi.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark"
-                           title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-06-09T21:06:39+08:00">
-                Published: Mon 09 June 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <h2>What are Slacker and Slacker Cluster</h2>
-<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That ...</p>
-                <a class="readmore" href="https://sunng.info/blog/slacker-cluster-012-grouping.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc.html">&laquo;</a>
-    Page 2 / 77
+    Page 2 / 78
         <a href="https://sunng.info/blog/category/misc3.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

@@ -1,5 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="https://sunng.info/blog/" rel="alternate"></link><link href="https://sunng.info/blog/atom.xml" rel="self"></link><id>https://sunng.info/blog/</id><updated>2016-03-21T22:28:06+08:00</updated><entry><title>"Smoothing Your Rust Crates Release With Cargo-release"</title><link href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html" rel="alternate"></link><updated>2016-03-21T22:28:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2016-03-21:blog/smoothing-your-rust-crates-release-with-cargo-release.html</id><summary type="html">&lt;p&gt;Cargo-release is a cargo subcommand that automates your libraries
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="https://sunng.info/blog/" rel="alternate"></link><link href="https://sunng.info/blog/atom.xml" rel="self"></link><id>https://sunng.info/blog/</id><updated>2016-03-27T21:25:06+08:00</updated><entry><title>Using external drive as rootfs for raspberry pi</title><link href="https://sunng.info/blog/using-external-drive-as-rootfs-for-raspberry-pi.html" rel="alternate"></link><updated>2016-03-27T21:25:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2016-03-27:blog/using-external-drive-as-rootfs-for-raspberry-pi.html</id><summary type="html">&lt;p&gt;Raspberry pi uses SD/TF card as storage. However, sometimes it becomes
+a bottleneck of performance because of the I/O speed on SD card is
+quite limited.&lt;/p&gt;
+&lt;p&gt;A simple &lt;code&gt;fio&lt;/code&gt; read/write test on my setup shows even with USB2.0, an
+external SSD is way faster than SD card.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sdcard: (groupid=0, jobs=1): err= 0: pid=582: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=4442.4KB/s, iops=1110, runt= 14720msec
+    clat (usec): min=7, max=18574, avg=175.16, stdev=1657.17
+     lat (usec): min=8, max=18575, avg=176.57, stdev=1657.16
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    9],
+     | 30.00th=[    9], 40.00th=[   10], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   11], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[  322], 99.50th=[17280], 99.90th=[18048], 99.95th=[18048],
+     | 99.99th=[18560]
+    bw (KB  /s): min=   93, max=12760, per=95.99%, avg=8527.36, stdev=5281.16
+  write: io=65680KB, bw=4461.1KB/s, iops=1115, runt= 14720msec
+    clat (usec): min=23, max=3373.8K, avg=699.49, stdev=38712.68
+     lat (usec): min=24, max=3373.8K, avg=701.24, stdev=38712.68
+    clat percentiles (usec):
+     |  1.00th=[   23],  5.00th=[   23], 10.00th=[   24], 20.00th=[   24],
+     | 30.00th=[   24], 40.00th=[   24], 50.00th=[   25], 60.00th=[   25],
+     | 70.00th=[   26], 80.00th=[   30], 90.00th=[   32], 95.00th=[   45],
+     | 99.00th=[   82], 99.50th=[18048], 99.90th=[19840], 99.95th=[20608],
+     | 99.99th=[2572288]
+    bw (KB  /s): min=   99, max=12832, per=96.08%, avg=8573.43, stdev=5318.31
+    lat (usec) : 10=18.57%, 20=29.59%, 50=49.06%, 100=1.59%, 250=0.10%
+    lat (usec) : 500=0.30%
+    lat (msec) : 4=0.01%, 10=0.01%, 20=0.74%, 50=0.04%, 1000=0.01%
+    lat (msec) : &amp;gt;=2000=0.01%
+  cpu          : usr=2.38%, sys=4.69%, ctx=1521, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &amp;gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+ssd: (groupid=0, jobs=1): err= 0: pid=583: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=28543KB/s, iops=7135, runt=  2291msec
+    clat (usec): min=7, max=196418, avg=63.48, stdev=1925.74
+     lat (usec): min=8, max=196419, avg=64.85, stdev=1925.74
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    8],
+     | 30.00th=[    9], 40.00th=[    9], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   10], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[ 1608], 99.50th=[ 1832], 99.90th=[ 2128], 99.95th=[ 2256],
+     | 99.99th=[146432]
+    bw (KB  /s): min= 6144, max=39320, per=100.00%, avg=27607.50, stdev=15537.13
+  write: io=65680KB, bw=28669KB/s, iops=7167, runt=  2291msec
+    clat (usec): min=15, max=280132, avg=54.86, stdev=2193.37
+     lat (usec): min=17, max=280134, avg=56.55, stdev=2193.37
+    clat percentiles (usec):
+     |  1.00th=[   16],  5.00th=[   16], 10.00th=[   16], 20.00th=[   17],
+     | 30.00th=[   17], 40.00th=[   17], 50.00th=[   17], 60.00th=[   17],
+     | 70.00th=[   18], 80.00th=[   18], 90.00th=[   22], 95.00th=[   26],
+     | 99.00th=[ 1256], 99.50th=[ 1720], 99.90th=[ 2096], 99.95th=[ 2288],
+     | 99.99th=[ 3024]
+    bw (KB  /s): min= 6176, max=39392, per=100.00%, avg=27584.75, stdev=15473.86
+    lat (usec) : 10=21.33%, 20=70.89%, 50=5.47%, 100=0.41%, 250=0.18%
+    lat (usec) : 500=0.14%, 750=0.01%, 1000=0.03%
+    lat (msec) : 2=1.33%, 4=0.20%, 250=0.01%, 500=0.01%
+  cpu          : usr=15.28%, sys=23.14%, ctx=686, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &amp;gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So if you want a better pi, it's strongly recommend to use an external
+driver as rootfs.&lt;/p&gt;
+&lt;p&gt;Last year, I backed
+&lt;a href="http://http://gungho.io/product/pidrive/"&gt;piDrive&lt;/a&gt; on Kickstart. The
+project is aimed to provide a SSD adapter for pi with low power
+requirement. This board made it possible to use an SSD with pi. And we
+can put our rootfs on this disk to run the pi smoothly.&lt;/p&gt;
+&lt;p&gt;Before we get started, I urge you to ensure your power adapter could
+provide 5V/2A for pi2 and 5V/2.5A for pi3. Otherwise, you may be
+resulted in file system corruption. Even worse, the SSD could be
+totally destroyed, like my first one.&lt;/p&gt;
+&lt;p&gt;You will still need a SD card as &lt;code&gt;/boot&lt;/code&gt; your pi because that's what
+pi requires. A ~128MB card will be just ok for &lt;code&gt;/boot&lt;/code&gt; but I know it's
+already difficult to find on the market. Perhaps you can create two
+partitions on your card so you can utilize the remaining spaces.&lt;/p&gt;
+&lt;p&gt;Create partition on your SSD and format them as you want. You can use
+ext4 for your rootfs. But for sdcard, only vfat is allowed for the
+&lt;code&gt;/boot&lt;/code&gt; partition. Mount the SSD and sdcard to your current system,
+for example, as &lt;code&gt;/mnt/root/&lt;/code&gt; and &lt;code&gt;/mnt/boot/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I'm using &lt;a href="http://archlinuxarm.org"&gt;archlinuxarm&lt;/a&gt; as my os, it's clean
+and compact as archlinux. The base tarball is just 270MB, makes
+raspbian's 1G+ seems a little bloated.&lt;/p&gt;
+&lt;p&gt;Download the tarball from archlinuxarm, at the time of writing, both
+Pi2 and Pi3 uses Pi2 file system.&lt;/p&gt;
+&lt;p&gt;Extract the tarball to &lt;code&gt;/mnt/root&lt;/code&gt; with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C /mnt/root
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Copy &lt;code&gt;/boot&lt;/code&gt; directory to SD card:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp -r /mnt/root/boot/* /mnt/boot/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Edit &lt;code&gt;/mnt/boot/cmdline.txt&lt;/code&gt; to tell pi where your rootfs is:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;root=/dev/sda1 rootdelay=5 rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Actually you just need to change two key/value pairs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Change &lt;code&gt;root=&lt;/code&gt; to your SSD partition that contains root
+  fs. Typically your disk will be &lt;code&gt;sda1&lt;/code&gt; here. From my experiments,
+  the bootloader doesn't recognize &lt;code&gt;PARTUUID=...&lt;/code&gt; as told by
+  &lt;a href="https://learn.adafruit.com/external-drive-as-raspberry-pi-root?view=all"&gt;adafruit&lt;/a&gt;
+  and &lt;code&gt;/dev/disk/by-uuid/...&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;rootdelay=5&lt;/code&gt; to let bootloader to wait for your partition to be
+  loaded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then you will need to edit &lt;code&gt;/etc/fstab&lt;/code&gt; to tell linux (not pi) about
+the file system layout:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#
+# /etc/fstab: static file system information
+#
+# &amp;lt;file system&amp;gt; &amp;lt;dir&amp;gt;   &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;       &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+/dev/mmcblk0p1  /boot   vfat    defaults        0       0
+/dev/sda1       /       ext4    defaults        0       1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So that's simply all you need to get prepared. Run &lt;code&gt;sync&lt;/code&gt; on your
+system to make sure everything is on the disk. Umount sdcard and
+ssd. Set them up on your Pi. Profit!&lt;/p&gt;</summary><category term="raspberrypi"></category><category term="linux"></category><category term="archlinux"></category></entry><entry><title>"Smoothing Your Rust Crates Release With Cargo-release"</title><link href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html" rel="alternate"></link><updated>2016-03-21T22:28:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2016-03-21:blog/smoothing-your-rust-crates-release-with-cargo-release.html</id><summary type="html">&lt;p&gt;Cargo-release is a cargo subcommand that automates your libraries
 release process. The idea was inspired by Clojure's leiningen, which
 has a &lt;code&gt;release&lt;/code&gt; command does exact same thing.&lt;/p&gt;
 &lt;p&gt;Typically, when you decide to release a library to crates.io, you need
@@ -151,35 +282,4 @@ It works&lt;span class="o"&gt;[&lt;/span&gt;  0.033&lt;span class="o"&gt;]&lt;/s
 &lt;li&gt;Rust 的 derive 是一个神奇的功能，后来发现确实是一个 magic，因为可以 derive 的 trait 都是写死在编译器里的&lt;/li&gt;
 &lt;li&gt;关于 Rust 的 ownership 看&lt;a href="http://nercury.github.io/rust/guide/2015/01/19/ownership.html"&gt;这篇文章&lt;/a&gt;，作者承诺再写一篇关于 borrow 和 lifetime 的，相信也不错&lt;/li&gt;
 &lt;li&gt;有任何问题都可以在 stackoverflow 上问，有几个人会很快回复&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="'programming'"></category><category term="'rust'"></category></entry><entry><title>"AVOS Cloud 实时通信服务架构：微服务和服务发现"</title><link href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="alternate"></link><updated>2014-08-19T16:46:20+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2014-08-19:blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html</id><summary type="html">&lt;p&gt;“微服务” (Microservice) 是今年特别热的一个概念，&lt;a href="http://martinfowler.com/articles/microservices.html"&gt;Martin Fowler 的文章&lt;/a&gt;对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。&lt;/p&gt;
-&lt;p&gt;在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.&lt;/p&gt;
-&lt;p&gt;以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Push 服务：处理推送的订阅关系，触发推送&lt;/li&gt;
-&lt;li&gt;长连接服务器：维持设备与服务的长连接&lt;/li&gt;
-&lt;li&gt;Router：应用层的 lookup，负责分配合适的长连接服务器给新设备&lt;/li&gt;
-&lt;li&gt;WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警&lt;/li&gt;
-&lt;li&gt;数据存储：群组数据，用户可以通过API访问&lt;/li&gt;
-&lt;li&gt;HBase：消息记录存储&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;模块间的集成，根据业务的特性分别使用 &lt;a href="https://github.com/sunng87/slacker"&gt;Slacker&lt;/a&gt; 远程调用框架和 &lt;a href="http://twitter.github.io/kestrel/"&gt;Kestrel&lt;/a&gt; 消息队列。
-对于可能耗时较大的任务，我们通过 Kestrel 队列放到后台执行，避免阻塞前台服务，影响吞吐量。而另一些需要实时的集成，则使用 Slacker 远程调用实现多个进程间的通信。&lt;/p&gt;
-&lt;p&gt;Slacker 是一个专门为 Clojure 语言设计的远程调用框架，利用 Slacker 你可以暴露一个 或多个 Clojure 的 namespace 供远程调用。在客户端，Slacker 利用 &lt;a href="http://clojure.org/macros"&gt;Clojure 宏&lt;/a&gt;的特性，保持远程调用和本地调用的代码完全一致，这样本地和远程调用的切换只要更改一个 &lt;code&gt;(require)&lt;/code&gt; 即可实现，把框架对业务代码的侵入降到最低。此外，Slacker 使用二进制序列化 &lt;a href="https://github.com/ptaoussanis/nippy"&gt;nippy&lt;/a&gt;，在网络连接层面使用异步复用，同时在超时方面也做了良好的控制。&lt;/p&gt;
-&lt;p&gt;以上的基础设施帮助我们良好地拆分模块，为下一步的扩展提供了可能。&lt;/p&gt;
-&lt;h3&gt;服务发现&lt;/h3&gt;
-&lt;p&gt;长连接服务器是实时通信的功能核心，它的瓶颈在内存和 CPU，可以通过增加部署来达到线性扩展。随着业务量的增加和硬件资源的整合，它可能会面临较频繁的部署变化，另外它也需要有能通过新增部署来快速平滑高峰压力的能力。基于 &lt;a href="https://en.wikipedia.org/wiki/Publish/subscribe"&gt;Pub/Sub 抽象&lt;/a&gt;的消息队列对此有良好的支持，但这对我们以 RPC 为核心的集成方式提出了新的要求，依赖模块也能快速响应服务部署的变化：我们不可能在新增某个服务部署后修改每个依赖的配置再逐一重启。&lt;/p&gt;
-&lt;p&gt;在这方面，我们利用了 &lt;a href="https://github.com/sunng87/slacker-cluster"&gt;Slacker Cluster 框架&lt;/a&gt;。他的核心思想是在部署和服务间增加一层抽象：对于服务的消费者而言，只需声明自己所依赖的服务，而无需静态地了解进程的地址。&lt;/p&gt;
-&lt;p&gt;所有的服务提供者将自己能够提供的服务注册在 &lt;a href="https://zookeeper.apache.org/"&gt;Zookeeper&lt;/a&gt; 集群里，并将部署地址注册为 Ephemeral 节点。Ephemeral 节点在创建它的连接断后会自动删除，这样当一个部署下线后，它相应的节点也会自动删除。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Zookeeper 目录结构&lt;/span&gt;
-ls /slacker/example-cluster/namespaces/
-&lt;span class="o"&gt;[&lt;/span&gt;my.serviceA, my.serviceB&lt;span class="o"&gt;]&lt;/span&gt;
-
-ls /slacker/example-cluster/namespaces/my.serviceA
-&lt;span class="o"&gt;[&lt;/span&gt;192.168.1.100:2104, 192.168.1.101:2014...&lt;span class="o"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;所有服务的客户端会 watch 自己感兴趣的 Zookeeper 节点，而部署变化时，所有的客户端都会得到通知，进而刷新服务列表，将流量引向新的节点。&lt;/p&gt;
-&lt;p&gt;在实时通信服务中，Router 服务会通过这个 RPC 机制轮询所有在线的长连接服务器，记录他们实时的运行状态。所有的用户设备并非直接连接到固定的长连接服务器，而是先询问 Router，由后者分配一台压力较轻的实例。当有新的长连接服务器部署后，Router收到通知，新的连接将优先连接这个新进程。此外，监控和数据收集的服务也会自动地把新实例加入管理范围。&lt;/p&gt;
-&lt;p&gt;有了这样一套服务发现机制，我们就可以对整个架构中的任意模块随时增减部署，保证服务可以以健康的状态运行。未来，我们还会集成云主机的提供商的API，来实现基础设施的自动化：当系统压力达到阀值时，云主机自动分配新的资源自动开机，jenkins 自动部署，加上现有的服务发现机制，实现0手工操作。这将是云服务运维的新篇。&lt;/p&gt;
-&lt;p&gt;原载 &lt;a href="https://blog.avoscloud.com/1927/"&gt;AVOSCloud Blog&lt;/a&gt;&lt;/p&gt;</summary><category term="programming"></category></entry></feed>
+&lt;/ul&gt;</summary><category term="'programming'"></category><category term="'rust'"></category></entry></feed>

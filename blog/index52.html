@@ -23,6 +23,49 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html" rel="bookmark"
+                           title="Permalink to We are using Hudson for continuous integration">We are using Hudson for continuous integration</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-04-06T00:00:00+08:00">
+                Published: Tue 06 April 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>CI</li>
+<li>dev</li>
+<li>hudson</li>
+<li>java</li>
+<li>maven</li>
+<li>software</li>
+<li>tool
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>经历了持续两周的人肉集成，今天上午抢得一台Linux机器，终于尝试用hudson来替代人肉构建。</p></p>
+<p>Hudson的安装和配置远比想象的简单，只要下载发布的war包，在相应的目录执行<br />
+nohup java -jar hudson.war > hudson.log 2>&1 &<br />
+即可启动到后台</p>
+
+<p>hudson的web图形界面可以胜任几乎全部工作。我们主要使用maven来构建项目，hudson提供了非常强大的功能：邮件提醒（通过插件支持twitter/jabber/irc提醒）；自动构建，除了基本的定时构建以外，hudson还会自动解析其管理的项目之间的依赖关系，从而实现级联的构建，这个功能非常震撼。</p>
+
+<p>刚刚上手以后我还安装了两个插件。一个是build-timeout插件，可以之间一次构建的超时时间：我们的项目中有老大写的交互式的maven配置插件，一旦这个插件在自动构建时运行会阻塞构建的流程。另一个是scp发布插件，可以自动scp一个文件到远程服务器上，我用这个插件来把构建版本发布到运行环境中，只要在适当的时候重启一下运行环境的服务器就可以实现部署了 ...</p>
+                <a class="readmore" href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu.html" rel="bookmark"
                            title="Permalink to Reset default cursor theme and web browser after installing kubuntu">Reset default cursor theme and web browser after installing kubuntu</a></h1>
                 </header>
@@ -163,47 +206,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/gao-ding-gwibber.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/jiang-jiang-jiang.html" rel="bookmark"
-                           title="Permalink to 将！将！将！">将！将！将！</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-03-20T00:00:00+08:00">
-                Published: Sat 20 March 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>自话
-tags:</li>
-<li>Life</li>
-<li>snda</li>
-<li>web
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><ol>
-    <li>汇报一下近况，最近仍然是6*12小时的工作，这是第二个礼拜了。我们的进度还算是顺利，不过架不住产品那里经常会有另他们自己拍案的新点子，这可苦了开发。可怜我们开发在产品面前基本没有什么话语权，连老大都只能说我们尽量支持。因为我负责的部分跟业务关系不是特别紧密，之前也算是有先见之明，坚决解耦，所以策划的变化对我影响不大，只是听见两旁的同事不断地重复“我悲剧了”。</li>
-    <li>10.04来了，迫不及待了又。结果升级的过程中遇到了无数依赖问题和冲突，apt几乎都无能为力，前天搞到1点多才睡，早晨7点起床又继续折腾。到了昨天中午终于可以进入桌面了，累得够呛，晚上又发烧了。</li>
-    <li>早晨起床忽然想起winter，现在的4square这么火，昨天又看到了比较mood的微博产品。哎，我们做的时候可是07年啊，也许是太超前了吧。</li>
-    <li>加班路上哼张楚的《将将将》，我真想再见张楚一回。</li>
-    <li>看见@dearaprilfool同学抄的《致橡树》，很有共鸣，女生们应该读一下。小时候读不算，这个年纪读才好 ...</li></ol></p></p>
-                <a class="readmore" href="https://sunng.info/blog/jiang-jiang-jiang.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index51.html">&laquo;</a>
-    Page 52 / 77
+    Page 52 / 78
         <a href="https://sunng.info/blog/index53.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

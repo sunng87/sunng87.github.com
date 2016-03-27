@@ -23,6 +23,57 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/nginx-http-push.html" rel="bookmark"
+                           title="Permalink to Nginx HTTP Push">Nginx HTTP Push</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-26T00:00:00+08:00">
+                Published: Thu 26 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>http</li>
+<li>nginx</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>前些天看到一个Nginx的Module，用来是实现Comet，今天简单试了一下功能。作者名叫Leo Ponomarev，项目地址：http://pushmodule.slact.net/
+<h3>安装</h3>
+Module需要在编译时加入nginx，同时下载nginx和nginx-push-module，在nginx configure时增加一个参数：
+<em>./configure --add-module=path/to/nginx_http_push_module</em>
+<h3>使用</h3>
+编写一个非常基本的nginx配置文件：
+<pre class="brush:plain">events{
+    worker_connections 1024;
+}
+http{
+    server {
+        listen  80;
+        server_name localhost;</pre></p></p>
+<p>     location /publish {<br />
+            set $push_channel_id $arg_id;</p>
+
+<p>         push_publisher;</p>
+
+<p>         push_store_messages on;<br />
+            push_message_timeout 2h ...</p>
+                <a class="readmore" href="https://sunng.info/blog/nginx-http-push.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/zhe-yi-qie-mei-you-xiang-xiang-de-na-yao-zao.html" rel="bookmark"
                            title="Permalink to 这一切没有想象的那么糟">这一切没有想象的那么糟</a></h1>
                 </header>
@@ -172,52 +223,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/ting-dou-ban-dian-tai-de-zui-jia-zi-shi.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/use-pipe-in-subprocess.html" rel="bookmark"
-                           title="Permalink to Use pipe in subprocess">Use pipe in subprocess</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-11-12T00:00:00+08:00">
-                Published: Thu 12 November 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>把戏
-tags:</li>
-<li>linux</li>
-<li>python
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><h3>问题：</h3>
-您要通过python的subprocess模块执行一些命令，要在程序中获得命令的标准输出，此外，命令中还有管道操作。
-<h3>解决：</h3>
-以这个命令为例：
-<em>cat /home/admin/deploy/log/2009-11-11.log ｜grep example.com ｜wc -l</em>
-<pre class="brush:python">
-import subprocess</pre></p></p>
-<p>cmd1 = 'cat /home/admin/deploy/log/2009-11-11.log'<br />
-cmd2 = 'grep example.com'<br />
-cmd3 = 'wc -l'</p>
-
-<p>pipe1 = subprocess.Popen(cmd1.split(), stdout ...</p>
-                <a class="readmore" href="https://sunng.info/blog/use-pipe-in-subprocess.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun61.html">&laquo;</a>
-    Page 62 / 77
+    Page 62 / 78
         <a href="https://sunng.info/blog/author/ning-sun63.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

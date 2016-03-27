@@ -23,6 +23,40 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/yong-markdownshu-xie-wen-dang.html" rel="bookmark"
+                           title="Permalink to 用markdown书写文档">用markdown书写文档</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-07-26T00:00:00+08:00">
+                Published: Mon 26 July 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>foss</li>
+<li>linux
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>写文档是头疼事，没人愿意写文档。在word里写文档，时间长了都怀疑自己是不是搞技术的。我阅历有限，在我的印象里就没有用word格式看过什么有价值的东西。只要一打开word想到的就是连篇累牍的废话、码字。word最重要的功能是什么？保存。其次呢？字数统计。我所写过的word文档绝大多数都是“只写”的，通常作为流程里的一个附件，没有人真正去看。</p></p>
+<p>以上是人身攻击，接下来比较实际的问题，word文档不是符合unix哲学的东西。格式不开放，你就没有办法进行diff操作，把word文档放到svn里，只能使用最基本的版本控制，没法查看changeset，只知道改了，不知道改了什么。</p>
+
+<p>为了改变这种情况，我试过用<a href="http://www.docbook.org/">docbook</a>格式。docbook用xml书写，定义了一套复杂的Schema，详细到作者的email都有定义。docbook还有丰富的工具集，可以通过xsl把docbook转换成所有你知道的文档格式。<a href="http://www.sonatype.com/products/maven/documentation/book-defguide">Maven: the Definitive Guide</a>就是用docbook写成的。不过用docbook也存在一些问题 ...</p>
+                <a class="readmore" href="https://sunng.info/blog/yong-markdownshu-xie-wen-dang.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/bottle-fapws3.html" rel="bookmark"
                            title="Permalink to bottle & fapws3">bottle & fapws3</a></h1>
                 </header>
@@ -192,48 +226,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/clojure-recur.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid.html" rel="bookmark"
-                           title="Permalink to fixing "libmozjs" missing when using mongodb on Ubuntu lucid">fixing "libmozjs" missing when using mongodb on Ubuntu lucid</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-07-13T00:00:00+08:00">
-                Published: Tue 13 July 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>把戏
-tags:</li>
-<li>mongodb</li>
-<li>ubuntu
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><strong>Problem</strong>
-When running mongod/mongo/mongos, you got message like this:
-<i>mongod: error while loading shared libraries: libmozjs.so: cannot open shared object file: No such file or directory</i></p></p>
-<p><strong>Solution</strong>
-Make sure you have xulrunner-dev installed:
-<em>sudo apt-get install xulrunner-dev</em></p>
-
-<p>then find ...</p>
-                <a class="readmore" href="https://sunng.info/blog/fixing-libmozjs-missing-when-using-mongodb-on-ubuntu-lucid.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc44.html">&laquo;</a>
-    Page 45 / 77
+    Page 45 / 78
         <a href="https://sunng.info/blog/category/misc46.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

@@ -23,6 +23,53 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html" rel="bookmark"
+                           title="Permalink to 验证码服务recaptcha和vidoop">验证码服务recaptcha和vidoop</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-13T00:00:00+08:00">
+                Published: Tue 13 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>captcha</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>某人已经发展到上班时间写blog了。</p></p>
+<p>继续说验证码服务，找到两个比较典型的。<a href="http://recaptcha.net/" target="_blank">recaptcha</a>非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），<a href="http://vidoop.com/" target="_blank">vidoop</a>提供了一种很有特点的验证码机制。</p>
+
+<p>两个服务都提供了python的接口封装便于接入，通过api接口可以管中窥豹，大致了解这两个验证服务的机制。
+<h3>recaptcha</h3>
+下面是一段结合了web.py的简单调用
+<pre class="brush:python">public_key = "******"
+private_key = "********"
+class Recaptcha(object):
+    def GET(self):
+        r = recaptcha.displayhtml(public_key)
+        return render.recapt(r)</pre></p>
+
+<p>    def POST(self):<br />
+        params = web.input()<br />
+        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field ...</p>
+                <a class="readmore" href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html" rel="bookmark"
                            title="Permalink to 验证码服务的两种方式">验证码服务的两种方式</a></h1>
                 </header>
@@ -199,47 +246,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/a-ba.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/dao-tou-liao.html" rel="bookmark"
-                           title="Permalink to 到头了">到头了</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-06T00:00:00+08:00">
-                Published: Tue 06 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>当时
-tags:</li>
-<li>Life
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>不管这是不是30号下午我伸直了脖子期待的国庆假期，总之伴随明天早晨8点45分打卡机一声鸣音它是要见鬼去了。8号？8号用来中和后一天的周一综合症吧，不指望了。今年国庆真是无聊到一定程度了，我印象中似乎从来都还没有这么无聊过。本来还想着靠自己一些勉强存在的兴趣爱好来抵抗无聊的，后来发现是不堪一击。概括地说这六天看了整整六天的喜羊羊。上帝啊。好像也不完全是，还听了很多革命歌曲看了一些老电影。总之正经事是没有什么明显的进度，哎呦不说了，我现在连什么是正经事都说不清楚。</p></p>
-<p>在上海一点出门的欲望了都没有，六天以来取得最远的地方就是旁边的超市，其中还有包括今天在内的三天连楼都没下去。豆瓣上本来还有个老电影的活动来着，结果正好是明天加班，想去也去不成。形势危急，主办方发了三封豆邮说大家快去，不然这个活动办不下去了。我想着在北京的时候还有点兴趣爱好什么的，那么严酷的斗争环境，周末还去听个讲座参加个沙龙什么的，在上海就一点胃口都没有了。要不以后还是找机会去北京吧，但是去干什么呢，真无聊。</p>
-
-<p>今天突然冒出个想法，要是能重活一次的话，我马上毫不犹豫爬到楼顶跳下来reset。</p>
-
-<p>好在好在，明天就回公司了，要试着配一下ehcache的集群，有时间的话比较一下RMI方式和JGroup方式的性能，再做下一步打算。对了，还有一个系统的维护指南要写。</p>
-
-<p>我还是想想明天上班Syu时的情景吧 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/dao-tou-liao.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc65.html">&laquo;</a>
-    Page 66 / 77
+    Page 66 / 78
         <a href="https://sunng.info/blog/category/misc67.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

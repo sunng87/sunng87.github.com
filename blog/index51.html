@@ -23,6 +23,51 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/my-first-hello-world-web-app-using-compojure.html" rel="bookmark"
+                           title="Permalink to My First Hello World Web App Using Compojure">My First Hello World Web App Using Compojure</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-04-24T00:00:00+08:00">
+                Published: Sat 24 April 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>clojure</li>
+<li>compojure</li>
+<li>java</li>
+<li>lein
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><a href="http://github.com/weavejester/compojure">Compojure</a>是一个用<a href="http://clojure.org/">Clojure</a>写成的类似<a href="http://www.sinatrarb.com/">Sinatra</a>的Web框架。<a href="http://github.com/technomancy/leiningen">Leiningen</a>是一个新的Clojure构建工具，它用Maven来处理依赖管理，而通过封装<a href="http://github.com/stuarthalloway/lancet">Lancet</a>（基于Ant）来实现build-in的task。</p></p>
+<p>以上是背景介绍。以下是HelloWorld。</p>
+
+<p>创建一个目录作为工程目录<br />
+[cc lang="bash"]<br />
+mkdir compojure-app<br />
+cd compojure-app<br />
+[/cc]</p>
+
+<p>像创建build.xml和pom.xml一样创建project.clj<br />
+[cc lang="lisp"]<br />
+(defproject info.sunng/compojure-app "0.0.1"<br />
+        :description "A ...</p>
+                <a class="readmore" href="https://sunng.info/blog/my-first-hello-world-web-app-using-compojure.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/xauthorg-openaddressesorg.html" rel="bookmark"
                            title="Permalink to XAuth.org & OpenAddresses.org">XAuth.org & OpenAddresses.org</a></h1>
                 </header>
@@ -172,53 +217,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/shi-yu-yuan-wei.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html" rel="bookmark"
-                           title="Permalink to We are using Hudson for continuous integration">We are using Hudson for continuous integration</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-04-06T00:00:00+08:00">
-                Published: Tue 06 April 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>装备
-tags:</li>
-<li>CI</li>
-<li>dev</li>
-<li>hudson</li>
-<li>java</li>
-<li>maven</li>
-<li>software</li>
-<li>tool
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>经历了持续两周的人肉集成，今天上午抢得一台Linux机器，终于尝试用hudson来替代人肉构建。</p></p>
-<p>Hudson的安装和配置远比想象的简单，只要下载发布的war包，在相应的目录执行<br />
-nohup java -jar hudson.war > hudson.log 2>&1 &<br />
-即可启动到后台</p>
-
-<p>hudson的web图形界面可以胜任几乎全部工作。我们主要使用maven来构建项目，hudson提供了非常强大的功能：邮件提醒（通过插件支持twitter/jabber/irc提醒）；自动构建，除了基本的定时构建以外，hudson还会自动解析其管理的项目之间的依赖关系，从而实现级联的构建，这个功能非常震撼。</p>
-
-<p>刚刚上手以后我还安装了两个插件。一个是build-timeout插件，可以之间一次构建的超时时间：我们的项目中有老大写的交互式的maven配置插件，一旦这个插件在自动构建时运行会阻塞构建的流程。另一个是scp发布插件，可以自动scp一个文件到远程服务器上，我用这个插件来把构建版本发布到运行环境中，只要在适当的时候重启一下运行环境的服务器就可以实现部署了 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index50.html">&laquo;</a>
-    Page 51 / 77
+    Page 51 / 78
         <a href="https://sunng.info/blog/index52.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

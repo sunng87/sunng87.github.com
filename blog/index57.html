@@ -23,6 +23,56 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/emerillon-map-viewer-for-gnome-desktop.html" rel="bookmark"
+                           title="Permalink to 'Emerillon: map viewer for gnome desktop'">'Emerillon: map viewer for gnome desktop'</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-30T00:00:00+08:00">
+                Published: Sat 30 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>装备
+tags:</li>
+<li>GIS</li>
+<li>gnome</li>
+<li>map</li>
+<li>OpenStreetMap
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>自从libchamplain / geoclue等库发布之后，gnome桌面的地理信息工具和支持发展很迅速：例如之前提到过的eye-of-gnome的地理信息插件，根据EXIF信息在地图上显示。现在gnome桌面上终于有一个专门的地图查看器了，仍然是基于libchamplain，名字叫做<a href="http://www.novopia.com/emerillon/" target="_blank">emerillon</a></p></p>
+<p><a title="Emerillon Map Viewer by 贝小塔, on Flickr" href="http://www.flickr.com/photos/40741608@N08/4315412541/"><img src="http://farm5.static.flickr.com/4021/4315412541_d34e08d02b.jpg" alt="Emerillon Map Viewer" width="500" height="286" /></a></p>
+
+<p>仍然是使用open street maps，这两年上海的地图发展的非常不错，连最新的二号线东延都已经被标注出来了。相比之下，南京的地图就还是一片空白。</p>
+
+<p>在Ubuntu上安装emerillon，可以从其网站上下载源码编译安装：
+<a href="http://www.novopia.com/emerillon/download.html">http://www.novopia.com/emerillon/download.html</a></p>
+
+<p>emerillon的几个主要依赖：
+<ul>
+    <li>libchamplain</li>
+    <li>librest</li>
+    <li>ethos</li>
+</ul>
+libchamplain在ubuntu 9.10的仓库已经包含</p>
+
+<p>librest也在软件仓库中，不过需要注意的是ubuntu将librest安装在pkg-config里时的名字叫做rest.pc，而emerillon查找的是rest-0.6.pc，所以需要手动建立一个软连接：
+<em>sudo ...</em></p>
+                <a class="readmore" href="https://sunng.info/blog/emerillon-map-viewer-for-gnome-desktop.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/all-new-sunnginfo.html" rel="bookmark"
                            title="Permalink to All new SUNNG.INFO">All new SUNNG.INFO</a></h1>
                 </header>
@@ -176,54 +226,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/which-university.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/oauth-step-by-step.html" rel="bookmark"
-                           title="Permalink to OAuth Step by Step">OAuth Step by Step</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-01-04T00:00:00+08:00">
-                Published: Mon 04 January 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>手艺
-tags:</li>
-<li>mashup</li>
-<li>oauth</li>
-<li>python</li>
-<li>web
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>最近琢磨OAuth认证方式。OAuth的优点主要在于﻿
-<ul>
-    <li>用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源；</li>
-    <li>资源提供方对第三方应用有更细粒度的控制。</li>
-</ul>
-在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、URL编码的请求路径和请求的参数表组成。<br />
-请求的参数表是除去oauth_signature以外的所有参数，按参数名排序，并进行url转义
-<pre class="brush:python">def to_signature_key(method, url, data):
-    keys = list(data.keys())
-    keys.sort()
-    encoded = urllib.quote("&amp;".join([key+"="+data[key] for key in keys]))
-    return "&amp;".join([method, urllib.quote ...</pre></p></p>
-                <a class="readmore" href="https://sunng.info/blog/oauth-step-by-step.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index56.html">&laquo;</a>
-    Page 57 / 77
+    Page 57 / 78
         <a href="https://sunng.info/blog/index58.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

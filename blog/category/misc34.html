@@ -23,6 +23,53 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/soldat-gefr.html" rel="bookmark"
+                           title="Permalink to soldat & gefr">soldat & gefr</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-01-08T00:00:00+08:00">
+                Published: Sat 08 January 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>gefr</li>
+<li>java</li>
+<li>jython</li>
+<li>project</li>
+<li>python</li>
+<li>soldat
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我的这一套stack正在走向完整。上次贴了一张soldat-http的图，现在基于soldat的wsgi服务器也已经有了一个基本可以运行的实现，名字叫做gefr（我的命名出处参考<a href="http://en.wikipedia.org/wiki/Rank_insignia_of_the_German_armed_forces">这里</a>）。现在gefr上已经可以跑基于bottle框架的wsgi程序了，也就是说一些基于python的web应用可能可以通过jython来运行在soldat上。为了搞定jython的环境，这几天我还花了不少时间做了jip帮我从maven仓库里自动下载依赖的jar包。</p></p>
+<p>soldat和gefr的代码都放在我的bitbucket上：
+<ul>
+<li>soldat <a href="https://bitbucket.org/sunng/soldat">https://bitbucket.org/sunng/soldat</a></li>
+<li>gefr <a href="https://bitbucket.org/sunng/gefr">https://bitbucket.org/sunng/gefr</a></li>
+</ul></p>
+
+<p>此外，这两个项目也分别发布到了<a href="https://oss.sonatype.org/content/repositories/snapshots/">sonatype oss仓库</a>和<a href="http://pypi.python.org/pypi/gefr">python cheese shop</a>。</p>
+
+<p>现在还有几个问题：
+<ul>
+<li>soldat在读buffer的时候先获得buffer的limit，再去读相应长度的buffer有时会出现BufferUnderflowException。这个可能存在线程安全问题，现在还没发现。</li>
+<li>gefr启动之后可以通过在jvisualvm里找到这个进程，但是绑定profiler之后很诡异的是gefr就不再处理请求了 ...</li></ul></p>
+                <a class="readmore" href="https://sunng.info/blog/soldat-gefr.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/jip-01.html" rel="bookmark"
                            title="Permalink to jip 0.1">jip 0.1</a></h1>
                 </header>
@@ -160,45 +207,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/my-first-http-server-soldat-http.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/lm-tooling-2010.html" rel="bookmark"
-                           title="Permalink to LM Tooling, 2010">LM Tooling, 2010</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-12-24T00:00:00+08:00">
-                Published: Fri 24 December 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>装备
-tags:</li>
-<li>hudson</li>
-<li>maven</li>
-<li>netweaver
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>阿哈，大家都开始总结2010年了，我也想找个角度来总结一下今年。三句不理老本行，还是聊软件开发周边的事情。Lifecycle Management Tooling，软件生命周期管理的工具和我一年的感受。</p></p>
-<p>一月份的时候我还有大把的业余时间，在做一个叫做<a href="https://bitbucket.org/sunng/yan">Yan</a>的验证码服务。这个项目从我刚一到盛大工作就开始了，不过因为没有特别的需求，最后变成了自己的开源项目。这个项目用Maven做dependency management，用hg做版本控制，代码放在bitbucket上。它对Maven的使用还很基本，是一个Single Module的小项目，因为服务本身已经实现了插件机制，本来我准备把它拆成Multimodule的Maven工程来着，不过后来因为比较忙，这件事就放掉了。那时我已经开始尝试用hg进行分支管理、每个release打tag，甚至还有一段时间会有一些两个分支的并行开发。这些基本上是实验性质的尝试，不过和后来相比也算是做的比较规范的了。</p>
-
-<p>三月份我注册了github，顺带就开始用git了。到目前为止，我对hg和git的区别还没有特别的感受，选择的主要依据其实bitbucket和github。相对social一些的项目，github是当仁不让的选择。bitbucket上人少比较清净，一些incubator项目放在上面 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/lm-tooling-2010.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc33.html">&laquo;</a>
-    Page 34 / 77
+    Page 34 / 78
         <a href="https://sunng.info/blog/category/misc35.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

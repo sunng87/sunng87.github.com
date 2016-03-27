@@ -23,6 +23,49 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/gefr-api-updates.html" rel="bookmark"
+                           title="Permalink to gefr API updates">gefr API updates</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-03-28T00:00:00+08:00">
+                Published: Mon 28 March 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>gefr</li>
+<li>java</li>
+<li>jython</li>
+<li>opensource</li>
+<li>project</li>
+<li>python</li>
+<li>wsgi
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>早上收到<a href="http://jythonet.appspot.com">jythonet</a>作者的一封邮件，受到启发，我打算扩展一下gefr这个WSGI adapter。原本gefr是写给soldat用来测试的，结果发现现在出现了买椟还珠的效果，既然大家更加关注这个，我决定多花一些时间在上面。不过话说回来gefr确实是Jython Web程序的新思路，过去大家都在想怎样把Jython放进Servlet中，gefr的思路是把Java的服务器实现放到WSGI后面。未来会有gefr-netty, gefr-mina, gefr-servlet等等出现，如果真的存在一个可靠的backend，也许这种思路也不失为一个办法，毕竟python的web框架更吸引人，而java的基础设施相对可靠，各取所长。</p></p>
+<p>根据这个目的，现在gefr 0.2的API更新为：
+<script src="https://bitbucket.org/sunng/gefr/src/8490748055f1/src/examples/example.py?embed=t"></script></p>
+
+<p>即在创建Gefr的时候需要告知backend类型，目前还只有soldat一种后端。未来也可能通过自动检测让这个参数成为可选。</p>
+
+<p>gefr 0.2已经在开发中，您可以通过这里关注：
+<a href="https://bitbucket.org/sunng/gefr/overview">https://bitbucket.org/sunng ...</a></p>
+                <a class="readmore" href="https://sunng.info/blog/gefr-api-updates.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/setting-up-soldat-and-gefr.html" rel="bookmark"
                            title="Permalink to Setting up soldat and gefr">Setting up soldat and gefr</a></h1>
                 </header>
@@ -182,43 +225,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/continuous-learning.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/tiny-lifestream-widget-available-on-sunnginfo.html" rel="bookmark"
-                           title="Permalink to Tiny LifeStream widget available on sunng.info">Tiny LifeStream widget available on sunng.info</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-11T00:00:00+08:00">
-                Published: Fri 11 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>手艺
-tags:</li>
-<li>daf</li>
-<li>javascript</li>
-<li>web
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>首先推荐samson的<a href="http://stdout.samsonw.info/">stdout</a>，这是一个LifeStream Web应用（针对Loser的LifeStream称为LoserStream）。你可以从<a href="https://github.com/samsonw/stdout">github</a>上获得代码，参考samson的<a href="http://blog.samsonis.me/2011/03/stdout-deployment/">deployment</a>和<a href="http://blog.samsonis.me/2011/03/stdout-customization/">customization</a>文档，在一二三四五六七八九十十一十二……分钟内搭建一个自己stdout，至于是不是LoserStream你自己看着办。</p></p>
-<p>本来打算在自己的主机上搭一个实例的，怎奈怎奈我那CentOS5的主机。所以我说我们这些CentOS用户最伤不起了！！！源里有Ruby有个毛用！！1.8.4，泥玛gem都装不上！！还要去找1.8.6的代码来编译，有没有！！！好不容易装上gem了，gem 1.6.1说找不到Win32API！！！干掉重装1.4.5！再装ruby-sqlite3，源里的sqlite3版本又不行，装不上，有没有！！！有没有 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/tiny-lifestream-widget-available-on-sunnginfo.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun29.html">&laquo;</a>
-    Page 30 / 77
+    Page 30 / 78
         <a href="https://sunng.info/blog/author/ning-sun31.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

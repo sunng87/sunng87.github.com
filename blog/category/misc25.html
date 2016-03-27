@@ -23,6 +23,38 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/zui-jin-de-yi-xie-xiang-fa.html" rel="bookmark"
+                           title="Permalink to 最近的一些想法">最近的一些想法</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-06-30T00:00:00+08:00">
+                Published: Thu 30 June 2011
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>work
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><p>最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。</p>
+<p>这是root cause，其实进了代码里面的问题更多。于是产生了对这种feature driven development的怀疑。我曾经觉得列出 feature，做好代价估计，然后大家各自去实现的方式很理性很可控。如果宏观地看，黑盒地看，这种方式对项目管理很友好。但是最近看这种方式下开发出来的产品，问题还是很多的。当开发人员面对一个feature却缺少对产品整体架构的足够了解，他很容易倾向于用quick and dirty的方式\打补丁的方式解决问题，而忽略新feature对架构整体的挑战。长期下来，软件的功能不断演进，架构却停留在早期，维护成本越来越高，神秘的陷阱越来越多。这时，每次发布都要通过测试部门的蛮力测试，这个过程中除了修bug还要克服无数的invalid的bug。What the hell!!!</p>
+<p>另一方面，从开发人员的角度 ...</p></p></p>
+                <a class="readmore" href="https://sunng.info/blog/zui-jin-de-yi-xie-xiang-fa.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/ngeohash-node-module-for-geohash-algorithm.html" rel="bookmark"
                            title="Permalink to 'ngeohash: node module for geohash algorithm'">'ngeohash: node module for geohash algorithm'</a></h1>
                 </header>
@@ -178,51 +210,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/jipembed-on-the-fly-classpath-resolution-for-jython.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/openlayers-extension-for-heatcanvas.html" rel="bookmark"
-                           title="Permalink to OpenLayers extension for HeatCanvas">OpenLayers extension for HeatCanvas</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-06T00:00:00+08:00">
-                Published: Mon 06 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>ANN
-tags:</li>
-<li>heatcanvas</li>
-<li>javascript</li>
-<li>OpenStreetMap</li>
-<li>project
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><img src="http://i.imgur.com/rtEuI.png" alt="" title="Hosted by imgur.com" /></p></p>
-<p>As the screenshot shows, now you can embed HeatCanavs in your OpenLayers application, as well as OpenSteetMap.</p>
-
-<p>Three steps to create such kind of map:</p>
-
-<p>1. Create HeatCanvas layer:<br />
-[cc lang="javascript"]<br />
-// constructor params:<br />
-// name, OpenLayers map instance, OpenLayers layer ...</p>
-                <a class="readmore" href="https://sunng.info/blog/openlayers-extension-for-heatcanvas.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc24.html">&laquo;</a>
-    Page 25 / 77
+    Page 25 / 78
         <a href="https://sunng.info/blog/category/misc26.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

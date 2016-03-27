@@ -21,7 +21,162 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html">"Smoothing Your Rust Crates Release With Cargo-release"</a></h1>
+                    <h1 class="entry-title"><a href="https://sunng.info/blog/using-external-drive-as-rootfs-for-raspberry-pi.html">Using external drive as rootfs for raspberry pi</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2016-03-27T21:25:06+08:00">
+                Published: Sun 27 March 2016
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+<p>tags: <a href="https://sunng.info/blog/tag/raspberrypi.html">raspberrypi</a> <a href="https://sunng.info/blog/tag/linux.html">linux</a> <a href="https://sunng.info/blog/tag/archlinux.html">archlinux</a> </p>
+</footer><!-- /.post-info --><p>Raspberry pi uses SD/TF card as storage. However, sometimes it becomes
+a bottleneck of performance because of the I/O speed on SD card is
+quite limited.</p>
+<p>A simple <code>fio</code> read/write test on my setup shows even with USB2.0, an
+external SSD is way faster than SD card.</p>
+<div class="highlight"><pre><span></span>sdcard: (groupid=0, jobs=1): err= 0: pid=582: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=4442.4KB/s, iops=1110, runt= 14720msec
+    clat (usec): min=7, max=18574, avg=175.16, stdev=1657.17
+     lat (usec): min=8, max=18575, avg=176.57, stdev=1657.16
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    9],
+     | 30.00th=[    9], 40.00th=[   10], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   11], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[  322], 99.50th=[17280], 99.90th=[18048], 99.95th=[18048],
+     | 99.99th=[18560]
+    bw (KB  /s): min=   93, max=12760, per=95.99%, avg=8527.36, stdev=5281.16
+  write: io=65680KB, bw=4461.1KB/s, iops=1115, runt= 14720msec
+    clat (usec): min=23, max=3373.8K, avg=699.49, stdev=38712.68
+     lat (usec): min=24, max=3373.8K, avg=701.24, stdev=38712.68
+    clat percentiles (usec):
+     |  1.00th=[   23],  5.00th=[   23], 10.00th=[   24], 20.00th=[   24],
+     | 30.00th=[   24], 40.00th=[   24], 50.00th=[   25], 60.00th=[   25],
+     | 70.00th=[   26], 80.00th=[   30], 90.00th=[   32], 95.00th=[   45],
+     | 99.00th=[   82], 99.50th=[18048], 99.90th=[19840], 99.95th=[20608],
+     | 99.99th=[2572288]
+    bw (KB  /s): min=   99, max=12832, per=96.08%, avg=8573.43, stdev=5318.31
+    lat (usec) : 10=18.57%, 20=29.59%, 50=49.06%, 100=1.59%, 250=0.10%
+    lat (usec) : 500=0.30%
+    lat (msec) : 4=0.01%, 10=0.01%, 20=0.74%, 50=0.04%, 1000=0.01%
+    lat (msec) : &gt;=2000=0.01%
+  cpu          : usr=2.38%, sys=4.69%, ctx=1521, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+ssd: (groupid=0, jobs=1): err= 0: pid=583: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=28543KB/s, iops=7135, runt=  2291msec
+    clat (usec): min=7, max=196418, avg=63.48, stdev=1925.74
+     lat (usec): min=8, max=196419, avg=64.85, stdev=1925.74
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    8],
+     | 30.00th=[    9], 40.00th=[    9], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   10], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[ 1608], 99.50th=[ 1832], 99.90th=[ 2128], 99.95th=[ 2256],
+     | 99.99th=[146432]
+    bw (KB  /s): min= 6144, max=39320, per=100.00%, avg=27607.50, stdev=15537.13
+  write: io=65680KB, bw=28669KB/s, iops=7167, runt=  2291msec
+    clat (usec): min=15, max=280132, avg=54.86, stdev=2193.37
+     lat (usec): min=17, max=280134, avg=56.55, stdev=2193.37
+    clat percentiles (usec):
+     |  1.00th=[   16],  5.00th=[   16], 10.00th=[   16], 20.00th=[   17],
+     | 30.00th=[   17], 40.00th=[   17], 50.00th=[   17], 60.00th=[   17],
+     | 70.00th=[   18], 80.00th=[   18], 90.00th=[   22], 95.00th=[   26],
+     | 99.00th=[ 1256], 99.50th=[ 1720], 99.90th=[ 2096], 99.95th=[ 2288],
+     | 99.99th=[ 3024]
+    bw (KB  /s): min= 6176, max=39392, per=100.00%, avg=27584.75, stdev=15473.86
+    lat (usec) : 10=21.33%, 20=70.89%, 50=5.47%, 100=0.41%, 250=0.18%
+    lat (usec) : 500=0.14%, 750=0.01%, 1000=0.03%
+    lat (msec) : 2=1.33%, 4=0.20%, 250=0.01%, 500=0.01%
+  cpu          : usr=15.28%, sys=23.14%, ctx=686, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+</pre></div>
+
+
+<p>So if you want a better pi, it's strongly recommend to use an external
+driver as rootfs.</p>
+<p>Last year, I backed
+<a href="http://http://gungho.io/product/pidrive/">piDrive</a> on Kickstart. The
+project is aimed to provide a SSD adapter for pi with low power
+requirement. This board made it possible to use an SSD with pi. And we
+can put our rootfs on this disk to run the pi smoothly.</p>
+<p>Before we get started, I urge you to ensure your power adapter could
+provide 5V/2A for pi2 and 5V/2.5A for pi3. Otherwise, you may be
+resulted in file system corruption. Even worse, the SSD could be
+totally destroyed, like my first one.</p>
+<p>You will still need a SD card as <code>/boot</code> your pi because that's what
+pi requires. A ~128MB card will be just ok for <code>/boot</code> but I know it's
+already difficult to find on the market. Perhaps you can create two
+partitions on your card so you can utilize the remaining spaces.</p>
+<p>Create partition on your SSD and format them as you want. You can use
+ext4 for your rootfs. But for sdcard, only vfat is allowed for the
+<code>/boot</code> partition. Mount the SSD and sdcard to your current system,
+for example, as <code>/mnt/root/</code> and <code>/mnt/boot/</code>.</p>
+<p>I'm using <a href="http://archlinuxarm.org">archlinuxarm</a> as my os, it's clean
+and compact as archlinux. The base tarball is just 270MB, makes
+raspbian's 1G+ seems a little bloated.</p>
+<p>Download the tarball from archlinuxarm, at the time of writing, both
+Pi2 and Pi3 uses Pi2 file system.</p>
+<p>Extract the tarball to <code>/mnt/root</code> with:</p>
+<div class="highlight"><pre><span></span>bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C /mnt/root
+</pre></div>
+
+
+<p>Copy <code>/boot</code> directory to SD card:</p>
+<div class="highlight"><pre><span></span>cp -r /mnt/root/boot/* /mnt/boot/
+</pre></div>
+
+
+<p>Edit <code>/mnt/boot/cmdline.txt</code> to tell pi where your rootfs is:</p>
+<div class="highlight"><pre><span></span>root=/dev/sda1 rootdelay=5 rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
+</pre></div>
+
+
+<p>Actually you just need to change two key/value pairs:</p>
+<ul>
+<li>Change <code>root=</code> to your SSD partition that contains root
+  fs. Typically your disk will be <code>sda1</code> here. From my experiments,
+  the bootloader doesn't recognize <code>PARTUUID=...</code> as told by
+  <a href="https://learn.adafruit.com/external-drive-as-raspberry-pi-root?view=all">adafruit</a>
+  and <code>/dev/disk/by-uuid/...</code>.</li>
+<li>Add <code>rootdelay=5</code> to let bootloader to wait for your partition to be
+  loaded.</li>
+</ul>
+<p>Then you will need to edit <code>/etc/fstab</code> to tell linux (not pi) about
+the file system layout:</p>
+<div class="highlight"><pre><span></span>#
+# /etc/fstab: static file system information
+#
+# &lt;file system&gt; &lt;dir&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+/dev/mmcblk0p1  /boot   vfat    defaults        0       0
+/dev/sda1       /       ext4    defaults        0       1
+</pre></div>
+
+
+<p>So that's simply all you need to get prepared. Run <code>sync</code> on your
+system to make sure everything is on the disk. Umount sdcard and
+ssd. Set them up on your Pi. Profit!</p>                </article>
+            </aside><!-- /#featured -->
+                <section id="content" class="body">
+                    <h1>Other articles</h1>
+                    <hr />
+                    <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html" rel="bookmark"
+                           title="Permalink to "Smoothing Your Rust Crates Release With Cargo-release"">"Smoothing Your Rust Crates Release With Cargo-release"</a></h1>
+                </header>
+
+                <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-03-21T22:28:06+08:00">
                 Published: Mon 21 March 2016
@@ -32,43 +187,16 @@
         </address>
 <p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
 <p>tags: <a href="https://sunng.info/blog/tag/rust.html">rust</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info --><p>Cargo-release is a cargo subcommand that automates your libraries
+</footer><!-- /.post-info -->                <p>Cargo-release is a cargo subcommand that automates your libraries
 release process. The idea was inspired by Clojure's leiningen, which
 has a <code>release</code> command does exact same thing.</p>
 <p>Typically, when you decide to release a library to crates.io, you need
 to go through following steps at least:</p>
 <ul>
-<li>bump version in Cargo.toml</li>
-<li>create a git tag for the release</li>
-<li>run <code>cargo publish</code></li>
-<li>push tags/commits to github</li>
-</ul>
-<p>cargo-release command deals these tasks for you. In addition, it
-increases your patch version and add a <code>pre</code> extension after <code>cargo
-publish</code>. The Java/Maven world uses a <code>SNAPSHOT</code> version for
-pre-release. What's sad, no other package manager follows this great
-idea. With this pre-release extension, users are able to tell if your
-master branch is on a released version or not.</p>
-<p>By default, cargo-release removes pre-release extension as the version
-to release. You can override this behavior by a <code>--level</code>. The value
-for <code>--level</code> can be <code>major</code>, <code>minor</code> or <code>patch</code>. As the name
-suggests, it increases different part of a semver version.</p>
-<p>For multi-crates repository, <code>cargo-release</code> reads you sub-directory
-name and use it as prefix of git tag to avoid conflicts.</p>
-<p>Some more features are planned for this tool, for instance:</p>
-<ul>
-<li>Custom tag prefix</li>
-<li>Build docs and push to gh-pages</li>
-</ul>
-<p>I hope this tool can be used as a standard of rust library release
-process. You can install this tool by <code>cargo install
-cargo-release</code>. And the github repo is
-<a href="https://github.com/sunng87/cargo-release">here</a>.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<li>bump version ...</li></ul>
+                <a class="readmore" href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
@@ -139,38 +267,9 @@ cargo-release</code>. And the github repo is
                 <a class="readmore" href="https://sunng.info/blog/handlebars-de-rust-shi-xian.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark"
-                           title="Permalink to "AVOS Cloud 实时通信服务架构：微服务和服务发现"">"AVOS Cloud 实时通信服务架构：微服务和服务发现"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-19T16:46:20+08:00">
-                Published: Tue 19 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
-<p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
-<p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
-<ul>
-<li>Push 服务：处理推送的订阅关系，触发推送</li>
-<li>长连接服务器：维持设备与服务的长连接</li>
-<li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
-<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警 ...</li></ul>
-                <a class="readmore" href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
-    Page 1 / 77
+    Page 1 / 78
         <a href="https://sunng.info/blog/category/misc2.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

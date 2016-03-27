@@ -23,6 +23,50 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/oauth-step-by-step.html" rel="bookmark"
+                           title="Permalink to OAuth Step by Step">OAuth Step by Step</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2010-01-04T00:00:00+08:00">
+                Published: Mon 04 January 2010
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>mashup</li>
+<li>oauth</li>
+<li>python</li>
+<li>web
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>最近琢磨OAuth认证方式。OAuth的优点主要在于﻿
+<ul>
+    <li>用户不需要直接提供用户名密码给第三方应用，就可以让第三方应用访问受限资源；</li>
+    <li>资源提供方对第三方应用有更细粒度的控制。</li>
+</ul>
+在整个OAuth协议里，生成signature的base string是最容易出错的部分。它由HTTP方法名、URL编码的请求路径和请求的参数表组成。<br />
+请求的参数表是除去oauth_signature以外的所有参数，按参数名排序，并进行url转义
+<pre class="brush:python">def to_signature_key(method, url, data):
+    keys = list(data.keys())
+    keys.sort()
+    encoded = urllib.quote("&amp;".join([key+"="+data[key] for key in keys]))
+    return "&amp;".join([method, urllib.quote ...</pre></p></p>
+                <a class="readmore" href="https://sunng.info/blog/oauth-step-by-step.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/happy-new-year-with-yan-04.html" rel="bookmark"
                            title="Permalink to Happy new year with Yan 0.4">Happy new year with Yan 0.4</a></h1>
                 </header>
@@ -153,42 +197,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/wo-shi-yi-zhan-xiao-deng.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/setting-environment-variables-for-glassfish-v3.html" rel="bookmark"
-                           title="Permalink to Setting Environment Variables for Glassfish v3">Setting Environment Variables for Glassfish v3</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-12-29T00:00:00+08:00">
-                Published: Tue 29 December 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>把戏
-tags:</li>
-<li>Glassfish</li>
-<li>java
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>After you test and build your application in NetBeans, you deploy it to Glassfish, but the environment variables are invalid again. In such situation, you should set these variable in glassfish configuration file which is supposed to located at:</p></p>
-<p><em>$GLASSFISH_HOME/glassfish/config ...</em></p>
-                <a class="readmore" href="https://sunng.info/blog/setting-environment-variables-for-glassfish-v3.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun57.html">&laquo;</a>
-    Page 58 / 77
+    Page 58 / 78
         <a href="https://sunng.info/blog/author/ning-sun59.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

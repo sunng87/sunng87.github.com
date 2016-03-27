@@ -23,6 +23,42 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/archlinux-an-quan-geng-huan-ying-pan.html" rel="bookmark"
+                           title="Permalink to "Archlinux 安全更换硬盘"">"Archlinux 安全更换硬盘"</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2013-10-22T22:26:00+08:00">
+                Published: Tue 22 October 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <p>公司升级所有笔记本到SSD，本来是个好事，不过迁移是个难事。除了我，所有的同事都是OS X，他们有自动工具，毫无个性，不理他们。我们Linux要做这个事其实想想比较简单：首先，我们的分区和目录是抽象为两层的；其次，整个文件系统是透明的，只要拷贝就好了。</p>
+<p>首先，拿到新硬盘要按需分区和格式化。用gpartd就可以，这一步千万不要忘记把/boot的目标分区设置为bootable，否则会导致无法引导。</p>
+<p>分区完成之后，挂载各个分区，把当前硬盘里的所有文件用<code>cp -ar</code>拷贝到新硬盘上，这一步非常花时间。</p>
+<p>搞定之后要再手动mkdir几个目录</p>
+<ul>
+<li>/run</li>
+<li>/sys</li>
+<li>/proc</li>
+<li>/dev</li>
+</ul>
+<p>使系统启动的时候可以mount上特殊分区。</p>
+<p>此外，要修改<code>/etc/fstab</code>，根据新的硬盘UUID来配置。UUID可以在<code>ll /dev/disks/by-uuid</code>里看到。</p>
+<p>挂载一些特殊分区到新硬盘目录：</p>
+<ul>
+<li><code>mount -o bind /dev ...</code></li></ul>
+                <a class="readmore" href="https://sunng.info/blog/archlinux-an-quan-geng-huan-ying-pan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/delicious-fa-bu.html" rel="bookmark"
                            title="Permalink to "Delicious 发布"">"Delicious 发布"</a></h1>
                 </header>
@@ -143,43 +179,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/gei-raspberry-pi-tian-jia-yi-ge-xian-shi-ip-de-ye-jing-ping.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/zhi-shang-de-lai-zhong-jue-qian.html" rel="bookmark"
-                           title="Permalink to 纸上得来终觉浅">纸上得来终觉浅</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2013-06-07T00:00:00+08:00">
-                Published: Fri 07 June 2013
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>自话
-tags:</li>
-<li>Life
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>之前看过无数的书无数的文章，讲可扩展性讲大型架构，不过真到了自己上场，毕竟还是没有从头到尾实践过，心里还有些没底。每做一个决定，每选定一个方案，心里都要反复打鼓，这是不是在给自己挖坑，是不是导致今后要浪费很多可乐咖啡的一个决定。第一份工作在盛大的时候，参与过这种规模比较大的项目，但是核心的部分，容量规划，性能评估，优化，都是那时的老大操心，我在一旁旁观。操心和旁观的区别大了去了，晚上睡不着的那几个小时，旁观的人享受不到，等来临的时候，就要如履薄冰地担着。</p></p>
-<p>公司的团队构成跟硅谷类似，不存在专门的“产品经理”，负责人要从后端到前端，从开发到部署，从运维到监控，从代码到UI设计，产品甚至到运营，都需要有所操心。好在团队经过一年多的锻炼，技术成熟配合也默契，各司其职又都是三头六臂，能在这样的过程里成长，书里读不到。</p>
-
-<p>一直是做互联网信息类的产品，现在自己制造的信息却越来越少，有些于心不忍，于是寥寥记录一下。</p>
-                <a class="readmore" href="https://sunng.info/blog/zhi-shang-de-lai-zhong-jue-qian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc3.html">&laquo;</a>
-    Page 4 / 77
+    Page 4 / 78
         <a href="https://sunng.info/blog/category/misc5.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

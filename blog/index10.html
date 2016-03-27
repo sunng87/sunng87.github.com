@@ -23,6 +23,44 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
+                           title="Permalink to 多线程服务器">多线程服务器</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-04-12T00:00:00+08:00">
+                Published: Thu 12 April 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>手艺
+tags:</li>
+<li>NIO</li>
+<li>programming
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>写了挺长时间网络程序了，有些事到最近才弄明白，记录一下。</p></p>
+<p>写一个高性能的服务器，传统的BIO方式基本上已经被淘汰了，很难获得理想的性能。所以现在都是以事件驱动的方式来写，在Linux上用epoll,Java平台上就是NIO。再向上，有一些包装的库，比如twisted比如libevent比如Java上的Netty。</p>
+
+<p>Netty的server需要至少两组线程，BossPool和WorkerPool,。前者负责accept，后者负责r/w。通常的例子里，这就是仅有的两组线程。用户在框架之上的业务逻辑，写在handler里，以单线程的方式运行在worker线程上。</p>
+
+<p>这样的方式在很多例子里很普遍。但是如果handler里的业务逻辑比较复杂，尤其是IO的等待过长(比如查询数据库)，就会由于在handler上阻塞的时间过长，导致服务器读写的效率下降。所以通常是不能在这样环境下的handler里写IO阻塞的代码。</p>
+
+<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间 ...</p>
+                <a class="readmore" href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/slacker-performance-enhanced.html" rel="bookmark"
                            title="Permalink to Slacker performance enhanced">Slacker performance enhanced</a></h1>
                 </header>
@@ -162,65 +200,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/shua-htc-evo-3d-gsm.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/kliment-voroshilov-tank-2.html" rel="bookmark"
-                           title="Permalink to Kliment Voroshilov tank 2">Kliment Voroshilov tank 2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-03-11T00:00:00+08:00">
-                Published: Sun 11 March 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>自话
-tags:</li>
-<li>D60</li>
-<li>tank
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>业余时间，我除了写括号以外，也会做点模型，不过是入门水平。用淘宝店家的话说，你随便涂涂就行了。这个KV-2坦克是去年秋天买的，后来周末学车加上天冷坐不住就搁置下来。现在稍微暖和一点，就赶紧把开工。</p></p>
-<p>KV-2坦克，是二战时期苏联的重型坦克。最早参加了苏芬战争，后来投入到早期的苏德战争。但是绝大多数被德军在巴巴罗萨行动中摧毁、俘虏。被俘虏的KV-2坦克被刷上德军的标志也为德军服役，这在二战早期的东线战场倒是很常见。我的这个KV-2附带的水贴纸也分两个版本，分别是苏军和德军的涂装。</p>
-
-<p>花了一天时间素组。
-<a href="http://www.flickr.com/photos/40741608@N08/6825567316/" title="DSC_0016 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7043/6825567316_29e7e13830.jpg" width="500" height="335" alt="DSC_0016" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6825568984/" title="DSC_0013 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7041/6825568984_8e897f9513.jpg" width="335" height="500" alt="DSC_0013" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6971689967/" title="DSC_0023 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7180/6971689967_171ab05c49.jpg" width="335" height="500" alt="DSC_0023" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6825572612/" title="DSC_0019 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7176/6825572612_a4bdb17248.jpg" width="500" height="335" alt="DSC_0019" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6971692767/" title="DSC_0029 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7182/6971692767_c84b5aba61.jpg" width="500" height="335" alt="DSC_0029" /></a></p>
-
-<p>今天又花了一上午时间上漆。第一次上漆，也没看什么教程，就是这个结果了。</p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6971694113/" title="DSC_0003 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7057/6971694113_73c6939dc8.jpg" width="335" height="500" alt="DSC_0003" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6825576398/" title="DSC_0009 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7059/6825576398_e57bf106a2.jpg" width="500" height="335" alt="DSC_0009" /></a></p>
-
-<p><a href="http://www.flickr.com/photos/40741608@N08/6971697399/" title="DSC_0015 by 贝小塔, on Flickr"><img src="http://farm8.staticflickr.com/7045/6971697399_fd01ca6c69.jpg" width="335" height="500" alt="DSC_0015" /></a></p>
-
-<p>下一个目标就是T34。</p>
-
-<p></p>
-                <a class="readmore" href="https://sunng.info/blog/kliment-voroshilov-tank-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index9.html">&laquo;</a>
-    Page 10 / 77
+    Page 10 / 78
         <a href="https://sunng.info/blog/index11.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

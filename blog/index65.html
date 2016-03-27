@@ -23,6 +23,58 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/yin-le-jie-kan-zhang-chu-gui-lai.html" rel="bookmark"
+                           title="Permalink to 音乐节看张楚归来">音乐节看张楚归来</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-10-18T00:00:00+08:00">
+                Published: Sun 18 October 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>留影
+tags:</li>
+<li>Music</li>
+<li>rock</li>
+<li>Shanghai</li>
+<li>zhangchu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>这周末是上海爵士音乐节，虽然名字上是爵士，但是实际上还有摇滚的场。18号下午是张楚和崔健的演出，慕名第一次去了世纪公园。</p></p>
+<p>刚进去的时候是曹方的演出。</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2565/4022603570_2a4c93ceb3.jpg" alt="" width="500" height="375" /></p>
+
+<p>这个大概是一个电子口琴吧，我是土人，不知道，声音是口琴的。</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2579/4022604038_7e5a2b191a.jpg" alt="" width="500" height="335" /></p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2550/4021843829_06654d29bf.jpg" alt="" width="500" height="336" /></p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2778/4021845629_856399924f.jpg" alt="" width="500" height="335" /></p>
+
+<p>夕阳。</p>
+
+<p>接下来就是张楚出场了。结果因为太过兴奋，忘了把自动对焦打开，所以刚出来咔咔咔拍了好多照片都是模糊的，也不能完全怪我，第一次见到张楚，那种感觉，大家可以想象吧。</p>
+
+<p><img class="alignnone" src="http://farm3.static.flickr.com/2509/4022639806_ff51c6d3ea.jpg" alt="" width="500" height="336" /></p>
+
+<p>张楚真的是张楚，和想象中的一模一样。今天一共唱了《光明大道》、《棉花》、《造飞机的工厂》、《孤独的人是可耻的》、《向日葵》、《海边》、《蚂蚁蚂蚁》、《姐姐》。除了海边是新歌一点都没听过以外，其他歌我都是从头到尾跟着一起唱下来的，后来我还想，不是花钱来听歌的，是花钱来唱歌的，还是大合唱。不过吼一吼感觉真好，今天吼了一下貌似是压抑很久了一样，算算大约自从去年夏天离开浦口宿舍就没有再这么吼过了。真过瘾 ...</p>
+                <a class="readmore" href="https://sunng.info/blog/yin-le-jie-kan-zhang-chu-gui-lai.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/shao-fan-you.html" rel="bookmark"
                            title="Permalink to 烧饭又">烧饭又</a></h1>
                 </header>
@@ -181,57 +233,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/xian-zhan-hou-zou.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html" rel="bookmark"
-                           title="Permalink to 验证码服务recaptcha和vidoop">验证码服务recaptcha和vidoop</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-13T00:00:00+08:00">
-                Published: Tue 13 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>手艺
-tags:</li>
-<li>captcha</li>
-<li>python</li>
-<li>web
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>某人已经发展到上班时间写blog了。</p></p>
-<p>继续说验证码服务，找到两个比较典型的。<a href="http://recaptcha.net/" target="_blank">recaptcha</a>非常著名，是twitter和facebook使用的验证码服务（不知道现在的情况。。。），<a href="http://vidoop.com/" target="_blank">vidoop</a>提供了一种很有特点的验证码机制。</p>
-
-<p>两个服务都提供了python的接口封装便于接入，通过api接口可以管中窥豹，大致了解这两个验证服务的机制。
-<h3>recaptcha</h3>
-下面是一段结合了web.py的简单调用
-<pre class="brush:python">public_key = "******"
-private_key = "********"
-class Recaptcha(object):
-    def GET(self):
-        r = recaptcha.displayhtml(public_key)
-        return render.recapt(r)</pre></p>
-
-<p>    def POST(self):<br />
-        params = web.input()<br />
-        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field ...</p>
-                <a class="readmore" href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index64.html">&laquo;</a>
-    Page 65 / 77
+    Page 65 / 78
         <a href="https://sunng.info/blog/index66.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

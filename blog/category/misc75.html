@@ -23,6 +23,43 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/desktop-switcheryi-xia.html" rel="bookmark"
+                           title="Permalink to desktop-switcher以下">desktop-switcher以下</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-05-29T00:00:00+08:00">
+                Published: Fri 29 May 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>bug</li>
+<li>gnome</li>
+<li>ubuntu
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>今天中午在synaptic里闲搜，发现了一个叫做desktop-switcher的小工具，它的功能是在ubuntu的netbook小桌面模式和经典模式之间切换。好奇心起，就装上试试。一试不得了，两个不太明确的报错之后，面板没有了，桌面也只剩下背景图片，左右键通通废掉，登出也只能按电源开关。尤其是xorg1.6之后，ctrl+alt+backspace也不好使了，甚是无奈。<br />
+这下岂不是又要重装系统了？还好这次冷静（现在越来越冷静了，我是说经历了水泼电脑之后），先新建了一个用户重新进桌面上网搜一下。还真搜到了问题，果然是这个切换工具有bug。<br />
+首先看一下gnome配置中有关的配置<br />
+gconftool-2 --get /desktop/gnome/session/required_components<br />
+这个值居然被清空了，参考launchpad上的讨论，要加上这几项<br />
+gconftool-2 --set /desktop/gnome/session/required_components --type ...</p></p>
+                <a class="readmore" href="https://sunng.info/blog/desktop-switcheryi-xia.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/wo-zou-xiang-ji-liu-de-he-pan.html" rel="bookmark"
                            title="Permalink to 我走向急流的河畔">我走向急流的河畔</a></h1>
                 </header>
@@ -170,70 +207,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/ba-wxde-chuang-ti-hui-tu-shu-chu-dao-wei-tu.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/zhe-jiu-shi-sheng-huo.html" rel="bookmark"
-                           title="Permalink to 这就是生活">这就是生活</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-04-19T00:00:00+08:00">
-                Published: Sun 19 April 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>留影
-tags:</li>
-<li>D60</li>
-<li>Photos
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff5343024"><img src="http://pic.yupoo.com/classicning/2707974e3267/medium.jpg" border="0" alt="DSC_0092.resized" width="500" height="335" /></a></p></p>
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff5a73025"><img src="http://pic.yupoo.com/classicning/6559674e3267/medium.jpg" border="0" alt="DSC_0096.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff62f3026"><img src="http://pic.yupoo.com/classicning/1559774e3267/medium.jpg" border="0" alt="DSC_0097.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff6923027"><img src="http://pic.yupoo.com/classicning/8321874e3267/medium.jpg" border="0" alt="DSC_0099.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff7083028"><img src="http://pic.yupoo.com/classicning/3035274e3268/medium.jpg" border="0" alt="DSC_0100.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff75b3029"><img src="http://pic.yupoo.com/classicning/6112274e3267/medium.jpg" border="0" alt="DSC_0101.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff7d1302a"><img src="http://pic.yupoo.com/classicning/7376674e3267/medium.jpg" border="0" alt="DSC_0103.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff8c7302c"><img src="http://pic.yupoo.com/classicning/0262174e3269/medium.jpg" border="0" alt="DSC_0106.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceff996302e"><img src="http://pic.yupoo.com/classicning/6751174e3269/medium.jpg" border="0" alt="DSC_0108.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffa4a3030"><img src="http://pic.yupoo.com/classicning/4131874e3269/medium.jpg" border="0" alt="DSC_0110.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffaa83031"><img src="http://pic.yupoo.com/classicning/8581174e3269/medium.jpg" border="0" alt="DSC_0111.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffb213032"><img src="http://pic.yupoo.com/classicning/1083774e3269/medium.jpg" border="0" alt="DSC_0112.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffd893036"><img src="http://pic.yupoo.com/classicning/8879974e3269/medium.jpg" border="0" alt="DSC_0117.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffdeb3037"><img src="http://pic.yupoo.com/classicning/0634574e3269/medium.jpg" border="0" alt="DSC_0118.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffe3a3038"><img src="http://pic.yupoo.com/classicning/6126974e3269/medium.jpg" border="0" alt="DSC_0119.resized" width="500" height="335" /></a></p>
-
-<p><a title="来YUPOO看我的照片" href="http://www.yupoo.com/photos/view?id=ff80808120a21f410120bceffeb13039"><img src="http://pic.yupoo.com/classicning/8238474e326a/medium.jpg" border="0" alt="DSC_0121.resized" width="500" height="335" /></a></p>
-                <a class="readmore" href="https://sunng.info/blog/zhe-jiu-shi-sheng-huo.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc74.html">&laquo;</a>
-    Page 75 / 77
+    Page 75 / 78
         <a href="https://sunng.info/blog/category/misc76.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

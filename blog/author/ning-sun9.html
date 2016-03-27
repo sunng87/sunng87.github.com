@@ -23,6 +23,44 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/deng-pyshan.html" rel="bookmark"
+                           title="Permalink to 登Py山">登Py山</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2012-06-17T00:00:00+08:00">
+                Published: Sun 17 June 2012
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>当时
+tags:</li>
+<li>Beijing</li>
+<li>outdoor
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>我的个天总算是有可写的东西了。</p></p>
+<p>这次来北京有个重要的主题叫做锻炼身体，为此不惜代价抓住有效的机会来参加这些活动。昨天跑去爬了昌平十三陵水库旁边的蟒山。这个蟒山的，我就叫他python山。据说是本地爬山的入门路线之一。这次活动正好副领队又是三年多没见过的老同学，于是就毫不犹豫地参加了。爬山前的周四是上线的日子，晚上折腾到两点多，第二天又早早去上班。我要说的是周六显然不在最佳状态。</p>
+
+<p>上次有这样的活动还是07年去庐山，那次就几乎中暑倒在山谷里了，为了避免悲剧发生这次背了3升水上山。这山是前半段比较陡，后半段稍微好一些。还是和上次庐山一样，跟着体力好走得快的人，很快就把力气用完了，坐在路边上一歇就是十五分钟，眼看着从队伍前头落到了队尾。然后也没有然后了，登顶的时候确实是在队尾。一开始还有心思照照相，后来赶紧把相机收起来，你不知道那个相机在肚子上一弹一弹的多耗费体力。</p>
+
+<p>登顶之后吃过午饭感觉就好多了，下到天池看了一样大水库，然后再从景区的台阶返回。据说下山的路是1299级台阶。还是一样，刚出发的时候还在前面，走着走着就看见收队的同学了。下台阶下得两腿发颤，最累的时候感觉随时都可能腿一软就坐下了，幸好这种情况没有发生。</p>
+
+<p>这次爬山最有成就感的，除了没有掉队以外，就是没出什么洋相。比庐山下山时坐倒n次要强多了 ...</p>
+                <a class="readmore" href="https://sunng.info/blog/deng-pyshan.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/keep-alive.html" rel="bookmark"
                            title="Permalink to Keep-Alive">Keep-Alive</a></h1>
                 </header>
@@ -171,48 +209,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/visualizing-openstreetmap-nanjing-contribution.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
-                           title="Permalink to 多线程服务器">多线程服务器</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-04-12T00:00:00+08:00">
-                Published: Thu 12 April 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>手艺
-tags:</li>
-<li>NIO</li>
-<li>programming
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>写了挺长时间网络程序了，有些事到最近才弄明白，记录一下。</p></p>
-<p>写一个高性能的服务器，传统的BIO方式基本上已经被淘汰了，很难获得理想的性能。所以现在都是以事件驱动的方式来写，在Linux上用epoll,Java平台上就是NIO。再向上，有一些包装的库，比如twisted比如libevent比如Java上的Netty。</p>
-
-<p>Netty的server需要至少两组线程，BossPool和WorkerPool,。前者负责accept，后者负责r/w。通常的例子里，这就是仅有的两组线程。用户在框架之上的业务逻辑，写在handler里，以单线程的方式运行在worker线程上。</p>
-
-<p>这样的方式在很多例子里很普遍。但是如果handler里的业务逻辑比较复杂，尤其是IO的等待过长(比如查询数据库)，就会由于在handler上阻塞的时间过长，导致服务器读写的效率下降。所以通常是不能在这样环境下的handler里写IO阻塞的代码。</p>
-
-<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun8.html">&laquo;</a>
-    Page 9 / 77
+    Page 9 / 78
         <a href="https://sunng.info/blog/author/ning-sun10.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

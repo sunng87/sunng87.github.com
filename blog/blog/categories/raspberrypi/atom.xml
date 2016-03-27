@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Here Comes the Sun</title><link href="https://sunng.info/blog/" rel="alternate"></link><link href="https://sunng.info/blog/blog/categories/raspberrypi/atom.xml" rel="self"></link><id>https://sunng.info/blog/</id><updated>2016-03-27T21:25:06+08:00</updated><entry><title>Using external drive as rootfs for raspberry pi</title><link href="https://sunng.info/blog/using-external-drive-as-rootfs-for-raspberry-pi.html" rel="alternate"></link><updated>2016-03-27T21:25:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2016-03-27:blog/using-external-drive-as-rootfs-for-raspberry-pi.html</id><summary type="html">&lt;p&gt;Raspberry pi uses SD/TF card as storage. However, sometimes it becomes
+a bottleneck of performance because of the I/O speed on SD card is
+quite limited.&lt;/p&gt;
+&lt;p&gt;A simple &lt;code&gt;fio&lt;/code&gt; read/write test on my setup shows even with USB2.0, an
+external SSD is way faster than SD card.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sdcard: (groupid=0, jobs=1): err= 0: pid=582: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=4442.4KB/s, iops=1110, runt= 14720msec
+    clat (usec): min=7, max=18574, avg=175.16, stdev=1657.17
+     lat (usec): min=8, max=18575, avg=176.57, stdev=1657.16
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    9],
+     | 30.00th=[    9], 40.00th=[   10], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   11], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[  322], 99.50th=[17280], 99.90th=[18048], 99.95th=[18048],
+     | 99.99th=[18560]
+    bw (KB  /s): min=   93, max=12760, per=95.99%, avg=8527.36, stdev=5281.16
+  write: io=65680KB, bw=4461.1KB/s, iops=1115, runt= 14720msec
+    clat (usec): min=23, max=3373.8K, avg=699.49, stdev=38712.68
+     lat (usec): min=24, max=3373.8K, avg=701.24, stdev=38712.68
+    clat percentiles (usec):
+     |  1.00th=[   23],  5.00th=[   23], 10.00th=[   24], 20.00th=[   24],
+     | 30.00th=[   24], 40.00th=[   24], 50.00th=[   25], 60.00th=[   25],
+     | 70.00th=[   26], 80.00th=[   30], 90.00th=[   32], 95.00th=[   45],
+     | 99.00th=[   82], 99.50th=[18048], 99.90th=[19840], 99.95th=[20608],
+     | 99.99th=[2572288]
+    bw (KB  /s): min=   99, max=12832, per=96.08%, avg=8573.43, stdev=5318.31
+    lat (usec) : 10=18.57%, 20=29.59%, 50=49.06%, 100=1.59%, 250=0.10%
+    lat (usec) : 500=0.30%
+    lat (msec) : 4=0.01%, 10=0.01%, 20=0.74%, 50=0.04%, 1000=0.01%
+    lat (msec) : &amp;gt;=2000=0.01%
+  cpu          : usr=2.38%, sys=4.69%, ctx=1521, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &amp;gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+ssd: (groupid=0, jobs=1): err= 0: pid=583: Sun Mar 27 13:36:30 2016
+  read : io=65392KB, bw=28543KB/s, iops=7135, runt=  2291msec
+    clat (usec): min=7, max=196418, avg=63.48, stdev=1925.74
+     lat (usec): min=8, max=196419, avg=64.85, stdev=1925.74
+    clat percentiles (usec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[    8], 20.00th=[    8],
+     | 30.00th=[    9], 40.00th=[    9], 50.00th=[   10], 60.00th=[   10],
+     | 70.00th=[   10], 80.00th=[   11], 90.00th=[   12], 95.00th=[   15],
+     | 99.00th=[ 1608], 99.50th=[ 1832], 99.90th=[ 2128], 99.95th=[ 2256],
+     | 99.99th=[146432]
+    bw (KB  /s): min= 6144, max=39320, per=100.00%, avg=27607.50, stdev=15537.13
+  write: io=65680KB, bw=28669KB/s, iops=7167, runt=  2291msec
+    clat (usec): min=15, max=280132, avg=54.86, stdev=2193.37
+     lat (usec): min=17, max=280134, avg=56.55, stdev=2193.37
+    clat percentiles (usec):
+     |  1.00th=[   16],  5.00th=[   16], 10.00th=[   16], 20.00th=[   17],
+     | 30.00th=[   17], 40.00th=[   17], 50.00th=[   17], 60.00th=[   17],
+     | 70.00th=[   18], 80.00th=[   18], 90.00th=[   22], 95.00th=[   26],
+     | 99.00th=[ 1256], 99.50th=[ 1720], 99.90th=[ 2096], 99.95th=[ 2288],
+     | 99.99th=[ 3024]
+    bw (KB  /s): min= 6176, max=39392, per=100.00%, avg=27584.75, stdev=15473.86
+    lat (usec) : 10=21.33%, 20=70.89%, 50=5.47%, 100=0.41%, 250=0.18%
+    lat (usec) : 500=0.14%, 750=0.01%, 1000=0.03%
+    lat (msec) : 2=1.33%, 4=0.20%, 250=0.01%, 500=0.01%
+  cpu          : usr=15.28%, sys=23.14%, ctx=686, majf=0, minf=22
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, &amp;gt;=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, &amp;gt;=64=0.0%
+     issued    : total=r=16348/w=16420/d=0, short=r=0/w=0/d=0, drop=r=0/w=0/d=0
+     latency   : target=0, window=0, percentile=100.00%, depth=1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So if you want a better pi, it's strongly recommend to use an external
+driver as rootfs.&lt;/p&gt;
+&lt;p&gt;Last year, I backed
+&lt;a href="http://http://gungho.io/product/pidrive/"&gt;piDrive&lt;/a&gt; on Kickstart. The
+project is aimed to provide a SSD adapter for pi with low power
+requirement. This board made it possible to use an SSD with pi. And we
+can put our rootfs on this disk to run the pi smoothly.&lt;/p&gt;
+&lt;p&gt;Before we get started, I urge you to ensure your power adapter could
+provide 5V/2A for pi2 and 5V/2.5A for pi3. Otherwise, you may be
+resulted in file system corruption. Even worse, the SSD could be
+totally destroyed, like my first one.&lt;/p&gt;
+&lt;p&gt;You will still need a SD card as &lt;code&gt;/boot&lt;/code&gt; your pi because that's what
+pi requires. A ~128MB card will be just ok for &lt;code&gt;/boot&lt;/code&gt; but I know it's
+already difficult to find on the market. Perhaps you can create two
+partitions on your card so you can utilize the remaining spaces.&lt;/p&gt;
+&lt;p&gt;Create partition on your SSD and format them as you want. You can use
+ext4 for your rootfs. But for sdcard, only vfat is allowed for the
+&lt;code&gt;/boot&lt;/code&gt; partition. Mount the SSD and sdcard to your current system,
+for example, as &lt;code&gt;/mnt/root/&lt;/code&gt; and &lt;code&gt;/mnt/boot/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I'm using &lt;a href="http://archlinuxarm.org"&gt;archlinuxarm&lt;/a&gt; as my os, it's clean
+and compact as archlinux. The base tarball is just 270MB, makes
+raspbian's 1G+ seems a little bloated.&lt;/p&gt;
+&lt;p&gt;Download the tarball from archlinuxarm, at the time of writing, both
+Pi2 and Pi3 uses Pi2 file system.&lt;/p&gt;
+&lt;p&gt;Extract the tarball to &lt;code&gt;/mnt/root&lt;/code&gt; with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C /mnt/root
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Copy &lt;code&gt;/boot&lt;/code&gt; directory to SD card:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp -r /mnt/root/boot/* /mnt/boot/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Edit &lt;code&gt;/mnt/boot/cmdline.txt&lt;/code&gt; to tell pi where your rootfs is:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;root=/dev/sda1 rootdelay=5 rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Actually you just need to change two key/value pairs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Change &lt;code&gt;root=&lt;/code&gt; to your SSD partition that contains root
+  fs. Typically your disk will be &lt;code&gt;sda1&lt;/code&gt; here. From my experiments,
+  the bootloader doesn't recognize &lt;code&gt;PARTUUID=...&lt;/code&gt; as told by
+  &lt;a href="https://learn.adafruit.com/external-drive-as-raspberry-pi-root?view=all"&gt;adafruit&lt;/a&gt;
+  and &lt;code&gt;/dev/disk/by-uuid/...&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;rootdelay=5&lt;/code&gt; to let bootloader to wait for your partition to be
+  loaded.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then you will need to edit &lt;code&gt;/etc/fstab&lt;/code&gt; to tell linux (not pi) about
+the file system layout:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#
+# /etc/fstab: static file system information
+#
+# &amp;lt;file system&amp;gt; &amp;lt;dir&amp;gt;   &amp;lt;type&amp;gt;  &amp;lt;options&amp;gt;       &amp;lt;dump&amp;gt;  &amp;lt;pass&amp;gt;
+/dev/mmcblk0p1  /boot   vfat    defaults        0       0
+/dev/sda1       /       ext4    defaults        0       1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;So that's simply all you need to get prepared. Run &lt;code&gt;sync&lt;/code&gt; on your
+system to make sure everything is on the disk. Umount sdcard and
+ssd. Set them up on your Pi. Profit!&lt;/p&gt;</summary><category term="raspberrypi"></category><category term="linux"></category><category term="archlinux"></category></entry></feed>

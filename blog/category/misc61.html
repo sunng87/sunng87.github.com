@@ -23,6 +23,44 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/yan-03.html" rel="bookmark"
+                           title="Permalink to Yan 0.3">Yan 0.3</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-12-20T00:00:00+08:00">
+                Published: Sun 20 December 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>ANN
+tags:</li>
+<li>captcha</li>
+<li>java</li>
+<li>Yan
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p>经过一周的重构和开发，我的开源项目，验证码服务，打上了0.3的tag，算是一个release吧。</p></p>
+<p>This release has been focusing on support for different types captcha generators. Now Yan is not only able to provide image/jpeg captcha, but also text/plain and any others.
+<h3>Changeset:</h3>
+<ul>
+    <li>Internal API Changes:
+<ul>
+    <li>Cache ...</li></ul></li></ul></p>
+                <a class="readmore" href="https://sunng.info/blog/yan-03.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/a-button-by-gimp.html" rel="bookmark"
                            title="Permalink to A button by GIMP">A button by GIMP</a></h1>
                 </header>
@@ -174,61 +212,10 @@ comments: true</li>
                 <a class="readmore" href="https://sunng.info/blog/zai-rhel4shang-da-jian-pythonlighttpdfastcgihuan-jing.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/nginx-http-push.html" rel="bookmark"
-                           title="Permalink to Nginx HTTP Push">Nginx HTTP Push</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-11-26T00:00:00+08:00">
-                Published: Thu 26 November 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>手艺
-tags:</li>
-<li>http</li>
-<li>nginx</li>
-<li>web
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p>前些天看到一个Nginx的Module，用来是实现Comet，今天简单试了一下功能。作者名叫Leo Ponomarev，项目地址：http://pushmodule.slact.net/
-<h3>安装</h3>
-Module需要在编译时加入nginx，同时下载nginx和nginx-push-module，在nginx configure时增加一个参数：
-<em>./configure --add-module=path/to/nginx_http_push_module</em>
-<h3>使用</h3>
-编写一个非常基本的nginx配置文件：
-<pre class="brush:plain">events{
-    worker_connections 1024;
-}
-http{
-    server {
-        listen  80;
-        server_name localhost;</pre></p></p>
-<p>     location /publish {<br />
-            set $push_channel_id $arg_id;</p>
-
-<p>         push_publisher;</p>
-
-<p>         push_store_messages on;<br />
-            push_message_timeout 2h ...</p>
-                <a class="readmore" href="https://sunng.info/blog/nginx-http-push.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/category/misc60.html">&laquo;</a>
-    Page 61 / 77
+    Page 61 / 78
         <a href="https://sunng.info/blog/category/misc62.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

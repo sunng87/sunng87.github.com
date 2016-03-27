@@ -23,6 +23,48 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/use-pipe-in-subprocess.html" rel="bookmark"
+                           title="Permalink to Use pipe in subprocess">Use pipe in subprocess</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-11-12T00:00:00+08:00">
+                Published: Thu 12 November 2009
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+
+</footer><!-- /.post-info -->                <ul>
+<li>把戏
+tags:</li>
+<li>linux</li>
+<li>python
+published: true
+comments: true</li>
+</ul>
+<hr />
+<p><p><h3>问题：</h3>
+您要通过python的subprocess模块执行一些命令，要在程序中获得命令的标准输出，此外，命令中还有管道操作。
+<h3>解决：</h3>
+以这个命令为例：
+<em>cat /home/admin/deploy/log/2009-11-11.log ｜grep example.com ｜wc -l</em>
+<pre class="brush:python">
+import subprocess</pre></p></p>
+<p>cmd1 = 'cat /home/admin/deploy/log/2009-11-11.log'<br />
+cmd2 = 'grep example.com'<br />
+cmd3 = 'wc -l'</p>
+
+<p>pipe1 = subprocess.Popen(cmd1.split(), stdout ...</p>
+                <a class="readmore" href="https://sunng.info/blog/use-pipe-in-subprocess.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/come-back-to-see-you.html" rel="bookmark"
                            title="Permalink to Come back to see you">Come back to see you</a></h1>
                 </header>
@@ -167,41 +209,10 @@ server.modules   += ( "mod_rewrite" )</p>
                 <a class="readmore" href="https://sunng.info/blog/lighttpdtong-guo-fastcgiyun-xing-webpycheng-xu.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/lu-hui-he-jie-zi-men.html" rel="bookmark"
-                           title="Permalink to 芦荟和桔子们">芦荟和桔子们</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-28T00:00:00+08:00">
-                Published: Wed 28 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
-<li>留影
-tags:</li>
-<li>daf
-published: true
-comments: true</li>
-</ul>
-<hr />
-<p><p><img class="alignnone" src="http://farm3.static.flickr.com/2585/4052990160_e76583aed9.jpg" alt="" width="500" height="333" /></p></p>
-<p><img class="alignnone" src="http://farm3.static.flickr.com/2772/4052990354_1f83589f87.jpg" alt="" width="500" height="333" /></p>
-                <a class="readmore" href="https://sunng.info/blog/lu-hui-he-jie-zi-men.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index62.html">&laquo;</a>
-    Page 63 / 77
+    Page 63 / 78
         <a href="https://sunng.info/blog/index64.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->

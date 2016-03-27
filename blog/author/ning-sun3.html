@@ -23,6 +23,29 @@
                     <ol id="posts-list" class="hfeed" start="4">
             <li><article class="hentry">
                 <header>
+                    <h1><a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark"
+                           title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2014-06-09T21:06:39+08:00">
+                Published: Mon 09 June 2014
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
+        </address>
+<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
+<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
+</footer><!-- /.post-info -->                <h2>What are Slacker and Slacker Cluster</h2>
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That ...</p>
+                <a class="readmore" href="https://sunng.info/blog/slacker-cluster-012-grouping.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
+
+            <li><article class="hentry">
+                <header>
                     <h1><a href="https://sunng.info/blog/fork-join-in-papaline.html" rel="bookmark"
                            title="Permalink to "Fork-Join in Papaline"">"Fork-Join in Papaline"</a></h1>
                 </header>
@@ -115,46 +138,10 @@
                 <a class="readmore" href="https://sunng.info/blog/slacker-library-updated.html">read more</a>
                 </div><!-- /.entry-content -->
             </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/archlinux-an-quan-geng-huan-ying-pan.html" rel="bookmark"
-                           title="Permalink to "Archlinux 安全更换硬盘"">"Archlinux 安全更换硬盘"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2013-10-22T22:26:00+08:00">
-                Published: Tue 22 October 2013
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <p>公司升级所有笔记本到SSD，本来是个好事，不过迁移是个难事。除了我，所有的同事都是OS X，他们有自动工具，毫无个性，不理他们。我们Linux要做这个事其实想想比较简单：首先，我们的分区和目录是抽象为两层的；其次，整个文件系统是透明的，只要拷贝就好了。</p>
-<p>首先，拿到新硬盘要按需分区和格式化。用gpartd就可以，这一步千万不要忘记把/boot的目标分区设置为bootable，否则会导致无法引导。</p>
-<p>分区完成之后，挂载各个分区，把当前硬盘里的所有文件用<code>cp -ar</code>拷贝到新硬盘上，这一步非常花时间。</p>
-<p>搞定之后要再手动mkdir几个目录</p>
-<ul>
-<li>/run</li>
-<li>/sys</li>
-<li>/proc</li>
-<li>/dev</li>
-</ul>
-<p>使系统启动的时候可以mount上特殊分区。</p>
-<p>此外，要修改<code>/etc/fstab</code>，根据新的硬盘UUID来配置。UUID可以在<code>ll /dev/disks/by-uuid</code>里看到。</p>
-<p>挂载一些特殊分区到新硬盘目录：</p>
-<ul>
-<li><code>mount -o bind /dev ...</code></li></ul>
-                <a class="readmore" href="https://sunng.info/blog/archlinux-an-quan-geng-huan-ying-pan.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
                 </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun2.html">&laquo;</a>
-    Page 3 / 77
+    Page 3 / 78
         <a href="https://sunng.info/blog/author/ning-sun4.html">&raquo;</a>
 </p>
                 </section><!-- /#content -->
