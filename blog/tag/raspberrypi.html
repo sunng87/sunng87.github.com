@@ -101,17 +101,17 @@ ssd: (groupid=0, jobs=1): err= 0: pid=583: Sun Mar 27 13:36:30 2016
 </pre></div>
 
 
-<p>So if you want a better pi, it's strongly recommend to use an external
-driver as rootfs.</p>
+<p>So if you want a better pi, it's highly recommended to use an external
+disk as rootfs.</p>
 <p>Last year, I backed
-<a href="http://http://gungho.io/product/pidrive/">piDrive</a> on Kickstart. The
-project is aimed to provide a SSD adapter for pi with low power
-requirement. This board made it possible to use an SSD with pi. And we
-can put our rootfs on this disk to run the pi smoothly.</p>
+<a href="http://gungho.io/product/pidrive/">piDrive</a> on Kickstart. The
+project was aimed to provide a SSD adapter for pi with low power
+requirement. This board made it possible to use an SSD with Pi. And we
+can put our rootfs on this disk to run the Pi smoothly.</p>
 <p>Before we get started, I urge you to ensure your power adapter could
-provide 5V/2A for pi2 and 5V/2.5A for pi3. Otherwise, you may be
+provide 5V/2A for Pi2 and 5V/2.5A for Pi3. Otherwise, you may be
 resulted in file system corruption. Even worse, the SSD could be
-totally destroyed, like my first one.</p>
+destroyed completely, like my first one.</p>
 <p>You will still need a SD card as <code>/boot</code> your pi because that's what
 pi requires. A ~128MB card will be just ok for <code>/boot</code> but I know it's
 already difficult to find on the market. Perhaps you can create two
@@ -132,10 +132,11 @@ Pi2 and Pi3 uses Pi2 file system.</p>
 
 <p>Copy <code>/boot</code> directory to SD card:</p>
 <div class="highlight"><pre><span></span>cp -r /mnt/root/boot/* /mnt/boot/
+mv /mnt/root/boot /mnt/root/boot_bak
 </pre></div>
 
 
-<p>Edit <code>/mnt/boot/cmdline.txt</code> to tell pi where your rootfs is:</p>
+<p>Edit <code>/mnt/boot/cmdline.txt</code> to tell Pi where your rootfs is:</p>
 <div class="highlight"><pre><span></span>root=/dev/sda1 rootdelay=5 rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
 </pre></div>
 
@@ -150,7 +151,7 @@ Pi2 and Pi3 uses Pi2 file system.</p>
 <li>Add <code>rootdelay=5</code> to let bootloader to wait for your partition to be
   loaded.</li>
 </ul>
-<p>Then you will need to edit <code>/etc/fstab</code> to tell linux (not pi) about
+<p>Then you will need to edit <code>/mnt/root/etc/fstab</code> to tell linux (not pi) about
 the file system layout:</p>
 <div class="highlight"><pre><span></span>#
 # /etc/fstab: static file system information
@@ -162,7 +163,7 @@ the file system layout:</p>
 
 
 <p>So that's simply all you need to get prepared. Run <code>sync</code> on your
-system to make sure everything is on the disk. Umount sdcard and
+system to make sure everything is on mounted disks. Umount sdcard and
 ssd. Set them up on your Pi. Profit!</p>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">

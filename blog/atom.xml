@@ -68,17 +68,17 @@ ssd: (groupid=0, jobs=1): err= 0: pid=583: Sun Mar 27 13:36:30 2016
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;So if you want a better pi, it's strongly recommend to use an external
-driver as rootfs.&lt;/p&gt;
+&lt;p&gt;So if you want a better pi, it's highly recommended to use an external
+disk as rootfs.&lt;/p&gt;
 &lt;p&gt;Last year, I backed
-&lt;a href="http://http://gungho.io/product/pidrive/"&gt;piDrive&lt;/a&gt; on Kickstart. The
-project is aimed to provide a SSD adapter for pi with low power
-requirement. This board made it possible to use an SSD with pi. And we
-can put our rootfs on this disk to run the pi smoothly.&lt;/p&gt;
+&lt;a href="http://gungho.io/product/pidrive/"&gt;piDrive&lt;/a&gt; on Kickstart. The
+project was aimed to provide a SSD adapter for pi with low power
+requirement. This board made it possible to use an SSD with Pi. And we
+can put our rootfs on this disk to run the Pi smoothly.&lt;/p&gt;
 &lt;p&gt;Before we get started, I urge you to ensure your power adapter could
-provide 5V/2A for pi2 and 5V/2.5A for pi3. Otherwise, you may be
+provide 5V/2A for Pi2 and 5V/2.5A for Pi3. Otherwise, you may be
 resulted in file system corruption. Even worse, the SSD could be
-totally destroyed, like my first one.&lt;/p&gt;
+destroyed completely, like my first one.&lt;/p&gt;
 &lt;p&gt;You will still need a SD card as &lt;code&gt;/boot&lt;/code&gt; your pi because that's what
 pi requires. A ~128MB card will be just ok for &lt;code&gt;/boot&lt;/code&gt; but I know it's
 already difficult to find on the market. Perhaps you can create two
@@ -99,10 +99,11 @@ Pi2 and Pi3 uses Pi2 file system.&lt;/p&gt;
 
 &lt;p&gt;Copy &lt;code&gt;/boot&lt;/code&gt; directory to SD card:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;cp -r /mnt/root/boot/* /mnt/boot/
+mv /mnt/root/boot /mnt/root/boot_bak
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Edit &lt;code&gt;/mnt/boot/cmdline.txt&lt;/code&gt; to tell pi where your rootfs is:&lt;/p&gt;
+&lt;p&gt;Edit &lt;code&gt;/mnt/boot/cmdline.txt&lt;/code&gt; to tell Pi where your rootfs is:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;root=/dev/sda1 rootdelay=5 rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -117,7 +118,7 @@ Pi2 and Pi3 uses Pi2 file system.&lt;/p&gt;
 &lt;li&gt;Add &lt;code&gt;rootdelay=5&lt;/code&gt; to let bootloader to wait for your partition to be
   loaded.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Then you will need to edit &lt;code&gt;/etc/fstab&lt;/code&gt; to tell linux (not pi) about
+&lt;p&gt;Then you will need to edit &lt;code&gt;/mnt/root/etc/fstab&lt;/code&gt; to tell linux (not pi) about
 the file system layout:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;#
 # /etc/fstab: static file system information
@@ -129,7 +130,7 @@ the file system layout:&lt;/p&gt;
 
 
 &lt;p&gt;So that's simply all you need to get prepared. Run &lt;code&gt;sync&lt;/code&gt; on your
-system to make sure everything is on the disk. Umount sdcard and
+system to make sure everything is on mounted disks. Umount sdcard and
 ssd. Set them up on your Pi. Profit!&lt;/p&gt;</summary><category term="raspberrypi"></category><category term="linux"></category><category term="archlinux"></category></entry><entry><title>"Smoothing Your Rust Crates Release With Cargo-release"</title><link href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html" rel="alternate"></link><updated>2016-03-21T22:28:06+08:00</updated><author><name>Ning Sun</name></author><id>tag:sunng.info,2016-03-21:blog/smoothing-your-rust-crates-release-with-cargo-release.html</id><summary type="html">&lt;p&gt;Cargo-release is a cargo subcommand that automates your libraries
 release process. The idea was inspired by Clojure's leiningen, which
 has a &lt;code&gt;release&lt;/code&gt; command does exact same thing.&lt;/p&gt;
