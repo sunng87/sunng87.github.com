@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>GPars的Actor实现</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/gparsde-actorshi-xian.html" rel="bookmark"
-           title="Permalink to GPars的Actor实现">GPars的Actor实现</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-04-28T00:00:00+08:00">
-                Published: Thu 28 April 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->      <ul>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/gparsde-actorshi-xian.html" rel="bookmark"
+         title="Permalink to GPars的Actor实现">GPars的Actor实现</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2011-04-28T00:00:00+08:00">
+      Thu 28 April 2011
+    </abbr>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <ul>
 <li>手艺
 tags:</li>
 <li>groovy</li>
@@ -94,29 +93,17 @@ core获得start消息后，调用DefaultActor覆盖的handleStart方法（Defaul
 <p>此外，core的MessageQueue的实现是DefaultMessageQueue。它使用两个LinkedList作为输入（向actor输入）队列和输出队列，当输入队列为空时，通过同步方法swap交换输入输出队列。swap是整个actor系统里唯一一个同步方法。这样的机制保证actor的core在线程池中处理时，外界仍然可以向actor发送消息，消息会在actor被调度出线程池之前全部处理掉。不过，他的前提是只有一个线程读这个队列，这个条件在actor系统里，通过core对象的activeUpdater可以有效的保证。</p>
 
 <p>Actor模式采用这种onDemand方式的线程使用，允许大量的actor共存，并只有活跃的actor会占用线程，非活跃状态的actor处在dettach状态，并不消耗计算资源，取消了空转的loop。</p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

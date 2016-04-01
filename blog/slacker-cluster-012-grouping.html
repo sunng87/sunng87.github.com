@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>"Slacker Cluster 0.12: Grouping"</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+<meta name="tags" content="clojure" />
+<meta name="tags" content="programming" />
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark"
-           title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-06-09T21:06:39+08:00">
-                Published: Mon 09 June 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->      <h2>What are Slacker and Slacker Cluster</h2>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark"
+         title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2014-06-09T21:06:39+08:00">
+      Mon 09 June 2014
+    </abbr>
+    <span class="article-tags">
+      <a href="https://sunng.info/blog/tag/clojure.html">clojure</a>,
+      <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+    </span>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <h2>What are Slacker and Slacker Cluster</h2>
 <p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That means you can switch back and forth at same time.</p>
 <p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> is a support module for running Slacker servers with multiple instances. Cluster enabled slacker server will publish all its served namespaces to Zookeeper cluster. The Cluster enabled client reads and watches these meta data. The most important feature of Slacker Cluster is you can add or remove servers without changing client configuration.</p>
 <h2>Grouping in Slacker Cluster</h2>
@@ -77,29 +82,17 @@
 
 <h2>Conclusion</h2>
 <p><a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> has been used in our Avos Cloud backend for service integration. Feel free to let me know if you have interests or questions with this library.</p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

@@ -1,44 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun - Ning Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun - Articles by Ning Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
+<h2>Articles by Ning Sun</h2>
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
-                           title="Permalink to 多线程服务器">多线程服务器</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark" title="Permalink to 多线程服务器">多线程服务器</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-04-12T00:00:00+08:00">
-                Published: Thu 12 April 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2012-04-12T00:00:00+08:00"> Thu 12 April 2012 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>NIO</li>
@@ -54,29 +45,15 @@ comments: true</li>
 
 <p>这样的方式在很多例子里很普遍。但是如果handler里的业务逻辑比较复杂，尤其是IO的等待过长(比如查询数据库)，就会由于在handler上阻塞的时间过长，导致服务器读写的效率下降。所以通常是不能在这样环境下的handler里写IO阻塞的代码。</p>
 
-<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>解决这个问题，一种方式是多线程，一种是全异步化。后者最典型的例子就是nodejs，坦白说编程模型非常复杂，对开发者要求较高。一种相对简单的办法，就是以多线程的方式，增加CPU的利用效率，来平衡IO阻塞带来的影响。IO等待时间的比重越大，线程数就可以陪得越高。牺牲一些sy的CPU时间 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/slacker-performance-enhanced.html" rel="bookmark" title="Permalink to Slacker performance enhanced">Slacker performance enhanced</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/slacker-performance-enhanced.html" rel="bookmark"
-                           title="Permalink to Slacker performance enhanced">Slacker performance enhanced</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-04-02T00:00:00+08:00">
-                Published: Mon 02 April 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2012-04-02T00:00:00+08:00"> Mon 02 April 2012 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>clojure</li>
@@ -89,29 +66,15 @@ comments: true</li>
 </ul>
 <hr />
 <p><p>In the slacker framework, performance issue becomes more and more critical as the basic features are almost completed. As mentioned in cnclojure meetup, I will focus on the performance enhancement in next release. </p></p>
-<p>Now I have worked out a ...</p>
-                <a class="readmore" href="https://sunng.info/blog/slacker-performance-enhanced.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>Now I have worked out a ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/wei-webworkershe-zhi-zheng-que-de-lu-jing.html" rel="bookmark" title="Permalink to 为WebWorker设置正确的路径">为WebWorker设置正确的路径</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/wei-webworkershe-zhi-zheng-que-de-lu-jing.html" rel="bookmark"
-                           title="Permalink to 为WebWorker设置正确的路径">为WebWorker设置正确的路径</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-03-22T00:00:00+08:00">
-                Published: Thu 22 March 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2012-03-22T00:00:00+08:00"> Thu 22 March 2012 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>把戏
 tags:</li>
 <li>heatcanvas</li>
@@ -130,29 +93,15 @@ HeatCanvas.getPath = function() {<br />
         var src = scriptTags[i].src;<br />
         var pos = src.indexOf("heatcanvas.js");<br />
         if (pos > 0) {<br />
-            return ...</scripttags.length;></p>
-                <a class="readmore" href="https://sunng.info/blog/wei-webworkershe-zhi-zheng-que-de-lu-jing.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+            return ...</scripttags.length;></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/my-favorite-feature-in-leiningen-2.html" rel="bookmark" title="Permalink to My favorite feature in leiningen 2">My favorite feature in leiningen 2</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/my-favorite-feature-in-leiningen-2.html" rel="bookmark"
-                           title="Permalink to My favorite feature in leiningen 2">My favorite feature in leiningen 2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-03-21T00:00:00+08:00">
-                Published: Wed 21 March 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2012-03-21T00:00:00+08:00"> Wed 21 March 2012 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>clojure</li>
@@ -163,29 +112,15 @@ comments: true</li>
 </ul>
 <hr />
 <p><p>Recently, the leiningen team has released a preview version for leiningen 2. It brings <a href="https://github.com/technomancy/leiningen/blob/master/NEWS.md" target="_blank">new features</a> to the clojure build tool. But my favorite one is not listed in any document. So I would like to share with you here.</p></p>
-<p>As ...</p>
-                <a class="readmore" href="https://sunng.info/blog/my-favorite-feature-in-leiningen-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>As ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/shua-htc-evo-3d-gsm.html" rel="bookmark" title="Permalink to 刷HTC EVO 3D GSM">刷HTC EVO 3D GSM</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/shua-htc-evo-3d-gsm.html" rel="bookmark"
-                           title="Permalink to 刷HTC EVO 3D GSM">刷HTC EVO 3D GSM</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-03-19T00:00:00+08:00">
-                Published: Mon 19 March 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2012-03-19T00:00:00+08:00"> Mon 19 March 2012 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>android
@@ -196,36 +131,24 @@ comments: true</li>
 <p><p>去年买的水货Desire Z在服役了刚刚一年之后就坏了，看来肯定是上了奸商的当。鉴于最近的新手机也没有什么像当时Desire Z那样一见倾心的，这次保守起见买了个行货EVO 3D。买行货的问题不仅是贵（贵很多），而且默认的ROM实在是没法用。几大国产流氓软件堂而皇之地强制安装后台运行，系统连google账户，官方market都没有。</p></p>
 <p>那么只能刷一下了。所有的步骤开始之前都是解锁，按照官方的解锁方式(http://www.htcdev.com)基本上没有什么难度。在我的archlinux上，不需要安装HTC Sync（也没得装），只需要从aur安装android-sdk和android-sdk-platform-tools就有adb和fastboot在PATH里。唯一值得一提的是，在我的系统上fastboot oem get_identifier_token需要sudo，否则会一直wait device。除了这个小插曲以外，按照官方的步骤就可以解锁HBOOT。</p>
 
-<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru ...</p>
-                <a class="readmore" href="https://sunng.info/blog/shua-htc-evo-3d-gsm.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>接下来就可以刷recovery了，HTC EVO 3D GSM版的codename叫做shootru，比较可靠的一个版本是4.0.1.4-shooteru ...</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/author/ning-sun9.html">&laquo;</a>
     Page 10 / 78
         <a href="https://sunng.info/blog/author/ning-sun11.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

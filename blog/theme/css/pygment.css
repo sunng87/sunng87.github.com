@@ -2,33 +2,33 @@
 background-color:#eee;
 }
 .c {
-color:#408090;
+color:#33859e;
 font-style:italic;
 }
 .err {
-border:1px solid #FF0000;
+border:1px solid #0C1014;
 }
 .k {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .o {
 color:#666666;
 }
 .cm {
-color:#408090;
+color:#33859e;
 font-style:italic;
 }
 .cp {
-color:#007020;
+color:#2aa889;
 }
 .c1 {
-color:#408090;
+color:#33859e;
 font-style:italic;
 }
 .cs {
 background-color:#FFF0F0;
-color:#408090;
+color:#33859e;
 }
 .gd {
 color:#A00000;
@@ -37,14 +37,14 @@ color:#A00000;
 font-style:italic;
 }
 .gr {
-color:#FF0000;
+color:#0C1014;
 }
 .gh {
 color:#000080;
 font-weight:bold;
 }
 .gi {
-color:#00A000;
+color:#2aa889;
 }
 .go {
 color:#303030;
@@ -64,22 +64,22 @@ font-weight:bold;
 color:#0040D0;
 }
 .kc {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .kd {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .kn {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .kp {
-color:#007020;
+color:#2aa889;
 }
 .kr {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .kt {
@@ -95,7 +95,7 @@ color:#4070A0;
 color:#4070A0;
 }
 .nb {
-color:#007020;
+color:#2aa889;
 }
 .nc {
 color:#0E84B5;
@@ -113,10 +113,10 @@ color:#D55537;
 font-weight:bold;
 }
 .ne {
-color:#007020;
+color:#2aa889;
 }
 .nf {
-color:#06287E;
+    color:#99d1ce;
 }
 .nl {
 color:#002070;
@@ -131,10 +131,10 @@ color:#062873;
 font-weight:bold;
 }
 .nv {
-color:#BB60D5;
+    color:#99d1ce;
 }
 .ow {
-color:#007020;
+color:#2aa889;
 font-weight:bold;
 }
 .w {
@@ -189,7 +189,7 @@ color:#4070A0;
 color:#517918;
 }
 .bp {
-color:#007020;
+color:#2aa889;
 }
 .vc {
 color:#BB60D5;

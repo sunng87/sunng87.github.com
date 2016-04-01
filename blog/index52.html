@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html" rel="bookmark"
-                           title="Permalink to We are using Hudson for continuous integration">We are using Hudson for continuous integration</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html" rel="bookmark" title="Permalink to We are using Hudson for continuous integration">We are using Hudson for continuous integration</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-04-06T00:00:00+08:00">
-                Published: Tue 06 April 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-04-06T00:00:00+08:00"> Tue 06 April 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>CI</li>
@@ -59,29 +49,15 @@ nohup java -jar hudson.war > hudson.log 2>&1 &<br />
 
 <p>hudson的web图形界面可以胜任几乎全部工作。我们主要使用maven来构建项目，hudson提供了非常强大的功能：邮件提醒（通过插件支持twitter/jabber/irc提醒）；自动构建，除了基本的定时构建以外，hudson还会自动解析其管理的项目之间的依赖关系，从而实现级联的构建，这个功能非常震撼。</p>
 
-<p>刚刚上手以后我还安装了两个插件。一个是build-timeout插件，可以之间一次构建的超时时间：我们的项目中有老大写的交互式的maven配置插件，一旦这个插件在自动构建时运行会阻塞构建的流程。另一个是scp发布插件，可以自动scp一个文件到远程服务器上，我用这个插件来把构建版本发布到运行环境中，只要在适当的时候重启一下运行环境的服务器就可以实现部署了 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/we-are-using-hudson-for-continuous-integration.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>刚刚上手以后我还安装了两个插件。一个是build-timeout插件，可以之间一次构建的超时时间：我们的项目中有老大写的交互式的maven配置插件，一旦这个插件在自动构建时运行会阻塞构建的流程。另一个是scp发布插件，可以自动scp一个文件到远程服务器上，我用这个插件来把构建版本发布到运行环境中，只要在适当的时候重启一下运行环境的服务器就可以实现部署了 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu.html" rel="bookmark" title="Permalink to Reset default cursor theme and web browser after installing kubuntu">Reset default cursor theme and web browser after installing kubuntu</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu.html" rel="bookmark"
-                           title="Permalink to Reset default cursor theme and web browser after installing kubuntu">Reset default cursor theme and web browser after installing kubuntu</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-04-03T00:00:00+08:00">
-                Published: Sat 03 April 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-04-03T00:00:00+08:00"> Sat 03 April 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>把戏
 tags:</li>
 <li>linux</li>
@@ -93,29 +69,15 @@ comments: true</li>
 <p><p>If you installed kubuntu parallel to ubuntu, you might find that the default browser is set to konqueror and cursor theme is oxygen which cannot modified by "gnome-default-applications-properties" and "gnome-appearance-properties".</p></p>
 <p>To fix this, use Debian update-alternatives tool:
 <em>update-alternatives --config x-www-browser</em>
-<em>update-alternatives --config ...</em></p>
-                <a class="readmore" href="https://sunng.info/blog/reset-default-cursor-theme-and-web-browser-after-installing-kubuntu.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<em>update-alternatives --config ...</em></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/update0.html" rel="bookmark" title="Permalink to Update0">Update0</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/update0.html" rel="bookmark"
-                           title="Permalink to Update0">Update0</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-04-02T00:00:00+08:00">
-                Published: Fri 02 April 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-04-02T00:00:00+08:00"> Fri 02 April 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>自话
 tags:</li>
 <li>java</li>
@@ -128,29 +90,15 @@ comments: true</li>
 <p><p>太忙了，真的太忙了，每天重复无数遍 mvn clean install -Dmaven.test.skip， 一不小心再遇上"cidaemon.exe"锁死文件无法删除，或者SVN报点Tree conflict，无法见证奇迹就只剩下悲剧了。都是重复的工作，但是在Windows下想做automation还是一筹莫展，比如要构建多个maven项目，也不知道怎么自动化地判断maven构建成功还是失败；再者在Windows里也不知道怎么自动化的scp文件到服务器上去，还要ssh执行重启服务的命令；手足无措啊。</p></p>
 <p>最严重的问题是每天忙的要命，但是并没有感觉有应有的收获或者长进什么的，折腾了半天做的事情还是自己熟悉的小方面，只是做得相对变态而已。每天新的情况让你根本来不及重构，而且严重的问题是，重构好了又有什么用呢，谁能想到后面又有什么变化把你自己引以为豪的设计通通推翻。程序员要考虑的事情太多了，常常要揣摩一些需求方的心思，偷偷摸摸地提前做一些准备。</p>
 
-<p>我现在已经有了一个annotation driven的自动暴露Java接口的框架。之前在CRL实习时，在Jazz上开发也是用一个类似的机制，当时是使用接口的命名规范来确定暴露，比如说有以get和post开头的接口都暴露为HTTP服务，就有很多类似postUpdate ...</p>
-                <a class="readmore" href="https://sunng.info/blog/update0.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>我现在已经有了一个annotation driven的自动暴露Java接口的框架。之前在CRL实习时，在Jazz上开发也是用一个类似的机制，当时是使用接口的命名规范来确定暴露，比如说有以get和post开头的接口都暴露为HTTP服务，就有很多类似postUpdate ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/feng-bi-kai-fa-2.html" rel="bookmark" title="Permalink to 封闭开发2">封闭开发2</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/feng-bi-kai-fa-2.html" rel="bookmark"
-                           title="Permalink to 封闭开发2">封闭开发2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-03-26T00:00:00+08:00">
-                Published: Fri 26 March 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-03-26T00:00:00+08:00"> Fri 26 March 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>自话
 tags:</li>
 <li>snda</li>
@@ -166,29 +114,15 @@ comments: true</li>
 
 <p>我们组的项目4月9号要内部上线，真正的产品内测是5月18号，大家请期待。</p>
 
-<p>4月23号的北京QCon，今天看到<a href="http://blog.goodtiger.net/">Goodtiger</a>说他要去了，我在这里严重嫉妒一下。哎，我一月份的时候就跟老大说了今年QCon牛人很多 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/feng-bi-kai-fa-2.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>4月23号的北京QCon，今天看到<a href="http://blog.goodtiger.net/">Goodtiger</a>说他要去了，我在这里严重嫉妒一下。哎，我一月份的时候就跟老大说了今年QCon牛人很多 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/gao-ding-gwibber.html" rel="bookmark" title="Permalink to 搞定gwibber">搞定gwibber</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/gao-ding-gwibber.html" rel="bookmark"
-                           title="Permalink to 搞定gwibber">搞定gwibber</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-03-22T00:00:00+08:00">
-                Published: Mon 22 March 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-03-22T00:00:00+08:00"> Mon 22 March 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>把戏
 tags:</li>
 <li>foss</li>
@@ -202,36 +136,24 @@ comments: true</li>
 <p><p>升级10.04之后，gwibber2.29开始使用pycurl来处理IO。结果一条更新都拿不下来，为此搜到很多相关、不相关的bug。最后终于自己找到问题，<strong>原来是pycurl.setopt方法传入字符串如果是unicode就会报typeerror</strong>。而通过gwibber配置界面输入的所有字符都是unicode编码，于是问题也就简单了。做个处理，在 <em>/usr/lib/python2.6/dist-packages/gwibber/microblog/network.py</em> 第18到21行：<br />
 [cc lang="python"]<br />
     self.curl.setopt(pycurl.URL, str(url).encode('ascii'))</p></p>
-<p>    if username and password ...</p>
-                <a class="readmore" href="https://sunng.info/blog/gao-ding-gwibber.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>    if username and password ...</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index51.html">&laquo;</a>
     Page 52 / 78
         <a href="https://sunng.info/blog/index53.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>多线程服务器</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
-           title="Permalink to 多线程服务器">多线程服务器</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2012-04-12T00:00:00+08:00">
-                Published: Thu 12 April 2012
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->      <ul>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/duo-xian-cheng-fu-wu-qi.html" rel="bookmark"
+         title="Permalink to 多线程服务器">多线程服务器</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2012-04-12T00:00:00+08:00">
+      Thu 12 April 2012
+    </abbr>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <ul>
 <li>手艺
 tags:</li>
 <li>NIO</li>
@@ -66,29 +65,17 @@ comments: true</li>
 <p>slacker 0.7.x基于aleph，由于aleph / lamina无法侵入协议层面，所以采用的都是顺序的客户端和服务器。这种方式编程非常简洁，协议设计简单，实现起来很快。但是作为RPC框架，一旦客户的函数阻塞较长，就会影响整体性能。0.8.0开始，通过新的协议和link库支持，slacker采用了transaction id的方式，服务器端默认使用并行处理，客户端不再依赖顺序指定响应和回调。尽管在一些CPU为局限的测试里性能有少许下降(与单线程相比，增加了调度的成本)，但是针对实际应用里IO等待较多的情况，新版本应该会表现出更好的综合性能。</p>
 
 <p>以上这些，就是最近的心得，希望能解释清楚事件驱动服务器里的这些事情。</p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Enhanced jip to simplify Jython module distribution</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/enhanced-jip-to-simplify-jython-module-distribution.html" rel="bookmark"
-           title="Permalink to Enhanced jip to simplify Jython module distribution">Enhanced jip to simplify Jython module distribution</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-04-10T00:00:00+08:00">
-                Published: Sun 10 April 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->      <ul>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/enhanced-jip-to-simplify-jython-module-distribution.html" rel="bookmark"
+         title="Permalink to Enhanced jip to simplify Jython module distribution">Enhanced jip to simplify Jython module distribution</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2011-04-10T00:00:00+08:00">
+      Sun 10 April 2011
+    </abbr>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <ul>
 <li>手艺
 tags:</li>
 <li>jip</li>
@@ -54,29 +53,17 @@ comments: true</li>
 <p>Another problem is the original design of .jip configuration file. From jip 0.2, .jip is available as environmen-scoped: we define some custom repositories and the whole environment shares them. But if we have multiple projects in the same environment, jip may waste time to find public artifact in a private repository. Even worse, jip may load invalid artifact from private repos. In the new design, private repositories are defined in pom.xml, as project-scoped, just like most java build tools. </p>
 <p>With new jip, to distribute a jython package, you should write a pom in the same way of Java, specifying the dependencies and custom repositories if you have. Then modify your MANIFEST.in to include it to your source package. At last, in the setup.py, define a new install command to call jip and pass the command into the setup() . From the new approach, only 'pip install' is required for end user. Super easy!</p>
 <p>Upon the new usage of jip(as a library), I am also considering to migrate from GPL to LGPL or MIT. I have little knowledge about conflicts between licenses. So if you have some ideas or concerns, feel free to let me know.</p></p></p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

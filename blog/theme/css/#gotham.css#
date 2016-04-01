@@ -1,0 +1,95 @@
+@import url(https://fonts.googleapis.com/css?family=Monda);
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0c1014;
+    background-repeat:repeat-x;
+    background-position:top center;
+    font-family: 'Monda',sans-serif;
+    height:100%;
+    padding: 20px;
+    color:#99d1ce;
+}
+
+#page{
+    z-index:0;
+    width:800px;
+    margin:auto;
+}
+section {
+    margin-bottom:20px;
+    margin-left:10px;
+    font-size:1em;
+}
+h1 {
+    font-size:3em;
+    margin-bottom:20px;
+}
+h2 {
+    font-size:1.75em;
+    margin-bottom:20px;
+}
+h3 {
+    font-size:1.2em;
+    margin-bottom:10px;
+    text-transform: lowercase;
+}
+
+p {
+    margin-bottom:8px;
+    line-height:125%;
+    font-size:1em;
+}
+ul.links {
+    margin-bottom:5px;
+}
+ul.links li {
+    line-height:125%;
+    list-style: inside;
+}
+ul.links li:last-child {
+    border:0;
+}
+a:link,a:visited{
+    color: #edb443;
+    text-decoration:none;
+}
+a:hover {
+    color: #2aa889;
+}
+
+@media screen and (max-width: 800px) {
+    #page {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #page {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/*---- pelican specific ------- */
+
+#post-list {
+    list-style: none;
+}
+
+article.hentry {
+    margin-bottom: 20px;
+}
+
+h2.entry-title {
+
+}
+
+footer.post-info {
+    fo
+}

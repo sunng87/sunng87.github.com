@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html" rel="bookmark"
-                           title="Permalink to 验证码服务recaptcha和vidoop">验证码服务recaptcha和vidoop</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html" rel="bookmark" title="Permalink to 验证码服务recaptcha和vidoop">验证码服务recaptcha和vidoop</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-13T00:00:00+08:00">
-                Published: Tue 13 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-13T00:00:00+08:00"> Tue 13 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>captcha</li>
@@ -63,29 +53,15 @@ class Recaptcha(object):
 
 <p>    def POST(self):<br />
         params = web.input()<br />
-        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field ...</p>
-                <a class="readmore" href="https://sunng.info/blog/yan-zheng-ma-fu-wu-recaptchahe-vidoop.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+        recaptcha_challenge_field, recaptcha_response_field = params.recaptcha_challenge_field ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html" rel="bookmark" title="Permalink to 验证码服务的两种方式">验证码服务的两种方式</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html" rel="bookmark"
-                           title="Permalink to 验证码服务的两种方式">验证码服务的两种方式</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-12T00:00:00+08:00">
-                Published: Mon 12 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-12T00:00:00+08:00"> Mon 12 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>captcha</li>
@@ -122,29 +98,15 @@ comments: true</li>
     <li>应用服务器将包含验证码地址的网页发送给用户浏览器；</li>
     <li>用户浏览器通过img的src方式向验证码服务器请求验证码图片；</li>
     <li>验证码服务器输出验证码图片流到用户浏览器；</li>
-    <li>用户判读验证码图片 ...</li></ol></p></p>
-                <a class="readmore" href="https://sunng.info/blog/yan-zheng-ma-fu-wu-de-liang-chong-fang-shi.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+    <li>用户判读验证码图片 ...</li></ol></p></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/jie-shou-can-guan-huan-ying-liu-yan.html" rel="bookmark" title="Permalink to 接受参观，欢迎留言">接受参观，欢迎留言</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/jie-shou-can-guan-huan-ying-liu-yan.html" rel="bookmark"
-                           title="Permalink to 接受参观，欢迎留言">接受参观，欢迎留言</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-10T00:00:00+08:00">
-                Published: Sat 10 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-10T00:00:00+08:00"> Sat 10 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>留影
 tags:</li>
 <li>clip</li>
@@ -176,29 +138,15 @@ A: XDDDDDD<br />
 B: 呵呵<br />
 B: 行啊<br />
 A: 哇哦<br />
-A: 被flatter够了以后继续画 嗯</span></p>
-                <a class="readmore" href="https://sunng.info/blog/jie-shou-can-guan-huan-ying-liu-yan.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+A: 被flatter够了以后继续画 嗯</span></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/dou-ban-jia-gou-fa-zhan-pptzhuan.html" rel="bookmark" title="Permalink to 豆瓣架构发展PPT[转]">豆瓣架构发展PPT[转]</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/dou-ban-jia-gou-fa-zhan-pptzhuan.html" rel="bookmark"
-                           title="Permalink to 豆瓣架构发展PPT[转]">豆瓣架构发展PPT[转]</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-09T00:00:00+08:00">
-                Published: Fri 09 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-09T00:00:00+08:00"> Fri 09 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>他山
 tags:</li>
 <li>Architecture</li>
@@ -211,29 +159,15 @@ comments: true</li>
 <p>PPT地址：
 <a href="http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf" target="_blank">http://www.riawork.org/iarch/douban/douban_qcon2009_beijing.pdf</a></p>
 
-<p>可惜因为字体的问题好像在Evince里很多中文字看不到，还得开一下虚拟机。</p>
-                <a class="readmore" href="https://sunng.info/blog/dou-ban-jia-gou-fa-zhan-pptzhuan.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>可惜因为字体的问题好像在Evince里很多中文字看不到，还得开一下虚拟机。</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/a-ba.html" rel="bookmark" title="Permalink to 阿巴">阿巴</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/a-ba.html" rel="bookmark"
-                           title="Permalink to 阿巴">阿巴</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-08T00:00:00+08:00">
-                Published: Thu 08 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-08T00:00:00+08:00"> Thu 08 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>自话
 tags:</li>
 <li>Life
@@ -242,36 +176,24 @@ comments: true</li>
 </ul>
 <hr />
 <p><p>早晨八点半下楼开自行车锁，突然听见背后有微弱的声音。回头一看是个老太太坐在轮椅上，眼睛直直地盯着我，嘴里含糊不清地发出阿巴阿巴的声音。我自然是听不懂她说什么了，继续开锁。十月份虽然还是阳光普照，但是风里已经有点肃穆的意思了。这样的天气，年纪大了的人独自在外面这么坐着，想起来还是很残酷的。我推车要走，老太太还是盯着我阿巴阿巴地喊。假日的早晨小区里空空荡荡，遇到这样的场面还真有点超出“奇怪”能表达的意思。我又不好意思头也不回就走，推着自行车走上前去，想问老太太点什么，但是好像又无从问起，最后大约问了些“您怎么在这里”，“您的家里人在哪”这类的问题。最终都没有形成对话，老太太还是自顾自颤颤巍巍地喊阿巴阿巴。这个时候旁边单元出来个中年妇女远远说了什么一句，我听不懂，只是听到“神经病”三个字。一看有亲戚在旁边，我想眼前这一切大约都还在别人的可控范围里，可以走了。</p></p>
-<p>也不知道这个阿巴到底是什么意思，或者说于老人自己是什么意思。路上我故意想得戏剧性一些，难道是老太太的什么亲人，早年走失的儿子？当然了，很有可能只是一个老人丧失语言能力之后惟一能发出的声音而已。</p>
-                <a class="readmore" href="https://sunng.info/blog/a-ba.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>也不知道这个阿巴到底是什么意思，或者说于老人自己是什么意思。路上我故意想得戏剧性一些，难道是老太太的什么亲人，早年走失的儿子？当然了，很有可能只是一个老人丧失语言能力之后惟一能发出的声音而已。</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index65.html">&laquo;</a>
     Page 66 / 78
         <a href="https://sunng.info/blog/index67.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

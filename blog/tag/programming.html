@@ -1,198 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun - programming</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+    <link href="https://sunng.info/blog/blog/categories/programming/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Tags Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
+  <h2 class="subtitle"> Tag: programming</h2>
+  <p>Subscribe to <a href="https://sunng.info/blog/blog/categories/programming/atom.xml">Feed</a> of articles under <b>programming</b></p>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html">"Smoothing Your Rust Crates Release With Cargo-release"</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-03-21T22:28:06+08:00">
-                Published: Mon 21 March 2016
-        </abbr>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/smoothing-your-rust-crates-release-with-cargo-release.html" rel="bookmark" title="Permalink to "Smoothing Your Rust Crates Release With Cargo-release"">"Smoothing Your Rust Crates Release With Cargo-release"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/rust.html">rust</a>,
+          <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+        </span>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/rust.html">rust</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info --><p>Cargo-release is a cargo subcommand that automates your libraries
+        <abbr class="published" title="2016-03-21T22:28:06+08:00"> Mon 21 March 2016 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>Cargo-release is a cargo subcommand that automates your libraries
 release process. The idea was inspired by Clojure's leiningen, which
 has a <code>release</code> command does exact same thing.</p>
 <p>Typically, when you decide to release a library to crates.io, you need
 to go through following steps at least:</p>
 <ul>
-<li>bump version in Cargo.toml</li>
-<li>create a git tag for the release</li>
-<li>run <code>cargo publish</code></li>
-<li>push tags/commits to github</li>
-</ul>
-<p>cargo-release command deals these tasks for you. In addition, it
-increases your patch version and add a <code>pre</code> extension after <code>cargo
-publish</code>. The Java/Maven world uses a <code>SNAPSHOT</code> version for
-pre-release. What's sad, no other package manager follows this great
-idea. With this pre-release extension, users are able to tell if your
-master branch is on a released version or not.</p>
-<p>By default, cargo-release removes pre-release extension as the version
-to release. You can override this behavior by a <code>--level</code>. The value
-for <code>--level</code> can be <code>major</code>, <code>minor</code> or <code>patch</code>. As the name
-suggests, it increases different part of a semver version.</p>
-<p>For multi-crates repository, <code>cargo-release</code> reads you sub-directory
-name and use it as prefix of git tag to avoid conflicts.</p>
-<p>Some more features are planned for this tool, for instance:</p>
-<ul>
-<li>Custom tag prefix</li>
-<li>Build docs and push to gh-pages</li>
-</ul>
-<p>I hope this tool can be used as a standard of rust library release
-process. You can install this tool by <code>cargo install
-cargo-release</code>. And the github repo is
-<a href="https://github.com/sunng87/cargo-release">here</a>.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<li>bump version ...</li></ul> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/summarizing-changes-in-slacker-013.html" rel="bookmark" title="Permalink to "Summarizing Changes in Slacker 0.13"">"Summarizing Changes in Slacker 0.13"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+          <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a>,
+        </span>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/summarizing-changes-in-slacker-013.html" rel="bookmark"
-                           title="Permalink to "Summarizing Changes in Slacker 0.13"">"Summarizing Changes in Slacker 0.13"</a></h1>
-                </header>
+        <abbr class="published" title="2015-10-18T13:45:37+08:00"> Sun 18 October 2015 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
+<p>Slacker is an RPC framework features non-invasive design. It exposes ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark" title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+          <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a>,
+        </span>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-10-18T13:45:37+08:00">
-                Published: Sun 18 October 2015
-        </abbr>
+        <abbr class="published" title="2015-07-25T14:54:54+08:00"> Sat 25 July 2015 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
+<p>In case you still have no idea about HTTP2, it's the ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/handlebars-de-rust-shi-xian.html" rel="bookmark" title="Permalink to "Handlebars 的 rust 实现"">"Handlebars 的 rust 实现"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+          <a href="https://sunng.info/blog/tag/rust.html">&#39;rust&#39;</a>,
+        </span>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a> </p>
-</footer><!-- /.post-info -->                <p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
-<p>Slacker is an RPC framework features non-invasive design. It exposes ...</p>
-                <a class="readmore" href="https://sunng.info/blog/summarizing-changes-in-slacker-013.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
-                           title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-07-25T14:54:54+08:00">
-                Published: Sat 25 July 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a> </p>
-</footer><!-- /.post-info -->                <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
-<p>In case you still have no idea about HTTP2, it's the ...</p>
-                <a class="readmore" href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/handlebars-de-rust-shi-xian.html" rel="bookmark"
-                           title="Permalink to "Handlebars 的 rust 实现"">"Handlebars 的 rust 实现"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-01-25T16:22:50+08:00">
-                Published: Sun 25 January 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/rust.html">&#39;rust&#39;</a> </p>
-</footer><!-- /.post-info -->                <p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
+        <abbr class="published" title="2015-01-25T16:22:50+08:00"> Sun 25 January 2015 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>本来一度感觉到用过 Clojure 之后很难对新语言产生兴趣了，还好遇到了 Rust 再次激活了这方面的生命力。今年的重点之一是学习 Rust 语言，方便自己能真正 touch bare metal。1月17号的 Rust 聚会上发现很多人都持有类似的想法。 C++ 之后鲜有这种语言，以至于之后成长起来的一代人都是在一个 VM 里编程，无论是 Java 还是 Python，最终都没有办法自己去管理内存，Rust 的出现给了大家一个机会。一个具备现代特性的系统编程语言，Zero runtime，可以运行在各种设备上。去年还给<a href="http://sunng.info/blog/blog/2014/04/20/rust-concurrent-made-safely/">程序员杂志写了一篇 Rust 的文章</a>，结果导致现在程序员杂志停刊了。</p>
 <p>扯远了，和当时学 Clojure 一样，这次的计划还是写一个正经的项目来促进学习。关于时机的选择，主要是 crates.io 仓库的发布基本上标志生态圈开始建立了，这个时候写东西就方便很多了。</p>
-<p>这次选的就是实现 Handlebars ...</p>
-                <a class="readmore" href="https://sunng.info/blog/handlebars-de-rust-shi-xian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>这次选的就是实现 Handlebars ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark" title="Permalink to "AVOS Cloud 实时通信服务架构：微服务和服务发现"">"AVOS Cloud 实时通信服务架构：微服务和服务发现"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+        </span>
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html" rel="bookmark"
-                           title="Permalink to "AVOS Cloud 实时通信服务架构：微服务和服务发现"">"AVOS Cloud 实时通信服务架构：微服务和服务发现"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-08-19T16:46:20+08:00">
-                Published: Tue 19 August 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
+        <abbr class="published" title="2014-08-19T16:46:20+08:00"> Tue 19 August 2014 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>“微服务” (Microservice) 是今年特别热的一个概念，<a href="http://martinfowler.com/articles/microservices.html">Martin Fowler 的文章</a>对微服务作了详细的介绍。简而言之，微服务鼓励用户把功能拆分以细粒度的服务接口暴露出来，并通过REST 服务或轻量级消息队列集成。在微服务架构里，一个业务的实现，可能由不同的功能单元组合而实现。</p>
 <p>在 AVOS Cloud，我们提供数据存储、统计、实时通信等不同功能的服务，在实现上，这些功能需要共用基础设施，有的服务本身也根据业务性质的不同拆分功能模块，我们目前就是以这种“微服务”架构思路来实现拆分。有句话说，if you cannot split, you cannot scale.</p>
 <p>以实时通信服务为例，根据功能角色的不同，我们有这样一些模块：</p>
 <ul>
 <li>Push 服务：处理推送的订阅关系，触发推送</li>
 <li>长连接服务器：维持设备与服务的长连接</li>
 <li>Router：应用层的 lookup，负责分配合适的长连接服务器给新设备</li>
-<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警 ...</li></ul>
-                <a class="readmore" href="https://sunng.info/blog/avos-cloud-shi-shi-tong-xin-fu-wu-jia-gou-wei-fu-wu-he-fu-wu-fa-xian.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<li>WatchDog：从多台长连接服务器收集运行和统计数据，对异常情况发起报警 ...</li></ul> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 3
         <a href="https://sunng.info/blog/tag/programming2.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

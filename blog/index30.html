@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/gefr-api-updates.html" rel="bookmark"
-                           title="Permalink to gefr API updates">gefr API updates</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/gefr-api-updates.html" rel="bookmark" title="Permalink to gefr API updates">gefr API updates</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-28T00:00:00+08:00">
-                Published: Mon 28 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-03-28T00:00:00+08:00"> Mon 28 March 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>gefr</li>
@@ -59,29 +49,15 @@ comments: true</li>
 <p>即在创建Gefr的时候需要告知backend类型，目前还只有soldat一种后端。未来也可能通过自动检测让这个参数成为可选。</p>
 
 <p>gefr 0.2已经在开发中，您可以通过这里关注：
-<a href="https://bitbucket.org/sunng/gefr/overview">https://bitbucket.org/sunng ...</a></p>
-                <a class="readmore" href="https://sunng.info/blog/gefr-api-updates.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<a href="https://bitbucket.org/sunng/gefr/overview">https://bitbucket.org/sunng ...</a></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/setting-up-soldat-and-gefr.html" rel="bookmark" title="Permalink to Setting up soldat and gefr">Setting up soldat and gefr</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/setting-up-soldat-and-gefr.html" rel="bookmark"
-                           title="Permalink to Setting up soldat and gefr">Setting up soldat and gefr</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-27T00:00:00+08:00">
-                Published: Sun 27 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-03-27T00:00:00+08:00"> Sun 27 March 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>java</li>
@@ -106,29 +82,15 @@ sudo apt-get install python-pip</p>
 <p><h4>创建虚拟jython环境</h4>
 virtualenv -p /usr/local/bin/jython gefr-test<br />
 cd gefr-test<br />
-source bin/activate ...</p>
-                <a class="readmore" href="https://sunng.info/blog/setting-up-soldat-and-gefr.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+source bin/activate ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/update-new-randomnextint.html" rel="bookmark" title="Permalink to '"Update ${new Random().nextInt()}"'">'"Update ${new Random().nextInt()}"'</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/update-new-randomnextint.html" rel="bookmark"
-                           title="Permalink to '"Update ${new Random().nextInt()}"'">'"Update ${new Random().nextInt()}"'</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-24T00:00:00+08:00">
-                Published: Thu 24 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-03-24T00:00:00+08:00"> Thu 24 March 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>当时
 tags:</li>
 <li>Life</li>
@@ -144,29 +106,15 @@ comments: true</li>
 <li>要说在上海有什么舍不得的话，就是这里的朋友了，同学同事真不少。有一起干活的，有一起吃饭的，有一起听歌的，各种都有，回了南京就没有这种条件了。不过其实大家在上海很忙一个月也聚不上一回，这么想的话没什么区别，赶上什么RubyConf之类的就又过来了，给沪宁线作贡献是咱的宿命。（话说今年的这些会什么时候开啊，我夏天的衣服还没有攒够呢）</li>
 <li>新赛季中超3号就揭幕了，今年舜天队的比赛可能连电视转播都没有了，你说不回南京能行吗！！能行吗！！从96年开始，今年就是第16年了。</li>
 <li>本来想说最近一两个月荒废得厉害，我回家以后要怎么怎么的，在这还是改为此处省去多少多少字吧。。。</li>
-</ol></p>
-                <a class="readmore" href="https://sunng.info/blog/update-new-randomnextint.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+</ol></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/exaile-doubanfm-plugin-009.html" rel="bookmark" title="Permalink to Exaile DoubanFM Plugin 0.0.9">Exaile DoubanFM Plugin 0.0.9</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/exaile-doubanfm-plugin-009.html" rel="bookmark"
-                           title="Permalink to Exaile DoubanFM Plugin 0.0.9">Exaile DoubanFM Plugin 0.0.9</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-19T00:00:00+08:00">
-                Published: Sat 19 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-03-19T00:00:00+08:00"> Sat 19 March 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>Douban</li>
@@ -185,29 +133,15 @@ comments: true</li>
 <p><a href="http://www.flickr.com/photos/40741608@N08/5539013314/" title="Doubanfm Exaile new by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5092/5539013314_be4d6ff6ee.jpg" width="500" height="243" alt="Doubanfm Exaile new" /></a></p>
 
 <p>从github获得新版本：
-<a href="https://github.com/sunng87/exaile-doubanfm-plugin/downloads">https://github.com/sunng87/exaile-doubanfm-plugin/downloads</a></p>
-                <a class="readmore" href="https://sunng.info/blog/exaile-doubanfm-plugin-009.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<a href="https://github.com/sunng87/exaile-doubanfm-plugin/downloads">https://github.com/sunng87/exaile-doubanfm-plugin/downloads</a></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/continuous-learning.html" rel="bookmark" title="Permalink to Continuous Learning">Continuous Learning</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/continuous-learning.html" rel="bookmark"
-                           title="Permalink to Continuous Learning">Continuous Learning</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-03-14T00:00:00+08:00">
-                Published: Mon 14 March 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-03-14T00:00:00+08:00"> Mon 14 March 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>当时
 tags:</li>
 <li>methodology</li>
@@ -221,36 +155,24 @@ comments: true</li>
 
 <p><strong>如果你确实希望沉浸于一种技术，那么你需要着手写一些代码。</strong>这个不说了，如果还认为自己是Programmer的话，写一些代码是最最基本的事情。要了解一种技术，写一些代码，跑一个demo是最最基本的。</p>
 
-<p><strong>尽可能和一位导师，或者一个顶尖的家伙一起工作。尽管从任何人身上学到东西，但是你可以从一个更聪明更有经验的人身上学到完整的（a whole lot more）。</strong>这个体会比较深，刚搬进工作室的时候坐在@samson959旁边，虽然只有短短几个月，但是跟着入了门，少走了很多很多弯路 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/continuous-learning.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p><strong>尽可能和一位导师，或者一个顶尖的家伙一起工作。尽管从任何人身上学到东西，但是你可以从一个更聪明更有经验的人身上学到完整的（a whole lot more）。</strong>这个体会比较深，刚搬进工作室的时候坐在@samson959旁边，虽然只有短短几个月，但是跟着入了门，少走了很多很多弯路 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index29.html">&laquo;</a>
     Page 30 / 78
         <a href="https://sunng.info/blog/index31.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

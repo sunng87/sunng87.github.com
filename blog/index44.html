@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/next-to-richard-stallman.html" rel="bookmark"
-                           title="Permalink to Next to Richard Stallman">Next to Richard Stallman</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/next-to-richard-stallman.html" rel="bookmark" title="Permalink to Next to Richard Stallman">Next to Richard Stallman</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-08-13T00:00:00+08:00">
-                Published: Fri 13 August 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-08-13T00:00:00+08:00"> Fri 13 August 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>自话
 tags:</li>
 <li>gnome</li>
@@ -57,29 +47,15 @@ Product:    empathy<br />
 Component:  User Guide<br />
 Version:    unspecified<br />
 OS:     Windows<br />
-Importance:     Normal critical ...</p></p></p>
-                <a class="readmore" href="https://sunng.info/blog/next-to-richard-stallman.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+Importance:     Normal critical ...</p></p></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/beanstalkd.html" rel="bookmark" title="Permalink to beanstalkd">beanstalkd</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/beanstalkd.html" rel="bookmark"
-                           title="Permalink to beanstalkd">beanstalkd</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-08-11T00:00:00+08:00">
-                Published: Wed 11 August 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-08-11T00:00:00+08:00"> Wed 11 August 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>foss</li>
@@ -104,29 +80,15 @@ comments: true</li>
 <p>Worker 即消费者，worker通过reserve / release / bury / delete 等命令操作job的生命周期。</p>
 
 <p>Job 是beanstalkd中的基本单元，一个job包含id和body，从属于一个tube。Job的生命周期是beanstalkd中的核心概念，它包含DELAYED / READY / RESERVED / BURIED / DELETED等状态。beanstalkd文档中的这个图对Job的声明周期进行了说明：
-<a href="http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81">http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt ...</a></p>
-                <a class="readmore" href="https://sunng.info/blog/beanstalkd.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<a href="http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt#L81">http://github.com/kr/beanstalkd/blob/master/doc/protocol.txt ...</a></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/jin-kuang-1.html" rel="bookmark" title="Permalink to 近况1">近况1</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/jin-kuang-1.html" rel="bookmark"
-                           title="Permalink to 近况1">近况1</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-08-09T00:00:00+08:00">
-                Published: Mon 09 August 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-08-09T00:00:00+08:00"> Mon 09 August 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>自话
 tags: []
 published: true
@@ -138,29 +100,15 @@ comments: true</li>
 <li>本来计划三周做完的项目，后台服务调用的中间件，做了刚一周整个流程刚跑通就被砍了。最近工作得很不顺心，公司各种产品之间结构松散，模型各不相同，想要all in one谈何容易。不愉快就容易萌生去意，可是看了JavaEye robbin的<a href="http://robbin.javaeye.com/blog/730223">这篇</a>，就彷徨了。</li>
 <li>上面一节原本写了不少，但考虑到说出来不太合适，就删了。你懂的。</li>
 <li>最近听豆瓣电台非常喜欢苏阳、野孩子这些西北味的歌，我毕竟还是干旱地区的人，听着就有共鸣。苏阳的<a href="http://www.douban.com/artist/suyang/download?song_id=10027">长在银川</a>我很喜欢，我喜欢这种带着地名的歌。有西北的味道，能让我想起小时候。“我的家住在，<a href="http://j.map.baidu.com/8n8f">同心路</a>边上” ，如果有机会，能去考察一下就太他妈好了。</li>
-<li>今天图灵把<a href="http://www.turingbook.com/Data/Newswire/d3aaad02-1af3-47df-8e87-d06e0a88672e/Asset/Newsletter_201008.html">八月份的新书</a>列出来，发现这么一本 ...</li></ol></p></p>
-                <a class="readmore" href="https://sunng.info/blog/jin-kuang-1.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<li>今天图灵把<a href="http://www.turingbook.com/Data/Newswire/d3aaad02-1af3-47df-8e87-d06e0a88672e/Asset/Newsletter_201008.html">八月份的新书</a>列出来，发现这么一本 ...</li></ol></p></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/exaile-doubanfm-plugin-for-exaile-032.html" rel="bookmark" title="Permalink to Exaile-doubanfm-plugin for exaile 0.3.2">Exaile-doubanfm-plugin for exaile 0.3.2</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/exaile-doubanfm-plugin-for-exaile-032.html" rel="bookmark"
-                           title="Permalink to Exaile-doubanfm-plugin for exaile 0.3.2">Exaile-doubanfm-plugin for exaile 0.3.2</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-08-03T00:00:00+08:00">
-                Published: Tue 03 August 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-08-03T00:00:00+08:00"> Tue 03 August 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>Douban</li>
@@ -178,29 +126,15 @@ doubanfm-0.0.3-exaile031.tar.gz</p>
 
 <p>接下来三周又有项目了，难度比较大，估计豆瓣插件近期不会有什么新的惊喜了。</p>
 
-<p>The post ...</p>
-                <a class="readmore" href="https://sunng.info/blog/exaile-doubanfm-plugin-for-exaile-032.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>The post ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/sunngs-pastebin.html" rel="bookmark" title="Permalink to sunng's pastebin">sunng's pastebin</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/sunngs-pastebin.html" rel="bookmark"
-                           title="Permalink to sunng's pastebin">sunng's pastebin</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2010-07-31T00:00:00+08:00">
-                Published: Sat 31 July 2010
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2010-07-31T00:00:00+08:00"> Sat 31 July 2010 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>gae</li>
@@ -213,36 +147,24 @@ comments: true</li>
 <a href="http://sunoffline.appspot.com/pb/">http://sunoffline.appspot.com/pb/</a></p></p>
 <p>支持纯文本、Markdown和代码高亮。数据永久保留，推荐大家收藏以备不时之需。</p>
 
-<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p>
-                <a class="readmore" href="https://sunng.info/blog/sunngs-pastebin.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>The post is brought to you by <a href="http://fedorahosted.org/lekhonee">lekhonee</a> v0.7</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index43.html">&laquo;</a>
     Page 44 / 78
         <a href="https://sunng.info/blog/index45.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

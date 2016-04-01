@@ -1,196 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun - 'clojure'</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+    <link href="https://sunng.info/blog/blog/categories/clojure/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Tags Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
+  <h2 class="subtitle"> Tag: &#39;clojure&#39;</h2>
+  <p>Subscribe to <a href="https://sunng.info/blog/blog/categories/clojure/atom.xml">Feed</a> of articles under <b>&#39;clojure&#39;</b></p>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://sunng.info/blog/summarizing-changes-in-slacker-013.html">"Summarizing Changes in Slacker 0.13"</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2015-10-18T13:45:37+08:00">
-                Published: Sun 18 October 2015
-        </abbr>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/summarizing-changes-in-slacker-013.html" rel="bookmark" title="Permalink to "Summarizing Changes in Slacker 0.13"">"Summarizing Changes in Slacker 0.13"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+          <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a>,
+        </span>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a> </p>
-</footer><!-- /.post-info --><p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
-<p>Slacker is an RPC framework features non-invasive design. It exposes clojure namespace as remote service, and keeps your remote invocation as simple as local version. Slacker cluster uses Zookeeper for service discovery, helps you to build micro-service based architecture. The grouping function gives you full control over request routing.</p>
-<h3>Application managed thread pool</h3>
-<p>During 0.12 series, Slacker server uses Netty managed thread pool for task execution. Netty assign a single thread from its pool to a connection. The thread will be used for all requests from the connection. And these requests will be processed in a serial manner. This works perfect for non-blocking tasks. However, if your tasks are data-intensive, this causes head-of-line blocking issue.</p>
-<p>The Netty design is to keep request/esponse ordered for a connection. Slacker uses multiplex on its connection, so ordering is not an issue. In 0.13, we now use an application managed thread pool for task execution. You can still configure the pool size by <code>:threads</code> option. If your tasks are non-blocking ones, just set the threads equals your cores. Otherwise, you can customize the size based on blocking time of your tasks.</p>
-<h3>Interrupt</h3>
-<p>0.13 introduces a new low-level API called <code>interrupt</code> and a new option <code>interrupt-on-timeout</code>. This is backend by a new protocol level command, <code>interrupt</code>. The new command allows the client to interrupt server execution for a particular task. The server thread will be released once <code>interrupt</code> received.</p>
-<p>Typically you don't have to call <code>interrupt</code> on slacker client. The <code>interrupt-on-timeout</code> option allows you to cancel a tasks on both client and server when it's timeout. Following the design principle of transparency, the cancellation is synchronized to server-side, just like a local invocation.</p>
-<h3>Plug-able Serializers</h3>
-<p>To keep our dependency-tree clean, we detects cheshire/nippy/carbonite at runtime, and makes these dependencies totally optional to slacker.</p>
-<p>The new default serializer is Clojure EDN because it requires no additional packages. Slacker provides built-in support for cheshire(<code>:json</code>) and nippy(<code>:nippy</code>). <a href="https://github.com/ptaoussanis/nippy">Nippy</a> is high recommended for Slacker. It's a clojure-native binary format, compact and fast. We have been using nippy with Slacker in our production for a long time without any issue.</p>
-<p>You can also extend our serializer system by create new implementations for serializer multi-method.</p>
-<h3>Server data for Slacker Cluster</h3>
-<p>The new Slacker Cluster <code>start-slacker-server</code> offers a new option <code>:server-data</code>. It allows you to assign some data for this server, for example, the environment (production or stage?). The data will be stored to Zookeeper and synchronized to client side.</p>
-<p>In the client grouping function, you can use the data to filter servers:</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">slacker.client.cluster</span> <span class="ss">:refer</span> <span class="ss">:all</span><span class="p">])</span>
+        <abbr class="published" title="2015-10-18T13:45:37+08:00"> Sun 18 October 2015 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p>After a year of feature development and minor fixes, <a href="https://github.com/sunng87/slacker">Slacker</a> and <a href="https://github.com/sunng87/slacker-cluster">Slacker Cluster</a> version 0.13 is now available. In this article, I will summarize changes in this release and give a you short introduction of new features and improvements.</p>
+<p>Slacker is an RPC framework features non-invasive design. It exposes ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark" title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+          <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a>,
+        </span>
 
-<span class="p">(</span><span class="k">def </span><span class="nv">sc</span> <span class="p">(</span><span class="nf">clustered-slackerc</span> <span class="nv">...</span><span class="p">))</span>
-<span class="p">(</span><span class="nf">defn-remote</span> <span class="nv">sc</span> <span class="nv">some-function</span>
-  <span class="ss">:grouping</span> <span class="p">(</span><span class="k">fn </span><span class="p">[</span><span class="kd">ns </span><span class="nv">func</span> <span class="nv">params</span> <span class="nv">servers</span><span class="p">]</span>
-               <span class="c1">;; test :prod? property of server data</span>
-               <span class="p">(</span><span class="nf">rand-nth</span> <span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="ss">:prod?</span> <span class="p">(</span><span class="nf">server-data</span> <span class="o">@</span><span class="nv">sc</span> <span class="nv">%</span><span class="p">))</span> <span class="nv">servers</span><span class="p">))))</span>
-</pre></div>
+        <abbr class="published" title="2015-07-25T14:54:54+08:00"> Sat 25 July 2015 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
+<p>In case you still have no idea about HTTP2, it's the ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/clojure-microservice-architecture-with-slacker-cluster.html" rel="bookmark" title="Permalink to "Clojure Microservice architecture with Slacker Cluster"">"Clojure Microservice architecture with Slacker Cluster"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+          <a href="https://sunng.info/blog/tag/clojure.html">clojure</a>,
+        </span>
 
+        <abbr class="published" title="2014-07-08T22:12:52+08:00"> Tue 08 July 2014 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
+<p>It's a new concept ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark" title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/clojure.html">clojure</a>,
+          <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+        </span>
 
-<p>The grouping function in this snippet filters production servers, and choose one from them to call.</p>
-<p>The server side looks pretty simple:</p>
-<div class="highlight"><pre><span></span><span class="p">(</span><span class="nf">require</span> <span class="o">&#39;</span><span class="p">[</span><span class="nv">slacker.server.cluster</span> <span class="ss">:refer</span> <span class="p">[</span><span class="nv">start-slacker-server</span><span class="p">]])</span>
+        <abbr class="published" title="2014-06-09T21:06:39+08:00"> Mon 09 June 2014 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <h2>What are Slacker and Slacker Cluster</h2>
+<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/fork-join-in-papaline.html" rel="bookmark" title="Permalink to "Fork-Join in Papaline"">"Fork-Join in Papaline"</a></h2> </header>
+      <footer class="post-info">
+        <span class="article-tags">
+          <a href="https://sunng.info/blog/tag/clojure.html">clojure</a>,
+          <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+        </span>
 
-<span class="p">(</span><span class="nf">start-slacker-server</span> <span class="nv">some-port</span> <span class="p">[</span><span class="nv">some-ns</span><span class="p">]</span>
-  <span class="ss">:server-data</span> <span class="p">{</span><span class="ss">:prod?</span> <span class="nv">true</span><span class="p">}</span>
-  <span class="nv">...</span><span class="p">)</span>
-</pre></div>
-
-
-<p>Besides of these features, we also fixed issues Zookeeper timeout issue on startup, ephemeral node lost and etc.</p>
-<p>After almost 4 years of development, we are stepping near to a 1.0 release. Hopefully we will reach the 1.0 milestone in 2016.</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
-                           title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-07-25T14:54:54+08:00">
-                Published: Sat 25 July 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a> </p>
-</footer><!-- /.post-info -->                <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
-<p>In case you still have no idea about HTTP2, it's the ...</p>
-                <a class="readmore" href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/clojure-microservice-architecture-with-slacker-cluster.html" rel="bookmark"
-                           title="Permalink to "Clojure Microservice architecture with Slacker Cluster"">"Clojure Microservice architecture with Slacker Cluster"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-07-08T22:12:52+08:00">
-                Published: Tue 08 July 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">programming</a> <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> </p>
-</footer><!-- /.post-info -->                <p><a href="http://www.infoq.com/presentations/Micro-Services">Microservice</a> has been a hot new concept in these days. Martin Fowler explained microservice <a href="http://martinfowler.com/articles/microservices.html">in this article</a>. From me, microservice is a set of fine-grained function units running on independent process, each of them are connected with light-weighted transports: RESTful API or light messaging queue.</p>
-<p>It's a new concept ...</p>
-                <a class="readmore" href="https://sunng.info/blog/clojure-microservice-architecture-with-slacker-cluster.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/slacker-cluster-012-grouping.html" rel="bookmark"
-                           title="Permalink to "Slacker Cluster 0.12: Grouping"">"Slacker Cluster 0.12: Grouping"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-06-09T21:06:39+08:00">
-                Published: Mon 09 June 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <h2>What are Slacker and Slacker Cluster</h2>
-<p><a href="https://github.com/sunng87/slacker">Slacker</a> is my side project started in late 2011. The goal of Slacker project is to provide a high performance RPC system for clojure, with elegant API. Slacker doesn't ruin your code. Your remote invocation looks exactly same as local, from code. That ...</p>
-                <a class="readmore" href="https://sunng.info/blog/slacker-cluster-012-grouping.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/fork-join-in-papaline.html" rel="bookmark"
-                           title="Permalink to "Fork-Join in Papaline"">"Fork-Join in Papaline"</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-05-27T21:47:45+08:00">
-                Published: Tue 27 May 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->                <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model "fork-join" for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
-<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a ...</p>
-                <a class="readmore" href="https://sunng.info/blog/fork-join-in-papaline.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+        <abbr class="published" title="2014-05-27T21:47:45+08:00"> Tue 27 May 2014 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model "fork-join" for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
+<p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a ...</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
     Page 1 / 2
         <a href="https://sunng.info/blog/tag/clojure2.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

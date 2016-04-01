@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Running Ring web application on HTTP2 with rj9a</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+<meta name="tags" content="'programming'" />
+<meta name="tags" content="'clojure'" />
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
-           title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2015-07-25T14:54:54+08:00">
-                Published: Sat 25 July 2015
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a> <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a> </p>
-</footer><!-- /.post-info -->      <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/running-ring-web-application-on-http2-with-rj9a.html" rel="bookmark"
+         title="Permalink to Running Ring web application on HTTP2 with rj9a">Running Ring web application on HTTP2 with rj9a</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2015-07-25T14:54:54+08:00">
+      Sat 25 July 2015
+    </abbr>
+    <span class="article-tags">
+      <a href="https://sunng.info/blog/tag/programming.html">&#39;programming&#39;</a>,
+      <a href="https://sunng.info/blog/tag/clojure.html">&#39;clojure&#39;</a>,
+    </span>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="https://github.com/sunng87/ring-jetty9-adapter">Ring-jetty9-adapter(rj9a)</a> just received an update, the <a href="https://clojars.org/info.sunng/ring-jetty9-adapter">0.9</a>, with Jetty 9.3 adoption. The most important feature in this release is support for HTTP2. That means, you can run your Ring application on the new HTTP2 protocol.</p>
 <p>In case you still have no idea about HTTP2, it's the biggest update to HTTP, the protocol we use everyday and everywhere. In short, <a href="https://en.wikipedia.org/wiki/HTTP/2">HTTP2</a> introduces connection multiplex to reuse connection for several request/response simultaneously. Also the persisted connection makes server push possible, and that's part of HTTP2. HTTP2 uses TLS by default. In order to keep most servers backward compatible, we will run HTTP2 and HTTP1.1 on the same server and port. Modern client will detect server configuration on SSL handshake, via a TLS extension called ALPN. The server will list supported application layer protocols in SERVER HELLO and let client to choose what it understands.</p>
 <p>The basic part of HTTP2 is fully compatible for 1.1, so you won't have to modify your application code to use it. In rj9a, just add option <code>:h2? true</code> to enable HTTP2. And <code>:h2c? true</code> to enable its variance on plain socket.</p>
 <div class="highlight"><pre><span></span><span class="p">(</span><span class="kd">defn </span><span class="nv">dummy-app</span> <span class="p">[</span><span class="nv">req</span><span class="p">]</span> <span class="p">{</span><span class="ss">:body</span> <span class="s">&quot;It works&quot;</span> <span class="ss">:status</span> <span class="mi">200</span><span class="p">})</span>
@@ -106,29 +111,17 @@ It works<span class="o">[</span>  0.033<span class="o">]</span> recv DATA frame 
 <p>The verbose output shows us every detail about request and response in HTTP2.</p>
 <p>Note that in order to run HTTP2, you will need JDK 8 / OpenJDK 1.8 and <a href="http://www.eclipse.org/jetty/documentation/current/alpn-chapter.html#alpn-starting">put alpn-boot jar in your bootclasspath</a>.  I have created <a href="https://github.com/sunng87/lein-bootclasspath-deps">a leiningen plugin</a> to manage bootclasspath in clojure project.</p>
 <p>The complete example is available in <a href="https://github.com/sunng87/ring-jetty9-adapter/blob/master/examples/rj9a/http2.clj">github repository</a>.</p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

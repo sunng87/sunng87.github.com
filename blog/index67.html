@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/dao-tou-liao.html" rel="bookmark"
-                           title="Permalink to 到头了">到头了</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/dao-tou-liao.html" rel="bookmark" title="Permalink to 到头了">到头了</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-06T00:00:00+08:00">
-                Published: Tue 06 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-06T00:00:00+08:00"> Tue 06 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>当时
 tags:</li>
 <li>Life
@@ -53,29 +43,15 @@ comments: true</li>
 
 <p>好在好在，明天就回公司了，要试着配一下ehcache的集群，有时间的话比较一下RMI方式和JGroup方式的性能，再做下一步打算。对了，还有一个系统的维护指南要写。</p>
 
-<p>我还是想想明天上班Syu时的情景吧 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/dao-tou-liao.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>我还是想想明天上班Syu时的情景吧 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/mapping-geometry-in-grails-and-mysql.html" rel="bookmark" title="Permalink to Mapping Geometry in Grails and MySQL">Mapping Geometry in Grails and MySQL</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/mapping-geometry-in-grails-and-mysql.html" rel="bookmark"
-                           title="Permalink to Mapping Geometry in Grails and MySQL">Mapping Geometry in Grails and MySQL</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-06T00:00:00+08:00">
-                Published: Tue 06 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-06T00:00:00+08:00"> Tue 06 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>GIS</li>
@@ -93,29 +69,15 @@ comments: true</li>
 <blockquote>org.hibernate.MappingException: No Dialect mapping for JDBC type: 2003</blockquote>
 这个问题最终在这里得到了解答：
 <a href="http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html" target="_blank">http://n2.nabble.com/No-Dialect-mapping-for-JDBC-type-2003-td1141106.html</a>
-按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition ...</p>
-                <a class="readmore" href="https://sunng.info/blog/mapping-geometry-in-grails-and-mysql.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+按照邮件列表里的反映，上面的配置在Postgis里是可以work的，但是如果用Mysql还需要指定JPA的columnDefinition ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/reading-gps-data-from-exif-using-groovy.html" rel="bookmark" title="Permalink to Reading GPS Data From EXIF Using Groovy">Reading GPS Data From EXIF Using Groovy</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/reading-gps-data-from-exif-using-groovy.html" rel="bookmark"
-                           title="Permalink to Reading GPS Data From EXIF Using Groovy">Reading GPS Data From EXIF Using Groovy</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-05T00:00:00+08:00">
-                Published: Mon 05 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-05T00:00:00+08:00"> Mon 05 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>GIS</li>
@@ -137,29 +99,15 @@ meta = JpegMetadataReader.readMetadata(file);</p>
 <p>gpsdir = meta.getDirectory(GpsDirectory.class);<br />
 lat = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LATITUDE);<br />
 lon = gpsdir.getRationalArray(GpsDirectory.TAG_GPS_LONGITUDE);<br />
-lats ...</p>
-                <a class="readmore" href="https://sunng.info/blog/reading-gps-data-from-exif-using-groovy.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+lats ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/gnome-shell.html" rel="bookmark" title="Permalink to Gnome Shell">Gnome Shell</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/gnome-shell.html" rel="bookmark"
-                           title="Permalink to Gnome Shell">Gnome Shell</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-04T00:00:00+08:00">
-                Published: Sun 04 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-04T00:00:00+08:00"> Sun 04 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>gnome</li>
@@ -176,29 +124,15 @@ comments: true</li>
 <p>上个图：
 <img class="alignnone" src="http://pic.yupoo.com/classicning/0026182bb7d6/medium.jpg" alt="" width="500" height="313" /></p>
 
-<p>当然了，还没有正式release，大家试用尝鲜注意安全第一。</p>
-                <a class="readmore" href="https://sunng.info/blog/gnome-shell.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>当然了，还没有正式release，大家试用尝鲜注意安全第一。</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/libchamplain-map-widget-of-gnome-desktop.html" rel="bookmark" title="Permalink to 'libchamplain: Map Widget of Gnome Desktop'">'libchamplain: Map Widget of Gnome Desktop'</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/libchamplain-map-widget-of-gnome-desktop.html" rel="bookmark"
-                           title="Permalink to 'libchamplain: Map Widget of Gnome Desktop'">'libchamplain: Map Widget of Gnome Desktop'</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2009-10-03T00:00:00+08:00">
-                Published: Sat 03 October 2009
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2009-10-03T00:00:00+08:00"> Sat 03 October 2009 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>foss</li>
@@ -216,36 +150,24 @@ comments: true</li>
 
 <p>libchamplain使用了<a href="http://www.clutter-project.org/" target="_blank">clutter</a>，在载入地图的时候还有fadein的效果。clutter是将要应用在下一代桌面gnome shell中的图形特效库。</p>
 
-<p>插件是用C写的，可以看成是libchamplain的一个例子，作者说已经有了其他语言的binding，如此未来在gnome桌面上开发tile地图程序会变得简单。</p>
-                <a class="readmore" href="https://sunng.info/blog/libchamplain-map-widget-of-gnome-desktop.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>插件是用C写的，可以看成是libchamplain的一个例子，作者说已经有了其他语言的binding，如此未来在gnome桌面上开发tile地图程序会变得简单。</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index66.html">&laquo;</a>
     Page 67 / 78
         <a href="https://sunng.info/blog/index68.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

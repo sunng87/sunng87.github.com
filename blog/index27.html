@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/jip-051-released.html" rel="bookmark"
-                           title="Permalink to jip 0.5.1 released">jip 0.5.1 released</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/jip-051-released.html" rel="bookmark" title="Permalink to jip 0.5.1 released">jip 0.5.1 released</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-05-15T00:00:00+08:00">
-                Published: Sun 15 May 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-05-15T00:00:00+08:00"> Sun 15 May 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>jip</li>
@@ -49,29 +39,15 @@ comments: true</li>
 </ul>
 <hr />
 <p><p>I just rolled out <a href="https://github.com/sunng87/jip/tree/v0.5.1">jip 0.5.1</a> as a bugfix version of 0.5. It has been published to <a href="http://pypi.python.org/pypi/jip">pypi</a> and you can install it with <font face="monospace">pip install jip</font> in your virtualenv.</p></p>
-<p>From 0.5, you have new features available ...</p>
-                <a class="readmore" href="https://sunng.info/blog/jip-051-released.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>From 0.5, you have new features available ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/yong-coffeescriptzhong-xie-liao-shou-ye.html" rel="bookmark" title="Permalink to 用coffeescript重写了首页">用coffeescript重写了首页</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/yong-coffeescriptzhong-xie-liao-shou-ye.html" rel="bookmark"
-                           title="Permalink to 用coffeescript重写了首页">用coffeescript重写了首页</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-05-13T00:00:00+08:00">
-                Published: Fri 13 May 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-05-13T00:00:00+08:00"> Fri 13 May 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>装备
 tags:</li>
 <li>coffeescript</li>
@@ -92,29 +68,15 @@ comments: true</li>
 
 <p>在nodejs的环境里可以通过npm安装coffer-script，利用它的命令行程序，可以把coffeescript编译成javascript。不过最给力的是可以在网页里通过<a href="http://jashkenas.github.com/coffee-script/#scripts">引入coffee-script.js</a>来直接执行（其实也是编译一下）coffeescript。</p>
 
-<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p>
-                <a class="readmore" href="https://sunng.info/blog/yong-coffeescriptzhong-xie-liao-shou-ye.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>于是我顺手重写了一下首页的js，改写成coffeescript。因为少打很多() {}，手可以控制在键盘中心的，敲字的效率大大提高。用空你也可以尝试一下。<br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=c7456ff3-1bf5-8c54-b037-86800bd4f910" /></div></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/an-zhuang-exailedou-ban-dian-tai-cha-jian-ji-gnome-shellkuo-zhan.html" rel="bookmark" title="Permalink to 安装Exaile豆瓣电台插件及Gnome-Shell扩展">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/an-zhuang-exailedou-ban-dian-tai-cha-jian-ji-gnome-shellkuo-zhan.html" rel="bookmark"
-                           title="Permalink to 安装Exaile豆瓣电台插件及Gnome-Shell扩展">安装Exaile豆瓣电台插件及Gnome-Shell扩展</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-05-09T00:00:00+08:00">
-                Published: Mon 09 May 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-05-09T00:00:00+08:00"> Mon 09 May 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>exaile</li>
@@ -135,29 +97,15 @@ sunng87-exaile-doubanfm-plugin-0.0.10-dbus-0-g90f7175.zip
 
 <p><h3>解压安装</h3>
 如果你已经安装过exaile豆瓣电台插件，可以先删除旧版本：
-<pre>$ rm -rf ~/.local/share/exaile ...</pre></p>
-                <a class="readmore" href="https://sunng.info/blog/an-zhuang-exailedou-ban-dian-tai-cha-jian-ji-gnome-shellkuo-zhan.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<pre>$ rm -rf ~/.local/share/exaile ...</pre></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/gnome-shell-extension-for-exaile-doubanfm-plugin.html" rel="bookmark" title="Permalink to GNOME-Shell Extension for Exaile DoubanFM Plugin">GNOME-Shell Extension for Exaile DoubanFM Plugin</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/gnome-shell-extension-for-exaile-doubanfm-plugin.html" rel="bookmark"
-                           title="Permalink to GNOME-Shell Extension for Exaile DoubanFM Plugin">GNOME-Shell Extension for Exaile DoubanFM Plugin</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-05-07T00:00:00+08:00">
-                Published: Sat 07 May 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-05-07T00:00:00+08:00"> Sat 07 May 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>手艺
 tags:</li>
 <li>dbus</li>
@@ -173,29 +121,15 @@ comments: true</li>
 <p><p>从有这个动机到基本可用，花了整整一天的时间。现在可以通过GNOME-Shell的一个小菜单从外部控制Exaile豆瓣电台了。它的意思就是说如果你使用Gnome-Shell，你可以把Exaile界面扔到一个你不想看到的地方去，比如第n+1个workspace。然后通过左上角的菜单来控制豆瓣电台的播放。见多识广的你不会对此感到太惊奇，其实它和Ubuntu上的Sound Menu Indicator类似，不过是专门给豆瓣电台设计的。
 <a href="http://www.flickr.com/photos/40741608@N08/5696429062/" title="Exaile with doubanfm plugin by 贝小塔, on Flickr"><img src="http://farm6.static.flickr.com/5104/5696429062_7f62a4d7f2.jpg" alt="Exaile with doubanfm plugin" height="313" width="500" /></a></p></p>
 <p>要实现这个功能，需要播放器通过dbus来expose一些接口供外部程序调用，它和Sound Menu是一样的，通过dbus来解耦。开发起来比较困难的是目前GNOME-Shell的API还不成熟，还没有文档，传统的javascript object inspect方法似乎在这个mozjs的环境里也不能用，所以实在是无从知道一些API。更不要提通过gjs来调用dbus了。网上有一些文档起了很大的作用，如果你也感兴趣，这些文章是：
-<ul><li>开发GNOME-Shell Extension：<a href="http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html">http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html ...</a></li></ul></p>
-                <a class="readmore" href="https://sunng.info/blog/gnome-shell-extension-for-exaile-doubanfm-plugin.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<ul><li>开发GNOME-Shell Extension：<a href="http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html">http://blog.fpmurphy.com/2011/04/gnome-3-shell-extensions.html ...</a></li></ul></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/qu-xi-an.html" rel="bookmark" title="Permalink to 去西安">去西安</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/qu-xi-an.html" rel="bookmark"
-                           title="Permalink to 去西安">去西安</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-05-03T00:00:00+08:00">
-                Published: Tue 03 May 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-05-03T00:00:00+08:00"> Tue 03 May 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>当时</li>
 <li>留影
 tags:</li>
@@ -210,36 +144,24 @@ comments: true</li>
 <p>我坐的K560是一趟开到延安老区的车，老区人民伤不起，一路上尽给到乌鲁木齐到拉萨的车让道了。晚上在上铺作原地翻滚，发现铁皮太厚根本没有信号，为了不虚此行，早晨7点就从上面跳下来，在窗边占个座位打开GPS。抬头一看已经到了开封，不对，才到开封。
 <a href="http://www.openstreetmap.org/user/Sunng/traces/1001751">http://www.openstreetmap.org/user/Sunng/traces/1001751</a></p>
 
-<p>到了西安已经是下午三点半，找到<a href="http://torrge.me/">老支书</a>，见到身强体壮的新版寇巨头。晚上我们就在曲江新区迷了路，冥冥之中深夜里摸到了我国第一个官二代并富二代，胡亥长眠的地方。最后还好老支书迷途知返，及时拿出诺基亚表明自己身份，与二代们划清界限，我们才又绕道大雁塔回了住处 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/qu-xi-an.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p>到了西安已经是下午三点半，找到<a href="http://torrge.me/">老支书</a>，见到身强体壮的新版寇巨头。晚上我们就在曲江新区迷了路，冥冥之中深夜里摸到了我国第一个官二代并富二代，胡亥长眠的地方。最后还好老支书迷途知返，及时拿出诺基亚表明自己身份，与二代们划清界限，我们才又绕道大雁塔回了住处 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index26.html">&laquo;</a>
     Page 27 / 78
         <a href="https://sunng.info/blog/index28.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

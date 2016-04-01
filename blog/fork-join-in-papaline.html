@@ -1,43 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>"Fork-Join in Papaline"</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+
+<meta name="tags" content="clojure" />
+<meta name="tags" content="programming" />
+
+  </head>
+
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
+
 <section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://sunng.info/blog/fork-join-in-papaline.html" rel="bookmark"
-           title="Permalink to "Fork-Join in Papaline"">"Fork-Join in Papaline"</a></h1>
-    </header>
-
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2014-05-27T21:47:45+08:00">
-                Published: Tue 27 May 2014
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-<p>tags: <a href="https://sunng.info/blog/tag/clojure.html">clojure</a> <a href="https://sunng.info/blog/tag/programming.html">programming</a> </p>
-</footer><!-- /.post-info -->      <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model "fork-join" for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
+  <header>
+    <h2 class="entry-title">
+      <a href="https://sunng.info/blog/fork-join-in-papaline.html" rel="bookmark"
+         title="Permalink to "Fork-Join in Papaline"">"Fork-Join in Papaline"</a></h2>
+    
+  </header>
+  <footer class="post-info">
+    <abbr class="published" title="2014-05-27T21:47:45+08:00">
+      Tue 27 May 2014
+    </abbr>
+    <span class="article-tags">
+      <a href="https://sunng.info/blog/tag/clojure.html">clojure</a>,
+      <a href="https://sunng.info/blog/tag/programming.html">programming</a>,
+    </span>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <p><a href="http://github.com/sunng87/papaline">Papaline</a> 0.3 introduced a new model "fork-join" for task execution. It allows you to split a task into smaller units, and execute them in parallel.</p>
 <p>Before that, a task is processed as a single unit from the first stage to the second, the third and the last. Within a stage, all computing is done in a single thread.</p>
 <p><img alt="linear execution" src="http://i.imgur.com/w6RlNZo.png" /></p>
 <p>This model has limitation that you are required to execute any of your stage in serial. If your task has a few split-able units, it's always better to run them in parallel. Here we have <code>(fork)</code> command for the situation.</p>
@@ -69,29 +74,17 @@
 <p>To collect the results of all forked sub-tasks, you can use <code>(join)</code>. If the return value is wrapped with join, it won't trigger next stage immediately but to wait all forked tasks to finish.</p>
 <p><img alt="join" src="http://i.imgur.com/BVDEH9Q.png" /></p>
 <p>So with <code>(fork)</code> and <code>(join)</code>, it's very flexible to change execution model in Papaline.  Internally, I use clojure's <a href="http://clojure.org/metadata">metadata</a> to add flags for the return value, without ruining the non-invasive design of <a href="http://github.com/sunng87/papaline">Papaline</a>.</p>
-    </div><!-- /.entry-content -->
-
-  </article>
+  </div><!-- /.entry-content -->
 </section>
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>

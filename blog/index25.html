@@ -1,44 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="utf-8" />
-        <title>Here Comes the Sun</title>
-        <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
-        <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Atom Feed" />
+  <head>
+    <title>Here Comes the Sun</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://sunng.info/blog/theme/css/main.css" />
+    <link href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate" title="Here Comes the Sun Full Atom Feed" />
+  </head>
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-</head>
+  <body id="index" class="home">
+    <div id="page">
+      <header id="banner" class="body">
+        <h1><a href="https://sunng.info/blog/">Here Comes the Sun <strong></strong></a></h1>
+        <nav id="menu">
+          <ul>
+            <li><a href="https://sunng.info/">About</a></li>
+            <li><a href="https://sunng.info/blog/atom.xml">Site Feed</a></li>
+          </ul>
+        </nav>
+      </header><!-- /#banner -->
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://sunng.info/blog/">Here Comes the Sun </a></h1>
-                <nav><ul>
-                    <li><a href="https://sunng.info/blog/category/misc.html">misc</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
+<section id="content">
 
-                <section id="content" class="body">
-                    <ol id="posts-list" class="hfeed" start="4">
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/zui-jin-de-yi-xie-xiang-fa.html" rel="bookmark"
-                           title="Permalink to 最近的一些想法">最近的一些想法</a></h1>
-                </header>
+  <ol id="post-list">
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/zui-jin-de-yi-xie-xiang-fa.html" rel="bookmark" title="Permalink to 最近的一些想法">最近的一些想法</a></h2> </header>
+      <footer class="post-info">
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-30T00:00:00+08:00">
-                Published: Thu 30 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-06-30T00:00:00+08:00"> Thu 30 June 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>当时
 tags:</li>
 <li>work
@@ -48,29 +38,15 @@ comments: true</li>
 <hr />
 <p><p><p>最近有机会带着两个弟兄做一个老产品的技术改造。起因是测试发现产品的并发性很差，反馈回开发部门作下一个版本的改进。一查代码发现在网络通信时，原本异步的NIO，发送线程居然被强行加了wait同步等待远程返回。线程不能被释放，前端的请求被排队，吞吐量根本上不去。</p>
 <p>这是root cause，其实进了代码里面的问题更多。于是产生了对这种feature driven development的怀疑。我曾经觉得列出 feature，做好代价估计，然后大家各自去实现的方式很理性很可控。如果宏观地看，黑盒地看，这种方式对项目管理很友好。但是最近看这种方式下开发出来的产品，问题还是很多的。当开发人员面对一个feature却缺少对产品整体架构的足够了解，他很容易倾向于用quick and dirty的方式\打补丁的方式解决问题，而忽略新feature对架构整体的挑战。长期下来，软件的功能不断演进，架构却停留在早期，维护成本越来越高，神秘的陷阱越来越多。这时，每次发布都要通过测试部门的蛮力测试，这个过程中除了修bug还要克服无数的invalid的bug。What the hell!!!</p>
-<p>另一方面，从开发人员的角度 ...</p></p></p>
-                <a class="readmore" href="https://sunng.info/blog/zui-jin-de-yi-xie-xiang-fa.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>另一方面，从开发人员的角度 ...</p></p></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/ngeohash-node-module-for-geohash-algorithm.html" rel="bookmark" title="Permalink to 'ngeohash: node module for geohash algorithm'">'ngeohash: node module for geohash algorithm'</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/ngeohash-node-module-for-geohash-algorithm.html" rel="bookmark"
-                           title="Permalink to 'ngeohash: node module for geohash algorithm'">'ngeohash: node module for geohash algorithm'</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-24T00:00:00+08:00">
-                Published: Fri 24 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-06-24T00:00:00+08:00"> Fri 24 June 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>GIS</li>
@@ -92,29 +68,15 @@ sys.puts(geohash.encode(32.1717, 118.2342));</p>
 
 <p>详细<br />
 访问github的相关页面：<a href="https://github.com/sunng87/node-geohash">https://github.com/sunng87/node-geohash
-</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=62cf2f06-ce63-87a6-a76b-5899455660e7" /></div></p>
-                <a class="readmore" href="https://sunng.info/blog/ngeohash-node-module-for-geohash-algorithm.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=62cf2f06-ce63-87a6-a76b-5899455660e7" /></div></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/checkout-my-forked-version-of-reddit-is-fun.html" rel="bookmark" title="Permalink to Checkout my forked version of reddit-is-fun">Checkout my forked version of reddit-is-fun</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/checkout-my-forked-version-of-reddit-is-fun.html" rel="bookmark"
-                           title="Permalink to Checkout my forked version of reddit-is-fun">Checkout my forked version of reddit-is-fun</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-15T00:00:00+08:00">
-                Published: Wed 15 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-06-15T00:00:00+08:00"> Wed 15 June 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>android</li>
@@ -131,29 +93,15 @@ comments: true</li>
 <img src="https://chart.googleapis.com/chart?cht=qr&amp;chs=300x300&amp;chl=https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk" alt="https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk" /></p>
 
 <p>链接地址：
-<a href="https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk">https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9d42ee6d-b2e5-8b52-a96c-e6e2dcd87c53" /></div></p>
-                <a class="readmore" href="https://sunng.info/blog/checkout-my-forked-version-of-reddit-is-fun.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<a href="https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk">https://github.com/downloads/sunng87/reddit-is-fun/reddit_is_fun-sunng-fork.apk</a><br /><br /><div class="zemanta-pixie"><img class="zemanta-pixie-img" alt="" src="http://img.zemanta.com/pixy.gif?x-id=9d42ee6d-b2e5-8b52-a96c-e6e2dcd87c53" /></div></p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/update-on-heatcanvas-and-gefr.html" rel="bookmark" title="Permalink to Update on HeatCanvas and gefr">Update on HeatCanvas and gefr</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/update-on-heatcanvas-and-gefr.html" rel="bookmark"
-                           title="Permalink to Update on HeatCanvas and gefr">Update on HeatCanvas and gefr</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-14T00:00:00+08:00">
-                Published: Tue 14 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-06-14T00:00:00+08:00"> Tue 14 June 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>gefr</li>
@@ -173,29 +121,15 @@ comments: true</li>
 
 <p><h3>Gefr新增 Jetty WSGI Bridge</h3></p>
 
-<p>昨天为<a href="https://bitbucket.org/sunng/gefr">gefr</a>新增了Jetty服务器的支持，这样你可以将自己的Python WSGI程序运行在成熟的Jetty服务器上。性能是大家关心的因素，下面是在我的本机（32位CentOS，双核2.8GHz，4G内存）上一个粗略的测试结果 ...</p>
-                <a class="readmore" href="https://sunng.info/blog/update-on-heatcanvas-and-gefr.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+<p>昨天为<a href="https://bitbucket.org/sunng/gefr">gefr</a>新增了Jetty服务器的支持，这样你可以将自己的Python WSGI程序运行在成熟的Jetty服务器上。性能是大家关心的因素，下面是在我的本机（32位CentOS，双核2.8GHz，4G内存）上一个粗略的测试结果 ...</p> </div><!-- /.entry-content -->
+    </article></li>
+    <li><article class="hentry">
+      <header> <h2 class="entry-title"><a href="https://sunng.info/blog/jipembed-on-the-fly-classpath-resolution-for-jython.html" rel="bookmark" title="Permalink to 'jip.embed: On-the-fly classpath resolution for Jython'">'jip.embed: On-the-fly classpath resolution for Jython'</a></h2> </header>
+      <footer class="post-info">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://sunng.info/blog/jipembed-on-the-fly-classpath-resolution-for-jython.html" rel="bookmark"
-                           title="Permalink to 'jip.embed: On-the-fly classpath resolution for Jython'">'jip.embed: On-the-fly classpath resolution for Jython'</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2011-06-10T00:00:00+08:00">
-                Published: Fri 10 June 2011
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://sunng.info/blog/author/ning-sun.html">Ning Sun</a>
-        </address>
-<p>In <a href="https://sunng.info/blog/category/misc.html">misc</a>.</p>
-
-</footer><!-- /.post-info -->                <ul>
+        <abbr class="published" title="2011-06-10T00:00:00+08:00"> Fri 10 June 2011 </abbr>
+      </footer><!-- /.post-info -->
+      <div class="entry-content"> <ul>
 <li>ANN
 tags:</li>
 <li>jip</li>
@@ -206,36 +140,24 @@ published: true
 comments: true</li>
 </ul>
 <hr />
-<p><p>jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you don't have to download jars manually and append them to ...</p></p>
-                <a class="readmore" href="https://sunng.info/blog/jipembed-on-the-fly-classpath-resolution-for-jython.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
+<p><p>jip 0.7 introduces a module called jip.embed, which allows you to add libraries to your code in the runtime as you declare them. With jip.embed, you don't have to download jars manually and append them to ...</p></p> </div><!-- /.entry-content -->
+    </article></li>
+  </ol><!-- /#posts-list -->
 <p class="paginator">
         <a href="https://sunng.info/blog/index24.html">&laquo;</a>
     Page 25 / 78
         <a href="https://sunng.info/blog/index26.html">&raquo;</a>
 </p>
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://sunng.info/blog/atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+</section><!-- /#content -->
 
-                            <li><a href="https://github.com/sunng87">Github</a></li>
-                            <li><a href="https://twitter.com/sunng">Twitter</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+      <footer id="contentinfo" class="body">
+        <address id="about" class="vcard body">
+          <p>Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+            which takes great advantage of <a href="http://python.org">Python</a>. </p>
+          <p>The theme is called <i>gotham</i>, created by myself on G17 Train Beijing-Nanjing, 2016 Apr 1st.</p>
+        </address><!-- /#about -->
+      </footer><!-- /#contentinfo -->
+    </div>
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
-
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
-
-</body>
+  </body>
 </html>
