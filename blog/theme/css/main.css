@@ -153,7 +153,7 @@ h2.subtitle {
 }
 
 #content div.entry-content p {
-    font-family: sans-serif;
+    /*! font-family: sans-serif; */
 }
 
 #content div.entry-content p,
@@ -161,6 +161,10 @@ h2.subtitle {
 #content div.entry-content ul {
     margin-bottom: 25px;
 
+}
+
+#content pre {
+    white-space: pre-wrap;
 }
 
 #content code {
