@@ -197,4 +197,7 @@ h2.subtitle {
     }
 
 
+    #content h2.entry-title {
+        font-size: 1.8em;
+    }
 }
