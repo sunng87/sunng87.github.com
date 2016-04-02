@@ -184,7 +184,17 @@ h2.subtitle {
         margin-left:0;
     }
 
+    #post-list h2.entry-title {
+        font-size:1.5em;
+    }
+
     footer.post-info {
         margin-left: 0;
     }
+    .article-tags {
+        float: none;
+        display: block;
+    }
+
+
 }
